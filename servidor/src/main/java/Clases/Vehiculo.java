@@ -11,13 +11,19 @@ package Clases;
 public abstract class  Vehiculo {
     private String marca;
     private String patente;
-
-    public Vehiculo(String marca, String patente) {
-        this.marca = marca;
-        this.patente = patente;
-    }
+    private Tarjeta_Ruta tarjeta_ruta;
+    private Seguro seguro;
+    private Tecnica tecnica;
 
     public Vehiculo() {
+    }
+
+    public Vehiculo(String marca, String patente, Seguro seguro, Tarjeta_Ruta tarjeta_ruta, Tecnica tecnica) {
+        this.marca = marca;
+        this.patente = patente;
+        this.seguro = seguro;
+        this.tarjeta_ruta = tarjeta_ruta;
+        this.tecnica = tecnica;
     }
 
     public String getMarca() {
@@ -35,6 +41,31 @@ public abstract class  Vehiculo {
     public void setPatente(String patente) {
         this.patente = patente;
     }
+
+    public Tarjeta_Ruta getTarjeta_ruta() {
+        return tarjeta_ruta;
+    }
+
+    public Seguro getSeguro() {
+        return seguro;
+    }
+
+    public Tecnica getTecnica() {
+        return tecnica;
+    }
+
+    public void setTarjeta_ruta(Tarjeta_Ruta tarjeta_ruta) {
+        this.tarjeta_ruta = tarjeta_ruta;
+    }
+
+    public void setSeguro(Seguro seguro) {
+        this.seguro = seguro;
+    }
+
+    public void setTecnica(Tecnica tecnica) {
+        this.tecnica = tecnica;
+    }
+    
     
     
 }
