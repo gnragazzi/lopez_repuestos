@@ -15,23 +15,28 @@ public class Camion extends Vehiculo{
     private String cilindrada;
     private String kilometraje;
     private ArrayList<Viaje> viaje;
+    private Semirremolque semirremolque;
 
-    public Camion(String modelo, String cilindrada, String kilometraje, ArrayList<Viaje> viaje, String marca, String patente) {
-        super(marca, patente);
-        this.modelo = modelo;
-        this.cilindrada = cilindrada;
-        this.kilometraje = kilometraje;
-        this.viaje = new ArrayList();
-    }
+
     
     public Camion() {
         super();
+    }
+
+    public Camion(String cilindrada, String kilometraje, String modelo, Semirremolque semirremolque, ArrayList<Viaje> viaje, String marca, String patente, Seguro seguro, Tarjeta_Ruta tarjeta_ruta, Tecnica tecnica) {
+        super(marca, patente, seguro, tarjeta_ruta, tecnica);
+        this.cilindrada = cilindrada;
+        this.kilometraje = kilometraje;
+        this.modelo = modelo;
+        this.semirremolque = semirremolque;
+        this.viaje = viaje;
     }
 
     public void setModelo(String modelo) {
         this.modelo = modelo;
     }
 
+    
     public void setCilindrada(String cilindrada) {
         this.cilindrada = cilindrada;
     }
@@ -58,6 +63,14 @@ public class Camion extends Vehiculo{
 
     public ArrayList<Viaje> getViaje() {
         return viaje;
+    }
+
+    public Semirremolque getSemirremolque() {
+        return semirremolque;
+    }
+
+    public void setSemirremolque(Semirremolque semirremolque) {
+        this.semirremolque = semirremolque;
     }
     
     

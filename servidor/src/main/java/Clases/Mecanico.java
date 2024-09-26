@@ -4,6 +4,7 @@
  */
 package Clases;
 
+import java.util.ArrayList;
 import java.util.Date;
 
 /**
@@ -12,12 +13,22 @@ import java.util.Date;
  */
 public class Mecanico extends Empleado{
 
-    public Mecanico(String dni, String cuil, String nombre, String apellido, String domicilio, Date fecha_nacimiento, String telefono) {
+    private ArrayList<Mantenimiento> mantenimiento;
+    
+    public Mecanico(String dni, String cuil, String nombre, String apellido, String domicilio, Date fecha_nacimiento, String telefono, ArrayList<Mantenimiento> mantenimiento) {
         super(dni, cuil, nombre, apellido, domicilio, fecha_nacimiento, telefono);
+        this.mantenimiento=mantenimiento;
     }
 
     public Mecanico() {
     }
-    
+
+    public ArrayList<Mantenimiento> getMantenimiento() {
+        return mantenimiento;
+    }
+
+    public void setMantenimiento(ArrayList<Mantenimiento> mantenimiento) {
+        this.mantenimiento = mantenimiento;
+    }
     
 }
