@@ -1,9 +1,9 @@
-import React from 'react'
-
 function Mantenimiento() {
   return (
-    <div>Mantenimiento</div>
-  )
+    <div>
+      <h1>Mantenimiento</h1>
+    </div>
+  );
 }
 
-export default Mantenimiento
+export default Mantenimiento;

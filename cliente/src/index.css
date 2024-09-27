@@ -4,6 +4,17 @@
   padding: 0;
 }
 
+@keyframes menuLateral {
+  0%{
+    transform: translateX(-50%);
+    opacity: 0;
+  }
+  100%{
+    transform: translateX(0%);
+    opacity: 1;
+  }
+}
+
 :root {
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
@@ -19,11 +30,13 @@
   /* COLORES */
   --fondo-barra: #1a1a1a;
   --fondo-barra-hover: #202020;
+  --fondo-barra-seleccion: #262626;
   --color-fuente: rgba(225, 225, 225, 0.87);
   --color-fuente-hover: rgba(255, 255, 255, 0.87);
   /* OTROS */
   --altura-barra-superior: 6vh;
   --posicion-cuerpo:calc(100-var(var(--altura-barra-superior)))
+  /* --transicion:  */
 }
 
 /* 
@@ -67,25 +80,63 @@ ESTA ES UNA IDEA DE COMO TRABAJAR CON MODO OSCURO/CLARO
 }
 .lateral {
   position:relative;
-  min-width: 8vw;
+  min-width: 20vw;
 }
+
+@media screen and (min-width:1200px) {
+  .lateral {
+    position:relative;
+    min-width: 12vw;
+  }
+}
+
 .lateral ul{
   font-size: 1rem;
   letter-spacing: 1px;
   list-style: none;
   position: absolute;
   top: 50%;
-  left: 50%;
-  transform: translate(-50%,-50%);
+  transform: translateY(-50%);
+  width: 100%;
+
 }
 .lateral li{
   text-transform: capitalize;
   padding: 0.5rem 0;
+  cursor: pointer;
+  transition: 0.2s ease-out all;
 }
-.lateral li:hover{
+.lateral a{
+  color: inherit;
+  text-decoration: none;
+}
+.no_seleccion:hover{
   color:var(--color-fuente-hover);
   background-color: var(--fondo-barra-hover);
-  cursor: pointer;
+}
+.seleccion{
+  background-color: var(--fondo-barra-seleccion);
+
+}
+.seleccion:hover{
+  color:var(--color-fuente-hover);
+}
+.oculto{
+  display: none;
+  visibility: hidden;
+  z-index: -1;
+  opacity: 0;
+  transition: 5s;
+}
+.visible{
+  visibility: visible;
+  z-index: 2;
+  opacity: 1;
+  padding-left: 1rem;
+}
+.visible p{
+  margin-left: 0.75rem;
+  animation: menuLateral 0.3s ease-out 1 ;
 }
 .cuerpo{
   position: relative;
@@ -96,12 +147,9 @@ ESTA ES UNA IDEA DE COMO TRABAJAR CON MODO OSCURO/CLARO
   max-height: var(--posicion-cuerpo);
   border-top-left-radius: 1rem;
 }
-.cuerpo h1{
+.cuerpo div{
   position: absolute;
   left: 50%;
   top: 50%;
-  /* top: 50%;
-  left: 50%;
-  */
   transform: translate(-50%,-50%); 
 }
