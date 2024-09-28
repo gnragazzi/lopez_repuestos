@@ -1,11 +1,16 @@
 package Clases;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import java.util.Date;
 
 public class Tarjeta_Ruta {
-    
+    @JsonProperty("fecha_emision")
     private Date fecha_emision;
+        @JsonProperty("fecha_vencimiento")
+
     private Date fecha_vencimiento;
+        @JsonProperty("vehiculo")
+
     private Vehiculo vehiculo;
 
     public Tarjeta_Ruta(Date fecha_emision, Date fecha_vencimiento, Vehiculo vehiculo) {

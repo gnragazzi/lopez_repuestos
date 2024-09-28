@@ -4,6 +4,7 @@
  */
 package Clases;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import java.util.ArrayList;
 
 /**
@@ -11,8 +12,11 @@ import java.util.ArrayList;
  * @author Administrador
  */
 public class Semirremolque extends Vehiculo{
+	@JsonProperty("tipo")
     private String tipo;
+	@JsonProperty("carga")
     private String carga;
+	@JsonProperty("camion")
     private Camion camion;
 
     public Semirremolque() {

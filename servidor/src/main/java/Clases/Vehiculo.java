@@ -4,6 +4,7 @@
  */
 package Clases;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import java.util.ArrayList;
 
 /**
@@ -11,11 +12,17 @@ import java.util.ArrayList;
  * @author Administrador
  */
 public abstract class  Vehiculo {
+	@JsonProperty("marca")
     private String marca;
+	@JsonProperty("patente")
     private String patente;
+	@JsonProperty("tarjeta_ruta")
     private Tarjeta_Ruta tarjeta_ruta;
+	@JsonProperty("seguro")
     private Seguro seguro;
+	@JsonProperty("tecnica")
     private Tecnica tecnica;
+	@JsonProperty("mantenimiento")
     private ArrayList<Mantenimiento> mantenimiento;
 
     public Vehiculo() {
