@@ -23,14 +23,19 @@ public class Camion extends Vehiculo{
         super();
     }
 
-    public Camion(String cilindrada, String kilometraje, String modelo, Semirremolque semirremolque, ArrayList<Viaje> viaje, String marca, String patente, Seguro seguro, Tarjeta_Ruta tarjeta_ruta, Tecnica tecnica) {
-        super(marca, patente, seguro, tarjeta_ruta, tecnica);
+
+    public Camion(String marca, String patente, Seguro seguro, Tarjeta_Ruta tarjeta_ruta, Tecnica tecnica,
+            ArrayList<Mantenimiento> mantenimiento, String modelo, String cilindrada, String kilometraje,
+            ArrayList<Viaje> viaje, Semirremolque semirremolque) {
+        super(marca, patente, seguro, tarjeta_ruta, tecnica, mantenimiento);
+        this.modelo = modelo;
         this.cilindrada = cilindrada;
         this.kilometraje = kilometraje;
-        this.modelo = modelo;
-        this.semirremolque = semirremolque;
         this.viaje = viaje;
+        this.semirremolque = semirremolque;
     }
+
+
 
     public void setModelo(String modelo) {
         this.modelo = modelo;

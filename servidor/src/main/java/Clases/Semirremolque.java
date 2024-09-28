@@ -4,6 +4,8 @@
  */
 package Clases;
 
+import java.util.ArrayList;
+
 /**
  *
  * @author Administrador
@@ -16,12 +18,16 @@ public class Semirremolque extends Vehiculo{
     public Semirremolque() {
     }
 
-    public Semirremolque(Camion camion, String carga, String tipo, String marca, String patente, Seguro seguro, Tarjeta_Ruta tarjeta_ruta, Tecnica tecnica) {
-        super(marca, patente, seguro, tarjeta_ruta, tecnica);
-        this.camion = camion;
-        this.carga = carga;
+
+
+    public Semirremolque(String marca, String patente, Seguro seguro, Tarjeta_Ruta tarjeta_ruta, Tecnica tecnica,
+            ArrayList<Mantenimiento> mantenimiento, String tipo, String carga, Camion camion) {
+        super(marca, patente, seguro, tarjeta_ruta, tecnica, mantenimiento);
         this.tipo = tipo;
+        this.carga = carga;
+        this.camion = camion;
     }
+
 
     public String getTipo() {
         return tipo;

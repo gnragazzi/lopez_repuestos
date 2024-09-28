@@ -8,7 +8,6 @@ import Principal from "./páginas/Principal";
 import Mantenimiento from "./páginas/Mantenimiento.jsx";
 import Viajes from "./páginas/Viajes.jsx";
 import { Formulario_Mantenimiento } from "./páginas/Formulario_Mantenimiento.jsx";
-
 const router = createBrowserRouter([
   {
     path: "/",
@@ -34,6 +33,10 @@ const router = createBrowserRouter([
       {
         path: "viajes",
         element: <Viajes />,
+      },
+      {
+        path: "viajes",
+        element: <Viajes></Viajes>,
       },
     ],
   },
