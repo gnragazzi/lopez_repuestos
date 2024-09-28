@@ -1,24 +1,24 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
-package Clases;
-import java.util.Date;
 
-/**
- *
- * @author Administrador
- */
+package Clases;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
+import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;
+import java.time.LocalDate;
+
+
 public abstract class Empleado {
     private String dni;
     private String cuil;
     private String nombre;
     private String apellido;
     private String domicilio;
-    private Date fecha_nacimiento;
+    @JsonDeserialize(using = LocalDateDeserializer.class)  
+    @JsonSerialize(using = LocalDateSerializer.class)  
+    private LocalDate fecha_nacimiento;
     private String telefono;
 
-    public Empleado(String dni, String cuil, String nombre, String apellido, String domicilio, Date fecha_nacimiento, String telefono) {
+    public Empleado(String dni, String cuil, String nombre, String apellido, String domicilio, LocalDate fecha_nacimiento, String telefono) {
         this.dni = dni;
         this.cuil = cuil;
         this.nombre = nombre;
@@ -51,9 +51,9 @@ public abstract class Empleado {
         return domicilio;
     }
 
-    public Date getFecha_nacimiento() {
+    public LocalDate getFecha_nacimiento() {
         return fecha_nacimiento;
-    }
+    } 
 
     public String getTelefono() {
         return telefono;
@@ -79,7 +79,7 @@ public abstract class Empleado {
         this.domicilio = domicilio;
     }
 
-    public void setFecha_nacimiento(Date fecha_nacimiento) {
+    public void setFecha_nacimiento(LocalDate fecha_nacimiento) {
         this.fecha_nacimiento = fecha_nacimiento;
     }
 
@@ -87,10 +87,11 @@ public abstract class Empleado {
         this.telefono = telefono;
     }
 
+    /*
     @Override
     public String toString() {
         return "Empleado{" + "dni=" + dni + ", cuil=" + cuil + ", nombre=" + nombre + ", apellido=" + apellido + ", domicilio=" + domicilio + ", fecha_nacimiento=" + fecha_nacimiento + ", telefono=" + telefono + '}';
-    }
+    }*/
   
 
 }

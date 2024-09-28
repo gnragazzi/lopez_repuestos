@@ -1,25 +1,32 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package Clases;
 
-import java.util.Date;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
+import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;
+import java.time.LocalDate;
+
 
 /**
  *
  * @author Administrador
  */
 public class Viaje {
-    private Date fecha_partida;
-    private Date fecha_llegada;
-    private Date fecha_esperada;
+    @JsonDeserialize(using = LocalDateDeserializer.class)
+    @JsonSerialize(using = LocalDateSerializer.class)
+    private LocalDate fecha_partida;
+    @JsonDeserialize(using = LocalDateDeserializer.class)
+    @JsonSerialize(using = LocalDateSerializer.class)
+    private LocalDate fecha_llegada;
+    @JsonDeserialize(using = LocalDateDeserializer.class)
+    @JsonSerialize(using = LocalDateSerializer.class)
+    private LocalDate fecha_esperada;
     private String kilometros_realizados;
     private float costos_combustibles;
     private String destinos;
     private Camion camion;
 
-    public Viaje(Date fecha_partida, Date fecha_llegada, Date fecha_esperada, String kilometros_realizados, float costos_combustibles, String destinos, Camion camion) {
+    public Viaje(LocalDate fecha_partida, LocalDate fecha_llegada, LocalDate fecha_esperada, String kilometros_realizados, float costos_combustibles, String destinos, Camion camion) {
         this.fecha_partida = fecha_partida;
         this.fecha_llegada = fecha_llegada;
         this.fecha_esperada = fecha_esperada;
@@ -32,15 +39,15 @@ public class Viaje {
     public Viaje() {
     }
 
-    public Date getFecha_partida() {
+    public LocalDate getFecha_partida() {
         return fecha_partida;
     }
 
-    public Date getFecha_llegada() {
+    public LocalDate getFecha_llegada() {
         return fecha_llegada;
     }
 
-    public Date getFecha_esperada() {
+    public LocalDate getFecha_esperada() {
         return fecha_esperada;
     }
 
@@ -60,15 +67,15 @@ public class Viaje {
         return destinos;
     }
 
-    public void setFecha_partida(Date fecha_partida) {
+    public void setFecha_partida(LocalDate fecha_partida) {
         this.fecha_partida = fecha_partida;
     }
 
-    public void setFecha_llegada(Date fecha_llegada) {
+    public void setFecha_llegada(LocalDate fecha_llegada) {
         this.fecha_llegada = fecha_llegada;
     }
 
-    public void setFecha_esperada(Date fecha_esperada) {
+    public void setFecha_esperada(LocalDate fecha_esperada) {
         this.fecha_esperada = fecha_esperada;
     }
 

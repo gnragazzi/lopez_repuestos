@@ -1,16 +1,24 @@
 package Clases;
 
-import java.util.Date;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
+import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;
+import java.time.LocalDate;
 
 public class Seguro {
-    
-    private Date fecha_emision;
-    private Date fecha_vencimiento;
+
+    @JsonDeserialize(using = LocalDateDeserializer.class)
+    @JsonSerialize(using = LocalDateSerializer.class)
+    private LocalDate fecha_emision;
+    @JsonDeserialize(using = LocalDateDeserializer.class)
+    @JsonSerialize(using = LocalDateSerializer.class)
+    private LocalDate fecha_vencimiento;
     private float pago;
     private String tipo;
     private String nombre_aseguradora;
 
-    public Seguro(Date fecha_emision, Date fecha_vencimiento, String nombre_aseguradora, float pago, String tipo) {
+    public Seguro(LocalDate fecha_emision, LocalDate fecha_vencimiento, String nombre_aseguradora, float pago, String tipo) {
         this.fecha_emision = fecha_emision;
         this.fecha_vencimiento = fecha_vencimiento;
         this.nombre_aseguradora = nombre_aseguradora;
@@ -21,11 +29,11 @@ public class Seguro {
     public Seguro() {
     }
 
-    public Date getFecha_emision() {
+    public LocalDate getFecha_emision() {
         return fecha_emision;
     }
 
-    public Date getFecha_vencimiento() {
+    public LocalDate getFecha_vencimiento() {
         return fecha_vencimiento;
     }
 
@@ -41,11 +49,11 @@ public class Seguro {
         return nombre_aseguradora;
     }
 
-    public void setFecha_emision(Date fecha_emision) {
+    public void setFecha_emision(LocalDate fecha_emision) {
         this.fecha_emision = fecha_emision;
     }
 
-    public void setFecha_vencimiento(Date fecha_vencimiento) {
+    public void setFecha_vencimiento(LocalDate fecha_vencimiento) {
         this.fecha_vencimiento = fecha_vencimiento;
     }
 

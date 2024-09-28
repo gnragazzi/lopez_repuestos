@@ -8,26 +8,48 @@ export const Formulario_Mantenimiento = () => {
   const [vehiculos, setVehiculos] = useState([]);
   const [mecanicos, setMecanicos] = useState([]);
   const [vehiculoSeleccionado, setVehiculoSeleccionado] = useState("WUB 750");
-  const [mecanicoSeleccionado, setMecanicoSeleccionado] = useState([
-    "455555555",
+  const [mecanicosSeleccionados, setmecanicosSeleccionados] = useState([
+    "45555555",
   ]);
+  const [esCamion, setEsCamion] = useState(false);
+
   const [datos, setDatos] = useState({
-    trabajo: "gola",
-    costo_repuesto: 1,
-    costo_mano: 1,
+    trabajos_realizados: "gola",
+    costo_repuestos: 1,
+    costo_manodeobra: 1,
     fecha: new Date().toISOString().substring(0, 10),
   });
   const enviarFormulario = () => {
+    const { trabajos_realizados, costo_manodeobra, costo_repuestos, fecha } =
+      datos;
+    const cuerpo2 = {
+      trabajos_realizados,
+      fecha,
+      costo_repuestos,
+      costo_manodeobra,
+      vehiculo: {
+        vehiculoSeleccionado,
+        esCamion,
+      },
+      mecanicosSeleccionados,
+    };
+    const cuerpo = {
+      trabajos_realizados: "Cambié una rueda",
+      fecha: "2024-09-28",
+      costo_repuestos: 25.1,
+      costo_manodeobra: "4",
+      vehiculo: {
+        vehiculoSeleccionado: "WUB 750",
+        esCamion: "false",
+      },
+      mecanicosSeleccionados: ["33069732", "31999766"],
+    };
+    console.log(cuerpo);
+    console.log(cuerpo2);
     axios
-      .post(
-        "http://localhost:8080/mantenimiento",
-        {
-          vehiculoSeleccionado,
-          mecanicoSeleccionado,
-          datos,
-        },
-        { headers: { "content-type": "application/json" } }
-      )
+      .post("http://localhost:8080/mantenimiento", cuerpo, {
+        headers: { "content-type": "application/json" },
+      })
       .then((res) => console.log(res));
     navegar("/mantenimiento");
   };
@@ -78,6 +100,10 @@ export const Formulario_Mantenimiento = () => {
                     patente != vehiculoSeleccionado
                       ? setVehiculoSeleccionado(patente)
                       : setVehiculoSeleccionado("");
+                    //verificamos un atributo que solo un camión tendría para determinar si es camión o semiremolque
+                    vehiculo.cilindrada
+                      ? setEsCamion(true)
+                      : setEsCamion(false);
                   }}
                 >
                   <p>{marca}</p>
@@ -102,17 +128,20 @@ export const Formulario_Mantenimiento = () => {
               return (
                 <li
                   className={
-                    mecanicoSeleccionado.includes(dni)
+                    mecanicosSeleccionados.includes(dni)
                       ? "vehiculos_lista vehiculos_lista_seleccionado"
                       : "vehiculos_lista"
                   }
                   key={dni}
                   onClick={() => {
-                    mecanicoSeleccionado.includes(dni)
-                      ? setMecanicoSeleccionado(
-                          mecanicoSeleccionado.filter((m) => m != dni)
+                    mecanicosSeleccionados.includes(dni)
+                      ? setmecanicosSeleccionados(
+                          mecanicosSeleccionados.filter((m) => m != dni)
                         )
-                      : setMecanicoSeleccionado([...mecanicoSeleccionado, dni]);
+                      : setmecanicosSeleccionados([
+                          ...mecanicosSeleccionados,
+                          dni,
+                        ]);
                   }}
                 >
                   <p>{dni}</p>
@@ -132,9 +161,9 @@ export const Formulario_Mantenimiento = () => {
               <legend>Ingrese el trabajo</legend>
               <textarea
                 placeholder="Ingrese el trabajo que se hizo"
-                value={datos.trabajo}
+                value={datos.trabajos_realizados}
                 onChange={(e) =>
-                  setDatos({ ...datos, trabajo: e.target.value })
+                  setDatos({ ...datos, trabajos_realizados: e.target.value })
                 }
               />
             </fieldset>
@@ -143,9 +172,9 @@ export const Formulario_Mantenimiento = () => {
               <input
                 placeholder="Costo de Repuesto"
                 type="number"
-                value={datos.costo_repuesto}
+                value={datos.costo_repuestos}
                 onChange={(e) =>
-                  setDatos({ ...datos, costo_repuesto: e.target.value })
+                  setDatos({ ...datos, costo_repuestos: e.target.value })
                 }
               />
             </fieldset>
@@ -154,9 +183,9 @@ export const Formulario_Mantenimiento = () => {
               <input
                 placeholder="Costo de Mano de Obra"
                 type="number"
-                value={datos.costo_mano}
+                value={datos.costo_manodeobra}
                 onChange={(e) =>
-                  setDatos({ ...datos, costo_mano: e.target.value })
+                  setDatos({ ...datos, costo_manodeobra: e.target.value })
                 }
               />
             </fieldset>
@@ -187,16 +216,16 @@ export const Formulario_Mantenimiento = () => {
           })}
           {mecanicos.map((m) => {
             return (
-              mecanicoSeleccionado.includes(m.dni) && (
+              mecanicosSeleccionados.includes(m.dni) && (
                 <p key={m.dni}>
                   Nombre: {m.nombre} {m.apellido} | DNI: {m.dni}
                 </p>
               )
             );
           })}
-          <p>Trabajo Realizado: {datos.trabajo}</p>
-          <p>Costo Repuesto: {datos.costo_repuesto}</p>
-          <p>Costo Mano de Obra: {datos.costo_mano}</p>
+          <p>Trabajo Realizado: {datos.trabajos_realizados}</p>
+          <p>Costo Repuesto: {datos.costo_repuestos}</p>
+          <p>Costo Mano de Obra: {datos.costo_manodeobra}</p>
           <p>Fecha: {datos.fecha}</p>
         </>
       )}
@@ -215,11 +244,11 @@ export const Formulario_Mantenimiento = () => {
             onClick={() => {
               if (
                 (pantalla == 0 && vehiculoSeleccionado) ||
-                (pantalla == 1 && mecanicoSeleccionado.length > 0) ||
+                (pantalla == 1 && mecanicosSeleccionados.length > 0) ||
                 (pantalla == 2 &&
-                  datos.costo_mano &&
-                  datos.costo_repuesto &&
-                  datos.trabajo &&
+                  datos.costo_manodeobra &&
+                  datos.costo_repuestos &&
+                  datos.trabajos_realizados &&
                   datos.fecha)
               )
                 setPantalla(pantalla + 1);
