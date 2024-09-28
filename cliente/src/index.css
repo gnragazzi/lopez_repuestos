@@ -52,7 +52,8 @@ ESTA ES UNA IDEA DE COMO TRABAJAR CON MODO OSCURO/CLARO
   button {
     background-color: #f9f9f9;
   }
-} */
+} 
+  */
 .container{
   top: 0;
   left: 0;
@@ -98,8 +99,8 @@ ESTA ES UNA IDEA DE COMO TRABAJAR CON MODO OSCURO/CLARO
   top: 50%;
   transform: translateY(-50%);
   width: 100%;
-
 }
+
 .lateral li{
   text-transform: capitalize;
   padding: 0.5rem 0;

@@ -6,6 +6,9 @@ import Contexto from "./Contexto.jsx";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Principal from "./páginas/Principal";
 import Mantenimiento from "./páginas/Mantenimiento.jsx";
+import Viajes from "./páginas/Viajes.jsx";
+import { Formulario_Mantenimiento } from "./páginas/Formulario_Mantenimiento.jsx";
+
 const router = createBrowserRouter([
   {
     path: "/",
@@ -13,11 +16,24 @@ const router = createBrowserRouter([
     children: [
       {
         path: "principal",
-        element: <Principal></Principal>,
+        element: <Principal />,
       },
       {
         path: "mantenimiento",
-        element: <Mantenimiento />,
+        children: [
+          {
+            path: "",
+            element: <Mantenimiento />,
+          },
+          {
+            path: "nuevo",
+            element: <Formulario_Mantenimiento />,
+          },
+        ],
+      },
+      {
+        path: "viajes",
+        element: <Viajes />,
       },
     ],
   },
