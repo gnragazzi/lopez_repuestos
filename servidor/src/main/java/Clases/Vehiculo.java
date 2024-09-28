@@ -4,6 +4,8 @@
  */
 package Clases;
 
+import java.util.ArrayList;
+
 /**
  *
  * @author Administrador
@@ -14,16 +16,18 @@ public abstract class  Vehiculo {
     private Tarjeta_Ruta tarjeta_ruta;
     private Seguro seguro;
     private Tecnica tecnica;
+    private ArrayList<Mantenimiento> mantenimiento;
 
     public Vehiculo() {
     }
 
-    public Vehiculo(String marca, String patente, Seguro seguro, Tarjeta_Ruta tarjeta_ruta, Tecnica tecnica) {
+    public Vehiculo(String marca, String patente, Seguro seguro, Tarjeta_Ruta tarjeta_ruta, Tecnica tecnica, ArrayList<Mantenimiento> mantenimiento) {
         this.marca = marca;
         this.patente = patente;
         this.seguro = seguro;
         this.tarjeta_ruta = tarjeta_ruta;
         this.tecnica = tecnica;
+        this.mantenimiento=mantenimiento;
     }
 
     public String getMarca() {
@@ -64,6 +68,14 @@ public abstract class  Vehiculo {
 
     public void setTecnica(Tecnica tecnica) {
         this.tecnica = tecnica;
+    }
+
+    public ArrayList<Mantenimiento> getMantenimiento() {
+        return mantenimiento;
+    }
+
+    public void setMantenimiento(ArrayList<Mantenimiento> mantenimiento) {
+        this.mantenimiento = mantenimiento;
     }
     
     
