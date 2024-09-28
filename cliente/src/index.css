@@ -148,9 +148,48 @@ ESTA ES UNA IDEA DE COMO TRABAJAR CON MODO OSCURO/CLARO
   max-height: var(--posicion-cuerpo);
   border-top-left-radius: 1rem;
 }
-.cuerpo div{
+.formulario{
   position: absolute;
   left: 50%;
   top: 50%;
   transform: translate(-50%,-50%); 
+}
+
+.botonera_formulario{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.vehiculos_lista{
+  text-align: center;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 1rem;
+  text-decoration: none;
+  list-style: none;
+  background-color: #1d1d1d;
+  padding: 1rem;
+}
+.vehiculos_lista:not(.header_lista){
+  cursor: pointer;
+}
+.vehiculos_lista:nth-child(2n){
+  background-color: #202020;
+}
+.vehiculos_lista_seleccionado{
+  background-color: #181818!important;
+  color: var(--color-fuente-hover);
+
+}
+.header_lista{
+  background-color: #1a1a1a;
+  border-bottom: 1px solid wheat;
+}
+.vehiculos_lista:hover:not(.header_lista,.vehiculos_lista_seleccionado){
+  color: var(--color-fuente-hover);
+  background: #181818;
+}
+fieldset{
+  border: 1px solid pink;
 }

@@ -1,4 +1,5 @@
 import { Outlet } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 function Mantenimiento() {
   /*
@@ -26,6 +27,7 @@ function Mantenimiento() {
     <div>
       <Outlet></Outlet>
       <h1 className="prueba">Mantenimiento</h1>
+      <Link to="nuevo">Nuevo Mantenimiento</Link>
     </div>
   );
 }
