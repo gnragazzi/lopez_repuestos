@@ -30,7 +30,7 @@
   /* COLORES */
   --fondo-barra: #1a1a1a;
   --fondo-barra-hover: #202020;
-  --fondo-barra-seleccion: #262626;
+  --fondo-barra-seleccion: #ae8c5c;
   --color-fuente: rgba(225, 225, 225, 0.87);
   --color-fuente-hover: rgba(255, 255, 255, 0.87);
   /* OTROS */
@@ -110,6 +110,9 @@ ESTA ES UNA IDEA DE COMO TRABAJAR CON MODO OSCURO/CLARO
   
 }
 
+.icon{
+  color: red !important
+}
 .icono_lopez_lateral img{
   object-fit: contain;
   width: 100%;
@@ -133,8 +136,13 @@ ESTA ES UNA IDEA DE COMO TRABAJAR CON MODO OSCURO/CLARO
   cursor: pointer;
   display: flex;
   align-items: center;
-  transition: .7s;
+  transition: .3s;
 }
+
+.lateral li:hover{
+  background-color:#ae8c5c;
+}
+
 
 .lateral a{
   color: inherit;
@@ -144,6 +152,7 @@ ESTA ES UNA IDEA DE COMO TRABAJAR CON MODO OSCURO/CLARO
   margin: 0;
   padding: 0;
   width: 100%;
+  
 }
 
 .lateral p{
@@ -162,10 +171,11 @@ ESTA ES UNA IDEA DE COMO TRABAJAR CON MODO OSCURO/CLARO
   color:var(--color-fuente-hover);
   background-color: var(--fondo-barra-hover);
 }
+
 .seleccion{
   background-color: var(--fondo-barra-seleccion);
-
 }
+
 .seleccion:hover{
   color:var(--color-fuente-hover);
 }

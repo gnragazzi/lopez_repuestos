@@ -7,10 +7,10 @@ import { useState } from "react";
 
 function Lateral() {
   const { clickMenu, menuSeleccionado } = useContextoGlobal();
-  const [subMenuAbierto, setSubMenuAbierto] = useState(null); // Estado para controlar el submenú abierto
+  const [subMenuAbierto, setSubMenuAbierto] = useState(null);
 
   const toggleSubMenu = (nombre) => {
-    setSubMenuAbierto(subMenuAbierto === nombre ? null : nombre); // Alternar el submenú
+    setSubMenuAbierto(subMenuAbierto === nombre ? null : nombre);
   };
 
   return (
@@ -57,7 +57,7 @@ function Lateral() {
                 className={menuSeleccionado === nombre ? "seleccion" : "no_seleccion"}
                 onClick={clickMenu}
               >
-                <img src={img} alt={nombre} />
+                <img className="icono_lateral" src={img} alt={nombre} />
                 <p>{nombre}</p>
               </li>
             </Link>
