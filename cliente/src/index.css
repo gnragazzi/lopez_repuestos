@@ -59,12 +59,13 @@ ESTA ES UNA IDEA DE COMO TRABAJAR CON MODO OSCURO/CLARO
   left: 0;
   margin: auto;
   display: flex;
-  flex-direction: row;
   min-height: 100vh;
   height: 100vh;
   max-height: 100vh;
   background-color: var(--fondo-barra);
+  flex-flow: row nowrap;
 }
+
 .barra_superior{
   position: absolute;
   min-width: 100vw;
@@ -72,45 +73,91 @@ ESTA ES UNA IDEA DE COMO TRABAJAR CON MODO OSCURO/CLARO
   max-height: var(--altura-barra-superior);
   text-align: end;
   text-transform: uppercase;
-  z-index: 1;
+  z-index: 10;
   background-color: var(--fondo-barra);
 }
+
 .barra_superior h1{
   margin: 1vh auto;
   font-size: 1rem;
 }
+
 .lateral {
   position:relative;
-  min-width: 20vw;
+  min-width: 13vw;
+  overflow-x: auto;
+  flex-basis: auto;
+  flex-shrink: 0;
 }
 
-@media screen and (min-width:1200px) {
+/*@media screen and (min-width:1200px) {
   .lateral {
     position:relative;
-    min-width: 12vw;
+    min-width: 15vw;
   }
+}
+*/
+
+.icono_lopez_lateral{
+  width: 100px;
+  height: 100px;
+  position: absolute;
+  left: 20%;
+  top: 10%;
+  right: 0;
+  bottom: 0;
+  z-index: 20;
+  
+}
+
+.icono_lopez_lateral img{
+  object-fit: cover;
+  width: 100%;
+  height: 100%;
 }
 
 .lateral ul{
   font-size: 1rem;
   letter-spacing: 1px;
   list-style: none;
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
+  position: relative;
+  transform: none;
+  top: 28%;
   width: 100%;
+  position: relative;
 }
 
 .lateral li{
   text-transform: capitalize;
-  padding: 0.5rem 0;
+  padding: 1rem 1rem;
   cursor: pointer;
-  transition: 0.2s ease-out all;
+  display: flex;
+  align-items: center;
+  transition: 1s ease-out;
 }
+
 .lateral a{
   color: inherit;
+  padding-left: 10px;
   text-decoration: none;
+  border: none;
+  margin: 0;
+  padding: 0;
+  width: 100%;
 }
+
+.lateral p{
+  padding-left: 10px;
+}
+
+.arrow {
+  transition: transform 0.4s ease;
+}
+
+.arrow.open {
+  transform: rotate(90deg);
+}
+
 .no_seleccion:hover{
   color:var(--color-fuente-hover);
   background-color: var(--fondo-barra-hover);
@@ -122,32 +169,35 @@ ESTA ES UNA IDEA DE COMO TRABAJAR CON MODO OSCURO/CLARO
 .seleccion:hover{
   color:var(--color-fuente-hover);
 }
+
 .oculto{
+  overflow: hidden;
   display: none;
-  visibility: hidden;
+  visibility: visible;
   z-index: -1;
   opacity: 0;
-  transition: 5s;
+  transition: 10s;
+  max-height: 0;
+  position: absolute;
 }
-.visible{
-  visibility: visible;
-  z-index: 2;
-  opacity: 1;
-  padding-left: 1rem;
-}
+
 .visible p{
   margin-left: 0.75rem;
-  animation: menuLateral 0.3s ease-out 1 ;
+  animation: menuLateral 3s ease-out 0 ;
 }
+
 .cuerpo{
-  position: relative;
+  position: flex;
+  flex-flow: row nowrap;
+  flex-shrink: 1;
   margin-top: var(--altura-barra-superior);
-  background-color: #242424;
-  min-width: 92vw;
+  background-color: #f01313;
+  min-width: 87vw;
   min-height: var(--posicion-cuerpo);
   max-height: var(--posicion-cuerpo);
   border-top-left-radius: 1rem;
 }
+
 .formulario{
   position: absolute;
   left: 50%;
