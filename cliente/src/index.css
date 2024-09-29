@@ -84,7 +84,7 @@ ESTA ES UNA IDEA DE COMO TRABAJAR CON MODO OSCURO/CLARO
 
 .lateral {
   position:relative;
-  min-width: 13vw;
+  min-width: 15vw;
   overflow-x: auto;
   flex-basis: auto;
   flex-shrink: 0;
@@ -99,11 +99,11 @@ ESTA ES UNA IDEA DE COMO TRABAJAR CON MODO OSCURO/CLARO
 */
 
 .icono_lopez_lateral{
-  width: 100px;
-  height: 100px;
+  width: 150px;
+  height: 70px;
   position: absolute;
-  left: 20%;
-  top: 10%;
+  left: 16%;
+  top: 12%;
   right: 0;
   bottom: 0;
   z-index: 20;
@@ -111,7 +111,7 @@ ESTA ES UNA IDEA DE COMO TRABAJAR CON MODO OSCURO/CLARO
 }
 
 .icono_lopez_lateral img{
-  object-fit: cover;
+  object-fit: contain;
   width: 100%;
   height: 100%;
 }
@@ -133,7 +133,7 @@ ESTA ES UNA IDEA DE COMO TRABAJAR CON MODO OSCURO/CLARO
   cursor: pointer;
   display: flex;
   align-items: center;
-  transition: 1s ease-out;
+  transition: .7s;
 }
 
 .lateral a{
@@ -170,20 +170,29 @@ ESTA ES UNA IDEA DE COMO TRABAJAR CON MODO OSCURO/CLARO
   color:var(--color-fuente-hover);
 }
 
+
+.seleccion_visible.show {
+  opacity: 1; /* Se mostrará cuando tenga la clase 'show' */
+}
+
 .oculto{
   overflow: hidden;
   display: none;
   visibility: visible;
   z-index: -1;
   opacity: 0;
-  transition: 10s;
   max-height: 0;
   position: absolute;
 }
 
-.visible p{
-  margin-left: 0.75rem;
-  animation: menuLateral 3s ease-out 0 ;
+.seleccion_visible{
+  padding: none;
+  margin-left: 1.7rem;
+  border-left: #ae8c5c;
+  border-style: solid;
+  border-top: none;
+  border-right: none;
+  border-bottom: none;
 }
 
 .cuerpo{
@@ -191,8 +200,8 @@ ESTA ES UNA IDEA DE COMO TRABAJAR CON MODO OSCURO/CLARO
   flex-flow: row nowrap;
   flex-shrink: 1;
   margin-top: var(--altura-barra-superior);
-  background-color: #f01313;
-  min-width: 87vw;
+  background-color: #ae8c5c;
+  min-width: 85vw;
   min-height: var(--posicion-cuerpo);
   max-height: var(--posicion-cuerpo);
   border-top-left-radius: 1rem;
