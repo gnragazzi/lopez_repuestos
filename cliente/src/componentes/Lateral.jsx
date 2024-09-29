@@ -14,7 +14,7 @@ function Lateral() {
       <ul>
         {categorias.map(({ nombre, subcategorias, img }) => {
           return subcategorias ? (
-            <div key={nombre}>
+            <div key={nombre}> 
                 <li
                   className={
                     menuSeleccionado == nombre ? "seleccion" : "no_seleccion"
