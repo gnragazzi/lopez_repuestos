@@ -48,11 +48,11 @@ public class manejadorMantenimiento implements HttpHandler {
         try {
             // CONVERTIR EL JSONString a JSONObject
 
-            JSONObject jsonobj = new JSONObject(buf.toString());
-            String trabajos_realizados = (String) jsonobj.get("trabajos_realizados");
-            LocalDate fecha = LocalDate.parse(((String) jsonobj.get("fecha")));
-            Float costo_repuestos = Float.parseFloat((String) jsonobj.get("costo_repuestos"));
-            Float costo_manodeobra = Float.parseFloat((String) jsonobj.get("costo_manodeobra"));
+            JSONObject jsonobj = new JSONObject(buf.toString()); 
+            String trabajos_realizados =  jsonobj.getString("trabajos_realizados");
+            LocalDate fecha = LocalDate.parse( jsonobj.getString("fecha"));
+            Double costo_repuestos = jsonobj.getDouble("costo_repuestos");
+            Double costo_manodeobra = jsonobj.getDouble("costo_manodeobra");
 
             /*
             //ACA DEBERÍA HACERSE UNA CONSULTA A LA BASE DE DATOS PARA TRAER EL MECÁNICO Y EL VEHÍCULO CORRESPONDIENTE...
@@ -62,7 +62,7 @@ public class manejadorMantenimiento implements HttpHandler {
             }
             catch(sqlexception){}
              */
-            Vehiculo vehiculo = Boolean.getBoolean((String) jsonobj.getJSONObject("vehiculo").get("esCamion")) ? new Camion() : new Semirremolque();
+            Vehiculo vehiculo = jsonobj.getJSONObject("vehiculo").getBoolean("esCamion") ? new Camion() : new Semirremolque();
             vehiculo.setPatente((String) jsonobj.getJSONObject("vehiculo").get("vehiculoSeleccionado"));
 
             ArrayList<Mecanico> mecanicos = new ArrayList<>();
@@ -79,9 +79,17 @@ public class manejadorMantenimiento implements HttpHandler {
                 }
             }
 
-            System.out.println("Es camión? :" + jsonobj.getJSONObject("vehiculo").getString("esCamion"));
-
             Mantenimiento m = new Mantenimiento(trabajos_realizados, fecha, costo_repuestos, costo_manodeobra, mecanicos, vehiculo);
+            System.out.printf(
+              "Trabajo: %s\n fecha: %s\ncosto_repuestos: %f\ncosto_manodeobra: %f\nDni mecánico: %s\nMatrícula Vehículo: %s\n",
+                    m.getTrabajos_realizados(),
+                    m.getFecha().toString(),
+                    m.getCostos_repuestos(),
+                    m.getCostos_manodeobra(),
+                    m.getMecanico().get(0).getDni(),
+                    m.getVehiculo().getPatente() 
+            
+            );
             //MANDAR EL MECÁNICO A LA BASE DE DATOS
             String response = "Gracias por todo";
             he.sendResponseHeaders(200, response.toString().getBytes().length);

@@ -7,22 +7,20 @@ export const Formulario_Mantenimiento = () => {
   const [pantalla, setPantalla] = useState(0);
   const [vehiculos, setVehiculos] = useState([]);
   const [mecanicos, setMecanicos] = useState([]);
-  const [vehiculoSeleccionado, setVehiculoSeleccionado] = useState("WUB 750");
-  const [mecanicosSeleccionados, setmecanicosSeleccionados] = useState([
-    "45555555",
-  ]);
+  const [vehiculoSeleccionado, setVehiculoSeleccionado] = useState("");
+  const [mecanicosSeleccionados, setmecanicosSeleccionados] = useState([]);
   const [esCamion, setEsCamion] = useState(false);
 
   const [datos, setDatos] = useState({
-    trabajos_realizados: "gola",
-    costo_repuestos: 1,
-    costo_manodeobra: 1,
+    trabajos_realizados: "",
+    costo_repuestos: 0,
+    costo_manodeobra: 0,
     fecha: new Date().toISOString().substring(0, 10),
   });
   const enviarFormulario = () => {
     const { trabajos_realizados, costo_manodeobra, costo_repuestos, fecha } =
       datos;
-    const cuerpo2 = {
+    const cuerpo = {
       trabajos_realizados,
       fecha,
       costo_repuestos,
@@ -33,19 +31,7 @@ export const Formulario_Mantenimiento = () => {
       },
       mecanicosSeleccionados,
     };
-    const cuerpo = {
-      trabajos_realizados: "Cambié una rueda",
-      fecha: "2024-09-28",
-      costo_repuestos: 25.1,
-      costo_manodeobra: "4",
-      vehiculo: {
-        vehiculoSeleccionado: "WUB 750",
-        esCamion: "false",
-      },
-      mecanicosSeleccionados: ["33069732", "31999766"],
-    };
-    console.log(cuerpo);
-    console.log(cuerpo2);
+
     axios
       .post("http://localhost:8080/mantenimiento", cuerpo, {
         headers: { "content-type": "application/json" },

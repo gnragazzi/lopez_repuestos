@@ -13,12 +13,12 @@ public class Mantenimiento {
     @JsonDeserialize(using = LocalDateDeserializer.class)
     @JsonSerialize(using = LocalDateSerializer.class)
     private LocalDate fecha;
-    private float costo_repuestos;
-    private float costo_manodeobra;
+    private double costo_repuestos;
+    private double costo_manodeobra;
     private ArrayList<Mecanico> mecanico = new ArrayList<Mecanico>();
     private Vehiculo vehiculo;
 
-    public Mantenimiento(String trabajos_realizados, LocalDate fecha, float costo_repuestos, float costo_manodeobra, ArrayList<Mecanico> mecanico, Vehiculo vehiculo) {
+    public Mantenimiento(String trabajos_realizados, LocalDate fecha, double costo_repuestos, double costo_manodeobra, ArrayList<Mecanico> mecanico, Vehiculo vehiculo) {
         this.trabajos_realizados = trabajos_realizados;
         this.fecha = fecha;
         this.costo_repuestos = costo_repuestos;
@@ -38,11 +38,11 @@ public class Mantenimiento {
         return fecha;
     }
 
-    public float getCostos_repuestos() {
+    public double getCostos_repuestos() {
         return costo_repuestos;
     }
 
-    public float getCostos_manodeobra() {
+    public double getCostos_manodeobra() {
         return costo_manodeobra;
     }
 
@@ -54,11 +54,11 @@ public class Mantenimiento {
         this.fecha = fecha;
     }
 
-    public void setCostos_repuestos(float costo_repuestos) {
+    public void setCostos_repuestos(double costo_repuestos) {
         this.costo_repuestos = costo_repuestos;
     }
 
-    public void setCostos_manodeobra(float costo_manodeobra) {
+    public void setCostos_manodeobra(double costo_manodeobra) {
         this.costo_manodeobra = costo_manodeobra;
     }
 
