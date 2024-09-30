@@ -10,10 +10,7 @@ function App() {
     <nav><Lateral /></nav>
     <main>
       <div className="container">
-      <div className="container overlay-fondo"></div>
-        <div className="container__fondo">
-          <img src={fondo} alt="fondo del container principal" />
-          </div>
+        <div className="overlay__fondo"></div>
         <div className="cuerpo"><Outlet /></div>
       </div>
     </main>

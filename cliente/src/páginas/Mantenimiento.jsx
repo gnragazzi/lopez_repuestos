@@ -26,8 +26,11 @@ function Mantenimiento() {
   return (
     <div>
       <Outlet></Outlet>
-      <h1 className="prueba">Mantenimiento</h1>
-      <Link to="nuevo">Nuevo Mantenimiento</Link>
+      <h2 className="title__Casos">Mantenimiento</h2>
+      <button className="button__acceso-formulario"><Link to="nuevo">Nuevo Mantenimiento</Link></button>
+      Lorem ipsum dolor sit amet consectetur adipisicing elit. Quis laboriosam eveniet esse facere saepe voluptate explicabo eos soluta architecto, suscipit, optio aliquam corrupti unde perferendis provident ut, nihil sunt accusantium?
+      Lorem ipsum dolor sit, amet consectetur adipisicing elit. Delectus dolorum accusamus excepturi laudantium ex modi distinctio perspiciatis et natus eligendi, in suscipit asperiores, numquam velit! Obcaecati voluptate pariatur corporis praesentium.
+      
     </div>
   );
 }
