@@ -100,23 +100,19 @@ header{
 
 nav{
   grid-area: nav;
-
+  min-width: 200px;
 }
 
 .div__lateral {
-  min-width: auto;
-  min-width: 200px;
   max-width: 200px; /*Se tiene que corresponder con el nav*/
   display: flex;
   flex-flow: column wrap;
   min-height: 100%;
   background-color: var(--fondo-barra-lateral);
-  overflow-x: auto;
   justify-content: start;
   align-items: start;
-  gap:90px 0;
+  gap:80px 0;
 }
-
 
 .div__lateral ul{
   order: 2;
@@ -262,7 +258,7 @@ main{
   width: 100%;
   top: 0;
   left: 0;
-  background-color: rgba(255, 255, 255, 0.4); /* Cambia el color y la opacidad aquí */
+  background-color: rgba(255, 255, 255, 0.6); /* Cambia el color y la opacidad aquí */
   pointer-events: none; /* Opcional: hace que el overlay no interfiera con clics en otros elementos */
   z-index: 20;
 }
@@ -285,20 +281,18 @@ main{
   flex-basis: auto;
   max-width: 50%;
   background-color: rgba(255,255,255,0.8);
-  box-shadow: 0 0 25px  var(--color-de-seleccion-nav);
+  box-shadow: 0 0 10px  var(--fondo-borde-logo);
   border-radius: 20px;
   padding: 0.5rem 1rem;
 }
 
 
-/*Coloco el display none porque no quiero que se muestre el h2 pero si quiero que el navegador lo vea.*/
-.title__Casos{
-  display: none;
-}
 
 
 
-/*
+
+
+
 
 .formulario{
   position: absolute;
@@ -346,7 +340,7 @@ fieldset{
   border: 1px solid pink;
 }
 
-*/
+
 
 /* 
 ESTA ES UNA IDEA DE COMO TRABAJAR CON MODO OSCURO/CLARO
