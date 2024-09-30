@@ -1,6 +1,6 @@
 function Barra_superior() {
   return (
-    <div className="barra_superior">
+    <div className="header__barra_superior">
       <h1>Barra_superior</h1>
     </div>
   );

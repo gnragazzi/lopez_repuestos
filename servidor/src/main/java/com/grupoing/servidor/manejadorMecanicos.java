@@ -39,7 +39,6 @@ public class manejadorMecanicos implements HttpHandler{
 
 
          @Override
-	 
          public void handle(HttpExchange he) throws IOException {
             he.getResponseHeaders().add("Access-Control-Allow-Origin", "*");
             if (he.getRequestMethod().equalsIgnoreCase("OPTIONS")) {
