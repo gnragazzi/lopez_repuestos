@@ -1,33 +1,30 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package Clases;
 
-import java.lang.reflect.Array;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
+import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;
 import java.util.ArrayList;
-import java.util.Date;
+import java.time.LocalDate;
 
-/**
- *
- * @author Administrador
- */
 public class Mantenimiento {
 
     private String trabajos_realizados;
-    private Date fecha;
-    private float costos_repuestos;
-    private float costos_manodeobra;
-    private ArrayList<Mecanico> mecanico=new ArrayList<Mecanico>();
+    @JsonDeserialize(using = LocalDateDeserializer.class)
+    @JsonSerialize(using = LocalDateSerializer.class)
+    private LocalDate fecha;
+    private double costo_repuestos;
+    private double costo_manodeobra;
+    private ArrayList<Mecanico> mecanico = new ArrayList<Mecanico>();
     private Vehiculo vehiculo;
 
-    public Mantenimiento(String trabajos_realizados, Date fecha, float costos_repuestos, float costos_manodeobra, ArrayList<Mecanico> mecanico,Vehiculo vehiculo) {
+    public Mantenimiento(String trabajos_realizados, LocalDate fecha, double costo_repuestos, double costo_manodeobra, ArrayList<Mecanico> mecanico, Vehiculo vehiculo) {
         this.trabajos_realizados = trabajos_realizados;
         this.fecha = fecha;
-        this.costos_repuestos = costos_repuestos;
-        this.costos_manodeobra = costos_manodeobra;
-        this.mecanico=mecanico;
-        this.vehiculo=vehiculo;
+        this.costo_repuestos = costo_repuestos;
+        this.costo_manodeobra = costo_manodeobra;
+        this.mecanico = mecanico;
+        this.vehiculo = vehiculo;
     }
 
     public Mantenimiento() {
@@ -37,32 +34,32 @@ public class Mantenimiento {
         return trabajos_realizados;
     }
 
-    public Date getFecha() {
+    public LocalDate getFecha() {
         return fecha;
     }
 
-    public float getCostos_repuestos() {
-        return costos_repuestos;
+    public double getCostos_repuestos() {
+        return costo_repuestos;
     }
 
-    public float getCostos_manodeobra() {
-        return costos_manodeobra;
+    public double getCostos_manodeobra() {
+        return costo_manodeobra;
     }
 
     public void setTrabajos_realizados(String trabajos_realizados) {
         this.trabajos_realizados = trabajos_realizados;
     }
 
-    public void setFecha(Date fecha) {
+    public void setFecha(LocalDate fecha) {
         this.fecha = fecha;
     }
 
-    public void setCostos_repuestos(float costos_repuestos) {
-        this.costos_repuestos = costos_repuestos;
+    public void setCostos_repuestos(double costo_repuestos) {
+        this.costo_repuestos = costo_repuestos;
     }
 
-    public void setCostos_manodeobra(float costos_manodeobra) {
-        this.costos_manodeobra = costos_manodeobra;
+    public void setCostos_manodeobra(double costo_manodeobra) {
+        this.costo_manodeobra = costo_manodeobra;
     }
 
     public ArrayList<Mecanico> getMecanico() {
@@ -80,5 +77,5 @@ public class Mantenimiento {
     public void setVehiculo(Vehiculo vehiculo) {
         this.vehiculo = vehiculo;
     }
-    
+
 }

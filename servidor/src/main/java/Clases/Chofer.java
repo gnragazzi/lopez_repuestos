@@ -1,28 +1,28 @@
-
 package Clases;
 
-import java.util.Date;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
+import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;
+import java.time.LocalDate;
 
-/**
- *
- * @author Administrador
- */
 public class Chofer extends Empleado {
-    
-    private Date fecha_psicotecnico;
+    @JsonDeserialize(using = LocalDateDeserializer.class)  
+    @JsonSerialize(using = LocalDateSerializer.class)  
+    private LocalDate fecha_psicotecnico;
 
-    public Chofer(String dni, String cuil, String nombre, String apellido, String domicilio, Date fecha_nacimiento, String telefono) {
+    public Chofer(String dni, String cuil, String nombre, String apellido, String domicilio, LocalDate fecha_nacimiento, String telefono) {
         super(dni, cuil, nombre, apellido, domicilio, fecha_nacimiento, telefono);
     }
 
     public Chofer() {
     }
 
-    public Date getFecha_psicotecnico() {
+    public LocalDate getFecha_psicotecnico() {
         return fecha_psicotecnico;
     }
 
-    public void setFecha_psicotecnico(Date fecha_psicotecnico) {
+    public void setFecha_psicotecnico(LocalDate fecha_psicotecnico) {
         this.fecha_psicotecnico = fecha_psicotecnico;
     }
 }

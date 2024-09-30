@@ -1,19 +1,28 @@
 package Clases;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import java.util.Date;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
+import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;
+import java.time.LocalDate;
 
 public class Tecnica {
-        @JsonProperty("fecha_emision")
-    private Date fecha_emision;
-	        @JsonProperty("fecha_vencimiento")
-    private Date fecha_vencimiento;
-		        @JsonProperty("ubicacion")
+
+    @JsonProperty("fecha_emision")
+    @JsonDeserialize(using = LocalDateDeserializer.class)
+    @JsonSerialize(using = LocalDateSerializer.class)
+    private LocalDate fecha_emision;
+    @JsonProperty("fecha_vencimiento")
+    @JsonDeserialize(using = LocalDateDeserializer.class)
+    @JsonSerialize(using = LocalDateSerializer.class)
+    private LocalDate fecha_vencimiento;
+    @JsonProperty("ubicacion")
     private String ubicacion;
-			        @JsonProperty("vehiculo")
+    @JsonProperty("vehiculo")
     private Vehiculo vehiculo;
 
-    public Tecnica(Date fecha_emision, Date fecha_vencimiento, String ubicacion, Vehiculo vehiculo) {
+    public Tecnica(LocalDate fecha_emision, LocalDate fecha_vencimiento, String ubicacion, Vehiculo vehiculo) {
         this.fecha_emision = fecha_emision;
         this.fecha_vencimiento = fecha_vencimiento;
         this.ubicacion = ubicacion;
@@ -23,11 +32,11 @@ public class Tecnica {
     public Tecnica() {
     }
 
-    public Date getFecha_emision() {
+    public LocalDate getFecha_emision() {
         return fecha_emision;
     }
 
-    public Date getFecha_vencimiento() {
+    public LocalDate getFecha_vencimiento() {
         return fecha_vencimiento;
     }
 
@@ -39,11 +48,11 @@ public class Tecnica {
         return vehiculo;
     }
 
-    public void setFecha_emision(Date fecha_emision) {
+    public void setFecha_emision(LocalDate fecha_emision) {
         this.fecha_emision = fecha_emision;
     }
 
-    public void setFecha_vencimiento(Date fecha_vencimiento) {
+    public void setFecha_vencimiento(LocalDate fecha_vencimiento) {
         this.fecha_vencimiento = fecha_vencimiento;
     }
 
@@ -54,8 +63,5 @@ public class Tecnica {
     public void setVehiculo(Vehiculo vehiculo) {
         this.vehiculo = vehiculo;
     }
-
-
-
 
 }
