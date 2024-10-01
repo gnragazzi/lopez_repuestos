@@ -23,7 +23,7 @@ export const categorias = [
     {
       nombre: "vehículos",
       img: icono_vehiculos,
-      subcategorias: ["camiones","semi-remolques"]
+      subcategorias: ["camiones","semiRemolques"]
     },
     {
       nombre: "mantenimiento",
