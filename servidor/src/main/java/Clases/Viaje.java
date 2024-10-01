@@ -21,12 +21,12 @@ public class Viaje {
     @JsonDeserialize(using = LocalDateDeserializer.class)
     @JsonSerialize(using = LocalDateSerializer.class)
     private LocalDate fecha_esperada;
-    private String kilometros_realizados;
+    private int kilometros_realizados;
     private float costos_combustibles;
     private String destinos;
     private Camion camion;
 
-    public Viaje(LocalDate fecha_partida, LocalDate fecha_llegada, LocalDate fecha_esperada, String kilometros_realizados, float costos_combustibles, String destinos, Camion camion) {
+    public Viaje(LocalDate fecha_partida, LocalDate fecha_llegada, LocalDate fecha_esperada, int kilometros_realizados, float costos_combustibles, String destinos, Camion camion) {
         this.fecha_partida = fecha_partida;
         this.fecha_llegada = fecha_llegada;
         this.fecha_esperada = fecha_esperada;
@@ -55,7 +55,7 @@ public class Viaje {
         return camion;
     }
 
-    public String getKilometros_realizados() {
+    public int getKilometros_realizados() {
         return kilometros_realizados;
     }
 
@@ -79,7 +79,7 @@ public class Viaje {
         this.fecha_esperada = fecha_esperada;
     }
 
-    public void setKilometros_realizados(String kilometros_realizados) {
+    public void setKilometros_realizados(int kilometros_realizados) {
         this.kilometros_realizados = kilometros_realizados;
     }
 

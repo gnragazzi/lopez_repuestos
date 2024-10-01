@@ -1,10 +1,14 @@
 package com.grupoing.servidor;
 
+import Clases.Camion;
+import Clases.Viaje;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.time.LocalDate;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -31,11 +35,44 @@ public class manejadorViaje implements HttpHandler {
         }
         br.close();
         isr.close();
-        try{
+
+        try {
             JSONObject jsonobj = new JSONObject(buf.toString());
-            System.out.println(jsonobj.toString());
-        }
-        catch(JSONException ex){
+            LocalDate fecha_partida = LocalDate.parse(jsonobj.getString("fecha_partida"));
+            LocalDate fecha_llegada = LocalDate.parse(jsonobj.getString("fecha_llegada"));
+            LocalDate fecha_esperada = LocalDate.parse(jsonobj.getString("fecha_esperada"));
+            
+            int kilometros_realizados = jsonobj.getInt("kilometros_realizados");
+            float costos_combustibles = (float )jsonobj.getDouble("costos_combustibles");
+            
+            Camion camion = new Camion();
+            //IDEALMENTE, BUSCAMOS EL CAMION EN LA BASE DE DATOS
+            camion.setPatente(jsonobj.getString("camion"));
+            
+            String destinos = jsonobj.getString("destinos");
+
+            Viaje v = new Viaje(fecha_partida, fecha_llegada, fecha_esperada, kilometros_realizados, costos_combustibles, destinos, camion);
+            
+            
+            System.out.printf("Fecha partida: %s\n"
+                    + "Fecha llegada: %s\nFecha Esperada: %s\n"
+                    + "Km realizados: %d\nCostos: %f\nDestinos: %s\ncamion: %s",
+                    v.getFecha_partida().toString(),
+                    v.getFecha_llegada().toString(),
+                    v.getFecha_esperada().toString(),
+                    v.getKilometros_realizados(),
+                    v.getCostos_combustibles(),
+                    v.getDestinos(),
+                    v.getCamion().getPatente() 
+            );
+            //MANDAR VIAJE A LA BASE DE DATOS...
+            //CREAR HTTP RESPONSE
+            String response = "Viaje Cargado...";
+            he.sendResponseHeaders(200, response.toString().getBytes().length);
+            OutputStream os = he.getResponseBody();
+            os.write(response.toString().getBytes());
+            os.close();
+        } catch (JSONException ex) {
             System.out.println("ERROR: " + ex);
         }
     }
