@@ -42,7 +42,7 @@ public class manejadorVehiculos implements HttpHandler {
             null,
             "R123",
             "360",
-            "100.000km",
+            100000,
             null,
             null);
 
