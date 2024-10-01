@@ -7,6 +7,8 @@ import Principal from "./páginas/Principal";
 import Mantenimiento from "./páginas/Mantenimiento.jsx";
 import Viajes from "./páginas/Viajes.jsx";
 import { Formulario_Mantenimiento } from "./páginas/Formulario_Mantenimiento.jsx";
+import { Cargar_viaje } from "./páginas/cargar_viaje/Cargar_viaje.jsx";
+
 const router = createBrowserRouter([
   {
     path: "/",
@@ -24,14 +26,23 @@ const router = createBrowserRouter([
             element: <Mantenimiento />,
           },
           {
-            path: "nuevo",
+            path: "cargar_mantenimiento",
             element: <Formulario_Mantenimiento />,
           },
         ],
       },
       {
         path: "viajes",
-        element: <Viajes />,
+        children: [
+          {
+            path: "",
+            element: <Viajes></Viajes>,
+          },
+          {
+            path: "cargar_viaje",
+            element: <Cargar_viaje></Cargar_viaje>,
+          },
+        ],
       },
     ],
   },
