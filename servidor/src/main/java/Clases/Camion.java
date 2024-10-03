@@ -1,15 +1,7 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package Clases;
 
 import java.util.ArrayList;
 
-/**
- *
- * @author Administrador
- */
 public class Camion extends Vehiculo{
     private String modelo;
     private String cilindrada;
