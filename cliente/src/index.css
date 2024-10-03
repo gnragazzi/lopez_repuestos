@@ -11,6 +11,19 @@ body{
   width: 100vw;
 }
 
+.container__table::-webkit-scrollbar {
+  width: 12px;               /* width of the entire scrollbar */
+}
+
+.container__table::-webkit-scrollbar-track {
+  background: transparent;        /* color of the tracking area */
+}
+
+.container__table::-webkit-scrollbar-thumb {
+  background-color: rgba(187, 187, 202, 0.649);    /* color of the scroll thumb */
+  border-radius: 20px;       /* roundness of the scroll thumb */
+}
+
 :root {
   /* VARIABLES */
   /* COLORES */
@@ -95,11 +108,13 @@ header{
 
 .barra_superior__icono_superior{
   position: absolute;
-  left: 15px;
   display: inline-block;
+  left: 45px;
+  top: 3px;
 }
+
 .barra_superior__icono_superior img{
-  max-width: 20vw;
+  max-width: 100px;
   height: var(--altura-barra-superior);
   object-fit: contain;
 }
@@ -133,22 +148,13 @@ header{
 }
 
 
-.container__barra_lateral input[type="checkbox"]{
-  display:none;
-}
-
-
-.button__checkbox:checked ~ .barra_lateral__menu-bar{
-  display: none;
-}
-
 .barra_lateral__menu-bar{
   min-height: 100%;
   display: flex;
   flex-flow: row nowrap;
   background-color: var(--fondo-barra-lateral);
   justify-content: center;
-  place-items: center;
+  padding-top:10vh;
 }
 
 
@@ -168,15 +174,17 @@ header{
   list-style: none;
   overflow-y: auto;
   flex-grow: 1;
+  padding-left: 0;
 }
 
 .div__lateral li{
   display: flex;
   flex-flow: row nowrap;
   text-transform: capitalize;
-  padding: 4vh 1rem;
+  padding: 2vh 1rem;
   cursor: pointer;
   align-items: center;
+  text-align: center;
 }
 
 .div__lateral li:hover{
@@ -196,6 +204,7 @@ header{
 
 .div__lateral p{
   padding-left: 10px;
+  padding-top: 12px;
 }
 
 
@@ -270,16 +279,17 @@ main{
 
 
 .container{
-  height: 100%;
-  max-width: 100%;
+  height: 94vh;
+  min-width: 100%;
   position: relative;
+  margin: 0;
   display: flex;
   flex-flow: row nowrap;
   background: linear-gradient(#fff9,#fff9),url(./assets/imagen_fondo/fondo_lopez.png) center / contain no-repeat;
   background-color: var(--fondo-container);
-  justify-content: center;
-  align-items: center;
   z-index: 10;
+  align-items: baseline;
+  justify-content: center;
 }
 
 
@@ -296,71 +306,92 @@ main{
 
 
 /*----------------------------CUERPO PARA LOS FORMULARIOS*/
-
 .cuerpo{
   z-index: 30;
-  flex-basis: auto;
-  max-width: 50%;
-  background-color: rgba(255,255,255,0.8);
-  box-shadow: 0 0 10px  var(--fondo-borde-logo);
+  flex-basis: 100%;
+  background-color: transparent;
   border-radius: 20px;
   padding: 0.5rem 1rem;
+  margin-top: 50px;
+  position: relative;
+}
+
+/*----------------------------Tabla para formularios*/
+.container__table{
+  max-height: 515px;
+  overflow-y: scroll;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: transparent!important;
+}
+
+th{
+  background: #ae8c5c!important;
+  position: sticky;
+  top:0;
+  border: none !important;
+  border-top: 2px !important;
+}
+
+td{
+  background: linear-gradient(#fff7,#fff7), transparent !important;
+  
+}
+
+.table thead tr{
+  position: sticky;
+  top:0;
+  border: 3px solid #ae8c5c!important;
 }
 
 
+tr:hover{
+  background: linear-gradient(#ae8c5cb8,#ae8c5cb8), transparent !important;
+  }
 
 
 
+/*----------------------------Formulario Mantenimiento*/
 
-
-
-
-.formulario{
+.enlace_cargar_mantenimiento{
   position: absolute;
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%,-50%); 
+  top:0;
+  right: 15px;
+}
+
+.vehiculos_lista_seleccionado{
+  background-color: var(--fondo-borde-logo);
 }
 
 .botonera_formulario{
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
+  position: relative;
 }
 
-.vehiculos_lista{
-  text-align: center;
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
-  gap: 1rem;
-  text-decoration: none;
-  list-style: none;
-  background-color: #1d1d1d;
-  padding: 1rem;
-}
-.vehiculos_lista:not(.header_lista){
-  cursor: pointer;
-}
-.vehiculos_lista:nth-child(2n){
-  background-color: #202020;
-}
-.vehiculos_lista_seleccionado{
-  background-color: #181818!important;
-  color: var(--color-fuente-hover);
+.formulario__boton{
+  position: absolute;
+  box-shadow: 0 0 3px var(--fondo-borde-logo);
+  border-radius: 5px;
+  padding: 6px;
+  background:linear-gradient(#fffa,#fffa), var(--fondo-barra-lateral);
+  transition: background 0.3s ease;
 
 }
-.header_lista{
-  background-color: #1a1a1a;
-  border-bottom: 1px solid wheat;
-}
-.vehiculos_lista:hover:not(.header_lista,.vehiculos_lista_seleccionado){
-  color: var(--color-fuente-hover);
-  background: #181818;
-}
-fieldset{
-  border: 1px solid pink;
+
+.formulario__boton:hover{
+  background: var(--color-de-seleccion-nav);
 }
 
+
+.siguiente{
+  right: 14px;
+}
+
+.volver{
+  left: 0;
+}
 
 
 /* 

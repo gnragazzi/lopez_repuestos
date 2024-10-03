@@ -7,8 +7,6 @@ function App() {
     <>
     <header><Barra_superior /></header>
     <div className="container__barra_lateral">
-        <input className="button__checkbox" type="checkbox" id="button__desplegable"/>
-        <label className="label__checkbox" htmlFor="button__desplegable" type="button">=</label>
       <div className="barra_lateral__menu-bar"><nav><Lateral /></nav></div>
       </div>
     
