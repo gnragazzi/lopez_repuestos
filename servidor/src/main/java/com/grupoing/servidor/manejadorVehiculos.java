@@ -42,7 +42,7 @@ public class manejadorVehiculos implements HttpHandler {
             null,
             "R123",
             "360",
-            "100.000km",
+            100000,
             null,
             null);
 
@@ -61,6 +61,7 @@ public class manejadorVehiculos implements HttpHandler {
     @Override
 
     public void handle(HttpExchange he) throws IOException {
+//        System.out.println("HOLA"); 
         he.getResponseHeaders().add("Access-Control-Allow-Origin", "*");
         if (he.getRequestMethod().equalsIgnoreCase("OPTIONS")) {
             he.getResponseHeaders().add("Access-Control-Allow-Methods", "GET, OPTIONS");
@@ -73,11 +74,23 @@ public class manejadorVehiculos implements HttpHandler {
         URI requestedUri = he.getRequestURI();
         String query = requestedUri.getRawQuery();
         parseQuery(query, parameters);
-        // send response
+        String tipo = (String) parameters.get("tipo");
 
         ArrayList<Vehiculo> vehiculos = new ArrayList<>();
-        vehiculos.add(camion1);
-        vehiculos.add(semirremolque1);
+        if (tipo == null) {
+            //Es decir, en este caso no se quiso acceder a ningún tipo de vehículo en particular, y se busca camiones y semiremolques por igual
+            vehiculos.add(camion1);
+            vehiculos.add(semirremolque1);
+        } else if (tipo.equalsIgnoreCase("camion")) {
+            //en este caso, solo se buscan camiones
+            //se debería buscar la lista completa de camiones en la BD
+            vehiculos.add(camion1);
+        } else if (tipo.equalsIgnoreCase("semiremolque")) {
+            // implementar lógica de búsqueda de semiremolques
+        } else {
+            //entonces está intentando acceder a un tipo incorrecto, por lo que el mensaje de respuesta debería ser 404
+        }
+        // send response
 
         ObjectWriter ow = new ObjectMapper().writer().withDefaultPrettyPrinter();
 

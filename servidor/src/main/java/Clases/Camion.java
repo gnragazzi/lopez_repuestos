@@ -1,19 +1,11 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package Clases;
 
 import java.util.ArrayList;
 
-/**
- *
- * @author Administrador
- */
 public class Camion extends Vehiculo{
     private String modelo;
     private String cilindrada;
-    private String kilometraje;
+    private int kilometraje;
     private ArrayList<Viaje> viaje;
     private Semirremolque semirremolque;
 
@@ -25,7 +17,7 @@ public class Camion extends Vehiculo{
 
 
     public Camion(String marca, String patente, Seguro seguro, Tarjeta_Ruta tarjeta_ruta, Tecnica tecnica,
-            ArrayList<Mantenimiento> mantenimiento, String modelo, String cilindrada, String kilometraje,
+            ArrayList<Mantenimiento> mantenimiento, String modelo, String cilindrada, int kilometraje,
             ArrayList<Viaje> viaje, Semirremolque semirremolque) {
         super(marca, patente, seguro, tarjeta_ruta, tecnica, mantenimiento);
         this.modelo = modelo;
@@ -50,7 +42,7 @@ public class Camion extends Vehiculo{
         this.viaje = viaje;
     }
 
-    public void setKilometraje(String kilometraje) {
+    public void setKilometraje(int kilometraje) {
         this.kilometraje = kilometraje;
     }
 
@@ -62,7 +54,7 @@ public class Camion extends Vehiculo{
         return cilindrada;
     }
 
-    public String getKilometraje() {
+    public int getKilometraje() {
         return kilometraje;
     }
 

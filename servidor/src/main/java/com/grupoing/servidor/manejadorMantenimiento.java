@@ -45,7 +45,7 @@ public class manejadorMantenimiento implements HttpHandler {
         }
         br.close();
         isr.close();
-        try {
+        try { 
             // CONVERTIR EL JSONString a JSONObject
 
             JSONObject jsonobj = new JSONObject(buf.toString()); 
@@ -91,6 +91,8 @@ public class manejadorMantenimiento implements HttpHandler {
             
             );
             //MANDAR EL MECÁNICO A LA BASE DE DATOS
+            
+            //CREAR HTTP RESPONSE
             String response = "Gracias por todo";
             he.sendResponseHeaders(200, response.toString().getBytes().length);
             OutputStream os = he.getResponseBody();
