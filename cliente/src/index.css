@@ -2,15 +2,26 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
   border: none;
+  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
 }
 
 body{
   height: 100vh;
   width: 100vw;
-  display: flex;
-  flex-direction: column;
+}
+
+.container__table::-webkit-scrollbar {
+  width: 12px;               /* width of the entire scrollbar */
+}
+
+.container__table::-webkit-scrollbar-track {
+  background: transparent;        /* color of the tracking area */
+}
+
+.container__table::-webkit-scrollbar-thumb {
+  background-color: rgba(187, 187, 202, 0.649);    /* color of the scroll thumb */
+  border-radius: 20px;       /* roundness of the scroll thumb */
 }
 
 :root {
@@ -45,23 +56,22 @@ body{
 /*-----------------------PROPIEDADES DE ROOT y grid items*/
 
 #root{
-  width: 100%;
-  height: 100%;
+  width: 100vw;
+  height: 100vh;
   display: grid;
   grid-template-columns: auto 1fr;
   grid-template-rows: var(--altura-barra-superior) auto;
   grid-auto-flow: row;
   gap: 0;
-  justify-items: stretch;
-  align-items: stretch;
   grid-template-areas: "header header"
    "nav main";
-   overflow: hidden;
 }
 
 
 
 /*-----------------------------HEADER--------------------------------*/
+
+
 /*-----------------------------BARRA SUPERIOR*/
 
 
@@ -82,14 +92,31 @@ header{
   min-height: var(--altura-barra-superior);
   max-height: var(--altura-barra-superior);
   background-color: var(--fondo-barra-superior);
-  text-align: end;
   text-transform: uppercase;
+  text-align: end;
   z-index: 10;
 }
 
 .header__barra_superior h1{
+  align-self: end;
   margin: 1vh auto;
   font-size: clamp(0px,1vh + 5px, 1rem);
+}
+
+
+/*----------------------------icono_lopez_superior*/
+
+.barra_superior__icono_superior{
+  position: absolute;
+  display: inline-block;
+  left: 45px;
+  top: 3px;
+}
+
+.barra_superior__icono_superior img{
+  max-width: 100px;
+  height: var(--altura-barra-superior);
+  object-fit: contain;
 }
 
 
@@ -97,43 +124,67 @@ header{
 
 /*-----------------------------BARRA LATERAL*/
 
-
-nav{
+.container__barra_lateral{
   grid-area: nav;
-  min-width: 200px;
-  max-height: 94vh;
+  min-width: fit-content;
+  display: flex;
+  flex-flow: row nowrap;
+  place-items: center;
 }
 
-.div__lateral {
-  max-width: 200px; /*Se tiene que corresponder con el nav*/
-  display: flex;
-  flex-flow: column wrap;
+.container__barra_lateral .label__checkbox{
+  position: absolute;
+  justify-content: center;
+  z-index: 20; /*Para que esté por encima del container*/
+  top: 8vh;
+  left: 0;
+  background-color: var(--fondo-borde-logo);
+  min-width: 40px;
+  height: 5vh;
+  text-align: center;
+  border-radius: 0 10px 10px 0;
+  font-size: 25px;
+  cursor: pointer;
+}
+
+
+.barra_lateral__menu-bar{
   min-height: 100%;
+  display: flex;
+  flex-flow: row nowrap;
   background-color: var(--fondo-barra-lateral);
-  justify-content: start;
-  align-items: start;
-  gap: 6vh 0;
+  justify-content: center;
+  padding-top:10vh;
+}
+
+
+.div__lateral {
+  min-width: 200px;
+  min-height: 100%; 
+  display: flex;
+  flex-flow: row nowrap;
 }
 
 .div__lateral ul{
   order: 2;
-  position: relative;
   width: 100%;
+  position: relative;
   font-size: 1rem;
   letter-spacing: 1px;
   list-style: none;
-  transform: none;
   overflow-y: auto;
   flex-grow: 1;
+  padding-left: 0;
 }
 
 .div__lateral li{
   display: flex;
   flex-flow: row nowrap;
   text-transform: capitalize;
-  padding: 4vh 1rem;
+  padding: 2vh 1rem;
   cursor: pointer;
   align-items: center;
+  text-align: center;
 }
 
 .div__lateral li:hover{
@@ -153,24 +204,9 @@ nav{
 
 .div__lateral p{
   padding-left: 10px;
+  padding-top: 12px;
 }
 
-
-/*------------------ICONO LOPEZ BARRA LATERAL*/
-
-.icono_lopez_lateral{
-  order: 1;
-  margin-left: 2vh;
-  flex-basis: 60px;
-  height: 50px;
-  z-index: 20;
-}
-
-.icono_lopez_lateral img{
-  object-fit: contain;
-  width: 100%;
-  height: 100%;
-}
 
 /*---------------------Selección visible*/
 
@@ -243,28 +279,20 @@ main{
 
 
 .container{
-  height: 100%;
-  max-width: 100%;
+  height: 94vh;
+  min-width: 100%;
   position: relative;
+  margin: 0;
   display: flex;
   flex-flow: row nowrap;
-  background: url(./assets/imagen_fondo/fondo_lopez.png) center / contain no-repeat;
+  background: linear-gradient(#fff9,#fff9),url(./assets/imagen_fondo/fondo_lopez.png) center / contain no-repeat;
   background-color: var(--fondo-container);
-  justify-content: center;
-  align-items: center;
   z-index: 10;
+  align-items: baseline;
+  justify-content: center;
 }
 
-.overlay__fondo{
-  position: absolute;
-  height: 100%;
-  width: 100%;
-  top: 0;
-  left: 0;
-  background-color: rgba(255, 255, 255, 0.6); /* Cambia el color y la opacidad aquí */
-  pointer-events: none; /* Opcional: hace que el overlay no interfiera con clics en otros elementos */
-  z-index: 20;
-}
+
 
 /*Media query para que la imágen no sea muy grande si maximizamos la pantalla en una computadora*/
 @media screen and (min-width: 1190px ){
@@ -278,71 +306,92 @@ main{
 
 
 /*----------------------------CUERPO PARA LOS FORMULARIOS*/
-
 .cuerpo{
   z-index: 30;
-  flex-basis: auto;
-  max-width: 50%;
-  background-color: rgba(255,255,255,0.8);
-  box-shadow: 0 0 10px  var(--fondo-borde-logo);
+  flex-basis: 100%;
+  background-color: transparent;
   border-radius: 20px;
   padding: 0.5rem 1rem;
+  margin-top: 50px;
+  position: relative;
+}
+
+/*----------------------------Tabla para formularios*/
+.container__table{
+  max-height: 515px;
+  overflow-y: scroll;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: transparent!important;
+}
+
+th{
+  background: #ae8c5c!important;
+  position: sticky;
+  top:0;
+  border: none !important;
+  border-top: 2px !important;
+}
+
+td{
+  background: linear-gradient(#fff7,#fff7), transparent !important;
+  
+}
+
+.table thead tr{
+  position: sticky;
+  top:0;
+  border: 3px solid #ae8c5c!important;
 }
 
 
+tr:hover{
+  background: linear-gradient(#ae8c5cb8,#ae8c5cb8), transparent !important;
+  }
 
 
 
+/*----------------------------Formulario Mantenimiento*/
 
-
-
-
-.formulario{
+.enlace_cargar_mantenimiento{
   position: absolute;
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%,-50%); 
+  top:0;
+  right: 15px;
+}
+
+.vehiculos_lista_seleccionado{
+  background-color: var(--fondo-borde-logo);
 }
 
 .botonera_formulario{
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
+  position: relative;
 }
 
-.vehiculos_lista{
-  text-align: center;
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
-  gap: 1rem;
-  text-decoration: none;
-  list-style: none;
-  background-color: #1d1d1d;
-  padding: 1rem;
-}
-.vehiculos_lista:not(.header_lista){
-  cursor: pointer;
-}
-.vehiculos_lista:nth-child(2n){
-  background-color: #202020;
-}
-.vehiculos_lista_seleccionado{
-  background-color: #181818!important;
-  color: var(--color-fuente-hover);
+.formulario__boton{
+  position: absolute;
+  box-shadow: 0 0 3px var(--fondo-borde-logo);
+  border-radius: 5px;
+  padding: 6px;
+  background:linear-gradient(#fffa,#fffa), var(--fondo-barra-lateral);
+  transition: background 0.3s ease;
 
 }
-.header_lista{
-  background-color: #1a1a1a;
-  border-bottom: 1px solid wheat;
-}
-.vehiculos_lista:hover:not(.header_lista,.vehiculos_lista_seleccionado){
-  color: var(--color-fuente-hover);
-  background: #181818;
-}
-fieldset{
-  border: 1px solid pink;
+
+.formulario__boton:hover{
+  background: var(--color-de-seleccion-nav);
 }
 
+
+.siguiente{
+  right: 14px;
+}
+
+.volver{
+  left: 0;
+}
 
 
 /* 

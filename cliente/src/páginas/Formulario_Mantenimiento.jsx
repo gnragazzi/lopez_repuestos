@@ -62,82 +62,102 @@ export const Formulario_Mantenimiento = () => {
       });
   }, []);
   return (
-    <div className="formulario">
+    <div className="cuerpo formulario">
       {/* elegir un vehículo de una lista */}
       {pantalla == 0 && (
         <>
           <h2>Seleccionar Vehículo</h2>
-          <ul>
-            <li className="vehiculos_lista header_lista">
-              <p>Marca</p>
-              <p>Patente</p>
-            </li>
-            {vehiculos.map((vehiculo) => {
+          <div className="container__table">
+            <table className="table table-bordered">
+              <thead>
+                <tr>
+                  <th>Marca</th>
+                  <th>Patente</th>
+                </tr>
+              </thead>
+              <tbody>
+              {vehiculos.map((vehiculo) => {
               const { patente, marca } = vehiculo;
               return (
-                <li
-                  className={
-                    vehiculoSeleccionado == patente
-                      ? "vehiculos_lista vehiculos_lista_seleccionado"
-                      : "vehiculos_lista"
-                  }
-                  key={patente}
-                  onClick={() => {
-                    patente != vehiculoSeleccionado
-                      ? setVehiculoSeleccionado(patente)
-                      : setVehiculoSeleccionado("");
-                    //verificamos un atributo que solo un camión tendría para determinar si es camión o semiremolque
-                    vehiculo.cilindrada
-                      ? setEsCamion(true)
-                      : setEsCamion(false);
-                  }}
-                >
+              <tr className={
+                vehiculoSeleccionado == patente
+                  ? "vehiculos_lista vehiculos_lista_seleccionado"
+                  : "vehiculos_lista"
+              }
+              key={patente}
+              onClick={() => {
+                patente != vehiculoSeleccionado
+                  ? setVehiculoSeleccionado(patente)
+                  : setVehiculoSeleccionado("");
+                //verificamos un atributo que solo un camión tendría para determinar si es camión o semiremolque
+                vehiculo.cilindrada
+                  ? setEsCamion(true)
+                  : setEsCamion(false);
+              }}>
+                <td>
                   <p>{marca}</p>
+                </td>
+                <td>
                   <p>{patente}</p>
-                </li>
+                </td>
+              </tr>
               );
             })}
-          </ul>
+              </tbody>
+        </table>
+      </div>
         </>
       )}
       {pantalla == 1 && (
         <>
           <h2>Seleccionar Mecánico</h2>
-          <ul>
-            <li className="vehiculos_lista header_lista">
-              <p>DNI</p>
-              <p>Nombre</p>
-              <p>Apellido</p>
-            </li>
-            {mecanicos.map((mecanico) => {
-              const { dni, nombre, apellido } = mecanico;
-              return (
-                <li
-                  className={
-                    mecanicosSeleccionados.includes(dni)
-                      ? "vehiculos_lista vehiculos_lista_seleccionado"
-                      : "vehiculos_lista"
-                  }
-                  key={dni}
-                  onClick={() => {
-                    mecanicosSeleccionados.includes(dni)
-                      ? setmecanicosSeleccionados(
-                          mecanicosSeleccionados.filter((m) => m != dni)
-                        )
-                      : setmecanicosSeleccionados([
-                          ...mecanicosSeleccionados,
-                          dni,
-                        ]);
-                  }}
-                >
-                  <p>{dni}</p>
-                  <p>{nombre}</p>
-                  <p>{apellido}</p>
-                </li>
-              );
-            })}
-          </ul>
-        </>
+          <div className="container__table">
+            <table className="table table-bordered">
+              <thead>
+                <tr>
+                  <th>DNI</th>
+                  <th>Nombre</th>
+                  <th>Apellido</th>
+                </tr>
+              </thead>
+              <tbody>
+                {mecanicos.map((mecanico) => {
+                  const { dni, nombre, apellido } = mecanico;
+                  return (
+                    <tr
+                      className={
+                        mecanicosSeleccionados.includes(dni)
+                          ? "vehiculos_lista vehiculos_lista_seleccionado"
+                          : "vehiculos_lista"
+                      }
+                      key={dni}
+                      onClick={() => {
+                        mecanicosSeleccionados.includes(dni)
+                          ? setmecanicosSeleccionados(
+                              mecanicosSeleccionados.filter((m) => m != dni)
+                            )
+                          : setmecanicosSeleccionados([
+                              ...mecanicosSeleccionados,
+                              dni,
+                            ]);
+                      }}
+                    >
+                      <td>
+                        <p>{dni}</p>
+                      </td>
+                      <td>
+                        <p>{nombre}</p>
+                      </td> 
+                      <td>
+                        <p>{apellido}</p>
+                      </td>
+                    </tr>
+                  );
+                })}
+          </tbody>
+        </table>
+      </div>
+      </>
       )}
       {pantalla == 2 && (
         <>
@@ -218,15 +238,15 @@ export const Formulario_Mantenimiento = () => {
 
       <div className="botonera_formulario">
         {pantalla == 0 && (
-          <button onClick={() => navegar("/mantenimiento")}>
-            Volver a la Pantalla Anterior
+          <button className="formulario__boton volver" onClick={() => navegar("/mantenimiento")}>
+            Volver
           </button>
         )}
         {pantalla > 0 && (
-          <button onClick={() => setPantalla(pantalla - 1)}>Volver</button>
+          <button className="formulario__boton volver" onClick={() => setPantalla(pantalla - 1)}>Volver</button>
         )}
         {pantalla < 3 && (
-          <button
+          <button className="formulario__boton siguiente" 
             onClick={() => {
               if (
                 (pantalla == 0 && vehiculoSeleccionado) ||
@@ -240,7 +260,7 @@ export const Formulario_Mantenimiento = () => {
                 setPantalla(pantalla + 1);
             }}
           >
-            Próxima Pantalla
+            Siguiente
           </button>
         )}
         {pantalla == 3 && <button onClick={enviarFormulario}>Confirmar</button>}
