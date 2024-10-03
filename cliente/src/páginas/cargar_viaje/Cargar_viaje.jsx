@@ -1,10 +1,13 @@
-import { useState } from "react";
+import { useReducer } from "react";
 import Cargar_viaje_1 from "./Cargar_viaje_1";
 import Cargar_viaje_2 from "./Cargar_viaje_2";
 import Cargar_viaje_3 from "./Cargar_viaje_3";
 
-export const Cargar_viaje = () => {
-  const [cuerpoPost, setCuerpoPost] = useState({
+const PROXIMA_PANTALLA = 0;
+const PANTALLA_ANTERIOR = 1;
+
+const estadoInicial = {
+  cuerpo: {
     fecha_partida: null,
     fecha_llegada: null,
     fecha_esperada: null,
@@ -12,28 +15,42 @@ export const Cargar_viaje = () => {
     costos_combustibles: 0,
     destinos: "",
     camion: "",
-  });
-  const [pantalla, setPantalla] = useState(0);
-  /*
-    1. camion: "",
-    2. destinos: "",
-    3. kilometros_realizados: 0,
-    4. costos_combustibles: 0,
-    
-    1. Fecha de partida
-    2. Fecha de llegada
-    3. Fecha Esperada
+  },
+  pantalla: 0,
+};
 
+const reducer = (estado, accion) => {
+  switch (accion.type) {
+    case PROXIMA_PANTALLA: {
+      return { ...estado, pantalla: estado.pantalla + 1 };
+    }
+    case PANTALLA_ANTERIOR: {
+      return { ...estado, pantalla: estado.pantalla - 1 };
+    }
+    default:
+      throw new Error(`ERROR: "${accion.type}" no es una acción reconocida...`);
+  }
+};
+
+export const Cargar_viaje = () => {
+  const [estado, dispatch] = useReducer(reducer, estadoInicial);
+  /*
     Página de confirmación
 */
-  const manejarCambioPantalla = () => {
-    setPantalla(pantalla + 1);
-  };
   return (
     <>
-      {pantalla == 0 && <Cargar_viaje_1 />}
-      {pantalla == 1 && <Cargar_viaje_2 />}
-      {pantalla == 2 && <Cargar_viaje_3 />}
+      {estado.pantalla == 0 && (
+        <Cargar_viaje_1 dispatch={dispatch} acciones={{ PROXIMA_PANTALLA }} />
+      )}
+      {estado.pantalla == 1 && (
+        <Cargar_viaje_2
+          dispatch={dispatch}
+          acciones={{ PROXIMA_PANTALLA, PANTALLA_ANTERIOR }}
+        />
+      )}
+      {estado.pantalla == 2 && (
+        <Cargar_viaje_3 dispatch={dispatch} acciones={{ PANTALLA_ANTERIOR }} />
+      )}
     </>
   );
 };
