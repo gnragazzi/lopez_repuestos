@@ -150,44 +150,47 @@ export const Cargar_viaje = () => {
       })
       .catch((error) => console.log(error));
   }, []);
-  return (
-    <>
-      {estado.lista_vehiculos.length < 1 && <p>No hay camiones cargados</p>}
-      {estado.pantalla == 0 && (
-        <Cargar_viaje_1
-          estado={estado}
-          dispatch={dispatch}
-          acciones={{
-            PROXIMA_PANTALLA,
-            SELECCIONAR_VEHICULO,
-            SELECCIONAR_DESTINO,
-            SELECCIONAR_KILOMETROS_REALIZADOS,
-            SELECCIONAR_COSTO_COMBUSTIBLE,
-          }}
-        />
-      )}
-      {estado.pantalla == 1 && (
-        <Cargar_viaje_2
-          dispatch={dispatch}
-          acciones={{
-            PROXIMA_PANTALLA,
-            PANTALLA_ANTERIOR,
-            SELECCIONAR_FECHA_PARTIDA,
-            SELECCIONAR_FECHA_LLEGADA,
-            SELECCIONAR_FECHA_ESPERADA,
-          }}
-          estado={estado}
-        />
-      )}
-      {estado.pantalla == 2 && (
-        <Cargar_viaje_3
-          cuerpo={estado.cuerpo_cargar_viaje}
-          lista_vehiculos={estado.lista_vehiculos}
-          dispatch={dispatch}
-          acciones={{ PANTALLA_ANTERIOR }}
-          enviarFormulario={enviarFormulario}
-        />
-      )}
-    </>
-  );
+  if (estado.lista_vehiculos.length < 1) {
+    return <p>No hay camiones cargados</p>;
+  } else {
+    return (
+      <>
+        {estado.pantalla == 0 && estado.lista_vehiculos.length >= 0 && (
+          <Cargar_viaje_1
+            estado={estado}
+            dispatch={dispatch}
+            acciones={{
+              PROXIMA_PANTALLA,
+              SELECCIONAR_VEHICULO,
+              SELECCIONAR_DESTINO,
+              SELECCIONAR_KILOMETROS_REALIZADOS,
+              SELECCIONAR_COSTO_COMBUSTIBLE,
+            }}
+          />
+        )}
+        {estado.pantalla == 1 && (
+          <Cargar_viaje_2
+            dispatch={dispatch}
+            acciones={{
+              PROXIMA_PANTALLA,
+              PANTALLA_ANTERIOR,
+              SELECCIONAR_FECHA_PARTIDA,
+              SELECCIONAR_FECHA_LLEGADA,
+              SELECCIONAR_FECHA_ESPERADA,
+            }}
+            estado={estado}
+          />
+        )}
+        {estado.pantalla == 2 && (
+          <Cargar_viaje_3
+            cuerpo={estado.cuerpo_cargar_viaje}
+            lista_vehiculos={estado.lista_vehiculos}
+            dispatch={dispatch}
+            acciones={{ PANTALLA_ANTERIOR }}
+            enviarFormulario={enviarFormulario}
+          />
+        )}
+      </>
+    );
+  }
 };

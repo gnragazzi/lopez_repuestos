@@ -25,10 +25,6 @@ import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;
 import java.time.LocalDate;
 
-/**
- *
- * @author gera
- */
 public class manejadorVehiculos implements HttpHandler {
 
     @JsonDeserialize(using = LocalDateDeserializer.class)
