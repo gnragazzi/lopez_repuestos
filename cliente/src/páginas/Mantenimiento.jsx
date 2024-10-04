@@ -18,6 +18,16 @@ function Mantenimiento() {
     { id: 8, nombre: "México", minutos: 190 },
     { id: 9, nombre: "Sudáfrica", minutos: 190 },
     { id: 10, nombre: "Egipto", minutos: 186 },
+    { id: 1, nombre: "Filipinas", minutos: 241 },
+    { id: 2, nombre: "Brasil", minutos: 225 },
+    { id: 3, nombre: "Colombia", minutos: 216 },
+    { id: 4, nombre: "Nigeria", minutos: 216 },
+    { id: 5, nombre: "Argentina", minutos: 207 },
+    { id: 6, nombre: "Indonesia", minutos: 195 },
+    { id: 7, nombre: "Emiratos Árabes Unidos", minutos: 191 },
+    { id: 8, nombre: "México", minutos: 190 },
+    { id: 9, nombre: "Sudáfrica", minutos: 190 },
+    { id: 10, nombre: "Egipto", minutos: 186 },
   ];
 
   const [data, setData] = useState(dataPaises);
@@ -79,7 +89,7 @@ setPaisSeleccionado(elemento);
     <div className="App">
       <h2>Mantenimientos</h2>
       <br />
-    <Link to="nuevo" className="enlace_cargar_mantenimiento"><button className="btn btn-success" onClick={Formulario_Mantenimiento}>Insertar</button></Link>
+    <Link to="cargar_mantenimiento" className="enlace_cargar_mantenimiento"><button className="btn btn-success" onClick={Formulario_Mantenimiento}>Insertar</button></Link>
     <div className="container__table">
         <table className="table table-bordered">
           <thead>

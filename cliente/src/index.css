@@ -1,6 +1,6 @@
 *{
   margin: 0;
-  padding: 0;
+  padding: 0 ;
   box-sizing: border-box;
   border: none;
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
@@ -130,12 +130,15 @@ header{
   display: flex;
   flex-flow: row nowrap;
   place-items: center;
+  height: 100%;
+
 }
 
+/*Esto no se usa si no queremos el label que despliegue el menú
 .container__barra_lateral .label__checkbox{
   position: absolute;
   justify-content: center;
-  z-index: 20; /*Para que esté por encima del container*/
+  z-index: 20; 
   top: 8vh;
   left: 0;
   background-color: var(--fondo-borde-logo);
@@ -146,6 +149,7 @@ header{
   font-size: 25px;
   cursor: pointer;
 }
+*/
 
 
 .barra_lateral__menu-bar{
@@ -273,16 +277,14 @@ header{
 
 main{
   grid-area: main;
-  max-width: 100%;
-  max-height: 100%;
+  width: calc(100vw - 200px); /*Los 200px es el width de la barra lateral*/
 }
 
 
 .container{
   height: 94vh;
-  min-width: 100%;
-  position: relative;
-  margin: 0;
+  max-width: 100% !important;
+  margin: 0 !important;
   display: flex;
   flex-flow: row nowrap;
   background: linear-gradient(#fff9,#fff9),url(./assets/imagen_fondo/fondo_lopez.png) center / contain no-repeat;
@@ -290,6 +292,8 @@ main{
   z-index: 10;
   align-items: baseline;
   justify-content: center;
+  padding-left: 0 !important;
+  padding-right: 0 !important;
 }
 
 
@@ -309,23 +313,55 @@ main{
 .cuerpo{
   z-index: 30;
   flex-basis: 100%;
+  max-width: 100%;
+  height: 92.5%; /*Esto se coloca para que el cuerpo vaya hasta abajo del todo*/
   background-color: transparent;
   border-radius: 20px;
   padding: 0.5rem 1rem;
   margin-top: 50px;
+  display:flex;
+  flex-flow: row wrap;
+}
+
+
+/*Es un flex-item de cuerpo*/
+.App{
+  width: 100%;
+  height: 100%;
+  position: relative;
+  display: flex;
+  flex-flow: column nowrap; /*Sujeto a modificaciones por si agrega columnas*/
+  align-items: start;
+}
+
+
+/*----------------------------Tabla para formularios*/
+
+.App h2{
+  font-size: 1.5rem;
+}
+
+.container__table{
+  height: 100%;
+  width: 100%;
+  overflow-y: auto;
+  display: flex;
+  flex-flow: row nowrap;
   position: relative;
 }
 
-/*----------------------------Tabla para formularios*/
-.container__table{
-  max-height: 515px;
-  overflow-y: scroll;
-}
 
-table {
+
+.table {
   width: 100%;
+  height: 100%;
+  position: relative;
   border-collapse: collapse;
   background-color: transparent!important;
+}
+
+tbody{
+  height: 100px;
 }
 
 th{
@@ -336,6 +372,7 @@ th{
   border-top: 2px !important;
 }
 
+
 td{
   background: linear-gradient(#fff7,#fff7), transparent !important;
   
@@ -344,7 +381,7 @@ td{
 .table thead tr{
   position: sticky;
   top:0;
-  border: 3px solid #ae8c5c!important;
+  border: none !important;
 }
 
 
@@ -360,6 +397,14 @@ tr:hover{
   position: absolute;
   top:0;
   right: 15px;
+}
+
+@media screen and (max-width: 506px){ /*Para que el boton no superponga el h2*/
+  .App .enlace_cargar_mantenimiento{
+    position: relative;
+    margin: 0px 0 10px 0;
+    right: 0;
+  }
 }
 
 .vehiculos_lista_seleccionado{
