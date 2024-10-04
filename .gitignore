@@ -1,3 +1,5 @@
 */node_modules/
 servidor/target/*
 *.class
+servidor/src/main/java/Conexion/Credenciales.java
+*/Credenciales.java
