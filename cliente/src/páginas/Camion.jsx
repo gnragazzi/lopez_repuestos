@@ -43,7 +43,7 @@ function Camiones() {
           <tbody>
             {data.length === 0 ? (
               <tr>
-                <td colSpan="4">No hay datos disponibles</td>
+                <td colSpan="5">No hay datos disponibles</td>
               </tr>
             ) : (
               data.map((elemento) => (
