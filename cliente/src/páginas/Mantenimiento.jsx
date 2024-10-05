@@ -78,7 +78,7 @@ setPaisSeleccionado(elemento);
     <div className="App">
       <h2>Mantenimientos</h2>
       <br />
-    <Link to="nuevo" className="enlace_cargar_mantenimiento"><button className="btn btn-success" onClick={Formulario_Mantenimiento}>Insertar</button></Link>
+    <Link to="cargar_mantenimiento" className="enlace_cargar_mantenimiento"><button className="btn btn-success" onClick={Formulario_Mantenimiento}>Insertar</button></Link>
     <div className="container__table">
         <table className="table table-bordered">
           <thead>
