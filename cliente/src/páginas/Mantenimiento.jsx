@@ -5,7 +5,6 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import {Modal, ModalBody, ModalHeader, ModalFooter} from 'reactstrap';
 import { Formulario_Mantenimiento } from "./Formulario_Mantenimiento";
 
-
 function Mantenimiento() {
   const dataPaises = [
     { id: 1, nombre: "Filipinas", minutos: 241 },

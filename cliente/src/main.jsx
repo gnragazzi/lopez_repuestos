@@ -8,6 +8,7 @@ import Mantenimiento from "./páginas/Mantenimiento.jsx";
 import Viajes from "./páginas/Viajes.jsx";
 import { Formulario_Mantenimiento } from "./páginas/Formulario_Mantenimiento.jsx";
 import { Cargar_viaje } from "./páginas/cargar_viaje/Cargar_viaje.jsx";
+import Camiones from "./páginas/Camion.jsx";
 
 const router = createBrowserRouter([
   {
@@ -17,6 +18,15 @@ const router = createBrowserRouter([
       {
         path: "principal",
         element: <Principal />,
+      },
+      {
+        path: "vehículos",
+        children: [
+          {
+            path: "camiones",
+            element: <Camiones />,
+          },
+        ],
       },
       {
         path: "mantenimiento",
