@@ -15,19 +15,30 @@ public class Mantenimiento {
     private LocalDate fecha;
     private double costo_repuestos;
     private double costo_manodeobra;
-    private ArrayList<Mecanico> mecanico = new ArrayList<Mecanico>();
+    private int kilometros_en_que_se_realizo;
+    private ArrayList<Mecanico> mecanico;
     private Vehiculo vehiculo;
 
-    public Mantenimiento(String trabajos_realizados, LocalDate fecha, double costo_repuestos, double costo_manodeobra, ArrayList<Mecanico> mecanico, Vehiculo vehiculo) {
+    public Mantenimiento(String trabajos_realizados, LocalDate fecha, double costo_repuestos, double costo_manodeobra, int kilometros_en_que_se_realizo, ArrayList<Mecanico> mecanico, Vehiculo vehiculo) {
         this.trabajos_realizados = trabajos_realizados;
         this.fecha = fecha;
         this.costo_repuestos = costo_repuestos;
         this.costo_manodeobra = costo_manodeobra;
+        this.kilometros_en_que_se_realizo = kilometros_en_que_se_realizo;
         this.mecanico = mecanico;
         this.vehiculo = vehiculo;
     }
 
+  
     public Mantenimiento() {
+    }
+
+    public int getKilometros_en_que_se_realizo() {
+        return kilometros_en_que_se_realizo;
+    }
+
+    public void setKilometros_en_que_se_realizo(int kilometros_en_que_se_realizo) {
+        this.kilometros_en_que_se_realizo = kilometros_en_que_se_realizo;
     }
 
     public String getTrabajos_realizados() {

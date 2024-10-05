@@ -53,6 +53,7 @@ public class manejadorMantenimiento implements HttpHandler {
             LocalDate fecha = LocalDate.parse( jsonobj.getString("fecha"));
             Double costo_repuestos = jsonobj.getDouble("costo_repuestos");
             Double costo_manodeobra = jsonobj.getDouble("costo_manodeobra");
+            int kilometros_en_que_se_realizo= jsonobj.getInt("kilometros_en_que_se_realizo");
 
             /*
             //ACA DEBERÍA HACERSE UNA CONSULTA A LA BASE DE DATOS PARA TRAER EL MECÁNICO Y EL VEHÍCULO CORRESPONDIENTE...
@@ -79,13 +80,14 @@ public class manejadorMantenimiento implements HttpHandler {
                 }
             }
 
-            Mantenimiento m = new Mantenimiento(trabajos_realizados, fecha, costo_repuestos, costo_manodeobra, mecanicos, vehiculo);
+            Mantenimiento m = new Mantenimiento(trabajos_realizados, fecha, costo_repuestos, costo_manodeobra,kilometros_en_que_se_realizo, mecanicos, vehiculo);
             System.out.printf(
-              "Trabajo: %s\n fecha: %s\ncosto_repuestos: %f\ncosto_manodeobra: %f\nDni mecánico: %s\nMatrícula Vehículo: %s\n",
+              "Trabajo: %s\n fecha: %s\ncosto_repuestos: %f\ncosto_manodeobra: %s\nkilometros_en_que_se_realizo: %d\nDni mecánico: %s\nMatrícula Vehículo: %s\n",
                     m.getTrabajos_realizados(),
                     m.getFecha().toString(),
                     m.getCostos_repuestos(),
                     m.getCostos_manodeobra(),
+                    m.getKilometros_en_que_se_realizo(),
                     m.getMecanico().get(0).getDni(),
                     m.getVehiculo().getPatente() 
             

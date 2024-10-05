@@ -4,27 +4,23 @@ import java.util.ArrayList;
 
 public class Camion extends Vehiculo{
     private String modelo;
-    private String cilindrada;
+    private String potencia;
     private int kilometraje;
     private ArrayList<Viaje> viaje;
-    private Semirremolque semirremolque;
-
-
+    
     
     public Camion() {
         super();
     }
-
 
     public Camion(String marca, String patente, Seguro seguro, Tarjeta_Ruta tarjeta_ruta, Tecnica tecnica,
             ArrayList<Mantenimiento> mantenimiento, String modelo, String cilindrada, int kilometraje,
             ArrayList<Viaje> viaje, Semirremolque semirremolque) {
         super(marca, patente, seguro, tarjeta_ruta, tecnica, mantenimiento);
         this.modelo = modelo;
-        this.cilindrada = cilindrada;
+        this.potencia = cilindrada;
         this.kilometraje = kilometraje;
         this.viaje = viaje;
-        this.semirremolque = semirremolque;
     }
 
 
@@ -35,7 +31,7 @@ public class Camion extends Vehiculo{
 
     
     public void setCilindrada(String cilindrada) {
-        this.cilindrada = cilindrada;
+        this.potencia = cilindrada;
     }
 
     public void setViaje(ArrayList<Viaje> viaje) {
@@ -51,7 +47,7 @@ public class Camion extends Vehiculo{
     }
 
     public String getCilindrada() {
-        return cilindrada;
+        return potencia;
     }
 
     public int getKilometraje() {
@@ -61,15 +57,5 @@ public class Camion extends Vehiculo{
     public ArrayList<Viaje> getViaje() {
         return viaje;
     }
-
-    public Semirremolque getSemirremolque() {
-        return semirremolque;
-    }
-
-    public void setSemirremolque(Semirremolque semirremolque) {
-        this.semirremolque = semirremolque;
-    }
-    
-    
-    
+     
 }

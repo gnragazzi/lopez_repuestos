@@ -23,19 +23,27 @@ public class Viaje {
     private LocalDate fecha_esperada;
     private int kilometros_realizados;
     private float costos_combustibles;
-    private String destinos;
+    private int Peso;
+    private String destino;
     private Camion camion;
+    private Chofer chofer;
+    private Semirremolque semirremolque;
 
-    public Viaje(LocalDate fecha_partida, LocalDate fecha_llegada, LocalDate fecha_esperada, int kilometros_realizados, float costos_combustibles, String destinos, Camion camion) {
+    
+    public Viaje(LocalDate fecha_partida, LocalDate fecha_llegada, LocalDate fecha_esperada, int kilometros_realizados, float costos_combustibles, int Peso, String destino, Camion camion, Chofer chofer, Semirremolque semirremolque) {
         this.fecha_partida = fecha_partida;
         this.fecha_llegada = fecha_llegada;
         this.fecha_esperada = fecha_esperada;
         this.kilometros_realizados = kilometros_realizados;
         this.costos_combustibles = costos_combustibles;
-        this.destinos = destinos;
-        this.camion=camion;
+        this.Peso = Peso;
+        this.destino = destino;
+        this.camion = camion;
+        this.chofer = chofer;
+        this.semirremolque = semirremolque;
     }
 
+    
     public Viaje() {
     }
 
@@ -63,8 +71,8 @@ public class Viaje {
         return costos_combustibles;
     }
 
-    public String getDestinos() {
-        return destinos;
+    public String getDestino() {
+        return destino;
     }
 
     public void setFecha_partida(LocalDate fecha_partida) {
@@ -87,13 +95,36 @@ public class Viaje {
         this.costos_combustibles = costos_combustibles;
     }
 
-    public void setDestinos(String destinos) {
-        this.destinos = destinos;
+    public void setDestino(String destinos) {
+        this.destino = destinos;
     }
 
     public void setCamion(Camion camion) {
         this.camion = camion;
     }    
-    
+
+    public int getPeso() {
+        return Peso;
+    }
+
+    public Chofer getChofer() {
+        return chofer;
+    }
+
+    public Semirremolque getSemirremolque() {
+        return semirremolque;
+    }
+
+    public void setPeso(int Peso) {
+        this.Peso = Peso;
+    }
+
+    public void setChofer(Chofer chofer) {
+        this.chofer = chofer;
+    }
+
+    public void setSemirremolque(Semirremolque semirremolque) {
+        this.semirremolque = semirremolque;
+    }
     
 }

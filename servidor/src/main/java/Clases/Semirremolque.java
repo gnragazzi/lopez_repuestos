@@ -17,7 +17,7 @@ public class Semirremolque extends Vehiculo{
 	@JsonProperty("carga")
     private String carga;
 	@JsonProperty("camion")
-    private Camion camion;
+    private ArrayList<Viaje> viaje;
 
     public Semirremolque() {
     }
@@ -25,11 +25,11 @@ public class Semirremolque extends Vehiculo{
 
 
     public Semirremolque(String marca, String patente, Seguro seguro, Tarjeta_Ruta tarjeta_ruta, Tecnica tecnica,
-            ArrayList<Mantenimiento> mantenimiento, String tipo, String carga, Camion camion) {
+            ArrayList<Mantenimiento> mantenimiento, String tipo, String carga, ArrayList<Viaje> viaje) {
         super(marca, patente, seguro, tarjeta_ruta, tecnica, mantenimiento);
         this.tipo = tipo;
         this.carga = carga;
-        this.camion = camion;
+        this.viaje = viaje;
     }
 
 
@@ -49,12 +49,11 @@ public class Semirremolque extends Vehiculo{
         this.carga = carga;
     }
 
-    public Camion getCamion() {
-        return camion;
+    public ArrayList<Viaje> getViaje() {
+        return viaje;
     }
 
-    public void setCamion(Camion camion) {
-        this.camion = camion;
-    }
-    
+    public void setViaje(ArrayList<Viaje> viaje) {
+        this.viaje = viaje;
+    } 
 }
