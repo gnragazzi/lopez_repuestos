@@ -5,6 +5,7 @@ import Clases.Mantenimiento;
 import Clases.Mecanico;
 import Clases.Semirremolque;
 import Clases.Vehiculo;
+import IDaoImpl.MantenimientoDAOImpl;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 import java.io.BufferedReader;
@@ -17,6 +18,8 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.json.JSONException;
@@ -53,7 +56,7 @@ public class manejadorMantenimiento implements HttpHandler {
             LocalDate fecha = LocalDate.parse( jsonobj.getString("fecha"));
             Double costo_repuestos = jsonobj.getDouble("costo_repuestos");
             Double costo_manodeobra = jsonobj.getDouble("costo_manodeobra");
-            int kilometros_en_que_se_realizo= jsonobj.getInt("kilometros_en_que_se_realizo");
+            //int kilometros_en_que_se_realizo= jsonobj.getInt("kilometros_en_que_se_realizo");
 
             /*
             //ACA DEBERÍA HACERSE UNA CONSULTA A LA BASE DE DATOS PARA TRAER EL MECÁNICO Y EL VEHÍCULO CORRESPONDIENTE...
@@ -80,7 +83,7 @@ public class manejadorMantenimiento implements HttpHandler {
                 }
             }
 
-            Mantenimiento m = new Mantenimiento(trabajos_realizados, fecha, costo_repuestos, costo_manodeobra,kilometros_en_que_se_realizo, mecanicos, vehiculo);
+            Mantenimiento m = new Mantenimiento(trabajos_realizados, fecha, costo_repuestos, costo_manodeobra,0, mecanicos, vehiculo);
             System.out.printf(
               "Trabajo: %s\n fecha: %s\ncosto_repuestos: %f\ncosto_manodeobra: %s\nkilometros_en_que_se_realizo: %d\nDni mecánico: %s\nMatrícula Vehículo: %s\n",
                     m.getTrabajos_realizados(),
@@ -94,6 +97,9 @@ public class manejadorMantenimiento implements HttpHandler {
             );
             //MANDAR EL MECÁNICO A LA BASE DE DATOS
             
+            MantenimientoDAOImpl mantenimientoDAO= new MantenimientoDAOImpl();
+            mantenimientoDAO.create(m);
+            
             //CREAR HTTP RESPONSE
             String response = "Gracias por todo";
             he.sendResponseHeaders(200, response.toString().getBytes().length);
@@ -103,6 +109,10 @@ public class manejadorMantenimiento implements HttpHandler {
         } catch (JSONException ex) {
             System.out.println("ERROR al parsear el cuerpo del request: " + ex);
             // CREAR LA RESPUESTA CON EL ERROR DEL SERVIDOR...
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(manejadorMantenimiento.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (Exception ex) {
+            Logger.getLogger(manejadorMantenimiento.class.getName()).log(Level.SEVERE, null, ex);
         }
 
     }

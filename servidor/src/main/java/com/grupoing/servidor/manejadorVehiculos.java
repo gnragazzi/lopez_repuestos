@@ -36,28 +36,6 @@ public class manejadorVehiculos implements HttpHandler {
     @JsonSerialize(using = LocalDateSerializer.class)
     LocalDate fecha = LocalDate.parse("2024-08-15");
 
-    Camion camion1 = new Camion("Scania", "WUB 750",
-            new Seguro(fecha, fecha, "Seguro Metal", 51251, "todo_riesgo"),
-            new Tarjeta_Ruta(fecha, fecha, null),
-            new Tecnica(fecha, fecha, "San Luis", null),
-            null,
-            "R123",
-            "360",
-            100000,
-            null);
-
-    Semirremolque semirremolque1 = new Semirremolque(
-            "Patito",
-            "ABC 321",
-            new Seguro(fecha, fecha, "Seguro Madera", 65466, "algún riesgo"),
-            new Tarjeta_Ruta(fecha, fecha, null),
-            new Tecnica(fecha, fecha, "San Luis", null),
-            null,
-            "Tolva",
-            "Cemento",
-            null
-    );
-
     @Override
 
     public void handle(HttpExchange he) throws IOException {
@@ -101,11 +79,34 @@ public class manejadorVehiculos implements HttpHandler {
                 Logger.getLogger(manejadorVehiculos.class.getName()).log(Level.SEVERE, null, ex);
             }
         } else if (tipo.equalsIgnoreCase("camion")) {
-            //en este caso, solo se buscan camiones
-            //se debería buscar la lista completa de camiones en la BD
-            vehiculos.add(camion1);
-        } else if (tipo.equalsIgnoreCase("semiremolque")) {
-            // implementar lógica de búsqueda de semiremolques
+            try {
+                CamionDAOImpl camionDAO;
+                camionDAO = new CamionDAOImpl();
+                ArrayList<Camion> camiones= camionDAO.list();      
+                Iterator<Camion> iteratorCamion = camiones.iterator();
+                while (iteratorCamion.hasNext()) {
+                    vehiculos.add(iteratorCamion.next());
+                }
+                
+            } catch (ClassNotFoundException ex) {
+                Logger.getLogger(manejadorVehiculos.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (Exception ex) {
+                Logger.getLogger(manejadorVehiculos.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            } else if (tipo.equalsIgnoreCase("semiremolque")) {
+            try {
+                SemirremolqueDAOImpl semirremolqueDAO = new SemirremolqueDAOImpl();
+                ArrayList<Semirremolque> semirremolques = semirremolqueDAO.list();   
+                Iterator<Semirremolque> iteratorSemirremolque = semirremolques.iterator();
+                while (iteratorSemirremolque.hasNext()) {
+                    vehiculos.add(iteratorSemirremolque.next());
+                }
+                
+            } catch (ClassNotFoundException ex) {
+                Logger.getLogger(manejadorVehiculos.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (Exception ex) {
+                Logger.getLogger(manejadorVehiculos.class.getName()).log(Level.SEVERE, null, ex);
+            }
         } else {
             //entonces está intentando acceder a un tipo incorrecto, por lo que el mensaje de respuesta debería ser 404
         }

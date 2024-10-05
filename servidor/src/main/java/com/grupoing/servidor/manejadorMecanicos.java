@@ -1,6 +1,7 @@
 package com.grupoing.servidor;
 
 import Clases.Mecanico;
+import IDaoImpl.MecanicoDAOImpl;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 import java.io.IOException;
@@ -17,14 +18,10 @@ import com.fasterxml.jackson.databind.ObjectWriter;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import java.time.LocalDate;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class manejadorMecanicos implements HttpHandler {
-
-    LocalDate fecha = LocalDate.parse("2024-08-15");
-
-    Mecanico mecanico1 = new Mecanico("45555555", "2044444442", "Ezequiel", "Nodar", "La Toma (pueblito)", fecha, "2664555555", null);
-    Mecanico mecanico2 = new Mecanico("45555556", "2044444442", "Ezequiel", "Bernaldez", "San Luis (ciudad)", fecha, "2664555555", null);
-    Mecanico mecanico3 = new Mecanico("45555557", "2044444442", "Gerardo", "Ragazzi", "Rosario (tiene armas en la casa)", fecha, "2664555555", null);
 
     @Override
     public void handle(HttpExchange he) throws IOException {
@@ -36,22 +33,26 @@ public class manejadorMecanicos implements HttpHandler {
             return;
         }
  
-        ArrayList<Mecanico> mecanicos = new ArrayList<>();
-        mecanicos.add(mecanico1);
-        mecanicos.add(mecanico2);
-        mecanicos.add(mecanico3);
         ObjectWriter ow = new ObjectMapper().writer().withDefaultPrettyPrinter();
 
         ObjectMapper mapper = new ObjectMapper();
         mapper.registerModule(new JavaTimeModule()); 
         mapper.configure(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS, false);
 
-        String response = ow.writeValueAsString(mecanicos);
-
-        he.sendResponseHeaders(200, response.getBytes().length);
-        OutputStream os = he.getResponseBody();
-        os.write(response.getBytes());
-        os.close();
+        try {
+            MecanicoDAOImpl mecanicoDAO= new MecanicoDAOImpl();
+            ArrayList<Mecanico> mecanicos=new ArrayList<>();
+            mecanicos= mecanicoDAO.list();
+            String response = ow.writeValueAsString(mecanicos);
+            he.sendResponseHeaders(200, response.getBytes().length);
+            OutputStream os = he.getResponseBody();
+            os.write(response.getBytes());
+            os.close();
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(manejadorMecanicos.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (Exception ex) {
+            Logger.getLogger(manejadorMecanicos.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     public static void parseQuery(String query, Map<String, Object> parameters) throws UnsupportedEncodingException {
