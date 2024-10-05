@@ -27,6 +27,7 @@
   --fondo-container: #f7f2ccff;
   --fondo-barra-superior: #EFDAAC;
   --fondo-barra-lateral: #FFEFBD;
+  --fondo-degradado: #D7C394;
   --fondo-cuerpo: #F8F2E8;
   --fondo-barra-hover: #202020;
   --fondo-borde-logo: #ae8c5c;
@@ -93,6 +94,9 @@ header{
   justify-content: end;
   align-items: start;
   border: none;
+  background: 
+  linear-gradient(to right, var(--fondo-degradado), #fff9 200px),
+  linear-gradient(to top, #fff9,var(--fondo-degradado) 4vh);
 }
 
 
@@ -138,7 +142,7 @@ header{
   display: flex;
   flex-flow: row nowrap;
   place-items: center;
-  background: linear-gradient(to left,#fff9,var(--fondo-barra-lateral)), transparent;
+  background: linear-gradient(to left,#fff9,var(--fondo-degradado)), transparent;
 }
 
 /*Esto no se usa si no queremos el label que despliegue el menú
