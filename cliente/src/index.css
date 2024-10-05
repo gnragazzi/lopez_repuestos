@@ -1,6 +1,6 @@
 *{
   margin: 0;
-  padding: 0;
+  padding: 0 ;
   box-sizing: border-box;
   border: none;
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
@@ -11,15 +11,15 @@ body{
   width: 100vw;
 }
 
-.container__table::-webkit-scrollbar {
+:is(.container__table,ul,.form__mantenimiento)::-webkit-scrollbar {
   width: 12px;               /* width of the entire scrollbar */
 }
 
-.container__table::-webkit-scrollbar-track {
+:is(.container__table,ul,.form__mantenimiento)::-webkit-scrollbar-track {
   background: transparent;        /* color of the tracking area */
 }
 
-.container__table::-webkit-scrollbar-thumb {
+:is(.container__table,ul,.form__mantenimiento)::-webkit-scrollbar-thumb {
   background-color: rgba(187, 187, 202, 0.649);    /* color of the scroll thumb */
   border-radius: 20px;       /* roundness of the scroll thumb */
 }
@@ -60,7 +60,7 @@ body{
   height: 100vh;
   display: grid;
   grid-template-columns: auto 1fr;
-  grid-template-rows: var(--altura-barra-superior) auto;
+  grid-template-rows: var(--altura-barra-superior) calc(100vh - var(--altura-barra-superior));
   grid-auto-flow: row;
   gap: 0;
   grid-template-areas: "header header"
@@ -132,10 +132,11 @@ header{
   place-items: center;
 }
 
+/*Esto no se usa si no queremos el label que despliegue el menú
 .container__barra_lateral .label__checkbox{
   position: absolute;
   justify-content: center;
-  z-index: 20; /*Para que esté por encima del container*/
+  z-index: 20; 
   top: 8vh;
   left: 0;
   background-color: var(--fondo-borde-logo);
@@ -146,10 +147,11 @@ header{
   font-size: 25px;
   cursor: pointer;
 }
+*/
 
 
 .barra_lateral__menu-bar{
-  min-height: 100%;
+  height: 100%;
   display: flex;
   flex-flow: row nowrap;
   background-color: var(--fondo-barra-lateral);
@@ -160,7 +162,7 @@ header{
 
 .div__lateral {
   min-width: 200px;
-  min-height: 100%; 
+  height: 100%; 
   display: flex;
   flex-flow: row nowrap;
 }
@@ -168,6 +170,7 @@ header{
 .div__lateral ul{
   order: 2;
   width: 100%;
+  height: 100%;
   position: relative;
   font-size: 1rem;
   letter-spacing: 1px;
@@ -176,6 +179,8 @@ header{
   flex-grow: 1;
   padding-left: 0;
 }
+
+
 
 .div__lateral li{
   display: flex;
@@ -273,23 +278,23 @@ header{
 
 main{
   grid-area: main;
-  max-width: 100%;
-  max-height: 100%;
+  width: calc(100vw - 200px); /*Los 200px es el width de la barra lateral*/
+  height: 100%;
 }
 
 
 .container{
-  height: 94vh;
-  min-width: 100%;
-  position: relative;
-  margin: 0;
+  height: 100%;
+  max-width: 100% !important;
+  margin: 0 !important;
   display: flex;
   flex-flow: row nowrap;
   background: linear-gradient(#fff9,#fff9),url(./assets/imagen_fondo/fondo_lopez.png) center / contain no-repeat;
   background-color: var(--fondo-container);
   z-index: 10;
-  align-items: baseline;
   justify-content: center;
+  padding-left: 0 !important;
+  padding-right: 0 !important;
 }
 
 
@@ -309,24 +314,53 @@ main{
 .cuerpo{
   z-index: 30;
   flex-basis: 100%;
+  max-width: 100%;
+  height: 100%; /*Esto se coloca para que el cuerpo vaya hasta abajo del todo*/
+  overflow: hidden;
   background-color: transparent;
   border-radius: 20px;
-  padding: 0.5rem 1rem;
-  margin-top: 50px;
+  padding: 50px 1rem 0 1rem;
+  display:flex;
+  flex-flow: row wrap;
+}
+
+
+/*Es un flex-item de cuerpo*/
+.App{
+  width: 100%;
+  height: 100%;
+  position: relative;
+  display: flex;
+  flex-flow: column nowrap; /*Sujeto a modificaciones por si agrega columnas*/
+  align-items: start;
+}
+
+
+/*----------------------------Tabla para formularios*/
+
+.App h2{
+  font-size: 1.5rem;
+}
+
+.container__table{
+  max-height: 100%;
+  width: 100%;
+  overflow-y: auto;
+  display: flex;
+  flex-flow: row nowrap;
   position: relative;
 }
 
-/*----------------------------Tabla para formularios*/
-.container__table{
-  max-height: 515px;
-  overflow-y: scroll;
-}
 
-table {
+
+.table {
   width: 100%;
+  max-height: 100%;
+  position: relative;
   border-collapse: collapse;
   background-color: transparent!important;
 }
+
 
 th{
   background: #ae8c5c!important;
@@ -336,6 +370,7 @@ th{
   border-top: 2px !important;
 }
 
+
 td{
   background: linear-gradient(#fff7,#fff7), transparent !important;
   
@@ -344,7 +379,7 @@ td{
 .table thead tr{
   position: sticky;
   top:0;
-  border: 3px solid #ae8c5c!important;
+  border: none !important;
 }
 
 
@@ -356,10 +391,22 @@ tr:hover{
 
 /*----------------------------Formulario Mantenimiento*/
 
+.form-table{
+  max-height: 80%;
+}
+
 .enlace_cargar_mantenimiento{
   position: absolute;
   top:0;
   right: 15px;
+}
+
+@media screen and (max-width: 506px){ /*Para que el boton no superponga el h2*/
+  .App .enlace_cargar_mantenimiento{
+    position: relative;
+    margin: 0px 0 10px 0;
+    right: 0;
+  }
 }
 
 .vehiculos_lista_seleccionado{
@@ -368,10 +415,12 @@ tr:hover{
 
 .botonera_formulario{
   position: relative;
+  margin-top: 20px;
+  width: 100%;
 }
 
 .formulario__boton{
-  position: absolute;
+  position: absolute;  
   box-shadow: 0 0 3px var(--fondo-borde-logo);
   border-radius: 5px;
   padding: 6px;
@@ -418,3 +467,50 @@ ESTA ES UNA IDEA DE COMO TRABAJAR CON MODO OSCURO/CLARO
   }
 }
 */
+
+/*------------------------------- Formulario para cargar más detalles de mantenimiento*/
+
+
+.form__mantenimiento{
+  width: 100%;
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: start;
+  align-items: start;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding: 2vh 0 2vh 2vw;
+}
+
+
+.form__items-mantenimiento{
+  flex: 0 1 100%; /*El ultimo es el flex basis, que define el ancho de los elementos, y como es column es el largo en este caso*/
+  width: 50%;
+  padding: 0 1vw 0 1vw;
+}
+
+.form__legend{
+  float: none;
+  width: auto;
+  font-size: 1rem;
+  color: var(--color-de-seleccion-nav);
+}
+
+.form__items-mantenimiento .items__input{
+  margin: 0 0 1vh 0;
+  width: 100%;
+  background-color: transparent;
+  border-bottom: 1px solid #0003;
+}
+
+.form__items-mantenimiento .items__input:focus{
+  outline: 1px solid #0003;
+  outline-offset: 3px;
+  border: none;
+  border-radius: 5px;
+}
+
+
+.form__items-mantenimiento .input__textarea{
+  resize: auto;
+}

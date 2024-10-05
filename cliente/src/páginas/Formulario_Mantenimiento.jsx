@@ -2,6 +2,11 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
+
+
+
+
+
 export const Formulario_Mantenimiento = () => {
   const navegar = useNavigate();
   const [pantalla, setPantalla] = useState(0);
@@ -62,12 +67,13 @@ export const Formulario_Mantenimiento = () => {
       });
   }, []);
   return (
-    <div className="cuerpo formulario">
+    <div className="App formulario">
       {/* elegir un vehículo de una lista */}
       {pantalla == 0 && (
         <>
           <h2>Seleccionar Vehículo</h2>
-          <div className="container__table">
+          <br />
+          <div className="container__table form-table">
             <table className="table table-bordered">
               <thead>
                 <tr>
@@ -111,7 +117,8 @@ export const Formulario_Mantenimiento = () => {
       {pantalla == 1 && (
         <>
           <h2>Seleccionar Mecánico</h2>
-          <div className="container__table">
+          <br />
+          <div className="container__table form-table">
             <table className="table table-bordered">
               <thead>
                 <tr>
@@ -161,11 +168,12 @@ export const Formulario_Mantenimiento = () => {
       )}
       {pantalla == 2 && (
         <>
-          <h2>Algunos Datos Más...</h2>
-          <form>
-            <fieldset>
-              <legend>Ingrese el trabajo</legend>
+          <h2>Detalles</h2>
+          <form className="form-table form__mantenimiento">
+            <fieldset className="form__items-mantenimiento">
+              <legend className="form__legend">Ingrese el trabajo</legend>
               <textarea
+                className="items__input input__textarea"
                 placeholder="Ingrese el trabajo que se hizo"
                 value={datos.trabajos_realizados}
                 onChange={(e) =>
@@ -173,9 +181,10 @@ export const Formulario_Mantenimiento = () => {
                 }
               />
             </fieldset>
-            <fieldset>
-              <legend>Costo de Repuesto</legend>
+            <fieldset className="form__items-mantenimiento">
+              <legend  className="form__legend">Costo de Repuesto</legend>
               <input
+                className="items__input"
                 placeholder="Costo de Repuesto"
                 type="number"
                 value={datos.costo_repuestos}
@@ -184,9 +193,10 @@ export const Formulario_Mantenimiento = () => {
                 }
               />
             </fieldset>
-            <fieldset>
-              <legend>Costo de Mano de Obra</legend>
+            <fieldset className="form__items-mantenimiento">
+              <legend  className="form__legend">Costo de Mano de Obra</legend>
               <input
+                className="items__input"
                 placeholder="Costo de Mano de Obra"
                 type="number"
                 value={datos.costo_manodeobra}
@@ -195,9 +205,10 @@ export const Formulario_Mantenimiento = () => {
                 }
               />
             </fieldset>
-            <fieldset>
-              <legend>Fecha</legend>
+            <fieldset className="form__items-mantenimiento">
+              <legend  className="form__legend">Fecha</legend>
               <input
+                className="items__input"
                 type="date"
                 value={datos.fecha}
                 onChange={(e) => {
