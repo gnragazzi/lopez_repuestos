@@ -1,6 +1,7 @@
 package com.grupoing.servidor;
 
 import Clases.Camion;
+import Clases.Chofer;
 import Clases.Semirremolque;
 import Clases.Viaje;
 import com.sun.net.httpserver.HttpExchange;
@@ -42,26 +43,29 @@ public class manejadorViaje implements HttpHandler {
             LocalDate fecha_partida = LocalDate.parse(jsonobj.getString("fecha_partida"));
             LocalDate fecha_llegada = LocalDate.parse(jsonobj.getString("fecha_llegada"));
             LocalDate fecha_esperada = LocalDate.parse(jsonobj.getString("fecha_esperada"));
-            
+
             int kilometros_realizados = jsonobj.getInt("kilometros_realizados");
-            float costos_combustibles = (float )jsonobj.getDouble("costos_combustibles");
-            
+            float costos_combustibles = (float) jsonobj.getDouble("costos_combustibles");
+
             Camion camion = new Camion();
             //IDEALMENTE, BUSCAMOS EL CAMION EN LA BASE DE DATOS
             camion.setPatente(jsonobj.getString("camion"));
-            
+
             String destinos = jsonobj.getString("destinos");
             float peso = (float) jsonobj.getDouble("peso");
-            
+
             Semirremolque semirremolque = new Semirremolque();
             semirremolque.setPatente(jsonobj.getString("semirremolque"));
 
-            Viaje v = new Viaje(fecha_partida, fecha_llegada, fecha_esperada, kilometros_realizados, costos_combustibles, destinos,peso ,camion,semirremolque);
-            
-            
+            Chofer chofer = new Chofer();
+            chofer.setDni(jsonobj.getString("chofer"));
+
+            Viaje v = new Viaje(fecha_partida, fecha_llegada, fecha_esperada, kilometros_realizados, costos_combustibles, destinos, peso, camion, semirremolque, chofer);
+
             System.out.printf("Fecha partida: %s\n"
                     + "Fecha llegada: %s\nFecha Esperada: %s\n"
-                    + "Km realizados: %d\nCostos: %f\nDestinos: %s\npeso: %f\ncamion: %s,semirremolque: %s\n",
+                    + "Km realizados: %d\nCostos: %f\nDestinos: %s\npeso: %f"
+                    + "\ncamion: %s\nsemirremolque: %s\nchofer: %s\n",
                     v.getFecha_partida().toString(),
                     v.getFecha_llegada().toString(),
                     v.getFecha_esperada().toString(),
@@ -69,8 +73,9 @@ public class manejadorViaje implements HttpHandler {
                     v.getCostos_combustibles(),
                     v.getDestino(),
                     v.getPeso(),
-                    v.getCamion().getPatente(), 
-                    v.getSemirremolque().getPatente()
+                    v.getCamion().getPatente(),
+                    v.getSemirremolque().getPatente(),
+                    v.getChofer().getDni()
             );
             //MANDAR VIAJE A LA BASE DE DATOS...
             //CREAR HTTP RESPONSE

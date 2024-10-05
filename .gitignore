@@ -1,3 +1,4 @@
 */node_modules/
 servidor/target/*
 *.class
+servidor/src/main/java/Conexion

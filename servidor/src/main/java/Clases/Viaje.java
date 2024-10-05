@@ -6,10 +6,7 @@ import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;
 import java.time.LocalDate;
 
-/**
- *
- * @author Administrador
- */
+
 public class Viaje {
 
     @JsonDeserialize(using = LocalDateDeserializer.class)
@@ -27,8 +24,10 @@ public class Viaje {
     private float peso;
     private Camion camion;
     private Semirremolque semirremolque;
+    private Chofer chofer;
+    
 
-    public Viaje(LocalDate fecha_partida, LocalDate fecha_llegada, LocalDate fecha_esperada, int kilometros_realizados, float costos_combustibles, String destino, float peso, Camion camion, Semirremolque semirremolque) {
+    public Viaje(LocalDate fecha_partida, LocalDate fecha_llegada, LocalDate fecha_esperada, int kilometros_realizados, float costos_combustibles, String destino, float peso, Camion camion, Semirremolque semirremolque, Chofer chofer) {
         this.fecha_partida = fecha_partida;
         this.fecha_llegada = fecha_llegada;
         this.fecha_esperada = fecha_esperada;
@@ -38,6 +37,7 @@ public class Viaje {
         this.peso = peso;
         this.camion = camion;
         this.semirremolque = semirremolque;
+        this.chofer = chofer;
     }
 
     public Viaje() {
@@ -78,7 +78,11 @@ public class Viaje {
     public Semirremolque getSemirremolque() {
         return semirremolque;
     }
-
+    public Chofer getChofer(){
+        return chofer;
+    }
+    
+//STTERS
     public void setFecha_partida(LocalDate fecha_partida) {
         this.fecha_partida = fecha_partida;
     }
@@ -114,5 +118,10 @@ public class Viaje {
     public void setSemirremolque(Semirremolque semirremolque) {
         this.semirremolque = semirremolque;
     }
+
+    public void setChofer(Chofer chofer) {
+        this.chofer = chofer;
+    }
+    
 
 }
