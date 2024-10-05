@@ -2,6 +2,11 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
+
+
+
+
+
 export const Formulario_Mantenimiento = () => {
   const navegar = useNavigate();
   const [pantalla, setPantalla] = useState(0);

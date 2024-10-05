@@ -11,15 +11,15 @@ body{
   width: 100vw;
 }
 
-:is(.container__table,ul)::-webkit-scrollbar {
+:is(.container__table,ul,.form__mantenimiento)::-webkit-scrollbar {
   width: 12px;               /* width of the entire scrollbar */
 }
 
-:is(.container__table,ul)::-webkit-scrollbar-track {
+:is(.container__table,ul,.form__mantenimiento)::-webkit-scrollbar-track {
   background: transparent;        /* color of the tracking area */
 }
 
-:is(.container__table,ul)::-webkit-scrollbar-thumb {
+:is(.container__table,ul,.form__mantenimiento)::-webkit-scrollbar-thumb {
   background-color: rgba(187, 187, 202, 0.649);    /* color of the scroll thumb */
   border-radius: 20px;       /* roundness of the scroll thumb */
 }
@@ -475,33 +475,42 @@ ESTA ES UNA IDEA DE COMO TRABAJAR CON MODO OSCURO/CLARO
   width: 100%;
   display: flex;
   flex-flow: column nowrap;
-  justify-content: center;
-  align-items: center;
+  justify-content: start;
+  align-items: start;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding: 2vh 0 2vh 2vw;
 }
 
 
 .form__items-mantenimiento{
-  flex: 0 1 auto; /*El ultimo es el flex basis, que define el ancho de los elementos, y como es column es el largo en este caso*/
-  min-width: 20vw;
-  max-width: 100%;
-  margin-top: 5vh;
+  flex: 0 1 100%; /*El ultimo es el flex basis, que define el ancho de los elementos, y como es column es el largo en este caso*/
+  width: 50%;
   padding: 0 1vw 0 1vw;
-  border: 1px solid var(--color-de-seleccion-nav);
-  border-radius: 5px;
-  background: linear-gradient(#fff7,#fff7), transparent;
 }
 
 .form__legend{
   float: none;
   width: auto;
-  -left: 2vw;
-  font-size: 1.3rem;
-  color: var(--color-de-seleccion-nav)
+  font-size: 1rem;
+  color: var(--color-de-seleccion-nav);
 }
 
 .form__items-mantenimiento .items__input{
-  margin: 2vh 0 2vh 0;
+  margin: 0 0 1vh 0;
   width: 100%;
-  border-radius: 5px;
   background-color: transparent;
+  border-bottom: 1px solid #0003;
+}
+
+.form__items-mantenimiento .items__input:focus{
+  outline: 1px solid #0003;
+  outline-offset: 3px;
+  border: none;
+  border-radius: 5px;
+}
+
+
+.form__items-mantenimiento .input__textarea{
+  resize: auto;
 }
