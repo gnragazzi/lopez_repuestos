@@ -6,10 +6,7 @@
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
 }
 
-body{
-  height: 100vh;
-  width: 100vw;
-}
+
 
 :is(.container__table,ul,.form__mantenimiento)::-webkit-scrollbar {
   width: 12px;               /* width of the entire scrollbar */
@@ -29,7 +26,7 @@ body{
   /* COLORES */
   --fondo-container: #f7f2ccff;
   --fondo-barra-superior: #EFDAAC;
-  --fondo-barra-lateral: #EFDAAC;
+  --fondo-barra-lateral: #FFEFBD;
   --fondo-cuerpo: #F8F2E8;
   --fondo-barra-hover: #202020;
   --fondo-borde-logo: #ae8c5c;
@@ -55,6 +52,16 @@ body{
 
 /*-----------------------PROPIEDADES DE ROOT y grid items*/
 
+
+
+body{
+  height: 100vh;
+  width: 100vw;
+  
+}
+
+
+
 #root{
   width: 100vw;
   height: 100vh;
@@ -65,6 +72,8 @@ body{
   gap: 0;
   grid-template-areas: "header header"
    "nav main";
+   background: linear-gradient(#fff9,#fff9);
+   background-color: var(--fondo-container);
 }
 
 
@@ -91,7 +100,6 @@ header{
   flex-basis: 100%; /*es el min-width de los flexitems.*/
   min-height: var(--altura-barra-superior);
   max-height: var(--altura-barra-superior);
-  background-color: var(--fondo-barra-superior);
   text-transform: uppercase;
   text-align: end;
   z-index: 10;
@@ -130,6 +138,7 @@ header{
   display: flex;
   flex-flow: row nowrap;
   place-items: center;
+  background: linear-gradient(to left,#fff9,var(--fondo-barra-lateral)), transparent;
 }
 
 /*Esto no se usa si no queremos el label que despliegue el menú
@@ -154,7 +163,6 @@ header{
   height: 100%;
   display: flex;
   flex-flow: row nowrap;
-  background-color: var(--fondo-barra-lateral);
   justify-content: center;
   padding-top:10vh;
 }
@@ -290,7 +298,6 @@ main{
   display: flex;
   flex-flow: row nowrap;
   background: linear-gradient(#fff9,#fff9),url(./assets/imagen_fondo/fondo_lopez.png) center / contain no-repeat;
-  background-color: var(--fondo-container);
   z-index: 10;
   justify-content: center;
   padding-left: 0 !important;
