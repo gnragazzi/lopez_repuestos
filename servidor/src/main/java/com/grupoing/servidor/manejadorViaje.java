@@ -1,6 +1,7 @@
 package com.grupoing.servidor;
 
 import Clases.Camion;
+import Clases.Semirremolque;
 import Clases.Viaje;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
@@ -50,27 +51,33 @@ public class manejadorViaje implements HttpHandler {
             camion.setPatente(jsonobj.getString("camion"));
             
             String destinos = jsonobj.getString("destinos");
+            float peso = (float) jsonobj.getDouble("peso");
+            
+            Semirremolque semirremolque = new Semirremolque();
+            semirremolque.setPatente(jsonobj.getString("semirremolque"));
 
-            Viaje v = new Viaje(fecha_partida, fecha_llegada, fecha_esperada, kilometros_realizados, costos_combustibles, destinos, camion);
+            Viaje v = new Viaje(fecha_partida, fecha_llegada, fecha_esperada, kilometros_realizados, costos_combustibles, destinos,peso ,camion,semirremolque);
             
             
             System.out.printf("Fecha partida: %s\n"
                     + "Fecha llegada: %s\nFecha Esperada: %s\n"
-                    + "Km realizados: %d\nCostos: %f\nDestinos: %s\ncamion: %s",
+                    + "Km realizados: %d\nCostos: %f\nDestinos: %s\npeso: %f\ncamion: %s,semirremolque: %s\n",
                     v.getFecha_partida().toString(),
                     v.getFecha_llegada().toString(),
                     v.getFecha_esperada().toString(),
                     v.getKilometros_realizados(),
                     v.getCostos_combustibles(),
-                    v.getDestinos(),
-                    v.getCamion().getPatente() 
+                    v.getDestino(),
+                    v.getPeso(),
+                    v.getCamion().getPatente(), 
+                    v.getSemirremolque().getPatente()
             );
             //MANDAR VIAJE A LA BASE DE DATOS...
             //CREAR HTTP RESPONSE
             String response = "Viaje Cargado...";
-            he.sendResponseHeaders(200, response.toString().getBytes().length);
+            he.sendResponseHeaders(200, response.getBytes().length);
             OutputStream os = he.getResponseBody();
-            os.write(response.toString().getBytes());
+            os.write(response.getBytes());
             os.close();
         } catch (JSONException ex) {
             System.out.println("ERROR: " + ex);
