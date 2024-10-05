@@ -5,15 +5,24 @@
 package IDaoImpl;
 
 import Clases.Viaje;
+import Conexion.Conexion;
 import InterfacesDAO.IViajeDAO;
+import java.sql.Connection;
 import java.util.ArrayList;
 
 /**
  *
  * @author clauz
  */
-public class ViajeIDAOImpl implements IViajeDAO{
-
+public class ViajeDAOImpl implements IViajeDAO{
+    
+    private Connection conexion;
+    
+    
+    public ViajeDAOImpl() throws ClassNotFoundException {
+         this.conexion = Conexion.getInstancia().getConexion();;
+    }
+    
     @Override
     public void create(Viaje viaje) throws Exception {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody

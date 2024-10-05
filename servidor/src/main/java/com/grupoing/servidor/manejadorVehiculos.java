@@ -6,6 +6,8 @@ import Clases.Semirremolque;
 import Clases.Tarjeta_Ruta;
 import Clases.Tecnica;
 import Clases.Vehiculo;
+import IDaoImpl.CamionDAOImpl;
+import IDaoImpl.SemirremolqueDAOImpl;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 import java.io.IOException;
@@ -24,6 +26,9 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;
 import java.time.LocalDate;
+import java.util.Iterator;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class manejadorVehiculos implements HttpHandler {
 
@@ -39,7 +44,6 @@ public class manejadorVehiculos implements HttpHandler {
             "R123",
             "360",
             100000,
-            null,
             null);
 
     Semirremolque semirremolque1 = new Semirremolque(
@@ -74,9 +78,28 @@ public class manejadorVehiculos implements HttpHandler {
 
         ArrayList<Vehiculo> vehiculos = new ArrayList<>();
         if (tipo == null) {
-            //Es decir, en este caso no se quiso acceder a ningún tipo de vehículo en particular, y se busca camiones y semiremolques por igual
-            vehiculos.add(camion1);
-            vehiculos.add(semirremolque1);
+            CamionDAOImpl camionDAO;
+            try {
+                camionDAO = new CamionDAOImpl();
+                ArrayList<Camion> camiones= camionDAO.list();
+                SemirremolqueDAOImpl semirremolqueDAO = new SemirremolqueDAOImpl();
+                ArrayList<Semirremolque> semirremolques = semirremolqueDAO.list();
+                
+                Iterator<Camion> iteratorCamion = camiones.iterator();
+                while (iteratorCamion.hasNext()) {
+                    vehiculos.add(iteratorCamion.next());
+                }
+                
+                Iterator<Semirremolque> iteratorSemirremolque = semirremolques.iterator();
+                while (iteratorSemirremolque.hasNext()) {
+                    vehiculos.add(iteratorSemirremolque.next());
+                }
+            
+            } catch (ClassNotFoundException ex) {
+                Logger.getLogger(manejadorVehiculos.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (Exception ex) {
+                Logger.getLogger(manejadorVehiculos.class.getName()).log(Level.SEVERE, null, ex);
+            }
         } else if (tipo.equalsIgnoreCase("camion")) {
             //en este caso, solo se buscan camiones
             //se debería buscar la lista completa de camiones en la BD
@@ -89,9 +112,7 @@ public class manejadorVehiculos implements HttpHandler {
         // send response
 
         ObjectWriter ow = new ObjectMapper().writer().withDefaultPrettyPrinter();
-
         String response = ow.writeValueAsString(vehiculos);
-
         he.sendResponseHeaders(200, response.toString().getBytes().length);
         OutputStream os = he.getResponseBody();
         os.write(response.toString().getBytes());

@@ -5,7 +5,9 @@
 package IDaoImpl;
 
 import Clases.Mecanico;
+import Conexion.Conexion;
 import InterfacesDAO.IMecanicoDAO;
+import java.sql.Connection;
 import java.util.ArrayList;
 
 /**
@@ -13,7 +15,12 @@ import java.util.ArrayList;
  * @author clauz
  */
 public class MecanicoDAOImpl implements IMecanicoDAO{
-
+    
+    private Connection conexion;
+    
+    public MecanicoDAOImpl() throws ClassNotFoundException {
+         this.conexion = Conexion.getInstancia().getConexion();;
+    }
     @Override
     public void create(Mecanico mecanico) throws Exception {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody

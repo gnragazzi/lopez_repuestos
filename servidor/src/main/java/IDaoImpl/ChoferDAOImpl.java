@@ -5,12 +5,19 @@
 package IDaoImpl;
 
 import Clases.Chofer;
+import Conexion.Conexion;
 import InterfacesDAO.IChoferDAO;
+import java.sql.Connection;
 import java.util.ArrayList;
 
 
 public class ChoferDAOImpl implements IChoferDAO{
-
+    
+    private Connection conexion;
+    
+    public ChoferDAOImpl() throws ClassNotFoundException {
+         this.conexion = Conexion.getInstancia().getConexion();;
+    }
     @Override
     public void create(Chofer chofer) throws Exception {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody

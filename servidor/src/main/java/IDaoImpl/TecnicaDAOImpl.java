@@ -5,7 +5,9 @@
 package IDaoImpl;
 
 import Clases.Tecnica;
+import Conexion.Conexion;
 import InterfacesDAO.ITecnicaDAO;
+import java.sql.Connection;
 import java.util.ArrayList;
 
 /**
@@ -13,7 +15,12 @@ import java.util.ArrayList;
  * @author clauz
  */
 public class TecnicaDAOImpl implements ITecnicaDAO{
-
+    
+    private Connection conexion;
+    
+    public TecnicaDAOImpl() throws ClassNotFoundException {
+         this.conexion = Conexion.getInstancia().getConexion();;
+    }
     @Override
     public void create(Tecnica tecnica) throws Exception {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
