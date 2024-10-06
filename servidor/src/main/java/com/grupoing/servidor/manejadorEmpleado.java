@@ -1,11 +1,14 @@
 package com.grupoing.servidor;
 
 import Clases.Camion;
+import Clases.Chofer;
+import Clases.Empleado;
 import Clases.Seguro;
 import Clases.Semirremolque;
 import Clases.Tarjeta_Ruta;
 import Clases.Tecnica;
 import Clases.Vehiculo;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 import java.io.IOException;
@@ -25,39 +28,11 @@ import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;
 import java.time.LocalDate;
 
-public class manejadorVehiculos implements HttpHandler {
-
-    @JsonDeserialize(using = LocalDateDeserializer.class)
-    @JsonSerialize(using = LocalDateSerializer.class)
-    LocalDate fecha = LocalDate.parse("2024-08-15");
-
-    Camion camion1 = new Camion("Scania", "WUB 750",
-            new Seguro(fecha, fecha, "Seguro Metal", 51251, "todo_riesgo"),
-            new Tarjeta_Ruta(fecha, fecha, null),
-            new Tecnica(fecha, fecha, "San Luis", null),
-            null,
-            "R123",
-            "360",
-            100000,
-            null,
-            null);
-
-    Semirremolque semirremolque1 = new Semirremolque(
-            "Patito",
-            "ABC 321",
-            new Seguro(fecha, fecha, "Seguro Madera", 65466, "algún riesgo"),
-            new Tarjeta_Ruta(fecha, fecha, null),
-            new Tecnica(fecha, fecha, "San Luis", null),
-            null,
-            "Tolva",
-            "Cemento",
-            null
-    );
+public class manejadorEmpleado implements HttpHandler {
 
     @Override
 
     public void handle(HttpExchange he) throws IOException {
-//        System.out.println("HOLA"); 
         he.getResponseHeaders().add("Access-Control-Allow-Origin", "*");
         if (he.getRequestMethod().equalsIgnoreCase("OPTIONS")) {
             he.getResponseHeaders().add("Access-Control-Allow-Methods", "GET, OPTIONS");
@@ -65,44 +40,60 @@ public class manejadorVehiculos implements HttpHandler {
             he.sendResponseHeaders(204, -1);
             return;
         }
-        // parse request
-        Map<String, Object> parameters = new HashMap<String, Object>();
-        URI requestedUri = he.getRequestURI();
-        String query = requestedUri.getRawQuery();
-        parseQuery(query, parameters);
-        String tipo = (String) parameters.get("tipo");
+        String método = he.getRequestMethod();
+        String response;
 
-        ArrayList<Vehiculo> vehiculos = new ArrayList<>();
-        if (tipo == null) {
-            //Es decir, en este caso no se quiso acceder a ningún tipo de vehículo en particular, y se busca camiones y semiremolques por igual
-            vehiculos.add(camion1);
-            vehiculos.add(semirremolque1);
-        } else if (tipo.equalsIgnoreCase("camion")) {
-            //en este caso, solo se buscan camiones
-            //se debería buscar la lista completa de camiones en la BD
-            vehiculos.add(camion1);
-            Camion c2 = new Camion();
-            c2.setPatente("REC 321");
-            vehiculos.add(c2); 
-            
-        } else if (tipo.equalsIgnoreCase("semirremolque")) { 
-            vehiculos.add(semirremolque1); 
+        if (método.equalsIgnoreCase("get")) {
+            response = manejarGet(he);
+        } else if (método.equalsIgnoreCase("post")) {
+            response = manejarPost(he);
         } else {
-            //entonces está intentando acceder a un tipo incorrecto, por lo que el mensaje de respuesta debería ser 404
+            response = "MÉTODO NO IMPLEMENTADO";
         }
-        // send response
 
-        ObjectWriter ow = new ObjectMapper().writer().withDefaultPrettyPrinter();
-
-        String response = ow.writeValueAsString(vehiculos);
-
+        // parse request 
         he.sendResponseHeaders(200, response.toString().getBytes().length);
         OutputStream os = he.getResponseBody();
         os.write(response.toString().getBytes());
         os.close();
     }
 
-    public static void parseQuery(String query, Map<String, Object> parameters) throws UnsupportedEncodingException {
+    public String manejarGet(HttpExchange he) throws UnsupportedEncodingException, JsonProcessingException {
+        
+        String tipo = obtenerParámetros(he.getRequestURI(),"tipo");
+
+        ArrayList<Empleado> empleados = new ArrayList<>();
+        if (tipo == null) {
+            //Es decir, en este caso no se quiso acceder a ningún tipo de empleado en particular, y se busca camiones y semiremolques por igual
+        } else if (tipo.equalsIgnoreCase("chofer")) {
+            //en este caso, solo se buscan choferes
+            //se debería buscar la lista completa de camiones en la BD
+            Chofer ch1 = new Chofer();
+            ch1.setDni("31999766");
+            Chofer ch2 = new Chofer();
+            ch2.setDni("33069732");
+            empleados.add(ch1);
+            empleados.add(ch2);
+
+        } else if (tipo.equalsIgnoreCase("mecánico")) {
+            // implementar lógica de búsqueda de mecánicos
+        } else {
+            //entonces está intentando acceder a un tipo incorrecto, por lo que el mensaje de respuesta debería ser 404
+        }
+        // send response
+
+        ObjectWriter ow = new ObjectMapper().writer().withDefaultPrettyPrinter();
+        return ow.writeValueAsString(empleados);
+    }
+
+    public String manejarPost(HttpExchange he) {
+        //IMPLEMENTAR MÉTODOS PARA SUBIR 
+        return "POST REQUEST";
+    }
+
+    public String obtenerParámetros(URI requestUri, String clave) throws UnsupportedEncodingException{
+        Map<String, Object> parameters = new HashMap<String, Object>();
+        String query = requestUri.getRawQuery();
         if (query != null) {
             String pairs[] = query.split("[&]");
             for (String pair : pairs) {
@@ -131,5 +122,6 @@ public class manejadorVehiculos implements HttpHandler {
                 }
             }
         }
-    }
+        return (String) parameters.get(clave);
+    } 
 }

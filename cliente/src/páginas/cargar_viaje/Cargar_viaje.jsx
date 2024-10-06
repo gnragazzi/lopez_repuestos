@@ -1,4 +1,4 @@
-import { useEffect, useReducer } from "react";
+import { useReducer } from "react";
 import Cargar_viaje_1 from "./Cargar_viaje_1";
 import Cargar_viaje_2 from "./Cargar_viaje_2";
 import Cargar_viaje_3 from "./Cargar_viaje_3";
@@ -7,15 +7,21 @@ import { useNavigate } from "react-router-dom";
 
 const PROXIMA_PANTALLA = 0;
 const PANTALLA_ANTERIOR = 1;
-const CARGAR_LISTA_VEHICULOS = 2;
-const SELECCIONAR_VEHICULO = 3;
-const SELECCIONAR_DESTINO = 4;
-const SELECCIONAR_KILOMETROS_REALIZADOS = 5;
-const SELECCIONAR_COSTO_COMBUSTIBLE = 6;
-const SELECCIONAR_FECHA_PARTIDA = 7;
-const SELECCIONAR_FECHA_LLEGADA = 8;
-const SELECCIONAR_FECHA_ESPERADA = 9;
-const RESETEAR_CUERPO_VIAJE = 10;
+const CARGAR_LISTA_CAMION = 2;
+const CARGAR_LISTA_SEMIRREMOLQUE = 3;
+const CARGAR_LISTA_CHOFER = 4;
+const SELECCIONAR_VEHICULO = 5;
+const SELECCIONAR_DESTINO = 6;
+const SELECCIONAR_KILOMETROS_REALIZADOS = 7;
+const SELECCIONAR_COSTO_COMBUSTIBLE = 8;
+const SELECCIONAR_FECHA_PARTIDA = 9;
+const SELECCIONAR_FECHA_LLEGADA = 10;
+const SELECCIONAR_FECHA_ESPERADA = 11;
+const SELECCIONAR_PESO = 12;
+const SELECCIONAR_SEMIRREMOLQUE = 13;
+const SELECCIONAR_CHOFER = 14;
+const RESETEAR_CUERPO_VIAJE = 15;
+
 const estadoInicial = {
   cuerpo_cargar_viaje: {
     fecha_partida: new Date().toISOString().substring(0, 10),
@@ -25,9 +31,14 @@ const estadoInicial = {
     costos_combustibles: 0,
     destinos: "",
     camion: "",
+    peso: 0,
+    semirremolque: "",
   },
-  lista_vehiculos: [],
+  lista_camiones: [],
+  lista_semirremolques: [],
+  lista_choferes: [],
   pantalla: 0,
+  chofer: "",
 };
 
 const reducer = (estado, accion) => {
@@ -41,8 +52,17 @@ const reducer = (estado, accion) => {
     case PANTALLA_ANTERIOR: {
       return { ...estado, pantalla: estado.pantalla - 1 };
     }
-    case CARGAR_LISTA_VEHICULOS: {
-      return { ...estado, lista_vehiculos: accion.payload };
+    // case CARGAR_LISTA_TEMPORAL: {
+    //   return { ...estado, lista_temporal: {...estado.lista_temporal,accion.payload} };
+    // }
+    case CARGAR_LISTA_CAMION: {
+      return { ...estado, lista_camiones: accion.payload };
+    }
+    case CARGAR_LISTA_CHOFER: {
+      return { ...estado, lista_choferes: accion.payload };
+    }
+    case CARGAR_LISTA_SEMIRREMOLQUE: {
+      return { ...estado, lista_semirremolques: accion.payload };
     }
     case SELECCIONAR_VEHICULO: {
       const patente = accion.payload;
@@ -114,6 +134,33 @@ const reducer = (estado, accion) => {
         },
       };
     }
+    case SELECCIONAR_PESO: {
+      return {
+        ...estado,
+        cuerpo_cargar_viaje: {
+          ...estado.cuerpo_cargar_viaje,
+          peso: accion.payload,
+        },
+      };
+    }
+    case SELECCIONAR_CHOFER: {
+      return {
+        ...estado,
+        cuerpo_cargar_viaje: {
+          ...estado.cuerpo_cargar_viaje,
+          chofer: accion.payload,
+        },
+      };
+    }
+    case SELECCIONAR_SEMIRREMOLQUE: {
+      return {
+        ...estado,
+        cuerpo_cargar_viaje: {
+          ...estado.cuerpo_cargar_viaje,
+          semirremolque: accion.payload,
+        },
+      };
+    }
     case RESETEAR_CUERPO_VIAJE:
       return estadoInicial;
 
@@ -127,9 +174,8 @@ export const Cargar_viaje = () => {
   const navegar = useNavigate();
 
   const enviarFormulario = () => {
-    console.log("Hola Ahí");
     axios
-      .post("http://localhost:8080/cargar_viaje", estado.cuerpo_cargar_viaje, {
+      .post("http://localhost:8080/viajes", estado.cuerpo_cargar_viaje, {
         headers: { "content-type": "application/json" },
       })
       .then((res) => {
@@ -138,35 +184,13 @@ export const Cargar_viaje = () => {
         navegar("/viajes");
       });
   };
-  useEffect(() => {
-    axios
-      .get("http://localhost:8080/vehiculos?tipo=camion", {
-        headers: {
-          Accept: "application/json",
-        },
-      })
-      .then((res) => {
-        dispatch({ type: CARGAR_LISTA_VEHICULOS, payload: res.data });
-      })
-      .catch((error) => console.log(error));
-  }, []);
+  // //HAY QUE TENER ALGUNA PANTALLA PARA CUANDO NO HAYA CAMIONES Y/O SEMIRREMOLQUES EN EL PERIODO DETERMINADO
+  // // if (estado.lista_vehiculos.length < 1) {
+  // //   return <p>No hay camiones cargados</p>;
+  // // }
   return (
     <>
-      {estado.lista_vehiculos.length < 1 && <p>No hay camiones cargados</p>}
       {estado.pantalla == 0 && (
-        <Cargar_viaje_1
-          estado={estado}
-          dispatch={dispatch}
-          acciones={{
-            PROXIMA_PANTALLA,
-            SELECCIONAR_VEHICULO,
-            SELECCIONAR_DESTINO,
-            SELECCIONAR_KILOMETROS_REALIZADOS,
-            SELECCIONAR_COSTO_COMBUSTIBLE,
-          }}
-        />
-      )}
-      {estado.pantalla == 1 && (
         <Cargar_viaje_2
           dispatch={dispatch}
           acciones={{
@@ -177,6 +201,22 @@ export const Cargar_viaje = () => {
             SELECCIONAR_FECHA_ESPERADA,
           }}
           estado={estado}
+        />
+      )}
+      {estado.pantalla == 1 && (
+        <Cargar_viaje_1
+          estado={estado}
+          dispatch={dispatch}
+          acciones={{
+            PROXIMA_PANTALLA,
+            SELECCIONAR_VEHICULO,
+            SELECCIONAR_DESTINO,
+            SELECCIONAR_KILOMETROS_REALIZADOS,
+            SELECCIONAR_COSTO_COMBUSTIBLE,
+            CARGAR_LISTA_CAMION,
+            CARGAR_LISTA_CHOFER,
+            CARGAR_LISTA_SEMIRREMOLQUE,
+          }}
         />
       )}
       {estado.pantalla == 2 && (
