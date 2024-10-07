@@ -1,8 +1,7 @@
-import { Outlet } from "react-router-dom";
 import { Link } from "react-router-dom";
-import React, {useState} from 'react';
-import 'bootstrap/dist/css/bootstrap.min.css';
-import {Modal, ModalBody, ModalHeader, ModalFooter} from 'reactstrap';
+import { useState } from "react";
+import "bootstrap/dist/css/bootstrap.min.css";
+import { Modal, ModalBody, ModalHeader, ModalFooter } from "reactstrap";
 import { Formulario_Mantenimiento } from "./Formulario_Mantenimiento";
 
 function Mantenimiento() {
@@ -35,61 +34,69 @@ function Mantenimiento() {
   const [modalInsertar, setModalInsertar] = useState(false);
 
   const [paisSeleccionado, setPaisSeleccionado] = useState({
-    id: '',
-    nombre: '',
-    minutos: ''
+    id: "",
+    nombre: "",
+    minutos: "",
   });
 
-  const seleccionarPais=(elemento, caso)=>{
-setPaisSeleccionado(elemento);
-(caso==='Editar')?setModalEditar(true):setModalEliminar(true)
-  }
+  const seleccionarPais = (elemento, caso) => {
+    setPaisSeleccionado(elemento);
+    caso === "Editar" ? setModalEditar(true) : setModalEliminar(true);
+  };
 
-  const handleChange=e=>{
-    const {name, value}=e.target;
-    setPaisSeleccionado((prevState)=>({
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setPaisSeleccionado((prevState) => ({
       ...prevState,
-      [name]: value
+      [name]: value,
     }));
-  }
+  };
 
-  const editar=()=>{
-    var dataNueva=data;
-    dataNueva.map(pais=>{
-      if(pais.id===paisSeleccionado.id){
-        pais.minutos=paisSeleccionado.minutos;
-        pais.nombre=paisSeleccionado.nombre;
+  const editar = () => {
+    var dataNueva = data;
+    dataNueva.map((pais) => {
+      if (pais.id === paisSeleccionado.id) {
+        pais.minutos = paisSeleccionado.minutos;
+        pais.nombre = paisSeleccionado.nombre;
       }
     });
     setData(dataNueva);
     setModalEditar(false);
-  }
+  };
 
-  const eliminar =()=>{
-    setData(data.filter(pais=>pais.id!==paisSeleccionado.id));
+  const eliminar = () => {
+    setData(data.filter((pais) => pais.id !== paisSeleccionado.id));
     setModalEliminar(false);
-  }
+  };
 
-  const abrirModalInsertar=()=>{
-    setPaisSeleccionado(null);
-    setModalInsertar(true);
-  }
+  // const abrirModalInsertar = () => {
+  //   setPaisSeleccionado(null);
+  //   setModalInsertar(true);
+  // };
 
-  const insertar =()=>{
-    var valorInsertar=paisSeleccionado;
-    valorInsertar.id=data[data.length-1].id+1;
+  const insertar = () => {
+    var valorInsertar = paisSeleccionado;
+    valorInsertar.id = data[data.length - 1].id + 1;
     var dataNueva = data;
     dataNueva.push(valorInsertar);
     setData(dataNueva);
     setModalInsertar(false);
-  }
+  };
 
   return (
     <div className="App">
       <h2>Mantenimientos</h2>
       <br />
-    <Link to="cargar_mantenimiento" className="enlace_cargar_mantenimiento"><button className="btn btn-success" onClick={Formulario_Mantenimiento}>Insertar</button></Link>
-    <div className="container__table">
+      <Link
+        to="cargar_mantenimiento"
+        className="enlace_cargar_mantenimiento"
+        rel="noopener noreferrer"
+      >
+        <button className="btn btn-success" onClick={Formulario_Mantenimiento}>
+          Insertar
+        </button>
+      </Link>
+      <div className="container__table">
         <table className="table table-bordered">
           <thead>
             <tr>
@@ -101,17 +108,29 @@ setPaisSeleccionado(elemento);
             </tr>
           </thead>
           <tbody>
-            {data.map(elemento=>(
-              <tr>
+            {data.map((elemento) => (
+              <tr key={elemento.id}>
                 <td>{elemento.id}</td>
                 <td>{elemento.nombre}</td>
                 <td>{elemento.minutos}</td>
                 <td>gfd</td>
-                <td><button className="btn btn-primary" onClick={()=>seleccionarPais(elemento, 'Editar')}>Editar</button> {"   "} 
-                <button className="btn btn-danger" onClick={()=>seleccionarPais(elemento, 'Eliminar')}>Eliminar</button></td>
+                <td>
+                  <button
+                    className="btn btn-primary"
+                    onClick={() => seleccionarPais(elemento, "Editar")}
+                  >
+                    Editar
+                  </button>{" "}
+                  {"   "}
+                  <button
+                    className="btn btn-danger"
+                    onClick={() => seleccionarPais(elemento, "Eliminar")}
+                  >
+                    Eliminar
+                  </button>
+                </td>
               </tr>
-            ))
-            }
+            ))}
           </tbody>
         </table>
       </div>
@@ -155,38 +174,37 @@ setPaisSeleccionado(elemento);
           </div>
         </ModalBody>
         <ModalFooter>
-          <button className="btn btn-primary" onClick={()=>editar()}>
+          <button className="btn btn-primary" onClick={() => editar()}>
             Actualizar
           </button>
           <button
             className="btn btn-danger"
-            onClick={()=>setModalEditar(false)}
+            onClick={() => setModalEditar(false)}
           >
             Cancelar
           </button>
         </ModalFooter>
       </Modal>
 
-
       <Modal isOpen={modalEliminar}>
         <ModalBody>
-          Estás Seguro que deseas eliminar el país {paisSeleccionado && paisSeleccionado.nombre}
+          Estás Seguro que deseas eliminar el país{" "}
+          {paisSeleccionado && paisSeleccionado.nombre}
         </ModalBody>
         <ModalFooter>
-          <button className="btn btn-danger" onClick={()=>eliminar()}>
+          <button className="btn btn-danger" onClick={() => eliminar()}>
             Sí
           </button>
           <button
             className="btn btn-secondary"
-            onClick={()=>setModalEliminar(false)}
+            onClick={() => setModalEliminar(false)}
           >
             No
           </button>
         </ModalFooter>
       </Modal>
 
-
-        <Modal isOpen={modalInsertar}>
+      <Modal isOpen={modalInsertar}>
         <ModalHeader>
           <div>
             <h3>Insertar País</h3>
@@ -200,7 +218,7 @@ setPaisSeleccionado(elemento);
               readOnly
               type="text"
               name="id"
-              value={data[data.length-1].id+1}
+              value={data[data.length - 1].id + 1}
             />
             <br />
 
@@ -209,7 +227,7 @@ setPaisSeleccionado(elemento);
               className="form-control"
               type="text"
               name="nombre"
-              value={paisSeleccionado ? paisSeleccionado.nombre: ''}
+              value={paisSeleccionado ? paisSeleccionado.nombre : ""}
               onChange={handleChange}
             />
             <br />
@@ -219,20 +237,19 @@ setPaisSeleccionado(elemento);
               className="form-control"
               type="text"
               name="minutos"
-              value={paisSeleccionado ? paisSeleccionado.minutos: ''}
+              value={paisSeleccionado ? paisSeleccionado.minutos : ""}
               onChange={handleChange}
             />
             <br />
           </div>
         </ModalBody>
         <ModalFooter>
-          <button className="btn btn-primary"
-          onClick={()=>insertar()}>
+          <button className="btn btn-primary" onClick={() => insertar()}>
             Insertar
           </button>
           <button
             className="btn btn-danger"
-            onClick={()=>setModalInsertar(false)}
+            onClick={() => setModalInsertar(false)}
           >
             Cancelar
           </button>
