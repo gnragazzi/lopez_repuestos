@@ -52,15 +52,15 @@ public class manejadorEmpleado implements HttpHandler {
         }
 
         // parse request 
-        he.sendResponseHeaders(200, response.toString().getBytes().length);
+        he.sendResponseHeaders(200, response.getBytes().length);
         OutputStream os = he.getResponseBody();
-        os.write(response.toString().getBytes());
+        os.write(response.getBytes());
         os.close();
     }
 
     public String manejarGet(HttpExchange he) throws UnsupportedEncodingException, JsonProcessingException {
-        
-        String tipo = obtenerParámetros(he.getRequestURI(),"tipo");
+
+        String tipo = obtenerParámetros(he.getRequestURI(), "tipo");
 
         ArrayList<Empleado> empleados = new ArrayList<>();
         if (tipo == null) {
@@ -72,8 +72,14 @@ public class manejadorEmpleado implements HttpHandler {
             ch1.setDni("31999766");
             Chofer ch2 = new Chofer();
             ch2.setDni("33069732");
+            Chofer ch3 = new Chofer();
+            ch3.setDni("31999999");
+            Chofer ch4 = new Chofer();
+            ch4.setDni("35703559");
             empleados.add(ch1);
             empleados.add(ch2);
+            empleados.add(ch3); 
+            empleados.add(ch4);
 
         } else if (tipo.equalsIgnoreCase("mecánico")) {
             // implementar lógica de búsqueda de mecánicos
@@ -91,7 +97,7 @@ public class manejadorEmpleado implements HttpHandler {
         return "POST REQUEST";
     }
 
-    public String obtenerParámetros(URI requestUri, String clave) throws UnsupportedEncodingException{
+    public String obtenerParámetros(URI requestUri, String clave) throws UnsupportedEncodingException {
         Map<String, Object> parameters = new HashMap<String, Object>();
         String query = requestUri.getRawQuery();
         if (query != null) {
@@ -123,5 +129,5 @@ public class manejadorEmpleado implements HttpHandler {
             }
         }
         return (String) parameters.get(clave);
-    } 
+    }
 }

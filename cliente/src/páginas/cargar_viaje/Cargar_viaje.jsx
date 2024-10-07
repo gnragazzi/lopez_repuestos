@@ -1,7 +1,11 @@
-import { useReducer } from "react";
+import { useEffect, useReducer } from "react";
 import Cargar_viaje_1 from "./Cargar_viaje_1";
 import Cargar_viaje_2 from "./Cargar_viaje_2";
 import Cargar_viaje_3 from "./Cargar_viaje_3";
+import Cargar_viaje_4 from "./Cargar_viaje_4";
+import Cargar_viaje_5 from "./Cargar_viaje_5";
+import Cargar_viaje_6 from "./Cargar_viaje_6";
+
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
@@ -21,6 +25,7 @@ const SELECCIONAR_PESO = 12;
 const SELECCIONAR_SEMIRREMOLQUE = 13;
 const SELECCIONAR_CHOFER = 14;
 const RESETEAR_CUERPO_VIAJE = 15;
+const CARGAR_FILTROS = 16;
 
 const estadoInicial = {
   cuerpo_cargar_viaje: {
@@ -33,7 +38,9 @@ const estadoInicial = {
     camion: "",
     peso: 0,
     semirremolque: "",
+    chofer: "",
   },
+  filtros: [],
   lista_camiones: [],
   lista_semirremolques: [],
   lista_choferes: [],
@@ -44,7 +51,6 @@ const estadoInicial = {
 const reducer = (estado, accion) => {
   switch (accion.type) {
     case PROXIMA_PANTALLA: {
-      console.log(accion.payload);
       return accion.payload.includes(false)
         ? estado
         : { ...estado, pantalla: estado.pantalla + 1 };
@@ -106,7 +112,12 @@ const reducer = (estado, accion) => {
         },
       };
     }
-
+    case CARGAR_FILTROS: {
+      return {
+        ...estado,
+        filtros: accion.payload,
+      };
+    }
     case SELECCIONAR_FECHA_PARTIDA: {
       return {
         ...estado,
@@ -188,14 +199,16 @@ export const Cargar_viaje = () => {
   // // if (estado.lista_vehiculos.length < 1) {
   // //   return <p>No hay camiones cargados</p>;
   // // }
+  useEffect(() => {
+    dispatch({ type: RESETEAR_CUERPO_VIAJE });
+  }, []);
   return (
     <>
       {estado.pantalla == 0 && (
-        <Cargar_viaje_2
+        <Cargar_viaje_1
           dispatch={dispatch}
           acciones={{
             PROXIMA_PANTALLA,
-            PANTALLA_ANTERIOR,
             SELECCIONAR_FECHA_PARTIDA,
             SELECCIONAR_FECHA_LLEGADA,
             SELECCIONAR_FECHA_ESPERADA,
@@ -204,11 +217,13 @@ export const Cargar_viaje = () => {
         />
       )}
       {estado.pantalla == 1 && (
-        <Cargar_viaje_1
+        <Cargar_viaje_2
           estado={estado}
           dispatch={dispatch}
           acciones={{
+            PANTALLA_ANTERIOR,
             PROXIMA_PANTALLA,
+            CARGAR_FILTROS,
             SELECCIONAR_VEHICULO,
             SELECCIONAR_DESTINO,
             SELECCIONAR_KILOMETROS_REALIZADOS,
@@ -221,8 +236,45 @@ export const Cargar_viaje = () => {
       )}
       {estado.pantalla == 2 && (
         <Cargar_viaje_3
-          cuerpo={estado.cuerpo_cargar_viaje}
-          lista_vehiculos={estado.lista_vehiculos}
+          estado={estado}
+          dispatch={dispatch}
+          acciones={{
+            SELECCIONAR_SEMIRREMOLQUE,
+            PROXIMA_PANTALLA,
+            PANTALLA_ANTERIOR,
+            CARGAR_LISTA_SEMIRREMOLQUE,
+          }}
+        />
+      )}
+      {estado.pantalla == 3 && (
+        <Cargar_viaje_4
+          estado={estado}
+          dispatch={dispatch}
+          acciones={{
+            PROXIMA_PANTALLA,
+            PANTALLA_ANTERIOR,
+            CARGAR_LISTA_CHOFER,
+            SELECCIONAR_CHOFER,
+          }}
+        />
+      )}
+      {estado.pantalla == 4 && (
+        <Cargar_viaje_5
+          estado={estado}
+          dispatch={dispatch}
+          acciones={{
+            PROXIMA_PANTALLA,
+            PANTALLA_ANTERIOR,
+            SELECCIONAR_DESTINO,
+            SELECCIONAR_KILOMETROS_REALIZADOS,
+            SELECCIONAR_COSTO_COMBUSTIBLE,
+            SELECCIONAR_PESO,
+          }}
+        />
+      )}
+      {estado.pantalla == 5 && (
+        <Cargar_viaje_6
+          estado={estado}
           dispatch={dispatch}
           acciones={{ PANTALLA_ANTERIOR }}
           enviarFormulario={enviarFormulario}

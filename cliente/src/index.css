@@ -311,23 +311,24 @@ main{
 }
 
 .vehiculos_lista{
+  background-color: #faebd7;
+  color:#181818;
   text-align: center;
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
   gap: 1rem;
   text-decoration: none;
   list-style: none;
-  background-color: #1d1d1d;
   padding: 1rem;
 }
 .vehiculos_lista:not(.header_lista){
   cursor: pointer;
 }
 .vehiculos_lista:nth-child(2n){
-  background-color: #202020;
+  background-color: #fbecd8;
 }
 .vehiculos_lista_seleccionado{
-  background-color: #181818!important;
+  background-color: #d7c8b4!important;
   color: var(--color-fuente-hover);
 
 }
@@ -335,9 +336,9 @@ main{
   background-color: #1a1a1a;
   border-bottom: 1px solid wheat;
 }
-.vehiculos_lista:hover:not(.header_lista,.vehiculos_lista_seleccionado){
+.vehiculos_lista:hover:not(.header_lista,.vehiculos_lista_seleccionado, .no_disponible){
   color: var(--color-fuente-hover);
-  background: #181818;
+  background: #e8d9c5;
 }
 fieldset{
   border: 1px solid pink;
@@ -369,3 +370,11 @@ ESTA ES UNA IDEA DE COMO TRABAJAR CON MODO OSCURO/CLARO
   }
 }
 */
+
+
+/* PRUEBA DE LOS ITEMS NO DISPONIBLES DE UNA LISTA */
+.no_disponible{
+  color:gray;
+  background-color: lightgray !important; 
+  cursor:not-allowed !important;
+}

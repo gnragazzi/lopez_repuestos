@@ -66,11 +66,7 @@ public class manejadorVehiculos implements HttpHandler {
             return;
         }
         // parse request
-        Map<String, Object> parameters = new HashMap<String, Object>();
-        URI requestedUri = he.getRequestURI();
-        String query = requestedUri.getRawQuery();
-        parseQuery(query, parameters);
-        String tipo = (String) parameters.get("tipo");
+        String tipo = obtenerParámetros(he.getRequestURI(), "tipo");
 
         ArrayList<Vehiculo> vehiculos = new ArrayList<>();
         if (tipo == null) {
@@ -83,12 +79,21 @@ public class manejadorVehiculos implements HttpHandler {
             vehiculos.add(camion1);
             Camion c2 = new Camion();
             c2.setPatente("REC 321");
-            vehiculos.add(c2); 
-            
-        } else if (tipo.equalsIgnoreCase("semirremolque")) { 
-            vehiculos.add(semirremolque1); 
+            vehiculos.add(c2);
+            Camion c3 = new Camion();
+            c3.setPatente("WUB 752");
+            vehiculos.add(c3);
+
+        } else if (tipo.equalsIgnoreCase("semirremolque")) {
+            vehiculos.add(semirremolque1);
+            Semirremolque sr2 = new Semirremolque();
+            sr2.setPatente("ABC 123");
+            Semirremolque sr3 = new Semirremolque();
+            sr3.setPatente("XGF 951");
+            vehiculos.add(sr2);
+            vehiculos.add(sr3);
         } else {
-            //entonces está intentando acceder a un tipo incorrecto, por lo que el mensaje de respuesta debería ser 404
+            //entonces está intentando acceder a un tipo incorrecto, por lo que el mensaje de respuesta debería ser 404 
         }
         // send response
 
@@ -96,13 +101,15 @@ public class manejadorVehiculos implements HttpHandler {
 
         String response = ow.writeValueAsString(vehiculos);
 
-        he.sendResponseHeaders(200, response.toString().getBytes().length);
+        he.sendResponseHeaders(200, response.getBytes().length);
         OutputStream os = he.getResponseBody();
-        os.write(response.toString().getBytes());
+        os.write(response.getBytes());
         os.close();
     }
-
-    public static void parseQuery(String query, Map<String, Object> parameters) throws UnsupportedEncodingException {
+ 
+    public String obtenerParámetros(URI requestUri, String clave) throws UnsupportedEncodingException {
+        Map<String, Object> parameters = new HashMap<String, Object>();
+        String query = requestUri.getRawQuery();
         if (query != null) {
             String pairs[] = query.split("[&]");
             for (String pair : pairs) {
@@ -131,5 +138,6 @@ public class manejadorVehiculos implements HttpHandler {
                 }
             }
         }
+        return (String) parameters.get(clave);
     }
 }

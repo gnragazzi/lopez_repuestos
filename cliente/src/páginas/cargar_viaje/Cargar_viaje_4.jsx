@@ -6,24 +6,24 @@ const Cargar_viaje_3 = ({ dispatch, acciones, estado }) => {
   const {
     PROXIMA_PANTALLA,
     PANTALLA_ANTERIOR,
-    CARGAR_LISTA_SEMIRREMOLQUE,
-    SELECCIONAR_SEMIRREMOLQUE,
+    CARGAR_LISTA_CHOFER,
+    SELECCIONAR_CHOFER,
   } = acciones;
   const {
-    cuerpo_cargar_viaje: { semirremolque: semirremolque_seleccionado },
-    filtros: { semirremolques: filtro_semirremolque },
-    lista_semirremolques,
+    cuerpo_cargar_viaje: { chofer: chofer_seleccionado },
+    filtros: { choferes: filtro_chofer },
+    lista_choferes,
   } = estado;
   useEffect(() => {
     axios
-      .get("http://localhost:8080/vehiculos?tipo=semirremolque", {
+      .get("http://localhost:8080/empleados?tipo=chofer", {
         headers: {
           Accept: "application/json",
         },
       })
       .then((res) => {
         dispatch({
-          type: CARGAR_LISTA_SEMIRREMOLQUE,
+          type: CARGAR_LISTA_CHOFER,
           payload: res.data,
         });
       })
@@ -31,40 +31,40 @@ const Cargar_viaje_3 = ({ dispatch, acciones, estado }) => {
   }, []);
   return (
     <div>
-      <h2>Selección de Semirremolque</h2>
-      <h4>Seleccione el vehículo para el viaje</h4>
+      <h2>Selección de Chofer</h2>
+      <h4>Seleccione el Chofer para el viaje</h4>
       <ul>
         <li className="vehiculos_lista header_lista">
           <p>Marca</p>
-          <p>Patente</p>
+          <p>DNI</p>
         </li>
-        {lista_semirremolques.map((semirremolque) => {
-          const { patente, marca } = semirremolque;
+        {lista_choferes.map((chofer) => {
+          const { dni, marca } = chofer;
           return (
             <li
               className={
-                filtro_semirremolque.includes(patente)
+                filtro_chofer.includes(dni)
                   ? "vehiculos_lista no_disponible"
-                  : semirremolque_seleccionado == patente
+                  : chofer_seleccionado == dni
                   ? "vehiculos_lista vehiculos_lista_seleccionado"
                   : "vehiculos_lista"
               }
-              key={patente}
+              key={dni}
               onClick={
-                filtro_semirremolque.includes(patente)
+                filtro_chofer.includes(dni)
                   ? () => {
                       console.log("No se puede seleccionar");
                     }
                   : () => {
                       dispatch({
-                        type: SELECCIONAR_SEMIRREMOLQUE,
-                        payload: patente,
+                        type: SELECCIONAR_CHOFER,
+                        payload: dni,
                       });
                     }
               }
             >
               <p>{marca}</p>
-              <p>{patente}</p>
+              <p>{dni}</p>
             </li>
           );
         })}
@@ -76,7 +76,7 @@ const Cargar_viaje_3 = ({ dispatch, acciones, estado }) => {
         onClick={() =>
           dispatch({
             type: PROXIMA_PANTALLA,
-            payload: [Boolean(semirremolque_seleccionado)],
+            payload: [Boolean(chofer_seleccionado)],
           })
         }
       >
