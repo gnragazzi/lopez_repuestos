@@ -6,12 +6,8 @@ import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;
 import java.time.LocalDate;
 
-
-/**
- *
- * @author Administrador
- */
 public class Viaje {
+
     @JsonDeserialize(using = LocalDateDeserializer.class)
     @JsonSerialize(using = LocalDateSerializer.class)
     private LocalDate fecha_partida;
@@ -23,27 +19,25 @@ public class Viaje {
     private LocalDate fecha_esperada;
     private int kilometros_realizados;
     private float costos_combustibles;
-    private int Peso;
+    private int peso;
     private String destino;
     private Camion camion;
     private Chofer chofer;
     private Semirremolque semirremolque;
 
-    
-    public Viaje(LocalDate fecha_partida, LocalDate fecha_llegada, LocalDate fecha_esperada, int kilometros_realizados, float costos_combustibles, int Peso, String destino, Camion camion, Chofer chofer, Semirremolque semirremolque) {
+    public Viaje(LocalDate fecha_partida, LocalDate fecha_llegada, LocalDate fecha_esperada, int kilometros_realizados, float costos_combustibles, int peso, String destino, Camion camion, Chofer chofer, Semirremolque semirremolque) {
         this.fecha_partida = fecha_partida;
         this.fecha_llegada = fecha_llegada;
         this.fecha_esperada = fecha_esperada;
         this.kilometros_realizados = kilometros_realizados;
         this.costos_combustibles = costos_combustibles;
-        this.Peso = Peso;
         this.destino = destino;
+        this.peso = peso;
         this.camion = camion;
-        this.chofer = chofer;
         this.semirremolque = semirremolque;
+        this.chofer = chofer;
     }
 
-    
     public Viaje() {
     }
 
@@ -75,6 +69,19 @@ public class Viaje {
         return destino;
     }
 
+    public int getPeso() {
+        return peso;
+    }
+
+    public Semirremolque getSemirremolque() {
+        return semirremolque;
+    }
+
+    public Chofer getChofer() {
+        return chofer;
+    }
+
+//STTERS
     public void setFecha_partida(LocalDate fecha_partida) {
         this.fecha_partida = fecha_partida;
     }
@@ -95,36 +102,24 @@ public class Viaje {
         this.costos_combustibles = costos_combustibles;
     }
 
-    public void setDestino(String destinos) {
-        this.destino = destinos;
+    public void setDestino(String destino) {
+        this.destino = destino;
     }
 
     public void setCamion(Camion camion) {
         this.camion = camion;
-    }    
-
-    public int getPeso() {
-        return Peso;
     }
 
-    public Chofer getChofer() {
-        return chofer;
+    public void setPeso(int peso) {
+        this.peso = peso;
     }
 
-    public Semirremolque getSemirremolque() {
-        return semirremolque;
-    }
-
-    public void setPeso(int Peso) {
-        this.Peso = Peso;
+    public void setSemirremolque(Semirremolque semirremolque) {
+        this.semirremolque = semirremolque;
     }
 
     public void setChofer(Chofer chofer) {
         this.chofer = chofer;
     }
 
-    public void setSemirremolque(Semirremolque semirremolque) {
-        this.semirremolque = semirremolque;
-    }
-    
 }

@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 public class Camion extends Vehiculo{
     private String modelo;
-    private String potencia;
+    private String potencia;//cilindrada
     private int kilometraje;
     private ArrayList<Viaje> viaje;
     
@@ -30,7 +30,7 @@ public class Camion extends Vehiculo{
     }
 
     
-    public void setCilindrada(String cilindrada) {
+    public void setPotencia(String cilindrada) {
         this.potencia = cilindrada;
     }
 
@@ -46,7 +46,7 @@ public class Camion extends Vehiculo{
         return modelo;
     }
 
-    public String getCilindrada() {
+    public String getPotencia() {
         return potencia;
     }
 

@@ -419,6 +419,7 @@ tr:hover{
   width: 100%;
 }
 
+<<<<<<< HEAD
 .formulario__boton{
   position: absolute;  
   box-shadow: 0 0 3px var(--fondo-borde-logo);
@@ -431,6 +432,39 @@ tr:hover{
 
 .formulario__boton:hover{
   background: var(--color-de-seleccion-nav);
+=======
+.vehiculos_lista{
+  background-color: #faebd7;
+  color:#181818;
+  text-align: center;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 1rem;
+  text-decoration: none;
+  list-style: none;
+  padding: 1rem;
+}
+.vehiculos_lista:not(.header_lista){
+  cursor: pointer;
+}
+.vehiculos_lista:nth-child(2n){
+  background-color: #fbecd8;
+}
+.vehiculos_lista_seleccionado{
+  background-color: #d7c8b4!important;
+  color: var(--color-fuente-hover);
+
+}
+.header_lista{
+  background-color: #1a1a1a;
+  border-bottom: 1px solid wheat;
+}
+.vehiculos_lista:hover:not(.header_lista,.vehiculos_lista_seleccionado, .no_disponible){
+  color: var(--color-fuente-hover);
+  background: #e8d9c5;
+}
+fieldset{
+  border: 1px solid pink;
 }
 
 
@@ -443,30 +477,6 @@ tr:hover{
 }
 
 
-/* 
-ESTA ES UNA IDEA DE COMO TRABAJAR CON MODO OSCURO/CLARO
-@media (prefers-color-scheme: dark) {
-  :root {
-    color: #213547;
-    background-color: #ffffff;
-  }
-  a:hover {
-    color: #747bff;
-  }
-  button {
-    background-color: #f9f9f9;
-  }
-} 
-  */
-
-
-  /*@media screen and (min-width:1200px) {
-  .lateral {
-    position:relative;
-    min-width: 15vw;
-  }
-}
-*/
 
 /*------------------------------- Formulario para cargar más detalles de mantenimiento*/
 
@@ -513,4 +523,10 @@ ESTA ES UNA IDEA DE COMO TRABAJAR CON MODO OSCURO/CLARO
 
 .form__items-mantenimiento .input__textarea{
   resize: auto;
+
+/* PRUEBA DE LOS ITEMS NO DISPONIBLES DE UNA LISTA */
+.no_disponible{
+  color:gray;
+  background-color: lightgray !important; 
+  cursor:not-allowed !important;
 }
