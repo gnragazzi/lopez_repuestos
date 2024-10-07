@@ -10,7 +10,7 @@ function Cargar_viaje_6({ dispatch, acciones, estado, enviarFormulario }) {
     semirremolque,
     kilometros_realizados,
     costos_combustibles,
-    destinos,
+    destino,
     fecha_partida,
     fecha_llegada,
     fecha_esperada,
@@ -55,7 +55,7 @@ function Cargar_viaje_6({ dispatch, acciones, estado, enviarFormulario }) {
             )
           );
         })}
-        <p>Destino: {destinos}</p>
+        <p>Destino: {destino}</p>
         <p>Kilometros Realizados: {kilometros_realizados}</p>
         <p>Costo de Combustible: {costos_combustibles}</p>
         <p>Peso de la carga: {peso}</p>

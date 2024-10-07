@@ -79,8 +79,12 @@ public class manejadorViaje implements HttpHandler {
             Camion camion = new Camion();
             //IDEALMENTE, BUSCAMOS EL CAMION EN LA BASE DE DATOS
             camion.setPatente(jsonobj.getString("camion"));
-
-            String destinos = jsonobj.getString("destinos");
+            camion.setKilometraje(123);
+            // al camión recuperado, le sumamos los kilometros realizados en el viaje
+            camion.setKilometraje(camion.getKilometraje()+ kilometros_realizados);
+            //LUEGO DE ESTO ES NECESARIO HACER EL UPDATE DEL CAMIÓN EN LA BASE DE DATOS. 
+            
+            String destino = jsonobj.getString("destino");
             int peso = jsonobj.getInt("peso");
 
             Semirremolque semirremolque = new Semirremolque();
@@ -89,11 +93,11 @@ public class manejadorViaje implements HttpHandler {
             Chofer chofer = new Chofer();
             chofer.setDni(jsonobj.getString("chofer"));
 
-            Viaje v = new Viaje(fecha_partida, fecha_llegada, fecha_esperada, kilometros_realizados, costos_combustibles, peso, destinos, camion, chofer, semirremolque);
+            Viaje v = new Viaje(fecha_partida, fecha_llegada, fecha_esperada, kilometros_realizados, costos_combustibles, peso, destino, camion, chofer, semirremolque);
 
             System.out.printf("Fecha partida: %s\n"
                     + "Fecha llegada: %s\nFecha Esperada: %s\n"
-                    + "Km realizados: %d\nCostos: %f\nDestinos: %s\npeso: %f"
+                    + "Km realizados: %d\nCostos: %f\nDestinos: %s\npeso: %d"
                     + "\ncamion: %s\nsemirremolque: %s\nchofer: %s\n",
                     v.getFecha_partida().toString(),
                     v.getFecha_llegada().toString(),

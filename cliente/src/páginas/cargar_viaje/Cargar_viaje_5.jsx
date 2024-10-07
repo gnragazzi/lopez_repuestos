@@ -10,7 +10,7 @@ function Cargar_viaje_5({ dispatch, acciones, estado }) {
   } = acciones;
   const {
     cuerpo_cargar_viaje: {
-      destinos,
+      destino,
       kilometros_realizados,
       costos_combustibles,
       peso,
@@ -25,7 +25,7 @@ function Cargar_viaje_5({ dispatch, acciones, estado }) {
           <legend>Ingrese el destino del viaje</legend>
           <textarea
             placeholder="destino"
-            value={destinos}
+            value={destino}
             onChange={(e) => {
               dispatch({
                 type: SELECCIONAR_DESTINO,
@@ -88,7 +88,7 @@ function Cargar_viaje_5({ dispatch, acciones, estado }) {
           dispatch({
             type: PROXIMA_PANTALLA,
             payload: [
-              Boolean(destinos),
+              Boolean(destino),
               Boolean(kilometros_realizados),
               Boolean(costos_combustibles),
             ],

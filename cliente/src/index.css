@@ -419,7 +419,6 @@ tr:hover{
   width: 100%;
 }
 
-<<<<<<< HEAD
 .formulario__boton{
   position: absolute;  
   box-shadow: 0 0 3px var(--fondo-borde-logo);
@@ -432,8 +431,8 @@ tr:hover{
 
 .formulario__boton:hover{
   background: var(--color-de-seleccion-nav);
-=======
-.vehiculos_lista{
+}
+  .vehiculos_lista{
   background-color: #faebd7;
   color:#181818;
   text-align: center;
@@ -523,7 +522,7 @@ fieldset{
 
 .form__items-mantenimiento .input__textarea{
   resize: auto;
-
+}
 /* PRUEBA DE LOS ITEMS NO DISPONIBLES DE UNA LISTA */
 .no_disponible{
   color:gray;

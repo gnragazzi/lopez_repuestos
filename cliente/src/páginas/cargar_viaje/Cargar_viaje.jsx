@@ -34,7 +34,7 @@ const estadoInicial = {
     fecha_esperada: new Date().toISOString().substring(0, 10),
     kilometros_realizados: 0,
     costos_combustibles: 0,
-    destinos: "",
+    destino: "",
     camion: "",
     peso: 0,
     semirremolque: "",
@@ -87,7 +87,7 @@ const reducer = (estado, accion) => {
         ...estado,
         cuerpo_cargar_viaje: {
           ...estado.cuerpo_cargar_viaje,
-          destinos: accion.payload,
+          destino: accion.payload,
         },
       };
     }
