@@ -98,7 +98,7 @@ setPaisSeleccionado(elemento);
               <th>Fecha</th>
               <th>Vehiculo</th>
               <th>Costo total</th>
-              <th>gfd</th>
+              <th className="td__botones">Acciones</th>
             </tr>
           </thead>
           <tbody>
@@ -108,7 +108,7 @@ setPaisSeleccionado(elemento);
                 <td>{elemento.nombre}</td>
                 <td>{elemento.minutos}</td>
                 <td>gfd</td>
-                <td><button className="btn btn-primary" onClick={()=>seleccionarPais(elemento, 'Editar')}>Editar</button> {"   "} 
+                <td className="td__botones tr-boton"><button className="btn btn-primary" onClick={()=>seleccionarPais(elemento, 'Editar')}>Editar</button> {"   "} 
                 <button className="btn btn-danger" onClick={()=>seleccionarPais(elemento, 'Eliminar')}>Eliminar</button></td>
               </tr>
             ))

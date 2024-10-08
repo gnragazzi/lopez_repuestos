@@ -3,6 +3,9 @@ import { useContextoGlobal } from "../Contexto";
 import { Link } from "react-router-dom";
 import arrow from "../assets/iconos_lateral/arrow.svg";
 import { useState } from "react";
+import { IoIosArrowForward } from "react-icons/io";
+
+
 
 function Lateral() {
   const { clickMenu, menuSeleccionado } = useContextoGlobal();
@@ -15,7 +18,7 @@ function Lateral() {
   return (
     <div className="div__lateral">
       <ul>
-        {categorias.map(({ nombre, subcategorias, img }) => {
+        {categorias.map(({ nombre, subcategorias, img, icono }) => {
           return subcategorias ? (
             <div key={nombre}>
               <li
@@ -25,12 +28,10 @@ function Lateral() {
                   toggleSubMenu(nombre);
                 }}
               >
-                <img className="icono_lateral" src={img} alt={nombre} />
+                {icono}
                 <p>{nombre}</p>
-                <img
+                <IoIosArrowForward
                   className={subMenuAbierto == nombre ? "arrow open" : "arrow"}
-                  src={arrow}
-                  alt="Flecha"
                 />
               </li>
 
@@ -54,7 +55,7 @@ function Lateral() {
                 className={menuSeleccionado == nombre ? "seleccion" : "no_seleccion"}
                 onClick={clickMenu}
               >
-                <img className="icono_lateral" src={img} alt={nombre} />
+                {icono}
                 <p>{nombre}</p>
               </li>
             </Link>
