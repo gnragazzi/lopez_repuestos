@@ -89,7 +89,7 @@ public class manejadorVehiculos implements HttpHandler {
             } catch (Exception ex) {
                 Logger.getLogger(manejadorVehiculos.class.getName()).log(Level.SEVERE, null, ex);
             }
-        } else if (tipo.equalsIgnoreCase("semiremolque")) {
+        } else if (tipo.equalsIgnoreCase("semirremolque")) {
             try {
                 SemirremolqueDAOImpl semirremolqueDAO = new SemirremolqueDAOImpl();
                 ArrayList<Semirremolque> semirremolques = semirremolqueDAO.list();
