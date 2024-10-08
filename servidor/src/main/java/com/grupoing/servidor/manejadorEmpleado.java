@@ -8,6 +8,7 @@ import Clases.Semirremolque;
 import Clases.Tarjeta_Ruta;
 import Clases.Tecnica;
 import Clases.Vehiculo;
+import IDaoImpl.ChoferDAOImpl;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
@@ -27,12 +28,15 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;
 import java.time.LocalDate;
+import java.util.Iterator;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class manejadorEmpleado implements HttpHandler {
 
     @Override
 
-    public void handle(HttpExchange he) throws IOException {
+    public void handle(HttpExchange he) throws IOException, JsonProcessingException {
         he.getResponseHeaders().add("Access-Control-Allow-Origin", "*");
         if (he.getRequestMethod().equalsIgnoreCase("OPTIONS")) {
             he.getResponseHeaders().add("Access-Control-Allow-Methods", "GET, OPTIONS");
@@ -41,10 +45,16 @@ public class manejadorEmpleado implements HttpHandler {
             return;
         }
         String método = he.getRequestMethod();
-        String response;
+        String response = null;
 
         if (método.equalsIgnoreCase("get")) {
-            response = manejarGet(he);
+            try {
+                response = manejarGet(he);
+            } catch (ClassNotFoundException ex) {
+                Logger.getLogger(manejadorEmpleado.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (Exception ex) {
+                Logger.getLogger(manejadorEmpleado.class.getName()).log(Level.SEVERE, null, ex);
+            }
         } else if (método.equalsIgnoreCase("post")) {
             response = manejarPost(he);
         } else {
@@ -58,7 +68,7 @@ public class manejadorEmpleado implements HttpHandler {
         os.close();
     }
 
-    public String manejarGet(HttpExchange he) throws UnsupportedEncodingException, JsonProcessingException {
+    public String manejarGet(HttpExchange he) throws UnsupportedEncodingException, JsonProcessingException, ClassNotFoundException, Exception {
 
         String tipo = obtenerParámetros(he.getRequestURI(), "tipo");
 
@@ -66,20 +76,29 @@ public class manejadorEmpleado implements HttpHandler {
         if (tipo == null) {
             //Es decir, en este caso no se quiso acceder a ningún tipo de empleado en particular, y se busca camiones y semiremolques por igual
         } else if (tipo.equalsIgnoreCase("chofer")) {
-            //en este caso, solo se buscan choferes
-            //se debería buscar la lista completa de camiones en la BD
-            Chofer ch1 = new Chofer();
-            ch1.setDni("31999766");
-            Chofer ch2 = new Chofer();
-            ch2.setDni("33069732");
-            Chofer ch3 = new Chofer();
-            ch3.setDni("31999999");
-            Chofer ch4 = new Chofer();
-            ch4.setDni("35703559");
-            empleados.add(ch1);
-            empleados.add(ch2);
-            empleados.add(ch3); 
-            empleados.add(ch4);
+//            //en este caso, solo se buscan choferes
+//            //se debería buscar la lista completa de camiones en la BD
+//            Chofer ch1 = new Chofer();
+//            ch1.setDni("31999766");
+//            Chofer ch2 = new Chofer();
+//            ch2.setDni("33069732");
+//            Chofer ch3 = new Chofer();
+//            ch3.setDni("31999999");
+//            Chofer ch4 = new Chofer();
+//            ch4.setDni("35703559");
+//            empleados.add(ch1);
+//            empleados.add(ch2);
+//            empleados.add(ch3); 
+//            empleados.add(ch4);
+              
+              ChoferDAOImpl choferDAO= new ChoferDAOImpl();
+              ArrayList<Chofer> choferes= new ArrayList<>();
+              choferes=choferDAO.list();
+              Iterator<Chofer> iteratorChofer = choferes.iterator();
+              while (iteratorChofer.hasNext()) {
+                    empleados.add(iteratorChofer.next());
+              }
+              
 
         } else if (tipo.equalsIgnoreCase("mecánico")) {
             // implementar lógica de búsqueda de mecánicos

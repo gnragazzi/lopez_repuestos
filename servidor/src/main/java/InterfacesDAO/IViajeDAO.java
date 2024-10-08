@@ -4,6 +4,7 @@
  */
 package InterfacesDAO;
 import Clases.Viaje;
+import java.time.LocalDate;
 import java.util.ArrayList;
 
 public interface IViajeDAO {
@@ -12,6 +13,7 @@ public interface IViajeDAO {
     public void update(Viaje viaje) throws Exception;
     public ArrayList<Viaje> list() throws Exception;
     public void find(Viaje viaje) throws Exception;
+    public ArrayList<Viaje> comprobarfechas(String Fecha_partida, String Fecha_llegada) throws Exception;
     
 
 }

@@ -4,6 +4,7 @@ import Clases.Camion;
 import Clases.Chofer;
 import Clases.Semirremolque;
 import Clases.Viaje;
+import IDaoImpl.ViajeDAOImpl;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
@@ -21,13 +22,15 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 public class manejadorViaje implements HttpHandler {
 
     @Override
-    public void handle(HttpExchange he) throws IOException {
+    public void handle(HttpExchange he) throws IOException, UnsupportedEncodingException {
         // CON ESTO SOLUCIONAMOS EL PROBLEMA DEL CORS
         he.getResponseHeaders().add("Access-Control-Allow-Origin", "*");
         if (he.getRequestMethod().equalsIgnoreCase("OPTIONS")) {
@@ -37,14 +40,24 @@ public class manejadorViaje implements HttpHandler {
             return;
         }
 
-        String response;
+        String response = null;
 
         String método = he.getRequestMethod();
 
         if (método.equalsIgnoreCase("post")) {
-            response = manejarPost(he);
+            try {
+                response = manejarPost(he);
+            } catch (Exception ex) {
+                Logger.getLogger(manejadorViaje.class.getName()).log(Level.SEVERE, null, ex);
+            }
         } else if (método.equalsIgnoreCase("get")) {
-            response = manejarGet(he);
+            try {
+                response = manejarGet(he);
+            } catch (ClassNotFoundException ex) {
+                Logger.getLogger(manejadorViaje.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (Exception ex) {
+                Logger.getLogger(manejadorViaje.class.getName()).log(Level.SEVERE, null, ex);
+            }
         } else {
             response = "Error: método aún no implementado";
         }
@@ -55,7 +68,7 @@ public class manejadorViaje implements HttpHandler {
         os.close();
     }
 
-    private String manejarPost(HttpExchange he) throws UnsupportedEncodingException, IOException {
+    private String manejarPost(HttpExchange he) throws UnsupportedEncodingException, IOException, ClassNotFoundException, Exception {
         //USAR EL InputStreamReadr NOS PERMITE PARSEAR EL CUERPO DEL POST
         InputStreamReader isr = new InputStreamReader(he.getRequestBody(), "utf-8");
         BufferedReader br = new BufferedReader(isr);
@@ -110,7 +123,10 @@ public class manejadorViaje implements HttpHandler {
                     v.getSemirremolque().getPatente(),
                     v.getChofer().getDni()
             );
-            //MANDAR VIAJE A LA BASE DE DATOS...
+            
+            ViajeDAOImpl viajeDAO= new ViajeDAOImpl();
+            viajeDAO.create(v);
+            
             return "Carga Exitosa";
         } catch (JSONException ex) {
             System.out.println("ERROR: " + ex);
@@ -119,7 +135,7 @@ public class manejadorViaje implements HttpHandler {
 
     }
 
-    private String manejarGet(HttpExchange he) throws JsonProcessingException, UnsupportedEncodingException {
+    private String manejarGet(HttpExchange he) throws JsonProcessingException, UnsupportedEncodingException, ClassNotFoundException, Exception {
         String fecha_partida, fecha_llegada;
         fecha_partida = obtenerParámetros(he.getRequestURI(), "fecha_partida");
         fecha_llegada = obtenerParámetros(he.getRequestURI(), "fecha_llegada");
@@ -138,54 +154,51 @@ public class manejadorViaje implements HttpHandler {
             partida = LocalDate.parse(fecha_partida);
             llegada = LocalDate.parse(fecha_llegada);
 
-            /*
-             * ACA IRÍAN LAS CONSULTAS A LA BASE DE DATOS... HAY QUE VER LUEGO
-             * SI LOS VIAJES VÁLIDOS SE DETERMINAN A LAS CONSULTAD A LA BASE DE
-             * DATOS O SE DETERMIANN LUGEGO EN ESTE
-             * MÉTODO
-             */
+            ViajeDAOImpl viajeDAO= new ViajeDAOImpl();
+            viajes=viajeDAO.comprobarfechas(fecha_partida, fecha_llegada);
+            
             //viaje 1
-            Camion c1 = new Camion();
-            c1.setPatente("WUB 750");
-            Semirremolque sr = new Semirremolque();
-            sr.setPatente("ABC 123");
-            Chofer ch1 = new Chofer();
-            ch1.setDni("33069732");
-            Viaje v1 = new Viaje(
-                    LocalDate.parse("2024-08-10"),
-                    LocalDate.parse("2024-08-15"),
-                    LocalDate.parse("2024-08-15"),
-                    15,
-                    154,
-                    159,
-                    "San Juan",
-                    c1,
-                    ch1,
-                    sr
-            );
+//            Camion c1 = new Camion();
+//            c1.setPatente("WUB 750");
+//            Semirremolque sr = new Semirremolque();
+//            sr.setPatente("ABC 123");
+//            Chofer ch1 = new Chofer();
+//            ch1.setDni("33069732");
+//            Viaje v1 = new Viaje(
+//                    LocalDate.parse("2024-08-10"),
+//                    LocalDate.parse("2024-08-15"),
+//                    LocalDate.parse("2024-08-15"),
+//                    15,
+//                    154,
+//                    159,
+//                    "San Juan",
+//                    c1,
+//                    ch1,
+//                    sr
+//            );
+//
+//            //viaje 2
+//            Camion c2 = new Camion();
+//            c2.setPatente("WUB 752");
+//            Semirremolque se2 = new Semirremolque();
+//            se2.setPatente("ABC 321");
+//            Chofer ch2 = new Chofer();
+//            ch2.setDni("31999999");
+//            Viaje v2 = new Viaje(
+//                    LocalDate.parse("2024-08-10"),
+//                    LocalDate.parse("2024-08-15"),
+//                    LocalDate.parse("2024-08-15"),
+//                    15,
+//                    15,
+//                    159,
+//                    "Rosario",
+//                    c2,
+//                    ch2,
+//                    se2
+//            );
 
-            //viaje 2
-            Camion c2 = new Camion();
-            c2.setPatente("WUB 752");
-            Semirremolque se2 = new Semirremolque();
-            se2.setPatente("ABC 321");
-            Chofer ch2 = new Chofer();
-            ch2.setDni("31999999");
-            Viaje v2 = new Viaje(
-                    LocalDate.parse("2024-08-10"),
-                    LocalDate.parse("2024-08-15"),
-                    LocalDate.parse("2024-08-15"),
-                    15,
-                    15,
-                    159,
-                    "Rosario",
-                    c2,
-                    ch2,
-                    se2
-            );
-
-            viajes.add(v1);
-            viajes.add(v2);
+//            viajes.add(v1);
+//            viajes.add(v2);
 //            System.out.printf("Es la partida anterior a la llegada %s ?", Boolean.toString(partida.isBefore(llegada)));
         }
         // send response
