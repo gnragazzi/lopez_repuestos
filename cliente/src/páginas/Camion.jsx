@@ -9,7 +9,7 @@ function Camiones() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get("http://localhost:8080/vehiculos");
+        const response = await axios.get("http://localhost:8080/vehiculos?tipo=camion");
         const camionesData = Array.isArray(response.data) ? response.data : [];
         
         setData(camionesData);
