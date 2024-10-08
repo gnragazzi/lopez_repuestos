@@ -104,7 +104,7 @@ function Mantenimiento() {
               <th>Fecha</th>
               <th>Vehiculo</th>
               <th>Costo total</th>
-              <th>gfd</th>
+              <th className="td__botones">Acciones</th>
             </tr>
           </thead>
           <tbody>
@@ -114,7 +114,7 @@ function Mantenimiento() {
                 <td>{elemento.nombre}</td>
                 <td>{elemento.minutos}</td>
                 <td>gfd</td>
-                <td>
+                <td className="td__botones tr-boton">
                   <button
                     className="btn btn-primary"
                     onClick={() => seleccionarPais(elemento, "Editar")}

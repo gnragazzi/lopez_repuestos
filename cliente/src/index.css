@@ -6,10 +6,7 @@
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
 }
 
-body{
-  height: 100vh;
-  width: 100vw;
-}
+
 
 :is(.container__table,ul,.form__mantenimiento)::-webkit-scrollbar {
   width: 12px;               /* width of the entire scrollbar */
@@ -27,15 +24,16 @@ body{
 :root {
   /* VARIABLES */
   /* COLORES */
-  --fondo-container: #f7f2ccff;
-  --fondo-barra-superior: #EFDAAC;
-  --fondo-barra-lateral: #EFDAAC;
+  --fondo-container: #fff;
+  --fondo-barra-superior: #312F2F;
+  --fondo-barra-lateral: #312F2F;
+  --fondo-degradado: #D7C394;
   --fondo-cuerpo: #F8F2E8;
-  --fondo-barra-hover: #202020;
+  --fondo-barra-hover: #ae8c5c;
   --fondo-borde-logo: #ae8c5c;
   --color-de-seleccion-nav: #ae8c5c;
-  --color-fuente: #000/*rgba(225, 225, 225, 0.87)*/;
-  --color-fuente-hover: #000/*rgba(255, 255, 255, 0.87)*/;
+  --color-fuente-sidebar: #ae8c5c;
+  --color-fuente-sidebar-hover: #312F2F;
   /* OTROS */
   --altura-barra-superior: 6vh;
   --posicion-cuerpo:calc(100-var(var(--altura-barra-superior)));
@@ -55,6 +53,16 @@ body{
 
 /*-----------------------PROPIEDADES DE ROOT y grid items*/
 
+
+
+body{
+  height: 100vh;
+  width: 100vw;
+  
+}
+
+
+
 #root{
   width: 100vw;
   height: 100vh;
@@ -65,6 +73,7 @@ body{
   gap: 0;
   grid-template-areas: "header header"
    "nav main";
+  background-color: var(--fondo-container);
 }
 
 
@@ -84,6 +93,7 @@ header{
   justify-content: end;
   align-items: start;
   border: none;
+  background: var(--fondo-barra-superior);
 }
 
 
@@ -91,7 +101,6 @@ header{
   flex-basis: 100%; /*es el min-width de los flexitems.*/
   min-height: var(--altura-barra-superior);
   max-height: var(--altura-barra-superior);
-  background-color: var(--fondo-barra-superior);
   text-transform: uppercase;
   text-align: end;
   z-index: 10;
@@ -130,6 +139,7 @@ header{
   display: flex;
   flex-flow: row nowrap;
   place-items: center;
+  background: var(--fondo-barra-lateral);
 }
 
 /*Esto no se usa si no queremos el label que despliegue el menú
@@ -154,7 +164,6 @@ header{
   height: 100%;
   display: flex;
   flex-flow: row nowrap;
-  background-color: var(--fondo-barra-lateral);
   justify-content: center;
   padding-top:10vh;
 }
@@ -190,10 +199,12 @@ header{
   cursor: pointer;
   align-items: center;
   text-align: center;
+  color: var(--color-fuente-sidebar)
 }
 
 .div__lateral li:hover{
   background-color: var(--color-de-seleccion-nav);
+  color: var(--color-fuente-sidebar-hover);
 }
 
 
@@ -212,6 +223,9 @@ header{
   padding-top: 12px;
 }
 
+.div__lateral .icono{
+  font-size: 2rem;
+}
 
 /*---------------------Selección visible*/
 
@@ -280,21 +294,35 @@ main{
   grid-area: main;
   width: calc(100vw - 200px); /*Los 200px es el width de la barra lateral*/
   height: 100%;
+  background: var(--fondo-container);
 }
 
 
 .container{
   height: 100%;
   max-width: 100% !important;
+  position: relative;
   margin: 0 !important;
   display: flex;
   flex-flow: row nowrap;
-  background: linear-gradient(#fff9,#fff9),url(./assets/imagen_fondo/fondo_lopez.png) center / contain no-repeat;
-  background-color: var(--fondo-container);
   z-index: 10;
   justify-content: center;
   padding-left: 0 !important;
   padding-right: 0 !important;
+}
+
+.container__icono-fondo{
+  position: absolute;
+  width: 50%;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%,-50%);
+}
+
+.container__icono-fondo img {
+  max-width: 100%;
+  object-fit: cover;
+  opacity: 0.2;
 }
 
 
@@ -363,17 +391,36 @@ main{
 
 
 th{
-  background: #ae8c5c!important;
+  background: linear-gradient(var(--color-de-seleccion-nav),var(--color-de-seleccion-nav)), transparent!important;
   position: sticky;
   top:0;
+  left: 0;
+  margin: auto;
   border: none !important;
   border-top: 2px !important;
+  text-align: baseline !important;
 }
 
 
 td{
-  background: linear-gradient(#fff7,#fff7), transparent !important;
-  
+  background: linear-gradient(#0001,#0001), transparent !important;
+  border:none !important;
+}
+
+.tr-boton{
+  display: flex;
+  flex-flow: row wrap;
+  width: fit-content;
+}
+
+.td__botones{
+  width: 170px;
+}
+
+/*botones de accion editar, eliminar, etc.*/
+
+.btn{
+  max-width: fit-content;
 }
 
 .table thead tr{
@@ -383,8 +430,8 @@ td{
 }
 
 
-tr:hover{
-  background: linear-gradient(#ae8c5cb8,#ae8c5cb8), transparent !important;
+tbody tr:hover{
+  background: linear-gradient(#0003,#0003), transparent !important;
   }
 
 
@@ -410,7 +457,7 @@ tr:hover{
 }
 
 .vehiculos_lista_seleccionado{
-  background-color: var(--fondo-borde-logo);
+  background: linear-gradient(#0003,#0003) ;
 }
 
 .botonera_formulario{
@@ -424,9 +471,8 @@ tr:hover{
   box-shadow: 0 0 3px var(--fondo-borde-logo);
   border-radius: 5px;
   padding: 6px;
-  background:linear-gradient(#fffa,#fffa), var(--fondo-barra-lateral);
-  transition: background 0.3s ease;
-
+  background:linear-gradient(#fffa,#fffa), transparent;
+  transition: background 0.2s ease;
 }
 
 .formulario__boton:hover{
@@ -513,4 +559,24 @@ ESTA ES UNA IDEA DE COMO TRABAJAR CON MODO OSCURO/CLARO
 
 .form__items-mantenimiento .input__textarea{
   resize: auto;
+}
+
+
+
+/*Formulario de confirmar seleccion*/
+
+.confirmar__seleccion{
+  position: relative;
+  display: flex;
+  flex-flow: column nowrap;
+  place-items: start;
+  margin-top: 10vh;
+  border-radius: 10px;
+  padding: 5px;
+  min-width: 500px;
+}
+
+.confirmar__seleccion p{
+  font-size: 1.6rem;
+  color: var(--color-fuente-sidebar);
 }

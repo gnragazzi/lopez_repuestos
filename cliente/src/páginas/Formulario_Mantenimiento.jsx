@@ -222,28 +222,30 @@ export const Formulario_Mantenimiento = () => {
       {pantalla == 3 && (
         <>
           <h2>Confirme Selección</h2>
-          {vehiculos.map((v) => {
-            return (
-              v.patente == vehiculoSeleccionado && (
-                <p key={v.patente}>
-                  Marca: {v.marca} | Patente {v.patente}
-                </p>
-              )
-            );
-          })}
-          {mecanicos.map((m) => {
-            return (
-              mecanicosSeleccionados.includes(m.dni) && (
-                <p key={m.dni}>
-                  Nombre: {m.nombre} {m.apellido} | DNI: {m.dni}
-                </p>
-              )
-            );
-          })}
+            <div className="confirmar__seleccion">
+              {vehiculos.map((v) => {
+                return (
+                  v.patente == vehiculoSeleccionado && (
+                    <p key={v.patente}>
+                      Marca: {v.marca} | Patente {v.patente}
+                    </p>
+                  )
+                );
+              })}
+              {mecanicos.map((m) => {
+                return (
+                  mecanicosSeleccionados.includes(m.dni) && (
+                    <p key={m.dni}>
+                      Nombre: {m.nombre} {m.apellido} | DNI: {m.dni}
+                    </p>
+                  )
+                );
+              })}
           <p>Trabajo Realizado: {datos.trabajos_realizados}</p>
           <p>Costo Repuesto: {datos.costo_repuestos}</p>
           <p>Costo Mano de Obra: {datos.costo_manodeobra}</p>
           <p>Fecha: {datos.fecha}</p>
+          </div>
         </>
       )}
 
@@ -274,7 +276,7 @@ export const Formulario_Mantenimiento = () => {
             Siguiente
           </button>
         )}
-        {pantalla == 3 && <button onClick={enviarFormulario}>Confirmar</button>}
+        {pantalla == 3 && <button className="formulario__boton siguiente" onClick={enviarFormulario}>Confirmar</button>}
       </div>
     </div>
   );
