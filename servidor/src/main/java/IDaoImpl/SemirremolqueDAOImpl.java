@@ -42,7 +42,7 @@ public class SemirremolqueDAOImpl implements ISemirremolqueDAO{
     @Override
     public ArrayList<Semirremolque> list() throws Exception {
         Statement statement = conexion.createStatement();
-        ResultSet rs = statement.executeQuery("select * from semirremolques, vehiculos where Patente=Vehiculos_Patente;");
+        ResultSet rs = statement.executeQuery("select * from Semirremolques, Vehiculos where Patente=Vehiculos_Patente;");
         ArrayList<Semirremolque> semirremolques = new ArrayList<>();
         while (rs.next()) {
             Semirremolque semirremolque = new Semirremolque();

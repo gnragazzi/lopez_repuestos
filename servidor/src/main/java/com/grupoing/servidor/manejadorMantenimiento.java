@@ -12,12 +12,8 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
-import java.io.UnsupportedEncodingException;
-import java.net.URLDecoder;
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.json.JSONArray;
@@ -95,13 +91,13 @@ public class manejadorMantenimiento implements HttpHandler {
                     m.getVehiculo().getPatente() 
             
             );
-            //MANDAR EL MECÁNICO A LA BASE DE DATOS
+            //MANDAR Mantenimiento A LA BASE DE DATOS
             
             MantenimientoDAOImpl mantenimientoDAO= new MantenimientoDAOImpl();
             mantenimientoDAO.create(m);
             
             //CREAR HTTP RESPONSE
-            String response = "Gracias por todo";
+            String response = "Cargado Correctamente.";
             he.sendResponseHeaders(200, response.toString().getBytes().length);
             OutputStream os = he.getResponseBody();
             os.write(response.toString().getBytes());
@@ -117,34 +113,5 @@ public class manejadorMantenimiento implements HttpHandler {
 
     }
 
-    public static void parseQuery(String query, Map<String, Object> parameters) throws UnsupportedEncodingException {
-        if (query != null) {
-            String pairs[] = query.split("[&]");
-            for (String pair : pairs) {
-                String param[] = pair.split("[=]");
-                String key = null;
-                String value = null;
-                if (param.length > 0) {
-                    key = URLDecoder.decode(param[0], System.getProperty("file.encoding"));
-                }
-                if (param.length > 1) {
-                    value = URLDecoder.decode(param[1], System.getProperty("file.encoding"));
-                }
-                if (parameters.containsKey(key)) {
-                    Object obj = parameters.get(key);
-                    if (obj instanceof List<?>) {
-                        List values = (List) obj;
-                        values.add(value);
-                    } else if (obj instanceof String) {
-                        List values = new ArrayList();
-                        values.add((String) obj);
-                        values.add(value);
-                        parameters.put(key, values);
-                    }
-                } else {
-                    parameters.put(key, value);
-                }
-            }
-        }
-    }
+    
 }

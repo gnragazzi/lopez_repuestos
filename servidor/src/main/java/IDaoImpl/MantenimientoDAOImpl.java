@@ -30,14 +30,14 @@ public class MantenimientoDAOImpl implements IMantenimientoDAO{
     public void create(Mantenimiento mantenimiento) throws Exception {
         mantenimiento.setKilometros_en_que_se_realizo(0);
         PreparedStatement envioMantenimiento;
-        envioMantenimiento = conexion.prepareStatement("insert into mantenimientos(Trabajo_realizados,Fecha, Costos_repuestos, Costos_mano_de_obra,Vehiculos_Patente, Kilometros_en_que_se_realizo) "
+        envioMantenimiento = conexion.prepareStatement("insert into Mantenimientos(Trabajo_realizados,Fecha, Costos_repuestos, Costos_mano_de_obra,Vehiculos_Patente, Kilometros_en_que_se_realizo) "
                 + "value ('" + mantenimiento.getTrabajos_realizados() + "','" + mantenimiento.getFecha() + "'," 
                 + mantenimiento.getCostos_repuestos() + "," + mantenimiento.getCostos_manodeobra() + ",'" + mantenimiento.getVehiculo().getPatente() + "'," + mantenimiento.getKilometros_en_que_se_realizo() + ");");
         envioMantenimiento.executeUpdate();
         Iterator<Mecanico> iterator = mantenimiento.getMecanico().iterator();
         while (iterator.hasNext()) {
             PreparedStatement envioMecanico;
-            envioMecanico = conexion.prepareStatement("insert into mantenimientos_has_mecanicos value(last_insert_id(),'" + iterator.next().getDni() +"');");
+            envioMecanico = conexion.prepareStatement("insert into Mantenimientos_has_Mecanicos value(last_insert_id(),'" + iterator.next().getDni() +"');");
             envioMecanico.executeUpdate();
         }
         

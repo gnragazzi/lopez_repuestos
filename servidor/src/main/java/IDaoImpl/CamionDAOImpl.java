@@ -45,7 +45,7 @@ public class CamionDAOImpl implements ICamionDAO{
     @Override
     public ArrayList<Camion> list() throws Exception {
         Statement statement = conexion.createStatement();
-        ResultSet rs = statement.executeQuery("select * from camiones, vehiculos where Patente=Vehiculos_Patente;");
+        ResultSet rs = statement.executeQuery("select * from Camiones, Vehiculos where Patente=Vehiculos_Patente;");
         ArrayList<Camion> camiones = new ArrayList<>();
         while (rs.next()) {
             Camion camion = new Camion();

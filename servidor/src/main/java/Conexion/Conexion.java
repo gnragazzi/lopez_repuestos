@@ -1,9 +1,5 @@
 package Conexion;
 
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -14,7 +10,7 @@ public class Conexion {
 
     private Connection conexion;
 
-    //A la hora de querer hacer una consulta a la base se tiene que hacer: 
+    //A la hora de querer hacer una consulta a la base se tiene que hacer:  
     //Connection conexion = Conexion.getInstancia().getConexion();
     //A la hora de cerrar la conexion se hace:
     //Conexion.getInstancia().cerrarConexion();
