@@ -11,6 +11,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.time.LocalDate;
 import java.util.ArrayList;
 
 
@@ -22,8 +23,6 @@ public class CamionDAOImpl implements ICamionDAO{
          this.conexion = Conexion.getInstancia().getConexion();;
     }
 
-    
-    
     @Override
     public void create(Camion camion) throws Exception {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
@@ -63,5 +62,22 @@ public class CamionDAOImpl implements ICamionDAO{
     public void find(Camion camion) throws Exception {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
-    
+
+    @Override
+    public ArrayList<Float> calcular_costos(String patente, LocalDate fecha) throws Exception {
+        Statement statement= conexion.createStatement();
+        ResultSet rs= statement.executeQuery("SELECT sum(Costos_mano_de_obra), sum(Costos_repuestos) FROM mantenimientos WHERE MONTH(Fecha) = "+ fecha.getMonthValue() +" AND YEAR(Fecha) = " + fecha.getYear() + " and Vehiculos_Patente= '" +patente + "'");
+        ArrayList<Float> costos= new ArrayList<>();
+        while(rs.next()){
+            costos.add(rs.getFloat("sum(Costos_repuestos)"));
+            costos.add(rs.getFloat("sum(Costos_mano_de_obra)"));
+        }
+        rs=statement.executeQuery("SELECT sum(Costos_combustibles), sum(Kilometros_realizados) FROM viajes WHERE MONTH(Fecha_partida) = "+ fecha.getMonthValue() +" AND YEAR(Fecha_partida) = " + fecha.getYear() + " and Camiones_Vehiculos_Patente='" +patente + "';");
+        while(rs.next()){
+            costos.add(rs.getFloat("sum(Costos_combustibles)"));
+            costos.add(rs.getFloat("sum(Kilometros_realizados)"));
+        }
+        return costos;
+    }
+
 }
