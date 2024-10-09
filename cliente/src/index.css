@@ -166,14 +166,16 @@ header{
   flex-flow: row nowrap;
   justify-content: center;
   padding-top:10vh;
+  position: relative;
 }
 
 
 .div__lateral {
-  min-width: 200px;
+  width: 200px;
   height: 100%; 
   display: flex;
   flex-flow: row nowrap;
+  transition: width .3s ease;
 }
 
 .div__lateral ul{
@@ -271,7 +273,51 @@ header{
 
 .seleccion_visible.show {
   opacity: 1; /* Se mostrará cuando tenga la clase 'show' */
+
 }
+
+
+
+/*---------------------------------desplegar barra lateral*/
+
+
+.checkbox_sidebar{
+  display: none;
+}
+
+.label_sidebar{
+  position: absolute;
+  top: 5px;
+  left: 200px;
+  background: var(--color-de-seleccion-nav);
+  height: 2.5rem;
+  width: 2.5rem;
+  border-radius: 0 5px 5px 0;
+  padding: 6px 0 0 6px;
+  cursor: pointer;
+  z-index: 200;
+  transition: left .3s ease;
+}
+
+.icono_sidebar{
+  font-size: 1.6rem;
+  transform: rotateY(0);
+  transition: transform .5s;
+}
+
+.checkbox_sidebar:checked ~ .div__lateral{
+  width: 0;
+}
+
+.checkbox_sidebar:checked ~ .label_sidebar{
+  left: 0;
+}
+
+
+.checkbox_sidebar:checked ~ .label_sidebar .icono_sidebar{
+  transform: rotateY(180deg);
+}
+
 
 
 /*-----------------------------MAIN--------------------------------*/
@@ -292,7 +338,7 @@ header{
 
 main{
   grid-area: main;
-  width: calc(100vw - 200px); /*Los 200px es el width de la barra lateral*/
+  width: 100%;
   height: 100%;
   background: var(--fondo-container);
 }
