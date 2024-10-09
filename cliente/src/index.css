@@ -247,10 +247,23 @@ header{
 }
 
 .div__lateral li:hover{
-  background: linear-gradient(to left, transparent, #0004) , var(--color-de-seleccion-nav);
+  background: radial-gradient(transparent, #0002),var(--color-de-seleccion-nav);
   color: var(--color-fuente-sidebar-hover);
+  background-size: 400% 400%;  
+  animation: animar-gradiente 3s ease infinite;
 }
 
+@keyframes animar-gradiente {  
+  0% {  
+    background-position: 0% 50%;  
+  }  
+  50% {  
+    background-position: 100% 50%;  
+  }  
+  100% {  
+    background-position: 0% 50%;  
+  }  
+}  
 
 .div__lateral a{
   color: inherit;
