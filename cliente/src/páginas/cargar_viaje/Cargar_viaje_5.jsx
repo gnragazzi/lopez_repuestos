@@ -35,7 +35,7 @@ function Cargar_viaje_5({ dispatch, acciones, estado }) {
           />
         </fieldset>
         <fieldset>
-          <legend>3. kilometros_realizados: </legend>
+          <legend>kilometros_realizados: </legend>
 
           <input
             placeholder="Ingrese los kilometros realizados en el viaje: "

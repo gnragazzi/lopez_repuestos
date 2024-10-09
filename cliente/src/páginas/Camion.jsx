@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import 'bootstrap/dist/css/bootstrap.min.css';
+import "bootstrap/dist/css/bootstrap.min.css";
 import axios from "axios";
 
 function Camiones() {
@@ -9,9 +9,11 @@ function Camiones() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get("http://localhost:8080/vehiculos?tipo=camion");
+        const response = await axios.get(
+          "http://localhost:8080/vehiculos?tipo=camion"
+        );
         const camionesData = Array.isArray(response.data) ? response.data : [];
-        
+
         setData(camionesData);
       } catch (error) {
         console.error("Error al traer los datos:", error);
@@ -55,19 +57,19 @@ function Camiones() {
                   <td>
                     <button
                       className="btn btn-primary"
-                      onClick={() => console.log('Editar:', elemento)}
+                      onClick={() => console.log("Editar:", elemento)}
                     >
                       Editar
                     </button>{" "}
                     <button
                       className="btn btn-danger"
-                      onClick={() => console.log('Eliminar:', elemento)}
+                      onClick={() => console.log("Eliminar:", elemento)}
                     >
                       Eliminar
                     </button>{" "}
                     <button
                       className="btn btn-primary"
-                      onClick={() => console.log('Costos:', elemento)}
+                      onClick={() => console.log("Costos:", elemento)}
                     >
                       Costos
                     </button>

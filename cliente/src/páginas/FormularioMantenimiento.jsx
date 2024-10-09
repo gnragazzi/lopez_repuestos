@@ -2,14 +2,14 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
-export const Formulario_Mantenimiento = () => {
-  const navegar = useNavigate();
+const FormularioMantenimiento = () => {
   const [pantalla, setPantalla] = useState(0);
   const [vehiculos, setVehiculos] = useState([]);
   const [mecanicos, setMecanicos] = useState([]);
   const [vehiculoSeleccionado, setVehiculoSeleccionado] = useState("");
   const [mecanicosSeleccionados, setmecanicosSeleccionados] = useState([]);
   const [esCamion, setEsCamion] = useState(false);
+  const navegar = useNavigate();
 
   const [datos, setDatos] = useState({
     trabajos_realizados: "",
@@ -209,7 +209,6 @@ export const Formulario_Mantenimiento = () => {
                 }
               />
             </fieldset>
-            {/* // nuevo campo */}
             {esCamion && (
               <fieldset className="form__items-mantenimiento">
                 <legend className="form__legend">
@@ -217,7 +216,7 @@ export const Formulario_Mantenimiento = () => {
                 </legend>
                 <input
                   className="items__input"
-                  placeholder="Costo de Mano de Obra"
+                  placeholder="Kilometros del camión"
                   type="number"
                   value={datos.kilometros_en_que_se_realizo}
                   onChange={(e) =>
@@ -248,6 +247,7 @@ export const Formulario_Mantenimiento = () => {
         <>
           <h2>Confirme Selección</h2>
           <div className="confirmar__seleccion">
+            <h3>Vehículo: </h3>
             {vehiculos.map((v) => {
               return (
                 v.patente == vehiculoSeleccionado && (
@@ -269,6 +269,12 @@ export const Formulario_Mantenimiento = () => {
             <p>Trabajo Realizado: {datos.trabajos_realizados}</p>
             <p>Costo Repuesto: {datos.costo_repuestos}</p>
             <p>Costo Mano de Obra: {datos.costo_manodeobra}</p>
+            {esCamion && (
+              <p>
+                Kilometros del camión en que se realizó el mantenimiento:{" "}
+                {datos.kilometros_en_que_se_realizo}
+              </p>
+            )}
             <p>Fecha: {datos.fecha}</p>
           </div>
         </>
@@ -322,3 +328,5 @@ export const Formulario_Mantenimiento = () => {
     </div>
   );
 };
+
+export default FormularioMantenimiento;

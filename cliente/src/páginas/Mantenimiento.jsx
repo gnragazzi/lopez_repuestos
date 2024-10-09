@@ -2,7 +2,6 @@ import { Link } from "react-router-dom";
 import { useState } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Modal, ModalBody, ModalHeader, ModalFooter } from "reactstrap";
-import { Formulario_Mantenimiento } from "./Formulario_Mantenimiento";
 
 function Mantenimiento() {
   const dataPaises = [
@@ -16,16 +15,16 @@ function Mantenimiento() {
     { id: 8, nombre: "México", minutos: 190 },
     { id: 9, nombre: "Sudáfrica", minutos: 190 },
     { id: 10, nombre: "Egipto", minutos: 186 },
-    { id: 1, nombre: "Filipinas", minutos: 241 },
-    { id: 2, nombre: "Brasil", minutos: 225 },
-    { id: 3, nombre: "Colombia", minutos: 216 },
-    { id: 4, nombre: "Nigeria", minutos: 216 },
-    { id: 5, nombre: "Argentina", minutos: 207 },
-    { id: 6, nombre: "Indonesia", minutos: 195 },
-    { id: 7, nombre: "Emiratos Árabes Unidos", minutos: 191 },
-    { id: 8, nombre: "México", minutos: 190 },
-    { id: 9, nombre: "Sudáfrica", minutos: 190 },
-    { id: 10, nombre: "Egipto", minutos: 186 },
+    { id: 11, nombre: "Filipinas", minutos: 241 },
+    { id: 12, nombre: "Brasil", minutos: 225 },
+    { id: 13, nombre: "Colombia", minutos: 216 },
+    { id: 14, nombre: "Nigeria", minutos: 216 },
+    { id: 15, nombre: "Argentina", minutos: 207 },
+    { id: 16, nombre: "Indonesia", minutos: 195 },
+    { id: 17, nombre: "Emiratos Árabes Unidos", minutos: 191 },
+    { id: 18, nombre: "México", minutos: 190 },
+    { id: 19, nombre: "Sudáfrica", minutos: 190 },
+    { id: 20, nombre: "Egipto", minutos: 186 },
   ];
 
   const [data, setData] = useState(dataPaises);
@@ -92,9 +91,7 @@ function Mantenimiento() {
         className="enlace_cargar_mantenimiento"
         rel="noopener noreferrer"
       >
-        <button className="btn btn-success" onClick={Formulario_Mantenimiento}>
-          Insertar
-        </button>
+        <button className="btn btn-success">Insertar</button>
       </Link>
       <div className="container__table">
         <table className="table table-bordered">
