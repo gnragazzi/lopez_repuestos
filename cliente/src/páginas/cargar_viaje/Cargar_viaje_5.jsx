@@ -18,12 +18,13 @@ function Cargar_viaje_5({ dispatch, acciones, estado }) {
   } = estado;
 
   return (
-    <div>
-      <h2>Por Favor, complete los siguientes campos</h2>
-      <form>
-        <fieldset>
-          <legend>Ingrese el destino del viaje</legend>
+    <div className="App formulario">
+      <h2>Detalles</h2>
+      <form className="form-table form__mantenimiento">
+        <fieldset className="form__items-mantenimiento">
+          <legend className="form__legend">Destino del viaje</legend>
           <textarea
+            className="items__input input__textarea"
             placeholder="destino"
             value={destino}
             onChange={(e) => {
@@ -34,10 +35,10 @@ function Cargar_viaje_5({ dispatch, acciones, estado }) {
             }}
           />
         </fieldset>
-        <fieldset>
-          <legend>kilometros_realizados: </legend>
-
+        <fieldset className="form__items-mantenimiento">
+          <legend className="form__legend">Kilometros realizados</legend>
           <input
+            className="items__input"
             placeholder="Ingrese los kilometros realizados en el viaje: "
             type="number"
             value={kilometros_realizados}
@@ -49,10 +50,11 @@ function Cargar_viaje_5({ dispatch, acciones, estado }) {
             }
           />
         </fieldset>
-        <fieldset>
-          <legend>Costos Combustibles: </legend>
+        <fieldset className="form__items-mantenimiento">
+          <legend className="form__legend">Costos Combustibles</legend>
 
           <input
+            className="items__input"
             placeholder="Ingrese el costo del combustible: "
             type="number"
             value={costos_combustibles}
@@ -64,10 +66,11 @@ function Cargar_viaje_5({ dispatch, acciones, estado }) {
             }
           />
         </fieldset>
-        <fieldset>
-          <legend>Peso: </legend>
+        <fieldset className="form__items-mantenimiento">
+          <legend className="form__legend">Peso</legend>
 
           <input
+            className="items__input"
             placeholder="Ingrese el peso de la carga: "
             type="number"
             value={peso}
@@ -80,23 +83,28 @@ function Cargar_viaje_5({ dispatch, acciones, estado }) {
           />
         </fieldset>
       </form>
-      <button onClick={() => dispatch({ type: PANTALLA_ANTERIOR })}>
-        Pantalla anterior
-      </button>
-      <button
-        onClick={() =>
-          dispatch({
-            type: PROXIMA_PANTALLA,
-            payload: [
-              Boolean(destino),
-              Boolean(kilometros_realizados),
-              Boolean(costos_combustibles),
-            ],
-          })
-        }
-      >
-        siguiente
-      </button>
+
+
+    <div className="botonera_formulario">
+      <button className="formulario__boton volver" onClick={() => dispatch({ type: PANTALLA_ANTERIOR })}>
+          Volver
+        </button>
+        <button className="formulario__boton siguiente" 
+          onClick={() =>
+            dispatch({
+              type: PROXIMA_PANTALLA,
+              payload: [
+                Boolean(destino),
+                Boolean(kilometros_realizados),
+                Boolean(costos_combustibles),
+              ],
+            })
+          }
+        >
+          Siguiente
+        </button>
+    </div>
+
     </div>
   );
 }
