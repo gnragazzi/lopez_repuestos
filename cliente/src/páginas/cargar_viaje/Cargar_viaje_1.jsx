@@ -1,7 +1,24 @@
 import { Link } from "react-router-dom";
+import { useState } from "react";
+import { MdReportGmailerrorred } from "react-icons/md";
 
 /* eslint-disable react/prop-types */
 function Cargar_viaje_1({ dispatch, acciones, estado }) {
+  
+  const [fechainvalida, setFechainvalida] = useState("");
+  const validarFechas = () => {
+    const partida = new Date(fecha_partida);
+    const llegada = new Date(fecha_llegada);
+  
+    if (llegada < partida) {
+      setFechainvalida(MdReportGmailerrorred);
+      return false;
+    }
+
+    setFechainvalida("");
+    return true;
+  };
+  
   const {
     PROXIMA_PANTALLA,
     SELECCIONAR_FECHA_PARTIDA,
@@ -31,8 +48,9 @@ function Cargar_viaje_1({ dispatch, acciones, estado }) {
         </fieldset>
         <fieldset className="form__items-mantenimiento">
           <legend className="form__legend">Fecha de Llegada</legend>
+          <div className="mensaje__error" title="La fecha de llegada no puede ser anterior a la fecha de partida. Elija otra fecha valida" >{fechainvalida}</div>
           <input
-            className="items__input"
+            className={`items__input ${fechainvalida ? 'error' : ''}`}
             type="date"
             value={fecha_llegada}
             onChange={(e) => {
@@ -61,8 +79,9 @@ function Cargar_viaje_1({ dispatch, acciones, estado }) {
       <div className="botonera_formulario">
         <button className="formulario__boton volver"><Link   to="/viajes" style={{textDecoration:'none', color:'#000'}}>Volver</Link></button>
       <button className="formulario__boton siguiente" 
-        onClick={() =>
-          dispatch({
+        onClick={() =>{
+          if(validarFechas()){
+            dispatch({
             type: PROXIMA_PANTALLA,
             //hay que validar las fechas unas contra otras (por ejemplo, fecha de partida no puede ser posterior a fecha de llegada)
             payload: [
@@ -70,8 +89,8 @@ function Cargar_viaje_1({ dispatch, acciones, estado }) {
               Boolean(fecha_llegada),
               Boolean(fecha_esperada),
             ],
-          })
-        }
+          })}
+        }}
       >
         Siguiente
       </button>

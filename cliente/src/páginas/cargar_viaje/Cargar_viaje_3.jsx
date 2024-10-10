@@ -1,8 +1,25 @@
 /* eslint-disable react/prop-types */
 import axios from "axios";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import { MdErrorOutline } from "react-icons/md";
 
 const Cargar_viaje_3 = ({ dispatch, acciones, estado }) => {
+  
+  const [error,setError]=useState("");
+  const [icono_error,setIcono_Error]=useState("");
+ 
+  const seleccion = () => {
+    if(semirremolque_seleccionado){
+      setError("");
+      setIcono_Error("");
+      return true;
+    }
+    setError("Debe elegir un semirremolque para poder avanzar")
+    setIcono_Error(MdErrorOutline);
+    return false;
+
+  }
+
   const {
     PROXIMA_PANTALLA,
     PANTALLA_ANTERIOR,
@@ -50,8 +67,8 @@ const Cargar_viaje_3 = ({ dispatch, acciones, estado }) => {
                       filtro_semirremolque.includes(patente)
                         ? "vehiculos_lista no_disponible"
                         : semirremolque_seleccionado == patente
-                        ? "vehiculos_lista vehiculos_lista_seleccionado"
-                        : "vehiculos_lista"
+                        ? "vehiculos_lista vehiculos_lista vehiculos_lista_seleccionado_viaje"
+                        : "vehiculos_lista disponible"
                     }
                     key={patente}
                     onClick={
@@ -79,13 +96,15 @@ const Cargar_viaje_3 = ({ dispatch, acciones, estado }) => {
           <button className="formulario__boton volver" onClick={() => dispatch({ type: PANTALLA_ANTERIOR })}>
             Volver
           </button>
+          <div className="no_seleccionado">{icono_error}       {error}</div>
           <button className="formulario__boton siguiente"
-            onClick={() =>
+            onClick={() =>{
+              if(seleccion()){
               dispatch({
                 type: PROXIMA_PANTALLA,
                 payload: [Boolean(semirremolque_seleccionado)],
-              })
-            }
+              })}
+            }}
           >
             Siguiente
           </button>

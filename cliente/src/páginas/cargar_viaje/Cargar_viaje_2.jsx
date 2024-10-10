@@ -1,8 +1,26 @@
 import axios from "axios";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import { MdErrorOutline } from "react-icons/md";
+
 
 /* eslint-disable react/prop-types */
 function Cargar_viaje_2({ dispatch, acciones, estado }) {
+  
+  const [error,setError]=useState("");
+  const [icono_error,setIcono_Error]=useState("");
+ 
+  const seleccion = () => {
+    if(camion_seleccionado){
+      setError("");
+      setIcono_Error("");
+      return true;
+    }
+    setError("Debe elegir un camion para poder avanzar")
+    setIcono_Error(MdErrorOutline);
+    return false;
+
+  }
+
   const {
     CARGAR_FILTROS,
     PROXIMA_PANTALLA,
@@ -71,8 +89,8 @@ function Cargar_viaje_2({ dispatch, acciones, estado }) {
                     filtro_camion.includes(patente)
                       ? "vehiculos_lista no_disponible"
                       : camion_seleccionado == patente
-                      ? "vehiculos_lista vehiculos_lista_seleccionado"
-                      : "vehiculos_lista"
+                      ? "vehiculos_lista vehiculos_lista_seleccionado_viaje"
+                      : "vehiculos_lista disponible"
                   }
                   key={patente}
                   onClick={
@@ -105,13 +123,15 @@ function Cargar_viaje_2({ dispatch, acciones, estado }) {
         <button className="formulario__boton volver" onClick={() => dispatch({ type: PANTALLA_ANTERIOR })}>
           Volver
         </button>
+        <div className="no_seleccionado">{icono_error}       {error}</div>
         <button className="formulario__boton siguiente" 
-          onClick={() =>
+          onClick={() =>{
+            if (seleccion()){
             dispatch({
               type: PROXIMA_PANTALLA,
               payload: [Boolean(camion_seleccionado)],
-            })
-          }
+            })}
+          }}
         >
           Siguiente
         </button>
