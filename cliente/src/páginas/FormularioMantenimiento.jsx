@@ -59,7 +59,7 @@ const FormularioMantenimiento = () => {
       })
       .catch((error) => console.log(error));
     axios
-      .get("http://localhost:8080/mecanicos", {
+      .get("http://localhost:8080/empleados?tipo=mecánico", {
         headers: {
           Accept: "application/json",
         },

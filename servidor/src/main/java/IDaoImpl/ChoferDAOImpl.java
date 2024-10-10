@@ -38,7 +38,7 @@ public class ChoferDAOImpl implements IChoferDAO{
     @Override
     public ArrayList<Chofer> list() throws Exception {
         Statement statement= conexion.createStatement();
-        ResultSet rs = statement.executeQuery("select * from empleados, choferes where dni=Empleados_DNI;");
+        ResultSet rs = statement.executeQuery("select * from Empleados, Choferes where dni=Empleados_DNI;");
         ArrayList<Chofer> choferes= new ArrayList<>(); 
         while(rs.next()){
             Chofer chofer= new Chofer();
