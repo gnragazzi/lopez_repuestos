@@ -51,59 +51,71 @@ function Cargar_viaje_2({ dispatch, acciones, estado }) {
       });
   }, []);
   return (
-    <div>
+    <div className="App formulario">
       <h2>Selección de Camión</h2>
-      <h4>Seleccione el vehículo para el viaje</h4>
-      <ul>
-        <li className="vehiculos_lista header_lista">
-          <p>Marca</p>
-          <p>Patente</p>
-        </li>
-        {lista_camiones.map((camion) => {
-          const { patente, marca } = camion;
-          return (
-            <li
-              className={
-                filtro_camion.includes(patente)
-                  ? "vehiculos_lista no_disponible"
-                  : camion_seleccionado == patente
-                  ? "vehiculos_lista vehiculos_lista_seleccionado"
-                  : "vehiculos_lista"
-              }
-              key={patente}
-              onClick={
-                filtro_camion.includes(patente)
-                  ? () => {
-                      console.log("No se puede seleccionar");
-                    }
-                  : () => {
-                      dispatch({
-                        type: SELECCIONAR_VEHICULO,
-                        payload: patente,
-                      });
-                    }
-              }
-            >
-              <p>{marca}</p>
-              <p>{patente}</p>
-            </li>
-          );
-        })}
-      </ul>
+      <br />
+      <div className="container__table form-table">
+        <table className="table table-bordered">
+          <thead>
+            <tr>
+              <th>Marca</th>
+              <th>Patente</th> 
+           </tr>
+          </thead>
+          <tbody>
+            {lista_camiones.map((camion) => {
+              const { patente, marca } = camion;
+              return (
+                <tr
+                  className={
+                    filtro_camion.includes(patente)
+                      ? "vehiculos_lista no_disponible"
+                      : camion_seleccionado == patente
+                      ? "vehiculos_lista vehiculos_lista_seleccionado"
+                      : "vehiculos_lista"
+                  }
+                  key={patente}
+                  onClick={
+                    filtro_camion.includes(patente)
+                      ? () => {
+                          console.log("No se puede seleccionar");
+                        }
+                      : () => {
+                          dispatch({
+                            type: SELECCIONAR_VEHICULO,
+                            payload: patente,
+                          });
+                        }
+                  }
+                >
+                  <td>
+                    <p>{marca}</p>
+                  </td>
+                  <td>
+                    <p>{patente}</p>
+                  </td>
+                </tr>
+              );
+            })}
+          </tbody>
+        </table>
+      </div>
 
-      <button onClick={() => dispatch({ type: PANTALLA_ANTERIOR })}>
-        Pantalla anterior
-      </button>
-      <button
-        onClick={() =>
-          dispatch({
-            type: PROXIMA_PANTALLA,
-            payload: [Boolean(camion_seleccionado)],
-          })
-        }
-      >
-        siguiente
-      </button>
+      <div className="botonera_formulario">
+        <button className="formulario__boton volver" onClick={() => dispatch({ type: PANTALLA_ANTERIOR })}>
+          Volver
+        </button>
+        <button className="formulario__boton siguiente" 
+          onClick={() =>
+            dispatch({
+              type: PROXIMA_PANTALLA,
+              payload: [Boolean(camion_seleccionado)],
+            })
+          }
+        >
+          Siguiente
+        </button>
+      </div>
     </div>
   );
 }

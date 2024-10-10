@@ -12,12 +12,13 @@ function Cargar_viaje_1({ dispatch, acciones, estado }) {
     cuerpo_cargar_viaje: { fecha_llegada, fecha_partida, fecha_esperada },
   } = estado;
   return (
-    <div>
+    <div className="App formulario">
       <h2>Por Favor, seleccione las fechas en las que se realizo el viaje</h2>
-      <form action="">
-        <fieldset>
-          <legend>Fecha de Partida</legend>
+      <form action="" className="form-table form__mantenimiento">
+        <fieldset className="form__items-mantenimiento">
+          <legend className="form__legend">Fecha de Partida</legend>
           <input
+            className="items__input"
             type="date"
             value={fecha_partida}
             onChange={(e) => {
@@ -28,9 +29,10 @@ function Cargar_viaje_1({ dispatch, acciones, estado }) {
             }}
           />
         </fieldset>
-        <fieldset>
-          <legend>Fecha de Llegada</legend>
+        <fieldset className="form__items-mantenimiento">
+          <legend className="form__legend">Fecha de Llegada</legend>
           <input
+            className="items__input"
             type="date"
             value={fecha_llegada}
             onChange={(e) => {
@@ -40,10 +42,11 @@ function Cargar_viaje_1({ dispatch, acciones, estado }) {
               });
             }}
           />
-        </fieldset>
-        <fieldset>
-          <legend>Fecha Esperada</legend>
+        </fieldset >
+        <fieldset className="form__items-mantenimiento">
+          <legend className="form__legend">Fecha Esperada</legend>
           <input
+            className="items__input"
             type="date"
             value={fecha_esperada}
             onChange={(e) => {
@@ -55,10 +58,9 @@ function Cargar_viaje_1({ dispatch, acciones, estado }) {
           />
         </fieldset>
       </form>
-      <Link to="/viajes">
-        <button>Volver</button>
-      </Link>
-      <button
+      <div className="botonera_formulario">
+        <button className="formulario__boton volver"><Link   to="/viajes" style={{textDecoration:'none', color:'#000'}}>Volver</Link></button>
+      <button className="formulario__boton siguiente" 
         onClick={() =>
           dispatch({
             type: PROXIMA_PANTALLA,
@@ -71,8 +73,9 @@ function Cargar_viaje_1({ dispatch, acciones, estado }) {
           })
         }
       >
-        siguiente
+        Siguiente
       </button>
+      </div>
     </div>
   );
 }

@@ -30,58 +30,67 @@ const Cargar_viaje_3 = ({ dispatch, acciones, estado }) => {
       .catch((error) => console.log(error));
   }, []);
   return (
-    <div>
+    <div className="App formulario">
       <h2>Selección de Semirremolque</h2>
-      <h4>Seleccione el vehículo para el viaje</h4>
-      <ul>
-        <li className="vehiculos_lista header_lista">
-          <p>Marca</p>
-          <p>Patente</p>
-        </li>
-        {lista_semirremolques.map((semirremolque) => {
-          const { patente, marca } = semirremolque;
-          return (
-            <li
-              className={
-                filtro_semirremolque.includes(patente)
-                  ? "vehiculos_lista no_disponible"
-                  : semirremolque_seleccionado == patente
-                  ? "vehiculos_lista vehiculos_lista_seleccionado"
-                  : "vehiculos_lista"
-              }
-              key={patente}
-              onClick={
-                filtro_semirremolque.includes(patente)
-                  ? () => {
-                      console.log("No se puede seleccionar");
+      <br />
+      <div className="container__table form-table">
+        <table className="table table-bordered">
+           <thead>
+                <tr>
+                  <th>Marca</th>
+                  <th>Patente</th>
+                </tr>
+            </thead>
+            <tbody>
+              {lista_semirremolques.map((semirremolque) => {
+                const { patente, marca } = semirremolque;
+                return (
+                  <tr
+                    className={
+                      filtro_semirremolque.includes(patente)
+                        ? "vehiculos_lista no_disponible"
+                        : semirremolque_seleccionado == patente
+                        ? "vehiculos_lista vehiculos_lista_seleccionado"
+                        : "vehiculos_lista"
                     }
-                  : () => {
-                      dispatch({
-                        type: SELECCIONAR_SEMIRREMOLQUE,
-                        payload: patente,
-                      });
+                    key={patente}
+                    onClick={
+                      filtro_semirremolque.includes(patente)
+                        ? () => {
+                            console.log("No se puede seleccionar");
+                          }
+                        : () => {
+                            dispatch({
+                              type: SELECCIONAR_SEMIRREMOLQUE,
+                              payload: patente,
+                            });
+                          }
                     }
-              }
-            >
-              <p>{marca}</p>
-              <p>{patente}</p>
-            </li>
-          );
-        })}
-      </ul>
-      <button onClick={() => dispatch({ type: PANTALLA_ANTERIOR })}>
-        Pantalla anterior
-      </button>
-      <button
-        onClick={() =>
-          dispatch({
-            type: PROXIMA_PANTALLA,
-            payload: [Boolean(semirremolque_seleccionado)],
-          })
-        }
-      >
-        siguiente
-      </button>
+                  >
+                    <td><p>{marca}</p></td>
+                    <td><p>{patente}</p></td>
+                  </tr>
+                );
+            })}
+          </tbody>
+        </table>
+      </div>
+      <div className="botonera_formulario">
+          <button className="formulario__boton volver" onClick={() => dispatch({ type: PANTALLA_ANTERIOR })}>
+            Volver
+          </button>
+          <button className="formulario__boton siguiente"
+            onClick={() =>
+              dispatch({
+                type: PROXIMA_PANTALLA,
+                payload: [Boolean(semirremolque_seleccionado)],
+              })
+            }
+          >
+            Siguiente
+          </button>
+      </div>
+
     </div>
   );
 };
