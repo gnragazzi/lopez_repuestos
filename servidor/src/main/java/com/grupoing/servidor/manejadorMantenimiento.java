@@ -6,6 +6,9 @@ import Clases.Mecanico;
 import Clases.Semirremolque;
 import Clases.Vehiculo;
 import IDaoImpl.MantenimientoDAOImpl;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.ObjectWriter;
 import com.sun.net.httpserver.HttpExchange;
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -13,14 +16,29 @@ import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Iterator;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
 public class manejadorMantenimiento extends Manejador {
 
     @Override
-    public String manejarGet(HttpExchange he) {
-        return "GET REQUEST";
+    public String manejarGet(HttpExchange he) throws JsonProcessingException, UnsupportedEncodingException, ClassNotFoundException, Exception {
+        
+        String tipo = obtenerParámetros(he.getRequestURI(), "tipo");
+        ArrayList<Mantenimiento> mantenimientos = new ArrayList<>();
+        if(tipo == null){
+            //Se devulven todos los mantenimientos
+            
+            MantenimientoDAOImpl mantenimientosDAO= new MantenimientoDAOImpl();
+            mantenimientos = mantenimientosDAO.list();
+        }
+        else{
+            //Para otra consulta de otro tipo
+        }
+        
+        ObjectWriter ow = new ObjectMapper().writer().withDefaultPrettyPrinter();
+        return ow.writeValueAsString(mantenimientos);
     }
  
     @Override

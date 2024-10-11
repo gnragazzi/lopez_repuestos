@@ -72,6 +72,9 @@ public class MantenimientoDAOImpl implements IMantenimientoDAO {
             mantenimiento.setCostos_manodeobra(rs.getFloat("costos_mano_de_obra"));
             mantenimiento.setCostos_repuestos(rs.getFloat("costos_repuestos"));
             mantenimiento.setFecha(LocalDate.parse(rs.getString("Fecha")));
+            mantenimiento.setTrabajos_realizados((rs.getString("Trabajo_realizados")));
+            
+            mantenimientos.add(mantenimiento);
         }
         return mantenimientos;
     }
