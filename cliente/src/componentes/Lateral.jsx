@@ -1,11 +1,8 @@
 import { categorias } from "../assets/data";
 import { useContextoGlobal } from "../Contexto";
 import { Link } from "react-router-dom";
-import arrow from "../assets/iconos_lateral/arrow.svg";
-import { useState } from "react";
+import { useState, memo } from "react";
 import { IoIosArrowForward } from "react-icons/io";
-
-
 
 function Lateral() {
   const { clickMenu, menuSeleccionado } = useContextoGlobal();
@@ -18,11 +15,13 @@ function Lateral() {
   return (
     <div className="div__lateral">
       <ul>
-        {categorias.map(({ nombre, subcategorias, img, icono }) => {
+        {categorias.map(({ nombre, subcategorias, icono }) => {
           return subcategorias ? (
             <div key={nombre}>
               <li
-                className={menuSeleccionado == nombre ? "seleccion" : "no_seleccion"}
+                className={
+                  menuSeleccionado == nombre ? "seleccion" : "no_seleccion"
+                }
                 onClick={() => {
                   clickMenu;
                   toggleSubMenu(nombre);
@@ -35,24 +34,25 @@ function Lateral() {
                 />
               </li>
 
-              {subMenuAbierto == nombre && (
+              {subMenuAbierto == nombre &&
                 subcategorias.map((sub) => (
-                  <li  
-                  key={sub}  
-                  className="seleccion_visible"  
-                  onClick={() => handleSelect(sub)}  
-                >  
-                  <Link to={`/${nombre}/${sub}`}>  
-                    <p>{sub}</p>  
-                  </Link>  
-                </li> 
-                ))  
-              )}
+                  <li
+                    key={sub}
+                    className="seleccion_visible"
+                    // onClick={() => handleSelect(sub)}
+                  >
+                    <Link to={`/${nombre}/${sub}`}>
+                      <p>{sub}</p>
+                    </Link>
+                  </li>
+                ))}
             </div>
           ) : (
             <Link to={`/${nombre}`} key={nombre}>
               <li
-                className={menuSeleccionado == nombre ? "seleccion" : "no_seleccion"}
+                className={
+                  menuSeleccionado == nombre ? "seleccion" : "no_seleccion"
+                }
                 onClick={clickMenu}
               >
                 {icono}
@@ -66,4 +66,4 @@ function Lateral() {
   );
 }
 
-export default Lateral;
+export default memo(Lateral);

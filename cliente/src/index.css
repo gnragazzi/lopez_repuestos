@@ -273,6 +273,7 @@ header{
   margin: 0;
   padding: 0;
   width: 100%;
+  text-align: left;
 }
 
 .div__lateral p{

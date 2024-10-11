@@ -1,7 +1,6 @@
 package com.grupoing.servidor;
 
-import Clases.Mecanico;
-import IDaoImpl.MecanicoDAOImpl;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 import java.io.IOException;
@@ -13,18 +12,13 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.ObjectWriter;
-import com.fasterxml.jackson.databind.SerializationFeature;
-import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
-import java.time.LocalDate;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class manejadorMecanicos implements HttpHandler {
+public abstract class Manejador implements HttpHandler {
 
     @Override
-    public void handle(HttpExchange he) throws IOException {
+    public void handle(HttpExchange he) throws IOException, JsonProcessingException {
         he.getResponseHeaders().add("Access-Control-Allow-Origin", "*");
         if (he.getRequestMethod().equalsIgnoreCase("OPTIONS")) {
             he.getResponseHeaders().add("Access-Control-Allow-Methods", "GET, OPTIONS");
@@ -32,30 +26,43 @@ public class manejadorMecanicos implements HttpHandler {
             he.sendResponseHeaders(204, -1);
             return;
         }
- 
-        ObjectWriter ow = new ObjectMapper().writer().withDefaultPrettyPrinter();
+        String método = he.getRequestMethod();
+        String response = null;
 
-        ObjectMapper mapper = new ObjectMapper();
-        mapper.registerModule(new JavaTimeModule()); 
-        mapper.configure(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS, false);
-
-        try {
-            MecanicoDAOImpl mecanicoDAO= new MecanicoDAOImpl();
-            ArrayList<Mecanico> mecanicos=new ArrayList<>();
-            mecanicos= mecanicoDAO.list();
-            String response = ow.writeValueAsString(mecanicos);
-            he.sendResponseHeaders(200, response.getBytes().length);
-            OutputStream os = he.getResponseBody();
-            os.write(response.getBytes());
-            os.close();
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(manejadorMecanicos.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (Exception ex) {
-            Logger.getLogger(manejadorMecanicos.class.getName()).log(Level.SEVERE, null, ex);
+        if (método.equalsIgnoreCase("get")) {
+            try {
+                response = manejarGet(he);
+            } catch (ClassNotFoundException ex) {
+                Logger.getLogger(manejadorEmpleado.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (Exception ex) {
+                Logger.getLogger(manejadorEmpleado.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        } else if (método.equalsIgnoreCase("post")) {
+            try {
+                response = manejarPost(he);
+            } catch (ClassNotFoundException ex) {
+                Logger.getLogger(Manejador.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (Exception ex) {
+                Logger.getLogger(Manejador.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        } else {
+            response = "MÉTODO NO IMPLEMENTADO";
         }
+
+        // parse request 
+        he.sendResponseHeaders(200, response.getBytes().length);
+        OutputStream os = he.getResponseBody();
+        os.write(response.getBytes());
+        os.close();
     }
 
-    public static void parseQuery(String query, Map<String, Object> parameters) throws UnsupportedEncodingException {
+    protected abstract String manejarGet(HttpExchange he) throws UnsupportedEncodingException, JsonProcessingException, ClassNotFoundException, Exception;
+
+    protected abstract String manejarPost(HttpExchange he) throws UnsupportedEncodingException, JsonProcessingException, ClassNotFoundException, Exception;
+
+    protected String obtenerParámetros(URI requestUri, String clave) throws UnsupportedEncodingException {
+        Map<String, Object> parameters = new HashMap<String, Object>();
+        String query = requestUri.getRawQuery();
         if (query != null) {
             String pairs[] = query.split("[&]");
             for (String pair : pairs) {
@@ -84,5 +91,6 @@ public class manejadorMecanicos implements HttpHandler {
                 }
             }
         }
+        return (String) parameters.get(clave);
     }
 }
