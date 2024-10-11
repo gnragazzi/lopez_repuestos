@@ -78,7 +78,10 @@ public class manejadorViaje extends Manejador {
 
         ArrayList<Viaje> viajes = new ArrayList<>();
         if (fecha_partida == null && fecha_llegada == null) {
-            // SE DEVUEVLVEN TODOS VIAJES  
+            
+            ViajeDAOImpl viajeDAO= new ViajeDAOImpl();
+            viajes=viajeDAO.list();
+            
         } else if (fecha_llegada == null) {
             // SE DEVUEVLVEN TODOS VIAJES  A PARTIR DE FECHAPARTIDA
         } else if (fecha_partida == null) {
@@ -90,6 +93,7 @@ public class manejadorViaje extends Manejador {
             viajes = viajeDAO.comprobarfechas(fecha_partida, fecha_llegada);
 
         }
+        
         ObjectWriter ow = new ObjectMapper().writer().withDefaultPrettyPrinter();
 
         return ow.writeValueAsString(viajes);

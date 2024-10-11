@@ -66,9 +66,10 @@ public class ViajeDAOImpl implements IViajeDAO {
             viaje.setChofer(chofer);
             viaje.setFecha_llegada(LocalDate.parse(rs.getString("Fecha_llegada")));
             viaje.setFecha_partida(LocalDate.parse(rs.getString("Fecha_partida")));
+            viaje.setPeso(rs.getInt("peso"));
+            viaje.setDestino(rs.getString("destino"));
             viajes.add(viaje);
         }
-        System.out.println("ffdsaf");
         return viajes;
     }
 
