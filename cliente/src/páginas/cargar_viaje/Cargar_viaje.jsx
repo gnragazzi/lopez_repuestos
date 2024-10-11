@@ -189,7 +189,7 @@ export const Cargar_viaje = () => {
       .then((res) => {
         console.log(res);
         dispatch({ type: RESETEAR_CUERPO_VIAJE });
-        navegar("/viajes");
+        navegar("/viajes"); // Navegar solo después de un éxito
       });
   };
   // //HAY QUE TENER ALGUNA PANTALLA PARA CUANDO NO HAYA CAMIONES Y/O SEMIRREMOLQUES EN EL PERIODO DETERMINADO

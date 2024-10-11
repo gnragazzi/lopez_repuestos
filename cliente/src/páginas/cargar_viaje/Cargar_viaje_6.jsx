@@ -52,15 +52,16 @@ function Cargar_viaje_6({ dispatch, acciones, estado, enviarFormulario }) {
                     chofer == c.dni && (
                       <div>
                         <h4>Chofer: </h4>
-                        <p key={c.dni}>DNI: {c.dni}</p>
+                        <p key={c.dni}>DNI: {c.dni} | Nombre: {c.nombre} | Apellido: {c.apellido}</p> 
                       </div>
                     )
                   );
                 })}
+                <h4>Datos de Viaje: </h4>
                 <p>Destino: {destino}</p>
                 <p>Kilometros Realizados: {kilometros_realizados}</p>
                 <p>Costo de Combustible: {costos_combustibles}</p>
-                <p>Peso de la carga: {peso}</p>
+                <p>Peso de la carga: {peso}Kg</p>
                 <p>Fecha de partida: {fecha_partida}</p>
                 <p>Fecha de llegada: {fecha_llegada}</p>
                 <p>Fecha de esperada: {fecha_esperada}</p>

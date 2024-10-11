@@ -537,7 +537,7 @@ td{
 
 
 tbody tr:hover{
-  background: linear-gradient(#0003,#0003), transparent !important;
+  background: linear-gradient(#0003,#0003), transparent;
   }
 
 
@@ -585,6 +585,15 @@ tbody tr:hover{
   background: var(--color-de-seleccion-nav);
 }
 
+.mensaje__error{
+  position: absolute;
+  border-radius: 1rem;
+  right: 0;
+  width: 20px;
+  background:linear-gradient(#fffa,#fffa), rgb(254, 53, 53);
+  text-align: center;
+  box-shadow: 0 0 5px red;
+}
 
 .siguiente{
   right: 14px;
@@ -638,7 +647,8 @@ ESTA ES UNA IDEA DE COMO TRABAJAR CON MODO OSCURO/CLARO
 .form__items-mantenimiento{
   flex: 0 1 100%; /*El ultimo es el flex basis, que define el ancho de los elementos, y como es column es el largo en este caso*/
   width: 50%;
-  padding: 0 1vw 0 1vw;
+  padding: 0 2vw 0 1vw;
+  position: relative;
 }
 
 .form__legend{
@@ -662,11 +672,19 @@ ESTA ES UNA IDEA DE COMO TRABAJAR CON MODO OSCURO/CLARO
   border-radius: 5px;
 }
 
+.form__items-mantenimiento .items__input{
+  border-bottom: 1px solid #0003;
+}
+
 
 .form__items-mantenimiento .input__textarea{
   resize: auto;
 }
 
+
+.form__items-mantenimiento .error{
+  border-bottom: 3px solid #d10c0c;
+}
 
 
 /*Formulario de confirmar seleccion*/
@@ -676,7 +694,7 @@ ESTA ES UNA IDEA DE COMO TRABAJAR CON MODO OSCURO/CLARO
   display: flex;
   flex-flow: column nowrap;
   place-items: start;
-  margin-top: 10vh;
+  margin-top: 20px;
   border-radius: 10px;
   padding: 5px;
   width: 100%;
@@ -687,4 +705,31 @@ ESTA ES UNA IDEA DE COMO TRABAJAR CON MODO OSCURO/CLARO
 .confirmar__seleccion p{
   font-size: 1.6rem;
   color: var(--color-fuente-sidebar);
+}
+
+
+.no_seleccionado{
+  position: absolute;
+  border-radius: 0.2rem;
+  left: 35%;
+  background:linear-gradient(#fffa,#fffa), rgb(254, 53, 53);
+  text-align: center;
+  box-shadow: 0 0 3px red;
+
+}
+
+.no_disponible{
+  background: #d10c0c28 !important;
+}
+
+.disponible{
+  background: #20d10c28;
+}
+
+.disponible:hover{
+  background: #20d10c6e;
+}
+
+.vehiculos_lista_seleccionado_viaje{
+  background: #20d10c6e !important;
 }
