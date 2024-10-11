@@ -10,6 +10,7 @@ import FormularioMantenimiento from "./páginas/FormularioMantenimiento.jsx";
 // import MantenimientoFormulario from "./páginas/MantenimientoFormulario.jsx";
 import { Cargar_viaje } from "./páginas/cargar_viaje/Cargar_viaje.jsx";
 import Camiones from "./páginas/Camion.jsx";
+import Costos_camión from "./páginas/costos_camion/Costos_camión.jsx";
 
 const router = createBrowserRouter([
   {
@@ -17,6 +18,7 @@ const router = createBrowserRouter([
     element: <App></App>,
     children: [
       {
+        index: true,
         path: "principal",
         element: <Principal />,
       },
@@ -25,7 +27,16 @@ const router = createBrowserRouter([
         children: [
           {
             path: "camiones",
-            element: <Camiones />,
+            children: [
+              {
+                path: "",
+                element: <Camiones />,
+              },
+              {
+                path: "costos",
+                element: <Costos_camión />,
+              },
+            ],
           },
         ],
       },

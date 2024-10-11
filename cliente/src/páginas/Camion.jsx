@@ -1,10 +1,17 @@
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 import { Link } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 import axios from "axios";
+import { useContextoGlobal } from "../Contexto";
 
 function Camiones() {
-  const [data, setData] = useState([]);
+  const {
+    estado_camiones: estado,
+    dispatch_camiones: dispatch,
+    acciones_camiones: acciones,
+  } = useContextoGlobal();
+
+  const { CARGAR_LISTA_CAMIONES, SELECCIONAR_CAMION } = acciones;
 
   useEffect(() => {
     const fetchData = async () => {
@@ -14,15 +21,15 @@ function Camiones() {
         );
         const camionesData = Array.isArray(response.data) ? response.data : [];
 
-        setData(camionesData);
+        dispatch({ type: CARGAR_LISTA_CAMIONES, payload: camionesData });
       } catch (error) {
         console.error("Error al traer los datos:", error);
-        setData([]);
+        dispatch({ type: CARGAR_LISTA_CAMIONES, payload: [] });
       }
     };
 
     fetchData();
-  }, []);
+  }, [CARGAR_LISTA_CAMIONES, dispatch]);
 
   return (
     <div className="App">
@@ -43,39 +50,47 @@ function Camiones() {
             </tr>
           </thead>
           <tbody>
-            {data.length === 0 ? (
+            {estado.lista_camiones.length === 0 ? (
               <tr>
                 <td colSpan="5">No hay datos disponibles</td>
               </tr>
             ) : (
-              data.map((elemento) => (
-                <tr key={elemento.id}>
-                  <td>{elemento.patente}</td>
-                  <td>{elemento.marca}</td>
-                  <td>{elemento.modelo}</td>
-                  <td>{elemento.kilometraje}</td>
-                  <td>
-                    <button
-                      className="btn btn-primary"
-                      onClick={() => console.log("Editar:", elemento)}
-                    >
-                      Editar
-                    </button>{" "}
-                    <button
-                      className="btn btn-danger"
-                      onClick={() => console.log("Eliminar:", elemento)}
-                    >
-                      Eliminar
-                    </button>{" "}
-                    <button
-                      className="btn btn-primary"
-                      onClick={() => console.log("Costos:", elemento)}
-                    >
-                      Costos
-                    </button>
-                  </td>
-                </tr>
-              ))
+              estado.lista_camiones.map((elemento) => {
+                return (
+                  <tr key={elemento.patente}>
+                    <td>{elemento.patente}</td>
+                    <td>{elemento.marca}</td>
+                    <td>{elemento.modelo}</td>
+                    <td>{elemento.kilometraje}</td>
+                    <td>
+                      <button
+                        className="btn btn-primary"
+                        onClick={() => console.log("Editar:", elemento)}
+                      >
+                        Editar
+                      </button>{" "}
+                      <button
+                        className="btn btn-danger"
+                        onClick={() => console.log("Eliminar:", elemento)}
+                      >
+                        Eliminar
+                      </button>{" "}
+                      <Link
+                        to={"costos"}
+                        className="btn btn-primary"
+                        onClick={() =>
+                          dispatch({
+                            type: SELECCIONAR_CAMION,
+                            payload: elemento.patente,
+                          })
+                        }
+                      >
+                        Costos
+                      </Link>
+                    </td>
+                  </tr>
+                );
+              })
             )}
           </tbody>
         </table>
