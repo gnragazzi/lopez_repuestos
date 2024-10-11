@@ -37,7 +37,6 @@ public class ViajeDAOImpl implements IViajeDAO{
         "value('" + viaje.getFecha_partida() + "', '" + viaje.getFecha_llegada() + "','" + viaje.getFecha_esperada() + "'," + viaje.getKilometros_realizados() + "," +viaje.getCostos_combustibles() + ", '" + viaje.getDestino() + "', "
                 + viaje.getPeso() + ", '" + viaje.getCamion().getPatente() + "', '" + viaje.getSemirremolque().getPatente() + "', '" + viaje.getChofer().getDni() + "');");
         envioViaje.executeUpdate();
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     @Override
