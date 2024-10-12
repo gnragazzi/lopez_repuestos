@@ -48,9 +48,9 @@ const Costos_2 = () => {
       });
   }, [CARGAR_COSTO, año_costo, camion_seleccionado, dispatch, mes_costo]);
   return (
-    <div className="App formulario">
-      <h2>Confirme Selección</h2>
-      <div className="confirmar__seleccion">
+    <>
+    <h2>Confirme Selección</h2>
+    <div className="confirmar__seleccion">
         {lista_camiones.map((v) => {
           return (
             camion_seleccionado == v.patente && (
@@ -73,7 +73,7 @@ const Costos_2 = () => {
         <strong>***</strong>
         <p>Costo Por Kilómetro: {costos_por_kilometros}</p>
       </div>
-    </div>
+    </>
   );
 };
 
