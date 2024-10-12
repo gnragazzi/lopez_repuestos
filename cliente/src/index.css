@@ -744,3 +744,8 @@ ESTA ES UNA IDEA DE COMO TRABAJAR CON MODO OSCURO/CLARO
     background-position: 0% 50%;  
   }  
 }  
+/* MENSAJES DE EN CONSTRUCCIÓN */
+.en_construcción{
+  color: var(--fondo-borde-logo);
+  font-size: 2rem;
+}
