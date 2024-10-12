@@ -49,7 +49,9 @@ public abstract class Manejador implements HttpHandler {
             response = "MÉTODO NO IMPLEMENTADO";
         }
 
+        
         // parse request 
+        he.getResponseHeaders().set("Content-Type", "application/json");  
         he.sendResponseHeaders(200, response.getBytes().length);
         OutputStream os = he.getResponseBody();
         os.write(response.getBytes());

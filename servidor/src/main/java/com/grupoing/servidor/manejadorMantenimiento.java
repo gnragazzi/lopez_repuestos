@@ -36,9 +36,6 @@ public class manejadorMantenimiento extends Manejador {
         ArrayList<Mantenimiento> mantenimientos = new ArrayList<>();
         mantenimientos = mantenimientoDAO.list();
 
-        JSONArray jsonArray = new JSONArray(mantenimientos);
-        System.out.println(jsonArray); 
-        
         ObjectWriter ow = new ObjectMapper().writer().withDefaultPrettyPrinter();
         return ow.writeValueAsString(mantenimientos);
     }

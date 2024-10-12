@@ -8,7 +8,9 @@ function Mantenimiento() {
 
   useEffect(() => {
     axios
-      .get("http://localhost:8080/mantenimiento")
+      .get("http://localhost:8080/mantenimiento", {
+        headers: { Accept: "application/json" },
+      })
       .then((response) => {
         setMantenimientos(response.data);
       })
