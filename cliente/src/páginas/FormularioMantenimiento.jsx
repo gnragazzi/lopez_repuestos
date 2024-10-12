@@ -43,8 +43,9 @@ const FormularioMantenimiento = () => {
       .post("http://localhost:8080/mantenimiento", cuerpo, {
         headers: { "content-type": "application/json" },
       })
-      .then((res) => console.log(res));
-    navegar("/mantenimiento");
+      .then(() => {
+        navegar("/mantenimiento");
+      });
   };
   useEffect(() => {
     axios.create({ timeout: 1000 });

@@ -4,16 +4,16 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import axios from "axios";
 
 function Mantenimiento() {
-  
   const [mantenimientos, setMantenimientos] = useState([]);
 
   useEffect(() => {
-    axios.get('http://localhost:8080/mantenimiento')
+    axios
+      .get("http://localhost:8080/mantenimiento")
       .then((response) => {
         setMantenimientos(response.data);
       })
       .catch((error) => {
-        console.error("error");
+        console.error(error);
       });
   }, []);
 
@@ -43,12 +43,15 @@ function Mantenimiento() {
           </thead>
           <tbody>
             {mantenimientos.map((elemento, index) => (
-              <tr key={index}>  {/* Aquí podrías usar un ID único en lugar de index */}
+              <tr key={index}>
+                {/* Aquí podrías usar un ID único en lugar de index */}
                 <td>{elemento.trabajos_realizados}</td>
                 <td>{elemento.vehiculo.patente}</td>
                 <td>{elemento.vehiculo.marca}</td>
                 {/* Formateo de fecha */}
-                <td>{elemento.fecha[2]}/{elemento.fecha[1]}/{elemento.fecha[0]}</td>
+                <td>
+                  {elemento.fecha[2]}/{elemento.fecha[1]}/{elemento.fecha[0]}
+                </td>
                 <td>${elemento.costos_manodeobra}</td>
                 <td>${elemento.costos_repuestos}</td>
                 <td className="td__botones tr-boton">

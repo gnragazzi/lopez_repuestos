@@ -16,41 +16,33 @@ import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Iterator;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
 public class manejadorMantenimiento extends Manejador {
+
     MantenimientoDAOImpl mantenimientoDAO;
 
     public manejadorMantenimiento() {
         try {
             mantenimientoDAO = new MantenimientoDAOImpl();
-        } catch ( ClassNotFoundException ex) {
+        } catch (ClassNotFoundException ex) {
             System.err.println(ex);
         }
     }
 
-    
     @Override
     public String manejarGet(HttpExchange he) throws JsonProcessingException, UnsupportedEncodingException, ClassNotFoundException, Exception {
-        
-        String tipo = obtenerParámetros(he.getRequestURI(), "tipo");
         ArrayList<Mantenimiento> mantenimientos = new ArrayList<>();
-        if(tipo == null){
-            //Se devulven todos los mantenimientos
-            
-            MantenimientoDAOImpl mantenimientosDAO= new MantenimientoDAOImpl();
-            mantenimientos = mantenimientosDAO.list();
-        }
-        else{
-            //Para otra consulta de otro tipo
-        }
+        mantenimientos = mantenimientoDAO.list();
+
+        JSONArray jsonArray = new JSONArray(mantenimientos);
+        System.out.println(jsonArray); 
         
         ObjectWriter ow = new ObjectMapper().writer().withDefaultPrettyPrinter();
         return ow.writeValueAsString(mantenimientos);
     }
- 
+
     @Override
     public String manejarPost(HttpExchange he) throws UnsupportedEncodingException, IOException {
         //USAR EL InputStreamReadr NOS PERMITE PARSEAR EL CUERPO DEL POST

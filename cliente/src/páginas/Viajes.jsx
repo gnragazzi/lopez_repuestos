@@ -1,19 +1,19 @@
 import { Link } from "react-router-dom";
-import { useState, useEffect} from "react";
+import { useState, useEffect } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import axios from "axios";
 
-
 function Viajes() {
   const [viajes, setViajes] = useState([]);
-  
+
   useEffect(() => {
-    axios.get('http://localhost:8080/viajes')
+    axios
+      .get("http://localhost:8080/viajes")
       .then((response) => {
         setViajes(response.data);
       })
       .catch((error) => {
-        console.error("error");
+        console.error(error);
       });
   }, []);
 
@@ -47,8 +47,14 @@ function Viajes() {
                 <td>{elemento.camion.patente}</td>
                 <td>{elemento.chofer.dni}</td>
                 <td>{elemento.semirremolque.patente}</td>
-                <td>{elemento.fecha_partida[2]}/{elemento.fecha_partida[1]}/{elemento.fecha_partida[0]}</td>
-                <td>{elemento.fecha_llegada[2]}/{elemento.fecha_llegada[1]}/{elemento.fecha_llegada[0]}</td>
+                <td>
+                  {elemento.fecha_partida[2]}/{elemento.fecha_partida[1]}/
+                  {elemento.fecha_partida[0]}
+                </td>
+                <td>
+                  {elemento.fecha_llegada[2]}/{elemento.fecha_llegada[1]}/
+                  {elemento.fecha_llegada[0]}
+                </td>
                 <td>{elemento.destino}</td>
                 <td className="td__botones tr-boton">
                   <button
@@ -56,8 +62,7 @@ function Viajes() {
                     onClick={() => console.log("Editar:", elemento)}
                   >
                     Editar
-                  </button>{() => console.log("Editar:", elemento)}
-                  {"   "}
+                  </button>
                   <button
                     className="btn btn-danger"
                     onClick={() => console.log("Eliminar:", elemento)}
@@ -73,6 +78,5 @@ function Viajes() {
     </div>
   );
 }
-
 
 export default Viajes;
