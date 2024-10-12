@@ -19,15 +19,17 @@ const Costos_camión = () => {
       {pagina_costos == 1 && <Costos_2 />}
       {/* BOTONERA */}
       <div className="botonera_formulario">
-        {pagina_costos == 0 && (
+        {
           <button
-            className="formulario__boton volver"
+            className={`formulario__boton ${
+              pagina_costos == 0 ? "volver" : "siguiente"
+            }`}
             onClick={() => navegar("/vehículos/camiones")}
           >
-            Volver
+            Volver a Lista de Camiones
           </button>
-        )}
-        {pagina_costos > 0 && (
+        }
+        {pagina_costos == 1 && (
           <button
             className="formulario__boton volver"
             onClick={() =>
@@ -39,10 +41,10 @@ const Costos_camión = () => {
               })
             }
           >
-            Volver
+            Volver a Seleccionar Período
           </button>
         )}
-        {pagina_costos < 3 && (
+        {pagina_costos == 0 && (
           <button
             className="formulario__boton siguiente"
             onClick={() => {
@@ -50,16 +52,6 @@ const Costos_camión = () => {
             }}
           >
             Siguiente
-          </button>
-        )}
-        {pagina_costos == 3 && (
-          <button
-            className="formulario__boton siguiente"
-            onClick={() => {
-              console.log("Enviado...");
-            }}
-          >
-            Confirmar
           </button>
         )}
       </div>
