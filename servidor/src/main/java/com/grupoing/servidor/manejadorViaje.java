@@ -20,6 +20,17 @@ import org.json.JSONObject;
 
 public class manejadorViaje extends Manejador {
 
+    ViajeDAOImpl viajeDAO;
+
+    public manejadorViaje() {
+        try {
+            viajeDAO = new ViajeDAOImpl();
+        }catch(ClassNotFoundException ex) {
+            System.out.println(ex);
+        }
+
+    }
+
     @Override
     protected String manejarPost(HttpExchange he) throws UnsupportedEncodingException, IOException, ClassNotFoundException, Exception {
         //USAR EL InputStreamReadr NOS PERMITE PARSEAR EL CUERPO DEL POST
@@ -61,7 +72,6 @@ public class manejadorViaje extends Manejador {
 
             Viaje v = new Viaje(fecha_partida, fecha_llegada, fecha_esperada, kilometros_realizados, costos_combustibles, peso, destino, camion, chofer, semirremolque);
 
-            ViajeDAOImpl viajeDAO = new ViajeDAOImpl();
             viajeDAO.create(v);
             return "Carga Exitosa";
         } catch (JSONException ex) {
@@ -86,7 +96,6 @@ public class manejadorViaje extends Manejador {
 
         } else {
 
-            ViajeDAOImpl viajeDAO = new ViajeDAOImpl();
             viajes = viajeDAO.comprobarfechas(fecha_partida, fecha_llegada);
 
         }
@@ -96,4 +105,3 @@ public class manejadorViaje extends Manejador {
     }
 
 }
- 

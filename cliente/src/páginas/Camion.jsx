@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, Outlet } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 import axios from "axios";
 import { useContextoGlobal } from "../Contexto";
@@ -11,9 +11,11 @@ function Camiones() {
     acciones_camiones: acciones,
   } = useContextoGlobal();
 
-  const { CARGAR_LISTA_CAMIONES, SELECCIONAR_CAMION } = acciones;
+  const { RESETEAR_ESTADO, CARGAR_LISTA_CAMIONES, SELECCIONAR_CAMION } =
+    acciones;
 
   useEffect(() => {
+    dispatch({ type: RESETEAR_ESTADO });
     const fetchData = async () => {
       try {
         const response = await axios.get(
@@ -29,10 +31,11 @@ function Camiones() {
     };
 
     fetchData();
-  }, [CARGAR_LISTA_CAMIONES, dispatch]);
+  }, [CARGAR_LISTA_CAMIONES, dispatch, RESETEAR_ESTADO]);
 
   return (
     <div className="App">
+      <Outlet />
       <h2>Camiones</h2>
       <br />
       <Link to="nuevo" className="enlace_cargar_mantenimiento">

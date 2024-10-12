@@ -11,8 +11,20 @@ import java.util.ArrayList;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
 import java.util.Iterator;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class manejadorEmpleado extends Manejador {
+    ChoferDAOImpl choferDAO;
+    MecanicoDAOImpl mecánicoDao;
+    public manejadorEmpleado() {
+        try {
+            choferDAO = new ChoferDAOImpl();
+            mecánicoDao = new MecanicoDAOImpl();
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(manejadorEmpleado.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
 
     public String manejarGet(HttpExchange he) throws UnsupportedEncodingException, ClassNotFoundException, Exception {
 
@@ -22,14 +34,14 @@ public class manejadorEmpleado extends Manejador {
         if (tipo == null) {
             //Es decir, en este caso no se quiso acceder a ningún tipo de empleado en particular, y se busca choferes y mecánicos por igual
         } else if (tipo.equalsIgnoreCase("chofer")) {
-            ChoferDAOImpl choferDAO = new ChoferDAOImpl();
+            
             Iterator<Chofer> iteratorChofer = choferDAO.list().iterator();
             while (iteratorChofer.hasNext()) {
                 empleados.add(iteratorChofer.next());
             }
 
         } else if (tipo.equalsIgnoreCase("mecánico")) {
-            MecanicoDAOImpl mecánicoDao = new MecanicoDAOImpl();
+            
             Iterator<Mecanico> iteratorMecanico = mecánicoDao.list().iterator();
             while (iteratorMecanico.hasNext()) {
                 empleados.add(iteratorMecanico.next());

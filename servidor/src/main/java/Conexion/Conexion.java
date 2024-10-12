@@ -23,7 +23,7 @@ public class Conexion {
         try {
             Class.forName(Credenciales.getDRIVERS());
             conexion = DriverManager.getConnection(url, usuario, contraseña);
-            System.out.println("Connection is successful");
+            System.out.println("Conección Exitosa.");
             System.out.println(conexion);
         } catch (SQLException e) {
             e.printStackTrace();

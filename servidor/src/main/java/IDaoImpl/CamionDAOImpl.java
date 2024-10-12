@@ -5,16 +5,17 @@
 package IDaoImpl;
 
 import Clases.Camion;
+import Clases.Costos;
 import Conexion.Conexion;
 import InterfacesDAO.ICamionDAO;
 import java.sql.Connection;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import org.json.JSONObject;
 
-
+ 
 public class CamionDAOImpl implements ICamionDAO{
 
     private Connection conexion;
@@ -64,20 +65,25 @@ public class CamionDAOImpl implements ICamionDAO{
     }
 
     @Override
-    public ArrayList<Float> calcular_costos(String patente, LocalDate fecha) throws Exception {
+    public Costos calcular_costos(String patente, LocalDate fecha) throws Exception {
+        Costos respuesta = new Costos();
+        respuesta.setPeríhodo(fecha);
+        respuesta.setPatente(patente);
+        
         Statement statement= conexion.createStatement();
-        ResultSet rs= statement.executeQuery("SELECT sum(Costos_mano_de_obra), sum(Costos_repuestos) FROM mantenimientos WHERE MONTH(Fecha) = "+ fecha.getMonthValue() +" AND YEAR(Fecha) = " + fecha.getYear() + " and Vehiculos_Patente= '" +patente + "'");
-        ArrayList<Float> costos= new ArrayList<>();
+        ResultSet rs= statement.executeQuery("SELECT sum(Costos_mano_de_obra), sum(Costos_repuestos) FROM Mantenimientos WHERE MONTH(Fecha) = "+ fecha.getMonthValue() +" AND YEAR(Fecha) = " + fecha.getYear() + " and Vehiculos_Patente= '" +patente + "'");
         while(rs.next()){
-            costos.add(rs.getFloat("sum(Costos_repuestos)"));
-            costos.add(rs.getFloat("sum(Costos_mano_de_obra)"));
+            respuesta.setCosto_repuestos(rs.getFloat("sum(Costos_repuestos)"));
+            respuesta.setCost_mano_de_obra(rs.getFloat("sum(Costos_mano_de_obra)"));
         }
-        rs=statement.executeQuery("SELECT sum(Costos_combustibles), sum(Kilometros_realizados) FROM viajes WHERE MONTH(Fecha_partida) = "+ fecha.getMonthValue() +" AND YEAR(Fecha_partida) = " + fecha.getYear() + " and Camiones_Vehiculos_Patente='" +patente + "';");
+        rs=statement.executeQuery("SELECT sum(Costos_combustibles), sum(Kilometros_realizados) FROM Viajes WHERE MONTH(Fecha_partida) = "+ fecha.getMonthValue() +" AND YEAR(Fecha_partida) = " + fecha.getYear() + " and Camiones_Vehiculos_Patente='" +patente + "';");
         while(rs.next()){
-            costos.add(rs.getFloat("sum(Costos_combustibles)"));
-            costos.add(rs.getFloat("sum(Kilometros_realizados)"));
+            respuesta.setCosto_combustible(rs.getFloat("sum(Costos_combustibles)")); 
+            respuesta.setKilometros_realizados(rs.getFloat("sum(Kilometros_realizados)"));
         }
-        return costos;
+        respuesta.calcularCostos_por_kilometros();
+        
+        return respuesta;
     }
 
 }

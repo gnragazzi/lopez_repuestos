@@ -30,6 +30,7 @@ const Costos_1 = () => {
           <select
             id="mes"
             name="mes"
+            value={meses[estado.mes_costo]}
             onChange={(e) => {
               dispatch({
                 type: SELECCIONAR_MES,
@@ -49,6 +50,7 @@ const Costos_1 = () => {
           <select
             id="año"
             name="año"
+            value={estado.año_costo}
             onChange={(e) => {
               dispatch({
                 type: SELECCIONAR_AÑO,

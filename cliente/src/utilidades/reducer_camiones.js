@@ -5,14 +5,22 @@ export const acciones_camiones = {
   ANTERIOR_PAGINA_COSTOS: 3,
   SELECCIONAR_MES: 4,
   SELECCIONAR_AÑO: 5,
+  CARGAR_COSTO: 6,
+  RESETEAR_ESTADO: 7,
 };
 
 export const estadoInicial_camiones = {
   lista_camiones: [],
   camion_seleccionado: "",
   mes_costo: 0,
-  año_costo: 0,
-  costos: {},
+  año_costo: 2024,
+  costos: {
+    costo_repuestos: 0,
+    cost_mano_de_obra: 0,
+    costo_combustible: 0,
+    kilometros_realizados: 0,
+    costos_por_kilometros: 0,
+  },
   pagina_costos: 0,
 };
 
@@ -33,6 +41,15 @@ export const reducer_camiones = (estado, accion) => {
     }
     case acciones_camiones.SELECCIONAR_MES: {
       return { ...estado, mes_costo: payload };
+    }
+    case acciones_camiones.SELECCIONAR_AÑO: {
+      return { ...estado, año_costo: payload };
+    }
+    case acciones_camiones.CARGAR_COSTO: {
+      return { ...estado, costos: payload };
+    }
+    case acciones_camiones.RESETEAR_ESTADO: {
+      return estadoInicial_camiones;
     }
     default:
       throw new Error(`ERROR: "${accion.type}" no es una acción reconocida...`);
