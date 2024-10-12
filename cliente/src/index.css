@@ -9,7 +9,7 @@
 
 
 :is(.container__table,ul,.form__mantenimiento,.confirmar__seleccion)::-webkit-scrollbar {
-  width: 12px;               /* width of the entire scrollbar */
+  width: 10px;               /* width of the entire scrollbar */
 }
 
 :is(.container__table,ul,.form__mantenimiento,.confirmar__seleccion)::-webkit-scrollbar-track {
@@ -37,6 +37,7 @@
   /* OTROS */
   --altura-barra-superior: 6vh;
   --posicion-cuerpo:calc(100-var(var(--altura-barra-superior)));
+  --width-sidebar:0;
   /* --transicion:  */
 
   /*Propiedades*/
@@ -213,6 +214,7 @@ header{
 
 .div__lateral {
   width: 200px;
+  --width-sidebar:200px;
   height: 100%; 
   display: flex;
   flex-flow: row nowrap;
@@ -250,20 +252,8 @@ header{
   background: radial-gradient(transparent, #0002),var(--color-de-seleccion-nav);
   color: var(--color-fuente-sidebar-hover);
   background-size: 400% 400%;  
-  animation: animar-gradiente 3s ease infinite;
+  animation: animar-gradiente 1.5s ease infinite;
 }
-
-@keyframes animar-gradiente {  
-  0% {  
-    background-position: 0% 50%;  
-  }  
-  50% {  
-    background-position: 100% 50%;  
-  }  
-  100% {  
-    background-position: 0% 50%;  
-  }  
-}  
 
 .div__lateral a{
   color: inherit;
@@ -368,6 +358,7 @@ header{
 
 .checkbox_sidebar:checked ~ .div__lateral{
   width: 0;
+  --width-sidebar:0;
 }
 
 .checkbox_sidebar:checked ~ .label_sidebar{
@@ -449,11 +440,12 @@ main{
 .cuerpo{
   z-index: 30;
   flex-basis: 100%;
-  max-width: 100%;
+  max-width: calc( 100% - 2rem) ;
   height: 100%; /*Esto se coloca para que el cuerpo vaya hasta abajo del todo*/
   overflow: hidden;
   background-color: transparent;
   border-radius: 20px;
+  position: relative;
   padding: 50px 1rem 0 1rem;
   display:flex;
   flex-flow: row wrap;
@@ -482,15 +474,15 @@ main{
   max-height: 100%;
   width: 100%;
   overflow-y: auto;
-  display: flex;
-  flex-flow: row nowrap;
+  overflow-x: auto;
   position: relative;
 }
 
 
 
 .table {
-  width: 100%;
+  /*table-layout: fixed;
+  max-width: 100% !important; FUNCIONA PARA ESTABLECER ANCHOS FIJOS DE UNA TABLA*/
   max-height: 100%;
   position: relative;
   border-collapse: collapse;
@@ -583,8 +575,11 @@ tbody tr:hover{
   transition: background 0.2s ease;
 }
 
+
 .formulario__boton:hover{
-  background: var(--color-de-seleccion-nav);
+  background: radial-gradient(#fff6,transparent),var(--color-de-seleccion-nav);
+  background-size: 400% 400%;
+  animation: animar-gradiente 1.5s ease infinite;
 }
 
 .mensaje__error{
@@ -735,3 +730,17 @@ ESTA ES UNA IDEA DE COMO TRABAJAR CON MODO OSCURO/CLARO
 .vehiculos_lista_seleccionado_viaje{
   background: #20d10c6e !important;
 }
+
+
+
+@keyframes animar-gradiente {  
+  0% {  
+    background-position: 0% 50%;  
+  }  
+  50% {  
+    background-position: 100% 50%;  
+  }  
+  100% {  
+    background-position: 0% 50%;  
+  }  
+}  
