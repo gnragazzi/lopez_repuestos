@@ -21,7 +21,17 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 public class manejadorMantenimiento extends Manejador {
+    MantenimientoDAOImpl mantenimientoDAO;
 
+    public manejadorMantenimiento() {
+        try {
+            mantenimientoDAO = new MantenimientoDAOImpl();
+        } catch ( ClassNotFoundException ex) {
+            System.err.println(ex);
+        }
+    }
+
+    
     @Override
     public String manejarGet(HttpExchange he) throws JsonProcessingException, UnsupportedEncodingException, ClassNotFoundException, Exception {
         
@@ -101,7 +111,6 @@ public class manejadorMantenimiento extends Manejador {
             );
             //MANDAR Mantenimiento A LA BASE DE DATOS
 
-            MantenimientoDAOImpl mantenimientoDAO = new MantenimientoDAOImpl();
             mantenimientoDAO.create(m);
 
             //CREAR HTTP RESPONSE
