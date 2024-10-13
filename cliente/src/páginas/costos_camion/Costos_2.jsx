@@ -64,14 +64,14 @@ const Costos_2 = () => {
           );
         })}
         <h4>
-          Datos del períhodo {mes_costo + 1}-{año_costo}:
+          Datos del período {mes_costo + 1}-{año_costo}:
         </h4>
-        <p>Kilometros Realizados: {kilometros_realizados}</p>
-        <p>Costo total de Combustible: {costo_combustible}</p>
-        <p>Costo total por mano de obra: {cost_mano_de_obra}</p>
-        <p>Costo total por repuestos: {costo_repuestos}</p>
-        <strong>***</strong>
-        <p>Costo Por Kilómetro: {costos_por_kilometros}</p>
+        <p>Kilometros Realizados: {kilometros_realizados}km</p>
+        <p>Costo total de Combustible: ${costo_combustible}</p>
+        <p>Costo total por mano de obra: ${cost_mano_de_obra}</p>
+        <p>Costo total por repuestos: ${costo_repuestos}</p>
+        <br />
+        <p>Costo Por Kilómetro: ${costos_por_kilometros}/km</p>
       </div>
     </div>
   );
