@@ -11,6 +11,7 @@ import FormularioMantenimiento from "./páginas/FormularioMantenimiento.jsx";
 import { Cargar_viaje } from "./páginas/cargar_viaje/Cargar_viaje.jsx";
 import Camiones from "./páginas/Camion.jsx";
 import Costos_camión from "./páginas/costos_camion/Costos_camión.jsx";
+import EnConstrucción from "./componentes/EnConstrucción.jsx";
 
 const router = createBrowserRouter([
   {
@@ -23,6 +24,19 @@ const router = createBrowserRouter([
         element: <Principal />,
       },
       {
+        path: "empleados",
+        children: [
+          {
+            path: "choferes",
+            element: <EnConstrucción titulo={"Choferes"} />,
+          },
+          {
+            path: "mecánicos",
+            element: <EnConstrucción titulo={"Mecánicos"} />,
+          },
+        ],
+      },
+      {
         path: "vehículos",
         children: [
           {
@@ -33,10 +47,18 @@ const router = createBrowserRouter([
                 element: <Camiones />,
               },
               {
+                path: "nuevo",
+                element: <EnConstrucción titulo={"Cargar Camión"} />,
+              },
+              {
                 path: "costos",
                 element: <Costos_camión />,
               },
             ],
+          },
+          {
+            path: "semirremolques",
+            element: <EnConstrucción titulo={"Semirremolques"} />,
           },
         ],
       },

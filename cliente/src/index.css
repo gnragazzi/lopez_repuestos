@@ -750,3 +750,8 @@ ESTA ES UNA IDEA DE COMO TRABAJAR CON MODO OSCURO/CLARO
   padding:3px;
   margin-left: 10px;
 }
+
+.en_construcción{
+  color: var(--fondo-borde-logo);
+  font-size: 2rem;
+}
