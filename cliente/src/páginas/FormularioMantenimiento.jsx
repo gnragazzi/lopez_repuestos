@@ -227,6 +227,19 @@ const FormularioMantenimiento = () => {
                     })
                   }
                 />
+                <button
+                  onClick={(e) => {
+                    e.preventDefault();
+                    setDatos({
+                      ...datos,
+                      kilometros_en_que_se_realizo: vehiculos.filter((v) => {
+                        return v.patente == vehiculoSeleccionado;
+                      })[0].kilometraje,
+                    });
+                  }}
+                >
+                  Usar Kilómetros actuales del Camión
+                </button>
               </fieldset>
             )}
 
@@ -272,7 +285,7 @@ const FormularioMantenimiento = () => {
             <p>Costo Mano de Obra: {datos.costo_manodeobra}</p>
             {esCamion && (
               <p>
-                Kilometros del camión en que se realizó el mantenimiento:{" "}
+                Kilometros del camión en que se realizó el mantenimiento:
                 {datos.kilometros_en_que_se_realizo}
               </p>
             )}
