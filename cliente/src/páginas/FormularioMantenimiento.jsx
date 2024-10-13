@@ -1,6 +1,9 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import { BsSpeedometer2 } from "react-icons/bs";
+
+
 
 const FormularioMantenimiento = () => {
   const [pantalla, setPantalla] = useState(0);
@@ -227,7 +230,8 @@ const FormularioMantenimiento = () => {
                     })
                   }
                 />
-                <button
+                <button className="formulario__boton kilometros_actuales"
+                title="Usar los kilometros actuales"
                   onClick={(e) => {
                     e.preventDefault();
                     setDatos({
@@ -238,7 +242,7 @@ const FormularioMantenimiento = () => {
                     });
                   }}
                 >
-                  Usar Kilómetros actuales del Camión
+                  <BsSpeedometer2 />
                 </button>
               </fieldset>
             )}
@@ -271,6 +275,7 @@ const FormularioMantenimiento = () => {
                 )
               );
             })}
+            <h3>Mecanicos: </h3>
             {mecanicos.map((m) => {
               return (
                 mecanicosSeleccionados.includes(m.dni) && (
@@ -280,13 +285,13 @@ const FormularioMantenimiento = () => {
                 )
               );
             })}
+            <h3>Datos del Mantenimiento: </h3>
             <p>Trabajo Realizado: {datos.trabajos_realizados}</p>
-            <p>Costo Repuesto: {datos.costo_repuestos}</p>
-            <p>Costo Mano de Obra: {datos.costo_manodeobra}</p>
+            <p>Costo Repuesto: ${datos.costo_repuestos}</p>
+            <p>Costo Mano de Obra: ${datos.costo_manodeobra}</p>
             {esCamion && (
               <p>
-                Kilometros del camión en que se realizó el mantenimiento:
-                {datos.kilometros_en_que_se_realizo}
+                Kilometros del camión en que se realizó el mantenimiento: {datos.kilometros_en_que_se_realizo}Km
               </p>
             )}
             <p>Fecha: {datos.fecha}</p>

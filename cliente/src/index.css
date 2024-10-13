@@ -744,3 +744,9 @@ ESTA ES UNA IDEA DE COMO TRABAJAR CON MODO OSCURO/CLARO
     background-position: 0% 50%;  
   }  
 }  
+
+.kilometros_actuales{
+  position: absolute;
+  padding:3px;
+  margin-left: 10px;
+}
