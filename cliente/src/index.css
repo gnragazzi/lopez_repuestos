@@ -556,8 +556,8 @@ tbody tr:hover{
   }
 }
 
-.vehiculos_lista_seleccionado{
-  background: linear-gradient(#0003,#0003) ;
+:is(.vehiculos_lista_seleccionado, .vehiculos_lista_seleccionado_viaje){
+  background: linear-gradient(#0005,#0005) !important ;
 }
 
 .botonera_formulario{
@@ -709,27 +709,18 @@ ESTA ES UNA IDEA DE COMO TRABAJAR CON MODO OSCURO/CLARO
   position: absolute;
   border-radius: 0.2rem;
   left: 35%;
-  background:linear-gradient(#fffa,#fffa), rgb(254, 53, 53);
   text-align: center;
-  box-shadow: 0 0 3px red;
-
 }
 
-.no_disponible{
-  background: #d10c0c28 !important;
+table tbody .no_disponible{
+  opacity:0.6;
 }
 
-.disponible{
-  background: #20d10c28;
+table tbody .no_disponible:hover{
+  background: transparent;
 }
 
-.disponible:hover{
-  background: #20d10c6e;
-}
 
-.vehiculos_lista_seleccionado_viaje{
-  background: #20d10c6e !important;
-}
 
 
 

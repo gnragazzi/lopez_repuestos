@@ -27,13 +27,20 @@ public class MantenimientoDAOImpl implements IMantenimientoDAO {
         mantenimiento.setKilometros_en_que_se_realizo(0);
         PreparedStatement envioMantenimiento;
         envioMantenimiento = conexion.prepareStatement("insert into Mantenimientos(Trabajo_realizados,Fecha, Costos_repuestos, Costos_mano_de_obra,Vehiculos_Patente, Kilometros_en_que_se_realizo) "
-                + "value ('" + mantenimiento.getTrabajos_realizados() + "','" + mantenimiento.getFecha() + "',"
-                + mantenimiento.getCostos_repuestos() + "," + mantenimiento.getCostos_manodeobra() + ",'" + mantenimiento.getVehiculo().getPatente() + "'," + mantenimiento.getKilometros_en_que_se_realizo() + ");");
+                + "value ( ? , ? , ? , ? , ? , ?);");
+        envioMantenimiento.setString(1,mantenimiento.getTrabajos_realizados());
+        envioMantenimiento.setString(2,String.valueOf(mantenimiento.getFecha()));
+        envioMantenimiento.setDouble(3, mantenimiento.getCostos_repuestos());   
+        envioMantenimiento.setDouble(4, mantenimiento.getCostos_manodeobra());
+        envioMantenimiento.setString(5, mantenimiento.getVehiculo().getPatente());
+        envioMantenimiento.setInt(6, mantenimiento.getKilometros_en_que_se_realizo());
+        
         envioMantenimiento.executeUpdate();
         Iterator<Mecanico> iterator = mantenimiento.getMecanico().iterator();
         while (iterator.hasNext()) {
             PreparedStatement envioMecanico;
-            envioMecanico = conexion.prepareStatement("insert into Mantenimientos_has_Mecanicos value(last_insert_id(),'" + iterator.next().getDni() + "');");
+            envioMecanico = conexion.prepareStatement("insert into Mantenimientos_has_Mecanicos value(last_insert_id(), ? );");
+            envioMecanico.setString(1, iterator.next().getDni());
             envioMecanico.executeUpdate();
         }
 

@@ -32,9 +32,18 @@ public class ViajeDAOImpl implements IViajeDAO {
     @Override
     public void create(Viaje viaje) throws Exception {
         PreparedStatement envioViaje;
-        envioViaje = conexion.prepareStatement("insert into Viajes(Fecha_partida, Fecha_llegada, Fecha_esperada, Kilometros_realizados, Costos_combustibles, Destino, Peso, Camiones_Vehiculos_Patente, Semirremolques_Vehiculos_Patente, Choferes_Empleados_DNI)"
-                + "value('" + viaje.getFecha_partida() + "', '" + viaje.getFecha_llegada() + "','" + viaje.getFecha_esperada() + "'," + viaje.getKilometros_realizados() + "," + viaje.getCostos_combustibles() + ", '" + viaje.getDestino() + "', "
-                + viaje.getPeso() + ", '" + viaje.getCamion().getPatente() + "', '" + viaje.getSemirremolque().getPatente() + "', '" + viaje.getChofer().getDni() + "');");
+        envioViaje = conexion.prepareStatement("insert into Viajes(Fecha_partida, Fecha_llegada, Fecha_esperada, Kilometros_realizados, Costos_combustibles, Destino, Peso, Camiones_Vehiculos_Patente, Semirremolques_Vehiculos_Patente, Choferes_Empleados_DNI) "
+                + "value(? , ? , ? , ? , ? , ? , ? , ? , ? , ?);");
+        envioViaje.setString(1,String.valueOf(viaje.getFecha_partida()));
+        envioViaje.setString(2,String.valueOf(viaje.getFecha_llegada()));
+        envioViaje.setString(3,String.valueOf(viaje.getFecha_esperada()));
+        envioViaje.setInt(4, viaje.getKilometros_realizados());
+        envioViaje.setDouble(5, viaje.getCostos_combustibles());
+        envioViaje.setString(6, viaje.getDestino());
+        envioViaje.setInt(7, viaje.getPeso());
+        envioViaje.setString(8, viaje.getCamion().getPatente());
+        envioViaje.setString(9, viaje.getSemirremolque().getPatente());
+        envioViaje.setString(10, viaje.getChofer().getDni());
         envioViaje.executeUpdate();
     }
 
@@ -80,8 +89,13 @@ public class ViajeDAOImpl implements IViajeDAO {
 
     @Override
     public ArrayList<Viaje> comprobarfechas(String Fecha_partida, String Fecha_llegada) throws Exception {
-        Statement statement = conexion.createStatement();
-        ResultSet rs = statement.executeQuery("select * from Viajes where (Fecha_partida between '" + Fecha_partida + "'  and '" + Fecha_llegada + "' ) or (Fecha_llegada between '" + Fecha_partida + "' and  '" + Fecha_llegada + "');");
+        PreparedStatement comprobarFechas = conexion.prepareStatement("select * from Viajes where (Fecha_partida between ?  and ? ) or (Fecha_llegada between ? and  ?);");
+        comprobarFechas.setString(1, Fecha_partida);
+        comprobarFechas.setString(2, Fecha_llegada);
+        comprobarFechas.setString(3, Fecha_partida);
+        comprobarFechas.setString(4, Fecha_llegada);
+        
+        ResultSet rs = comprobarFechas.executeQuery();
         ArrayList<Viaje> viajes = new ArrayList<>();
         while (rs.next()) {
             Viaje viaje = new Viaje();
