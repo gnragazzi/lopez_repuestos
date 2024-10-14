@@ -6,8 +6,7 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Principal from "./páginas/Principal";
 import Mantenimiento from "./páginas/Mantenimiento.jsx";
 import Viajes from "./páginas/Viajes.jsx";
-import FormularioMantenimiento from "./páginas/FormularioMantenimiento.jsx";
-// import MantenimientoFormulario from "./páginas/MantenimientoFormulario.jsx";
+import CargarMantenimiento from "./páginas/mantenimiento/CargarMantenimiento.jsx";
 import { Cargar_viaje } from "./páginas/cargar_viaje/Cargar_viaje.jsx";
 import Camiones from "./páginas/Camion.jsx";
 import Costos_camión from "./páginas/costos_camion/Costos_camión.jsx";
@@ -71,7 +70,7 @@ const router = createBrowserRouter([
           },
           {
             path: "cargar_mantenimiento",
-            element: <FormularioMantenimiento />,
+            element: <CargarMantenimiento />,
             // element: <MantenimientoFormulario />,
           },
         ],

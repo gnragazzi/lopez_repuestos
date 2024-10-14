@@ -76,7 +76,6 @@ public class manejadorMantenimiento extends Manejador {
             ArrayList<Mecanico> mecanicos = new ArrayList<>();
 
             JSONArray arr = jsonobj.getJSONArray("mecanicosSeleccionados");
-
             if (arr != null) {
                 int len = arr.length();
                 for (int i = 0; i < len; i++) {
