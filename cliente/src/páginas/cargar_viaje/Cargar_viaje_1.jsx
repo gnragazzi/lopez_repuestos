@@ -77,7 +77,7 @@ function Cargar_viaje_1({ dispatch, acciones, estado }) {
         </fieldset>
       </form>
       <div className="botonera_formulario">
-        <button className="formulario__boton volver"><Link   to="/viajes" style={{textDecoration:'none', color:'#000'}}>Volver</Link></button>
+        <button className="formulario__boton volver"><Link  rel="nofollow" to="/viajes" style={{textDecoration:'none', color:'#000'}}>Volver</Link></button>
       <button className="formulario__boton siguiente" 
         onClick={() =>{
           if(validarFechas()){

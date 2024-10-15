@@ -38,7 +38,7 @@ function Camiones() {
       <Outlet />
       <h2>Camiones</h2>
       <br />
-      <Link to="nuevo" className="enlace_cargar_mantenimiento">
+      <Link rel="nofollow" to="nuevo" className="enlace_cargar_mantenimiento">
         <button className="btn btn-success">Insertar</button>
       </Link>
       <div className="container__table">
@@ -78,7 +78,7 @@ function Camiones() {
                       >
                         Eliminar
                       </button>{" "}
-                      <Link
+                      <Link rel="nofollow"
                         to={"costos"}
                         className="btn btn-primary"
                         onClick={() =>

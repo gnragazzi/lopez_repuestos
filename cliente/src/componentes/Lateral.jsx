@@ -41,14 +41,14 @@ function Lateral() {
                     className="seleccion_visible"
                     // onClick={() => handleSelect(sub)}
                   >
-                    <Link to={`/${nombre}/${sub}`}>
+                    <Link rel="nofollow" to={`/${nombre}/${sub}`}>
                       <p>{sub}</p>
                     </Link>
                   </li>
                 ))}
             </div>
           ) : (
-            <Link to={`/${nombre}`} key={nombre}>
+            <Link rel="nofollow" to={`/${nombre}`} key={nombre}>
               <li
                 className={
                   menuSeleccionado == nombre ? "seleccion" : "no_seleccion"

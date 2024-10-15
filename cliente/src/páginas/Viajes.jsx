@@ -24,7 +24,7 @@ function Viajes() {
       <Link
         to="cargar_viaje"
         className="enlace_cargar_mantenimiento"
-        rel="noopener noreferrer"
+        rel="nofollow"
       >
         <button className="btn btn-success">Insertar</button>
       </Link>

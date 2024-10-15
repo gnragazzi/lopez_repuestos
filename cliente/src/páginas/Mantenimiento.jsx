@@ -23,10 +23,9 @@ function Mantenimiento() {
     <div className="App">
       <h2>Mantenimientos</h2>
       <br />
-      <Link
+      <Link rel="nofollow"
         to="cargar_mantenimiento"
         className="enlace_cargar_mantenimiento"
-        rel="noopener noreferrer"
       >
         <button className="btn btn-success">Insertar</button>
       </Link>
