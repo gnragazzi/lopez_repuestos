@@ -24,7 +24,6 @@ public class MantenimientoDAOImpl implements IMantenimientoDAO {
 
     @Override
     public void create(Mantenimiento mantenimiento) throws Exception {
-        mantenimiento.setKilometros_en_que_se_realizo(0);
         PreparedStatement envioMantenimiento;
         envioMantenimiento = conexion.prepareStatement("insert into Mantenimientos(Trabajo_realizados,Fecha, Costos_repuestos, Costos_mano_de_obra,Vehiculos_Patente, Kilometros_en_que_se_realizo) "
                 + "value ( ? , ? , ? , ? , ? , ?);");

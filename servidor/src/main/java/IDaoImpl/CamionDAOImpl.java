@@ -39,8 +39,11 @@ public class CamionDAOImpl implements ICamionDAO{
 
     @Override
     public void update(Camion camion) throws Exception {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-        /*ACA VA LA CONSULTA A LA BASE DE DATOS */
+        PreparedStatement envioCamion;
+        envioCamion = conexion.prepareStatement("update Camiones set kilometraje=kilometraje + ? where Vehiculos_Patente= ?;");
+        envioCamion.setInt(1,camion.getKilometraje());
+        envioCamion.setString(2,camion.getPatente());
+        envioCamion.executeUpdate();
     }
 
     @Override
