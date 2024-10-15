@@ -65,8 +65,8 @@ const CargarMantenimiento = () => {
         "Debe utilizar menos de 45 caracteres.";
       esValido = false;
     }
-    if (costo_repuestos <= 0) {
-      nuevosInputs.costo_repuestos = "El costo debe ser mayor a 0.";
+    if (costo_repuestos < 0) {
+      nuevosInputs.costo_repuestos = "El costo de los repuestos no puede ser negativo.";
       esValido = false;
     }
     if (costo_repuestos == "") {
