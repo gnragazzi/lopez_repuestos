@@ -86,10 +86,11 @@ function Cargar_viaje_5({ dispatch, acciones, estado }) {
           <div className="mensaje__error">
             {inputs.destino && <MdReportGmailerrorred title={inputs.destino} />}
           </div>
-          <textarea
+          <input
             className={`items__input input__textarea ${
               inputs.destino ? "error" : ""
             }`}
+            type="text"
             placeholder="Destino"
             onChange={(e) => {
               dispatch({

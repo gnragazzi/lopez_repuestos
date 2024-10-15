@@ -34,10 +34,11 @@ const Cargar_M3 = ({ dispatch, estado, acciones, validarCampos }) => {
               <MdReportGmailerrorred title={inputs.trabajos_realizados} />
             )}
           </div>
-          <textarea
+          <input
             className={`items__input input__textarea ${
               inputs.trabajos_realizados ? "error" : ""
             }`}
+            type="text"
             placeholder="Ingrese el trabajo que se hizo"
             value={trabajos_realizados}
             onChange={(e) => {

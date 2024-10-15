@@ -584,12 +584,19 @@ tbody tr:hover{
 
 .mensaje__error{
   position: absolute;
-  border-radius: 1rem;
+  /* border-radius: 1rem; */
   right: 0;
-  width: 20px;
-  background:linear-gradient(#fffa,#fffa), rgb(254, 53, 53);
+  /* background:linear-gradient(#fffa,#fffa), rgb(254, 53, 53); */
   text-align: center;
-  box-shadow: 0 0 5px red;
+  /* box-shadow: 0 0 5px red; */
+  transform: translate(150%,-20%);
+  font-size: 1.5rem;
+  color:#d10c0c;
+  transition: all 0.5s ease-out 0s;
+}
+
+.mensaje__error:hover{
+  color:#312F2F;
 }
 
 .siguiente{
@@ -601,30 +608,7 @@ tbody tr:hover{
 }
 
 
-/* 
-ESTA ES UNA IDEA DE COMO TRABAJAR CON MODO OSCURO/CLARO
-@media (prefers-color-scheme: dark) {
-  :root {
-    color: #213547;
-    background-color: #ffffff;
-  }
-  a:hover {
-    color: #747bff;
-  }
-  button {
-    background-color: #f9f9f9;
-  }
-} 
-  */
 
-
-  /*@media screen and (min-width:1200px) {
-  .lateral {
-    position:relative;
-    min-width: 15vw;
-  }
-}
-*/
 
 /*------------------------------- Formulario para cargar más detalles de mantenimiento*/
 
