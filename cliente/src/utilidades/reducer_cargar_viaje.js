@@ -16,6 +16,7 @@ export const acciones_cargar_viaje = {
   SELECCIONAR_CHOFER: 14,
   RESETEAR_CUERPO_VIAJE: 15,
   CARGAR_FILTROS: 16,
+  VALIDAR_INPUTS: 17,
 };
 
 export const estadoInicial_cargar_viaje = {
@@ -37,6 +38,13 @@ export const estadoInicial_cargar_viaje = {
   lista_choferes: [],
   pantalla: 0,
   chofer: "",
+  inputs: {
+    destino: "",
+    kilometros: "",
+    combustible: "",
+    peso: "",
+    flag_formulario: false,
+  },
 };
 
 export const reducer_cargar_viaje = (estado, accion) => {
@@ -162,7 +170,12 @@ export const reducer_cargar_viaje = (estado, accion) => {
     }
     case acciones_cargar_viaje.RESETEAR_CUERPO_VIAJE:
       return estadoInicial_cargar_viaje;
-
+    case acciones_cargar_viaje.VALIDAR_INPUTS: {
+      return {
+        ...estado,
+        inputs: accion.payload,
+      };
+    }
     default:
       throw new Error(`ERROR: "${accion.type}" no es una acción reconocida...`);
   }

@@ -11,6 +11,7 @@ export const acciones_cargar_mantenimiento = {
   SELECCIONAR_COSTO_MANODEOBRA: 10,
   SELECCIONAR_KILOMETROS_EN_QUE_SE_REALIZO: 11,
   SELECCIONAR_FECHA: 12,
+  VALIDAR_INPUTS: 13,
 };
 
 export const estadoInicial_cargar_mantenimiento = {
@@ -29,6 +30,14 @@ export const estadoInicial_cargar_mantenimiento = {
   lista_vehículos: [],
   lista_mecánicos: [],
   pantalla: 0,
+  inputs: {
+    trabajos_realizados: "",
+    costo_repuestos: "",
+    combustible: "",
+    peso: "",
+    flag_formulario: false,
+    esValido: false,
+  },
 };
 
 export const reducer_cargar_mantenimiento = (estado, accion) => {
@@ -37,7 +46,6 @@ export const reducer_cargar_mantenimiento = (estado, accion) => {
     case acciones_cargar_mantenimiento.PROXIMA_PANTALLA: {
       const {
         pantalla,
-        cuerpo_cargar_mantenimiento,
         cuerpo_cargar_mantenimiento: {
           vehiculo: { vehiculoSeleccionado },
           mecanicosSeleccionados,
@@ -46,11 +54,7 @@ export const reducer_cargar_mantenimiento = (estado, accion) => {
       if (
         (pantalla == 0 && vehiculoSeleccionado) ||
         (pantalla == 1 && mecanicosSeleccionados.length > 0) ||
-        (pantalla == 2 &&
-          cuerpo_cargar_mantenimiento.costo_manodeobra &&
-          cuerpo_cargar_mantenimiento.costo_repuestos &&
-          cuerpo_cargar_mantenimiento.trabajos_realizados &&
-          cuerpo_cargar_mantenimiento.fecha)
+        pantalla == 2
       ) {
         return { ...estado, pantalla: estado.pantalla + 1 };
       } else return estado;
@@ -143,11 +147,13 @@ export const reducer_cargar_mantenimiento = (estado, accion) => {
         },
       };
     }
-
+    case acciones_cargar_mantenimiento.VALIDAR_INPUTS: {
+      return {
+        ...estado,
+        inputs: accion.payload,
+      };
+    }
     case acciones_cargar_mantenimiento.RESETEAR_CUERPO_MANTENIMIENTO:
-      console.log("estado inicial", estadoInicial_cargar_mantenimiento);
-      console.log("estado", estado);
-
       return estadoInicial_cargar_mantenimiento;
 
     default:
