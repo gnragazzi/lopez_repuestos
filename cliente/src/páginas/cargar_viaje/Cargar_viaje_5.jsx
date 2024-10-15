@@ -1,60 +1,58 @@
-import { useState } from "react";
 import { MdReportGmailerrorred } from "react-icons/md";
 
 /* eslint-disable react/prop-types */
 function Cargar_viaje_5({ dispatch, acciones, estado }) {
-  const [errores, setErrores] = useState({
-    destino: "",
-    kilometros: "",
-    combustible: "",
-    peso: "",
-  });
-
   const validarCampos = () => {
+    const regex = /[^\w|\s|áéíóú|,]/i;
     let esValido = true;
-    const nuevosErrores = {
+    const nuevosInputs = {
       destino: "",
       kilometros: "",
       combustible: "",
       peso: "",
     };
 
-    if (!destino.trim()) {
-      nuevosErrores.destino = "El campo no puede estar vacio, ingrese un dato.";
+    if (destino.length < 1) {
+      nuevosInputs.destino = "El campo no puede estar vacio, ingrese un dato.";
+      esValido = false;
+    } else if (regex.test(destino)) {
+      nuevosInputs.destino = "Utilice unicamente letras, números o comas.";
+      esValido = false;
+    } else if (destino.length > 45) {
+      nuevosInputs.destino = "Ingrese un destino de menos de 45 caracteres.";
       esValido = false;
     }
-
     if (kilometros_realizados <= 0) {
-      nuevosErrores.kilometros = "Los kilometros deben ser mayor a 0.";
+      nuevosInputs.kilometros = "Los kilometros deben ser mayor a 0.";
       esValido = false;
     }
-
-    if(kilometros_realizados == ""){
-      nuevosErrores.kilometros = "El campo no puede estar vacio, ingrese un dato.";
+    if (kilometros_realizados == "") {
+      nuevosInputs.kilometros = "Ingrese un número válido.";
       esValido = false;
     }
 
     if (costos_combustibles < 0) {
-      nuevosErrores.combustible = "El costo del combustible no puede ser negativo.";
+      nuevosInputs.combustible =
+        "El costo del combustible no puede ser negativo.";
       esValido = false;
     }
 
-    if(costos_combustibles == ""){
-      nuevosErrores.combustible = "El campo no puede estar vacio, ingrese un dato.";
+    if (costos_combustibles == "") {
+      nuevosInputs.combustible = "Ingrese un número válido.";
       esValido = false;
     }
 
     if (peso < 0) {
-      nuevosErrores.peso = "El peso no puede ser negativo.";
+      nuevosInputs.peso = "El peso no puede ser negativo.";
       esValido = false;
     }
 
-    if(peso == ""){
-      nuevosErrores.peso = "El campo no puede estar vacio, ingrese un dato";
+    if (peso == "") {
+      nuevosInputs.peso = "Ingrese un número válido";
       esValido = false;
     }
-
-    setErrores(nuevosErrores);
+    nuevosInputs.flag_formulario = true;
+    dispatch({ type: VALIDAR_INPUTS, payload: nuevosInputs });
     return esValido;
   };
 
@@ -65,10 +63,18 @@ function Cargar_viaje_5({ dispatch, acciones, estado }) {
     SELECCIONAR_KILOMETROS_REALIZADOS,
     SELECCIONAR_COSTO_COMBUSTIBLE,
     SELECCIONAR_PESO,
+    VALIDAR_INPUTS,
   } = acciones;
 
   const {
-    cuerpo_cargar_viaje: { destino, kilometros_realizados, costos_combustibles, peso },
+    cuerpo_cargar_viaje: {
+      destino,
+      kilometros_realizados,
+      costos_combustibles,
+      peso,
+    },
+    inputs,
+    inputs: { flag_formulario },
   } = estado;
 
   return (
@@ -78,12 +84,12 @@ function Cargar_viaje_5({ dispatch, acciones, estado }) {
         <fieldset className="form__items-mantenimiento">
           <legend className="form__legend">Destino del viaje</legend>
           <div className="mensaje__error">
-            {errores.destino && (
-              <MdReportGmailerrorred title={errores.destino} />
-            )}
+            {inputs.destino && <MdReportGmailerrorred title={inputs.destino} />}
           </div>
           <textarea
-            className={`items__input input__textarea ${errores.destino ? "error" : ""}`}
+            className={`items__input input__textarea ${
+              inputs.destino ? "error" : ""
+            }`}
             placeholder="Destino"
             onChange={(e) => {
               dispatch({
@@ -91,17 +97,18 @@ function Cargar_viaje_5({ dispatch, acciones, estado }) {
                 payload: e.target.value,
               });
             }}
+            onBlur={flag_formulario ? validarCampos : undefined}
           />
         </fieldset>
         <fieldset className="form__items-mantenimiento">
           <legend className="form__legend">Kilómetros realizados</legend>
           <div className="mensaje__error">
-            {errores.kilometros && (
-              <MdReportGmailerrorred title={errores.kilometros}/>
+            {inputs.kilometros && (
+              <MdReportGmailerrorred title={inputs.kilometros} />
             )}
           </div>
           <input
-            className={`items__input ${errores.kilometros ? "error" : ""}`}
+            className={`items__input ${inputs.kilometros ? "error" : ""}`}
             placeholder="Ingrese los kilómetros realizados en el viaje"
             type="number"
             onChange={(e) =>
@@ -110,17 +117,18 @@ function Cargar_viaje_5({ dispatch, acciones, estado }) {
                 payload: e.target.value,
               })
             }
+            onBlur={flag_formulario ? validarCampos : undefined}
           />
         </fieldset>
         <fieldset className="form__items-mantenimiento">
           <legend className="form__legend">Costos Combustibles</legend>
           <div className="mensaje__error">
-            {errores.combustible && (
-              <MdReportGmailerrorred title={errores.combustible}/>
+            {inputs.combustible && (
+              <MdReportGmailerrorred title={inputs.combustible} />
             )}
           </div>
           <input
-            className={`items__input ${errores.combustible ? "error" : ""}`}
+            className={`items__input ${inputs.combustible ? "error" : ""}`}
             placeholder="Ingrese el costo del combustible"
             type="number"
             onChange={(e) =>
@@ -129,17 +137,16 @@ function Cargar_viaje_5({ dispatch, acciones, estado }) {
                 payload: e.target.value,
               })
             }
+            onBlur={flag_formulario ? validarCampos : undefined}
           />
         </fieldset>
         <fieldset className="form__items-mantenimiento">
           <legend className="form__legend">Peso (en Kg)</legend>
           <div className="mensaje__error">
-            {errores.peso && (
-              <MdReportGmailerrorred title={errores.peso}/>
-            )}
+            {inputs.peso && <MdReportGmailerrorred title={inputs.peso} />}
           </div>
           <input
-            className={`items__input ${errores.peso ? "error" : ""}`}
+            className={`items__input ${inputs.peso ? "error" : ""}`}
             placeholder="Ingrese el peso de la carga"
             type="number"
             onChange={(e) =>
@@ -148,6 +155,7 @@ function Cargar_viaje_5({ dispatch, acciones, estado }) {
                 payload: e.target.value,
               })
             }
+            onBlur={flag_formulario ? validarCampos : undefined}
           />
         </fieldset>
       </form>
@@ -165,7 +173,11 @@ function Cargar_viaje_5({ dispatch, acciones, estado }) {
             if (validarCampos()) {
               dispatch({
                 type: PROXIMA_PANTALLA,
-                payload: [Boolean(destino), Boolean(kilometros_realizados), Boolean(costos_combustibles)],
+                payload: [
+                  Boolean(destino),
+                  Boolean(kilometros_realizados),
+                  Boolean(costos_combustibles),
+                ],
               });
             }
           }}
