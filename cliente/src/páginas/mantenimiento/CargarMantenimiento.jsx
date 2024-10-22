@@ -1,6 +1,5 @@
-import { useEffect, useReducer } from "react";
+import { useEffect, useReducer, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
 
 import {
   acciones_cargar_mantenimiento,
@@ -11,17 +10,19 @@ import Cargar_M1 from "./Cargar_M1.jsx";
 import Cargar_M2 from "./Cargar_M2.jsx";
 import Cargar_M3 from "./Cargar_M3.jsx";
 import Cargar_M4 from "./Cargar_M4.jsx";
-import { useContextoGlobal } from "../../Contexto.jsx";
+import useAxiosPrivado from "../../utilidades/useAxiosPrivado.jsx";
 
 // crear componentes para mostrar información
 
 const CargarMantenimiento = () => {
+  const [cargando, setCargando] = useState(false);
+  const [error, setError] = useState("");
+  const axiosPrivado = useAxiosPrivado();
   const navegar = useNavigate();
   const [estado, dispatch] = useReducer(
     reducer_cargar_mantenimiento,
     estadoInicial_cargar_mantenimiento
   );
-  const { auth } = useContextoGlobal();
   const {
     cuerpo_cargar_mantenimiento: {
       trabajos_realizados,
@@ -103,128 +104,133 @@ const CargarMantenimiento = () => {
     return esValido;
   };
   const enviarFormulario = () => {
-    axios
-      .post(
-        "http://localhost:8080/mantenimiento",
-        cuerpo_cargar_mantenimiento,
-        {
-          headers: {
-            "content-type": "application/json",
-            Authorization: `Bearer ${auth}`,
-          },
-        }
-      )
+    axiosPrivado
+      .post("/mantenimiento", cuerpo_cargar_mantenimiento)
       .then(() => {
         navegar("/mantenimiento");
         dispatch({ type: RESETEAR_CUERPO_MANTENIMIENTO });
+      })
+      .catch((error) => {
+        setError(error.message);
       });
   };
   useEffect(() => {
+    setError("");
+    setCargando(true);
     dispatch({ type: RESETEAR_CUERPO_MANTENIMIENTO });
-    axios.create({ timeout: 1000 });
-    axios
-      .get("http://localhost:8080/vehiculos", {
-        headers: {
-          Accept: "application/json",
-          Authorization: `Bearer ${auth}`,
-        },
-      })
+    axiosPrivado
+      .get("/vehiculos")
       .then((res) => {
+        setCargando(false);
         dispatch({ type: CARGAR_LISTA_VEHÍCULOS, payload: res.data });
       })
-      .catch((error) => console.log(error));
-    axios
-      .get("http://localhost:8080/empleados?tipo=mecánico", {
-        headers: {
-          Accept: "application/json",
-          Authorization: `Bearer ${auth}`,
-        },
-      })
+      .catch((error) => {
+        setCargando(false);
+        setError(error.message);
+      });
+    axiosPrivado
+      .get("/empleados?tipo=mecánico")
       .then((res) => {
+        setCargando(false);
         dispatch({ type: CARGAR_LISTA_MECÁNICOS, payload: res.data });
+      })
+      .catch((error) => {
+        setCargando(false);
+        setError(error.message);
       });
   }, [
     CARGAR_LISTA_MECÁNICOS,
     CARGAR_LISTA_VEHÍCULOS,
     RESETEAR_CUERPO_MANTENIMIENTO,
+    axiosPrivado,
   ]);
-  return (
-    <div className="App formulario">
-      {/* elegir un vehículo de una lista */}
-      {pantalla == 0 && (
-        <Cargar_M1
-          dispatch={dispatch}
-          estado={estado}
-          acciones={acciones_cargar_mantenimiento}
-        />
-      )}
-      {pantalla == 1 && (
-        <Cargar_M2
-          dispatch={dispatch}
-          estado={estado}
-          acciones={acciones_cargar_mantenimiento}
-        />
-      )}
-      {pantalla == 2 && (
-        <Cargar_M3
-          dispatch={dispatch}
-          estado={estado}
-          acciones={acciones_cargar_mantenimiento}
-          validarCampos={validarCampos}
-        />
-      )}
-      {pantalla == 3 && <Cargar_M4 estado={estado} />}
 
-      <div className="botonera_formulario">
+  if (cargando) {
+    return <h1>Cargando...</h1>;
+  } else if (error) {
+    return (
+      <>
+        <h1>{error}</h1>
+      </>
+    );
+  } else
+    return (
+      <div className="App formulario">
+        {/* elegir un vehículo de una lista */}
         {pantalla == 0 && (
-          <button
-            className="formulario__boton volver"
-            onClick={() => navegar("/mantenimiento")}
-          >
-            Volver
-          </button>
+          <Cargar_M1
+            dispatch={dispatch}
+            estado={estado}
+            acciones={acciones_cargar_mantenimiento}
+          />
         )}
-        {pantalla > 0 && (
-          <button
-            className="formulario__boton volver"
-            onClick={() => dispatch({ type: PANTALLA_ANTERIOR })}
-          >
-            Volver
-          </button>
+        {pantalla == 1 && (
+          <Cargar_M2
+            dispatch={dispatch}
+            estado={estado}
+            acciones={acciones_cargar_mantenimiento}
+          />
         )}
-        {pantalla < 3 && (
-          <button
-            className="formulario__boton siguiente"
-            onClick={
-              pantalla != 2
-                ? () => {
-                    dispatch({
-                      type: PROXIMA_PANTALLA,
-                    });
-                  }
-                : () => {
-                    validarCampos()
-                      ? dispatch({
-                          type: PROXIMA_PANTALLA,
-                        })
-                      : undefined;
-                  }
-            }
-          >
-            Siguiente
-          </button>
+        {pantalla == 2 && (
+          <Cargar_M3
+            dispatch={dispatch}
+            estado={estado}
+            acciones={acciones_cargar_mantenimiento}
+            validarCampos={validarCampos}
+          />
         )}
-        {pantalla == 3 && (
-          <button
-            className="formulario__boton siguiente"
-            onClick={enviarFormulario}
-          >
-            Confirmar
-          </button>
-        )}
+        {pantalla == 3 && <Cargar_M4 estado={estado} />}
+
+        <div className="botonera_formulario">
+          {pantalla == 0 && (
+            <button
+              className="formulario__boton volver"
+              onClick={() => navegar("/mantenimiento")}
+            >
+              Volver
+            </button>
+          )}
+          {pantalla > 0 && (
+            <button
+              className="formulario__boton volver"
+              onClick={() => dispatch({ type: PANTALLA_ANTERIOR })}
+            >
+              Volver
+            </button>
+          )}
+          {pantalla < 3 && (
+            <button
+              className="formulario__boton siguiente"
+              onClick={
+                pantalla != 2
+                  ? () => {
+                      dispatch({
+                        type: PROXIMA_PANTALLA,
+                      });
+                    }
+                  : () => {
+                      validarCampos()
+                        ? dispatch({
+                            type: PROXIMA_PANTALLA,
+                          })
+                        : undefined;
+                    }
+              }
+            >
+              Siguiente
+            </button>
+          )}
+          {pantalla == 3 && (
+            <button
+              className="formulario__boton siguiente"
+              onClick={enviarFormulario}
+            >
+              Confirmar
+            </button>
+          )}
+        </div>
       </div>
-    </div>
-  );
+    );
 };
 
 export default CargarMantenimiento;

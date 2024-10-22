@@ -19,14 +19,14 @@ const Login = () => {
       })
       .catch((err) => console.log(err));
   };
-  if (!auth?.token_acceso)
+  if (!auth)
     return (
       <div>
         <h1>Login</h1>
         <button onClick={manejarLogin}>Login</button>
       </div>
     );
-  else return <Navigate to={"/"} state={{ from: location }} replace />;
+  else return <Navigate to={"/"} state={{ from: localizacion }} replace />;
 };
 
 export default Login;

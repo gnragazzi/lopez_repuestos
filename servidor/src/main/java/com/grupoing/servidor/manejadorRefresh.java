@@ -1,52 +1,57 @@
 package com.grupoing.servidor;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.ObjectWriter;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.UnsupportedEncodingException;
-import java.net.URI;
 import java.net.URLDecoder;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class manejadorRefresh implements HttpHandler{
+public class manejadorRefresh implements HttpHandler {
 
     @Override
     public void handle(HttpExchange he) throws IOException {
-        String refreshToken = null; 
         String response;
-        if (he.getRequestHeaders().containsKey("Cookie")) {
-            refreshToken = obtenerToken(he);
-//            System.out.println("REFRESH TOKEN: "+refreshToken);   
+        String refreshToken = he.getRequestHeaders().containsKey("Cookie") ? obtenerToken(he) : null;
+        int codigo_respuesta = 0;
+
+        if (Autorización.validarToken(Autorización.REFRESH, refreshToken)) {
+            System.out.println("Se solicito un nuevo token...");
+            String jwtToken = Autorización.nuevoTokenDeAcceso();
+            ObjectWriter ow = new ObjectMapper().writer().withDefaultPrettyPrinter();
+            Respuesta obRespuesta = new Respuesta("Nuevo Token", jwtToken);
+            response = ow.writeValueAsString(obRespuesta);
+            codigo_respuesta = 200;
+        } else {
+            response = "Este token ya no es válido... Tiene que volverse a logear";
+            codigo_respuesta = 401;
         }
-        
-        if(Autorización.validarToken(Autorización.REFRESH,refreshToken))
-            response = "Se genera un nuevo token de acceso";
-        else
-            response = "Este token ya no es válido... Tiene que volverse a logear"; 
 
         String origin = he.getRequestHeaders().get("Origin").get(0);
-
         he.getResponseHeaders().add("Access-Control-Allow-Origin", origin);
         he.getResponseHeaders().add("Access-Control-Allow-Credentials", "true");
-        
-        he.getResponseHeaders().set("Content-Type", "application/json"); 
-        he.sendResponseHeaders(200, response.getBytes().length);
+
+        he.getResponseHeaders().set("Content-Type", "application/json");
+        he.sendResponseHeaders(codigo_respuesta, response.getBytes().length);
         OutputStream os = he.getResponseBody();
         os.write(response.getBytes());
         os.close();
     }
+
     protected String obtenerToken(HttpExchange he) throws UnsupportedEncodingException {
         String cookies = he.getRequestHeaders().get("Cookie").get(0);
-        
+
         Map<String, Object> cookies_separadas = new HashMap<String, Object>();
-        
+
         if (cookies != null) {
             String pairs[] = cookies.split("[;]");
-            for (String pair : pairs) { 
+            for (String pair : pairs) {
                 String param[] = pair.split("[=]");
                 String key = null;
                 String value = null;
@@ -74,6 +79,32 @@ public class manejadorRefresh implements HttpHandler{
         }
         return (String) cookies_separadas.get("refresh");
     }
-    
-    
+
+    private class Respuesta {
+
+        String msj;
+        String Token;
+
+        public Respuesta(String msj, String Token) {
+            this.msj = msj;
+            this.Token = Token;
+        }
+
+        public String getToken() {
+            return Token;
+        }
+
+        public String getMsj() {
+            return msj;
+        }
+
+        public void setMsj(String msj) {
+            this.msj = msj;
+        }
+
+        public void setToken(String Token) {
+            this.Token = Token;
+        }
+
+    }
 }

@@ -20,9 +20,7 @@ public class manejadorAuth implements HttpHandler {
         Date fecha_expiración = new Date(System.currentTimeMillis() + 6 * 60 * 60000L);
         String refreshToken = Autorización.nuevoTokenRefresh(fecha_expiración);
         he.getResponseHeaders().add("Set-Cookie", "refresh=" + refreshToken + "; HttpOnly; Secure; SameSite=Strict; Expires=" + fecha_expiración.toGMTString());
-        he.getResponseHeaders().add("Set-Cookie", "cke=123");
-
-        /*  EN CASO DE QUE NO FUNCIONE, UTILIZAR LA VARIABLE (QUE PERMITIRÍA EL USO DESDE CUALQUIER URL) 
+        /*  EN CASO DE QUE NO FUNCIONE, UTILIZAR LA VARIABLE (QUE PERMITIRÍA EL USO DESDE CUALQUIER URL)  
         String origin = he.getRequestHeaders().get("Origin").get(0);
         System.out.println(origin); 
          */
