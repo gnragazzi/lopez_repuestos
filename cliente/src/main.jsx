@@ -1,5 +1,5 @@
 import { createRoot } from "react-dom/client";
-import App from "./App.jsx";
+//import App from "./App.jsx";
 import "./index.css";
 import Contexto from "./Contexto.jsx";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
@@ -11,11 +11,17 @@ import { Cargar_viaje } from "./páginas/cargar_viaje/Cargar_viaje.jsx";
 import Camiones from "./páginas/Camion.jsx";
 import Costos_camión from "./páginas/costos_camion/Costos_camión.jsx";
 import EnConstrucción from "./componentes/EnConstrucción.jsx";
+import Login from "./páginas/Login.jsx";
+import RequiereAuth from "./componentes/RequiereAuth.jsx";
 
 const router = createBrowserRouter([
   {
+    path: "/login",
+    element: <Login />,
+  },
+  {
     path: "/",
-    element: <App></App>,
+    element: <RequiereAuth />,
     children: [
       {
         index: true,

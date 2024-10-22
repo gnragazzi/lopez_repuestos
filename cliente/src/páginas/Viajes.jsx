@@ -2,13 +2,17 @@ import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import axios from "axios";
+import { useContextoGlobal } from "../Contexto";
 
 function Viajes() {
   const [viajes, setViajes] = useState([]);
+  const { auth } = useContextoGlobal();
 
   useEffect(() => {
     axios
-      .get("http://localhost:8080/viajes")
+      .get("http://localhost:8080/viajes", {
+        headers: { Authorization: `Bearer ${auth}` },
+      })
       .then((response) => {
         setViajes(response.data);
       })

@@ -2,14 +2,19 @@ import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import axios from "axios";
+import { useContextoGlobal } from "../Contexto";
 
 function Mantenimiento() {
   const [mantenimientos, setMantenimientos] = useState([]);
+  const { auth } = useContextoGlobal();
 
   useEffect(() => {
     axios
       .get("http://localhost:8080/mantenimiento", {
-        headers: { Accept: "application/json" },
+        headers: {
+          Accept: "application/json",
+          Authorization: `Bearer ${auth}`,
+        },
       })
       .then((response) => {
         setMantenimientos(response.data);
@@ -23,7 +28,8 @@ function Mantenimiento() {
     <div className="App">
       <h2>Mantenimientos</h2>
       <br />
-      <Link rel="nofollow"
+      <Link
+        rel="nofollow"
         to="cargar_mantenimiento"
         className="enlace_cargar_mantenimiento"
       >

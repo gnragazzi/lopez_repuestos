@@ -19,40 +19,54 @@ public abstract class Manejador implements HttpHandler {
 
     @Override
     public void handle(HttpExchange he) throws IOException, JsonProcessingException {
-        he.getResponseHeaders().add("Access-Control-Allow-Origin", "*");
+        he.getResponseHeaders().add("Access-Control-Allow-Origin", "*");     
         if (he.getRequestMethod().equalsIgnoreCase("OPTIONS")) {
             he.getResponseHeaders().add("Access-Control-Allow-Methods", "GET, OPTIONS");
             he.getResponseHeaders().add("Access-Control-Allow-Headers", "Content-Type,Authorization");
             he.sendResponseHeaders(204, -1);
             return;
         }
-        String método = he.getRequestMethod();
         String response = null;
+        String token = null;
+        int codigo_respuesta = 200;
+        // manejar acceso no autorizado
+        try { 
+            token = he.getRequestHeaders().getFirst("Authorization").split(" ")[1];
+            if (!Autorización.decode(token)) {
+                response = "USUARIO NO VALIDO";
+            } else {
 
-        if (método.equalsIgnoreCase("get")) {
-            try {
-                response = manejarGet(he);
-            } catch (ClassNotFoundException ex) {
-                Logger.getLogger(manejadorEmpleado.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (Exception ex) {
-                Logger.getLogger(manejadorEmpleado.class.getName()).log(Level.SEVERE, null, ex);
+                String método = he.getRequestMethod();
+
+                if (método.equalsIgnoreCase("get")) {
+                    try {
+                        response = manejarGet(he);
+                    } catch (ClassNotFoundException ex) {
+                        Logger.getLogger(manejadorEmpleado.class.getName()).log(Level.SEVERE, null, ex);
+                    } catch (Exception ex) {
+                        Logger.getLogger(manejadorEmpleado.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                } else if (método.equalsIgnoreCase("post")) {
+                    try {
+                        response = manejarPost(he);
+                    } catch (ClassNotFoundException ex) {
+                        Logger.getLogger(Manejador.class.getName()).log(Level.SEVERE, null, ex);
+                    } catch (Exception ex) {
+                        Logger.getLogger(Manejador.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                } else {
+                    response = "MÉTODO NO IMPLEMENTADO";
+                }
             }
-        } else if (método.equalsIgnoreCase("post")) {
-            try {
-                response = manejarPost(he);
-            } catch (ClassNotFoundException ex) {
-                Logger.getLogger(Manejador.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (Exception ex) {
-                Logger.getLogger(Manejador.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        } else {
-            response = "MÉTODO NO IMPLEMENTADO";
+        } catch (Exception ex) {
+            // NO SE PROPORCIONÓ UN TOKEN
+            response = "NO PROPORCIONÓ UN TOKEN VÁLIDO";
+            codigo_respuesta = 401;
         }
 
-        
         // parse request 
-        he.getResponseHeaders().set("Content-Type", "application/json");  
-        he.sendResponseHeaders(200, response.getBytes().length);
+        he.getResponseHeaders().set("Content-Type", "application/json");
+        he.sendResponseHeaders(codigo_respuesta, response.getBytes().length);
         OutputStream os = he.getResponseBody();
         os.write(response.getBytes());
         os.close();

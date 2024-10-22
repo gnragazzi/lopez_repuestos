@@ -6,6 +6,7 @@ import { useContextoGlobal } from "../Contexto";
 
 function Camiones() {
   const {
+    auth,
     estado_camiones: estado,
     dispatch_camiones: dispatch,
     acciones_camiones: acciones,
@@ -19,7 +20,8 @@ function Camiones() {
     const fetchData = async () => {
       try {
         const response = await axios.get(
-          "http://localhost:8080/vehiculos?tipo=camion"
+          "http://localhost:8080/vehiculos?tipo=camion",
+          { headers: { Authorization: `Bearer ${auth}` } }
         );
         const camionesData = Array.isArray(response.data) ? response.data : [];
 
@@ -78,7 +80,8 @@ function Camiones() {
                       >
                         Eliminar
                       </button>{" "}
-                      <Link rel="nofollow"
+                      <Link
+                        rel="nofollow"
                         to={"costos"}
                         className="btn btn-primary"
                         onClick={() =>

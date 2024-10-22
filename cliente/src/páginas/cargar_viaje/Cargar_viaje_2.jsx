@@ -1,25 +1,24 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { MdErrorOutline } from "react-icons/md";
-
+import { useContextoGlobal } from "../../Contexto";
 
 /* eslint-disable react/prop-types */
 function Cargar_viaje_2({ dispatch, acciones, estado }) {
-  
-  const [error,setError]=useState("");
-  const [icono_error,setIcono_Error]=useState("");
- 
+  const [error, setError] = useState("");
+  const [icono_error, setIcono_Error] = useState("");
+  const { auth } = useContextoGlobal();
+
   const seleccion = () => {
-    if(camion_seleccionado){
+    if (camion_seleccionado) {
       setError("");
       setIcono_Error("");
       return true;
     }
-    setError("Debe elegir un camion para poder avanzar")
+    setError("Debe elegir un camion para poder avanzar");
     setIcono_Error(MdErrorOutline);
     return false;
-
-  }
+  };
 
   const {
     CARGAR_FILTROS,
@@ -39,7 +38,8 @@ function Cargar_viaje_2({ dispatch, acciones, estado }) {
 
     axios
       .get(
-        `http://localhost:8080/viajes?fecha_partida=${estado.cuerpo_cargar_viaje.fecha_partida}&fecha_llegada=${estado.cuerpo_cargar_viaje.fecha_llegada}`
+        `http://localhost:8080/viajes?fecha_partida=${estado.cuerpo_cargar_viaje.fecha_partida}&fecha_llegada=${estado.cuerpo_cargar_viaje.fecha_llegada}`,
+        { headers: { Authorization: `Bearer ${auth}` } }
       )
       .then((res) => {
         const filtros = res.data.reduce(
@@ -57,6 +57,7 @@ function Cargar_viaje_2({ dispatch, acciones, estado }) {
           .get("http://localhost:8080/vehiculos?tipo=camion", {
             headers: {
               Accept: "application/json",
+              Authorization: `Bearer ${auth}`,
             },
           })
           .then((res) => {
@@ -77,8 +78,8 @@ function Cargar_viaje_2({ dispatch, acciones, estado }) {
           <thead>
             <tr>
               <th>Marca</th>
-              <th>Patente</th> 
-           </tr>
+              <th>Patente</th>
+            </tr>
           </thead>
           <tbody>
             {lista_camiones.map((camion) => {
@@ -120,17 +121,24 @@ function Cargar_viaje_2({ dispatch, acciones, estado }) {
       </div>
 
       <div className="botonera_formulario">
-        <button className="formulario__boton volver" onClick={() => dispatch({ type: PANTALLA_ANTERIOR })}>
+        <button
+          className="formulario__boton volver"
+          onClick={() => dispatch({ type: PANTALLA_ANTERIOR })}
+        >
           Volver
         </button>
-        <div className="no_seleccionado">{icono_error}       {error}</div>
-        <button className="formulario__boton siguiente" 
-          onClick={() =>{
-            if (seleccion()){
-            dispatch({
-              type: PROXIMA_PANTALLA,
-              payload: [Boolean(camion_seleccionado)],
-            })}
+        <div className="no_seleccionado">
+          {icono_error} {error}
+        </div>
+        <button
+          className="formulario__boton siguiente"
+          onClick={() => {
+            if (seleccion()) {
+              dispatch({
+                type: PROXIMA_PANTALLA,
+                payload: [Boolean(camion_seleccionado)],
+              });
+            }
           }}
         >
           Siguiente

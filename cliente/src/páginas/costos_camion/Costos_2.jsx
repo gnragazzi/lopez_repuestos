@@ -4,6 +4,7 @@ import axios from "axios";
 
 const Costos_2 = () => {
   const {
+    auth,
     acciones_camiones: { CARGAR_COSTO },
     dispatch_camiones: dispatch,
     estado_camiones: {
@@ -25,7 +26,8 @@ const Costos_2 = () => {
       .get(
         `http://localhost:8080/vehiculos?costos=${año_costo}-${
           mes_costo + 1 < 10 ? "0" + (mes_costo + 1) : mes_costo + 1
-        }&patente=${camion_seleccionado}`
+        }&patente=${camion_seleccionado}`,
+        { headers: { Authorization: `Bearer ${auth}` } }
       )
       .then((res) => {
         const {

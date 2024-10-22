@@ -13,6 +13,7 @@ export const useContextoGlobal = () => {
 
 // eslint-disable-next-line react/prop-types
 function Contexto({ children }) {
+  const [auth, setAuth] = useState("");
   const [estado_camiones, dispatch_camiones] = useReducer(
     reducer_camiones,
     estadoInicial_camiones
@@ -31,6 +32,8 @@ function Contexto({ children }) {
         estado_camiones,
         dispatch_camiones,
         acciones_camiones,
+        auth,
+        setAuth,
       }}
     >
       {children}

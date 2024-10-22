@@ -11,6 +11,7 @@ import Cargar_M1 from "./Cargar_M1.jsx";
 import Cargar_M2 from "./Cargar_M2.jsx";
 import Cargar_M3 from "./Cargar_M3.jsx";
 import Cargar_M4 from "./Cargar_M4.jsx";
+import { useContextoGlobal } from "../../Contexto.jsx";
 
 // crear componentes para mostrar información
 
@@ -20,7 +21,7 @@ const CargarMantenimiento = () => {
     reducer_cargar_mantenimiento,
     estadoInicial_cargar_mantenimiento
   );
-
+  const { auth } = useContextoGlobal();
   const {
     cuerpo_cargar_mantenimiento: {
       trabajos_realizados,
@@ -66,7 +67,8 @@ const CargarMantenimiento = () => {
       esValido = false;
     }
     if (costo_repuestos < 0) {
-      nuevosInputs.costo_repuestos = "El costo de los repuestos no puede ser negativo.";
+      nuevosInputs.costo_repuestos =
+        "El costo de los repuestos no puede ser negativo.";
       esValido = false;
     }
     if (costo_repuestos == "") {
@@ -106,7 +108,10 @@ const CargarMantenimiento = () => {
         "http://localhost:8080/mantenimiento",
         cuerpo_cargar_mantenimiento,
         {
-          headers: { "content-type": "application/json" },
+          headers: {
+            "content-type": "application/json",
+            Authorization: `Bearer ${auth}`,
+          },
         }
       )
       .then(() => {
@@ -121,6 +126,7 @@ const CargarMantenimiento = () => {
       .get("http://localhost:8080/vehiculos", {
         headers: {
           Accept: "application/json",
+          Authorization: `Bearer ${auth}`,
         },
       })
       .then((res) => {
@@ -131,6 +137,7 @@ const CargarMantenimiento = () => {
       .get("http://localhost:8080/empleados?tipo=mecánico", {
         headers: {
           Accept: "application/json",
+          Authorization: `Bearer ${auth}`,
         },
       })
       .then((res) => {

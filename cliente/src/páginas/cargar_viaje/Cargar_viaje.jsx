@@ -12,15 +12,20 @@ import {
 } from "../../utilidades/reducer_cargar_viaje";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { useContextoGlobal } from "../../Contexto";
 
 export const Cargar_viaje = () => {
   const [estado, dispatch] = useReducer(reducer, estadoInicial);
   const navegar = useNavigate();
+  const { auth } = useContextoGlobal();
 
   const enviarFormulario = () => {
     axios
       .post("http://localhost:8080/viajes", estado.cuerpo_cargar_viaje, {
-        headers: { "content-type": "application/json" },
+        headers: {
+          "content-type": "application/json",
+          Authorization: `Bearer ${auth}`,
+        },
       })
       .then((res) => {
         console.log(res);
