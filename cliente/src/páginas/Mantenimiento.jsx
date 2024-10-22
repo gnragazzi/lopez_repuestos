@@ -1,14 +1,16 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import { useState, useEffect } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { useContextoGlobal } from "../Contexto";
 import useAxiosPrivado from "../utilidades/useAxiosPrivado";
 
 function Mantenimiento() {
+  const navegar = useNavigate();
+  const localizacion = useLocation();
   const [mantenimientos, setMantenimientos] = useState([]);
   const [cargando, setCargando] = useState(false);
   const [error, setError] = useState("");
-  const { auth } = useContextoGlobal();
+  const { auth, setAuth } = useContextoGlobal();
   const axiosPrivado = useAxiosPrivado();
 
   useEffect(() => {
@@ -24,8 +26,12 @@ function Mantenimiento() {
         setCargando(false);
 
         setError(error.message);
+        if (error.status == 401) {
+          setAuth("");
+          navegar("/login", { state: { from: localizacion }, replace: true });
+        }
       });
-  }, [auth, axiosPrivado]);
+  }, [auth, axiosPrivado, localizacion, navegar, setAuth]);
 
   if (cargando) {
     return <h1>Cargando...</h1>;

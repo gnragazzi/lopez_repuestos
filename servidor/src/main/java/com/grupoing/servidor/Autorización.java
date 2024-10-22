@@ -18,7 +18,8 @@ public class Autorización {
     public static final String REFRESH = "refresh";
     
     public Autorización() {
-        algorithm = Algorithm.HMAC256("xF1oOlk#4!.41x3rk"); 
+        algorithm = Algorithm.HMAC256("xF1oOlk#4!.41x3r");   
+        //algorithm = Algorithm.HMAC256("xF1oOlk#4!.41x3rk");  
         verifier = JWT.require(algorithm)
                 .withIssuer("Lopez-Servidor")
                 .build();
@@ -34,7 +35,7 @@ public class Autorización {
                 .withJWTId(UUID.randomUUID()
                         .toString())
                 //                .withNotBefore(new Date(System.currentTimeMillis() + 1000L)) 
-                .sign(algorithm);
+                .sign(algorithm); 
     }
 
     public static String nuevoTokenRefresh(Date fecha_expiración) {
