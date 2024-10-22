@@ -19,7 +19,9 @@ public abstract class Manejador implements HttpHandler {
 
     @Override
     public void handle(HttpExchange he) throws IOException, JsonProcessingException {
-        he.getResponseHeaders().add("Access-Control-Allow-Origin", "*");     
+
+        he.getResponseHeaders().add("Access-Control-Allow-Origin", "*");
+
         if (he.getRequestMethod().equalsIgnoreCase("OPTIONS")) {
             he.getResponseHeaders().add("Access-Control-Allow-Methods", "GET, OPTIONS");
             he.getResponseHeaders().add("Access-Control-Allow-Headers", "Content-Type,Authorization");
@@ -30,10 +32,11 @@ public abstract class Manejador implements HttpHandler {
         String token = null;
         int codigo_respuesta = 200;
         // manejar acceso no autorizado
-        try { 
+        try {
             token = he.getRequestHeaders().getFirst("Authorization").split(" ")[1];
-            if (!Autorización.decode(token)) {
+            if (!Autorización.validarToken(Autorización.ACCESO,token)) {
                 response = "USUARIO NO VALIDO";
+                codigo_respuesta = 403;
             } else {
 
                 String método = he.getRequestMethod();

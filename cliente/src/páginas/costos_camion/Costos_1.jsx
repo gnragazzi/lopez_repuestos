@@ -24,7 +24,7 @@ const Costos_1 = () => {
   return (
     <>
       <h2>Seleccione la Fecha:</h2>
-      <form form className="form-table form__mantenimiento">
+      <form className="form-table form__mantenimiento">
         <fieldset className="form__items-mantenimiento">
           <legend className="form__legend">Mes</legend>
           <select

@@ -13,6 +13,8 @@ public class Servidor {
 
     public static void main(String[] args) throws IOException, SQLException, ClassNotFoundException, Exception {
 
+        //Eventualmente, hay que implementar un singleton o restringir de alguna forma nuevas instancias
+        Autorización auth = new Autorización();
         //***************************************************//
         HttpServer server = HttpServer.create(new InetSocketAddress(port), 0);
         System.out.println("Servidor Montado en el puerto " + port);
@@ -20,7 +22,8 @@ public class Servidor {
         server.createContext("/mantenimiento", new manejadorMantenimiento());
         server.createContext("/viajes", new manejadorViaje());
         server.createContext("/empleados", new manejadorEmpleado());
-        server.createContext("/auth", new Autorización());
+        server.createContext("/auth", new manejadorAuth());
+        server.createContext("/refresh", new manejadorRefresh());
         server.setExecutor(null);
         server.start();
     }
