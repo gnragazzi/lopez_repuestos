@@ -11,6 +11,7 @@ import Cargar_M1 from "./Cargar_M1.jsx";
 import Cargar_M2 from "./Cargar_M2.jsx";
 import Cargar_M3 from "./Cargar_M3.jsx";
 import Cargar_M4 from "./Cargar_M4.jsx";
+import { Bounce, toast } from "react-toastify";
 
 // crear componentes para mostrar información
 
@@ -66,7 +67,8 @@ const CargarMantenimiento = () => {
       esValido = false;
     }
     if (costo_repuestos < 0) {
-      nuevosInputs.costo_repuestos = "El costo de los repuestos no puede ser negativo.";
+      nuevosInputs.costo_repuestos =
+        "El costo de los repuestos no puede ser negativo.";
       esValido = false;
     }
     if (costo_repuestos == "") {
@@ -110,6 +112,16 @@ const CargarMantenimiento = () => {
         }
       )
       .then(() => {
+        toast.success("🛠 Cargado Correctamente 🛠", {
+          position: "top-center",
+          autoClose: 3000,
+          draggable: true,
+          progress: undefined,
+          theme: "colored",
+          transition: Bounce,
+          icon: false,
+          bodyClassName: "toast_class",
+        });
         navegar("/mantenimiento");
         dispatch({ type: RESETEAR_CUERPO_MANTENIMIENTO });
       });
