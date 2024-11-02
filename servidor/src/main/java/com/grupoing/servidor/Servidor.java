@@ -18,6 +18,7 @@ public class Servidor {
         //***************************************************//
         HttpServer server = HttpServer.create(new InetSocketAddress(port), 0);
         System.out.println("Servidor Montado en el puerto " + port);
+        
         server.createContext("/vehiculos", new manejadorVehiculos());
         server.createContext("/mantenimiento", new manejadorMantenimiento());
         server.createContext("/viajes", new manejadorViaje());

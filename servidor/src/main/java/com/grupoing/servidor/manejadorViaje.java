@@ -76,7 +76,7 @@ public class manejadorViaje extends Manejador {
             return "Carga Exitosa";
         } catch (JSONException ex) {
             System.out.println("ERROR: " + ex);
-            return "Error en la carga";
+            throw ex;
         }
     }
 

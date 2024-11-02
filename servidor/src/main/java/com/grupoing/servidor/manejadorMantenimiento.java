@@ -41,7 +41,7 @@ public class manejadorMantenimiento extends Manejador {
     }
 
     @Override
-    public String manejarPost(HttpExchange he) throws UnsupportedEncodingException, IOException {
+    public String manejarPost(HttpExchange he) throws UnsupportedEncodingException, IOException, Exception {
         //USAR EL InputStreamReadr NOS PERMITE PARSEAR EL CUERPO DEL POST
         InputStreamReader isr = new InputStreamReader(he.getRequestBody(), "utf-8");
         BufferedReader br = new BufferedReader(isr);
@@ -60,16 +60,8 @@ public class manejadorMantenimiento extends Manejador {
             LocalDate fecha = LocalDate.parse(jsonobj.getString("fecha"));
             Double costo_repuestos = jsonobj.getDouble("costo_repuestos");
             Double costo_manodeobra = jsonobj.getDouble("costo_manodeobra");
-            //int kilometros_en_que_se_realizo= jsonobj.getInt("kilometros_en_que_se_realizo");
 
-            /*
-            //ACA DEBERÍA HACERSE UNA CONSULTA A LA BASE DE DATOS PARA TRAER EL MECÁNICO Y EL VEHÍCULO CORRESPONDIENTE...
-            // HASTA QUE ESA FUNCIONALIDAD ESTÉ IMPLEMENTADA, CREAREMOS UN NUEVO MECÁNICO Y VEHÍCULO...
-            try{
-                buscarMecánico y Vehículo de la base de datos
-            }
-            catch(sqlexception){}
-             */
+
             Vehiculo vehiculo = jsonobj.getJSONObject("vehiculo").getBoolean("esCamion") ? new Camion() : new Semirremolque();
             vehiculo.setPatente((String) jsonobj.getJSONObject("vehiculo").get("vehiculoSeleccionado"));
 
@@ -87,16 +79,16 @@ public class manejadorMantenimiento extends Manejador {
             }
 
             Mantenimiento m = new Mantenimiento(trabajos_realizados, fecha, costo_repuestos, costo_manodeobra, 0, mecanicos, vehiculo);
-            System.out.printf(
-                    "Trabajo: %s\n fecha: %s\ncosto_repuestos: %f\ncosto_manodeobra: %s\nkilometros_en_que_se_realizo: %d\nDni mecánico: %s\nMatrícula Vehículo: %s\n",
-                    m.getTrabajos_realizados(),
-                    m.getFecha().toString(),
-                    m.getCostos_repuestos(),
-                    m.getCostos_manodeobra(),
-                    m.getKilometros_en_que_se_realizo(),
-                    m.getMecanico().get(0).getDni(),
-                    m.getVehiculo().getPatente()
-            );
+//            System.out.printf(
+//                    "Trabajo: %s\n fecha: %s\ncosto_repuestos: %f\ncosto_manodeobra: %s\nkilometros_en_que_se_realizo: %d\nDni mecánico: %s\nMatrícula Vehículo: %s\n",
+//                    m.getTrabajos_realizados(),
+//                    m.getFecha().toString(),
+//                    m.getCostos_repuestos(),
+//                    m.getCostos_manodeobra(),
+//                    m.getKilometros_en_que_se_realizo(),
+//                    m.getMecanico().get(0).getDni(),
+//                    m.getVehiculo().getPatente()
+//            );
             //MANDAR Mantenimiento A LA BASE DE DATOS
 
             mantenimientoDAO.create(m);
@@ -104,8 +96,8 @@ public class manejadorMantenimiento extends Manejador {
             //CREAR HTTP RESPONSE
             return "Cargado Correctamente.";
         } catch (Exception ex) {
-            System.err.println("Ocurrió el siguiente error durante la carga del mantenimiento: " + ex);
-            return "ERROR EN LA CARGA";
+            System.out.println("Ocurrió un error en el parseo del JSON.");
+            throw ex;
         }
     }
 

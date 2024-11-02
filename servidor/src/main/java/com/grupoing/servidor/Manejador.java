@@ -12,8 +12,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 public abstract class Manejador implements HttpHandler {
 
@@ -34,7 +32,7 @@ public abstract class Manejador implements HttpHandler {
         // manejar acceso no autorizado
         try {
             token = he.getRequestHeaders().getFirst("Authorization").split(" ")[1];
-            if (!Autorización.validarToken(Autorización.ACCESO,token)) {
+            if (!Autorización.validarToken(Autorización.ACCESO, token)) {
                 response = "USUARIO NO VALIDO";
                 codigo_respuesta = 403;
             } else {
@@ -44,20 +42,19 @@ public abstract class Manejador implements HttpHandler {
                 if (método.equalsIgnoreCase("get")) {
                     try {
                         response = manejarGet(he);
-                    } catch (ClassNotFoundException ex) {
-                        Logger.getLogger(manejadorEmpleado.class.getName()).log(Level.SEVERE, null, ex);
                     } catch (Exception ex) {
-                        Logger.getLogger(manejadorEmpleado.class.getName()).log(Level.SEVERE, null, ex);
+                        codigo_respuesta = 500;
+                        response = "Error de GET. No se pudo leer la entrada.";
                     }
                 } else if (método.equalsIgnoreCase("post")) {
                     try {
                         response = manejarPost(he);
-                    } catch (ClassNotFoundException ex) {
-                        Logger.getLogger(Manejador.class.getName()).log(Level.SEVERE, null, ex);
                     } catch (Exception ex) {
-                        Logger.getLogger(Manejador.class.getName()).log(Level.SEVERE, null, ex);
+                        codigo_respuesta = 500;
+                        response = "Error de POST. No se realizó la carga.";
                     }
                 } else {
+                    codigo_respuesta = 501;
                     response = "MÉTODO NO IMPLEMENTADO";
                 }
             }

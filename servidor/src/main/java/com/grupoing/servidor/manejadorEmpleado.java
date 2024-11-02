@@ -33,6 +33,7 @@ public class manejadorEmpleado extends Manejador {
         ArrayList<Empleado> empleados = new ArrayList<>();
         if (tipo == null) {
             //Es decir, en este caso no se quiso acceder a ningún tipo de empleado en particular, y se busca choferes y mecánicos por igual
+            throw new Exception(); // TODAVÍA NO ESTÁ IMPLEMENTADO
         } else if (tipo.equalsIgnoreCase("chofer")) {
             
             Iterator<Chofer> iteratorChofer = choferDAO.list().iterator();
@@ -55,9 +56,8 @@ public class manejadorEmpleado extends Manejador {
         return ow.writeValueAsString(empleados);
     }
 
-    public String manejarPost(HttpExchange he) {
-        //IMPLEMENTAR MÉTODOS PARA SUBIR 
-        return "POST REQUEST";
+    public String manejarPost(HttpExchange he) throws Exception {
+        throw new Exception();
     }
 
 }
