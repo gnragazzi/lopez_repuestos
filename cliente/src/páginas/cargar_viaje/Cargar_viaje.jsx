@@ -12,6 +12,7 @@ import {
 } from "../../utilidades/reducer_cargar_viaje";
 import { useNavigate } from "react-router-dom";
 import useAxiosPrivado from "../../utilidades/useAxiosPrivado";
+import { Bounce, toast } from "react-toastify";
 
 export const Cargar_viaje = () => {
   const axiosPrivado = useAxiosPrivado();
@@ -26,6 +27,16 @@ export const Cargar_viaje = () => {
       .then((res) => {
         console.log(res);
         dispatch({ type: acciones.RESETEAR_CUERPO_VIAJE });
+        toast.success("🚚 Viaje Cargado Correctamente 🚚", {
+          position: "top-center",
+          autoClose: 3000,
+          draggable: true,
+          progress: undefined,
+          theme: "colored",
+          transition: Bounce,
+          icon: false,
+          bodyClassName: "toast_class",
+        });
         navegar("/viajes");
       })
       .catch((error) => {

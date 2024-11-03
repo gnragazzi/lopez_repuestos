@@ -11,7 +11,7 @@ import Cargar_M2 from "./Cargar_M2.jsx";
 import Cargar_M3 from "./Cargar_M3.jsx";
 import Cargar_M4 from "./Cargar_M4.jsx";
 import useAxiosPrivado from "../../utilidades/useAxiosPrivado.jsx";
-
+import { Bounce, toast } from "react-toastify";
 // crear componentes para mostrar información
 
 const CargarMantenimiento = () => {
@@ -107,6 +107,16 @@ const CargarMantenimiento = () => {
     axiosPrivado
       .post("/mantenimiento", cuerpo_cargar_mantenimiento)
       .then(() => {
+        toast.success("🛠 Cargado Correctamente 🛠", {
+          position: "top-center",
+          autoClose: 3000,
+          draggable: true,
+          progress: undefined,
+          theme: "colored",
+          transition: Bounce,
+          icon: false,
+          bodyClassName: "toast_class",
+        });
         navegar("/mantenimiento");
         dispatch({ type: RESETEAR_CUERPO_MANTENIMIENTO });
       })

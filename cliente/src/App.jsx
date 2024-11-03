@@ -3,12 +3,15 @@ import Barra_superior from "./componentes/Barra_superior";
 import { Outlet } from "react-router-dom";
 import icono_lopez from "./assets/imagen_fondo/fondo_lopez.png";
 import { FaTruckArrowRight } from "react-icons/fa6";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 function App() {
   return (
     <>
       <header>
         <Barra_superior />
+        <ToastContainer />
       </header>
       <div className="container__barra_lateral">
         <div className="barra_lateral__menu-bar">

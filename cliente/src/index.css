@@ -730,3 +730,8 @@ table tbody .no_disponible:hover{
   color: var(--fondo-borde-logo);
   font-size: 2rem;
 }
+
+.toast_class{
+  font-size: 1rem;
+  font-weight: bold;
+}
