@@ -6,7 +6,7 @@ package IDaoImpl;
 
 import Clases.Seguro;
 import Conexion.Conexion;
-import InterfacesDAO.ISeguroDAO;
+import InterfacesDAO.IDAO;
 import java.sql.Connection;
 import java.util.ArrayList;
 
@@ -14,12 +14,12 @@ import java.util.ArrayList;
  *
  * @author clauz
  */
-public class SeguroDAOImpl implements ISeguroDAO{
+public class SeguroDAOImpl implements IDAO<Seguro>{
     
     private Connection conexion;
     
     public SeguroDAOImpl() throws ClassNotFoundException {
-         this.conexion = Conexion.getInstancia().getConexion();;
+         this.conexion = Conexion.getInstancia().getConexion();
     }
     @Override
     public void create(Seguro seguro) throws Exception {
@@ -42,7 +42,7 @@ public class SeguroDAOImpl implements ISeguroDAO{
     }
 
     @Override
-    public void find(Seguro seguro) throws Exception {
+    public Seguro read(Seguro obj) throws Exception {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
     

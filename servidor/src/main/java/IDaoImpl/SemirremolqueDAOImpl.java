@@ -7,7 +7,7 @@ package IDaoImpl;
 import Clases.Camion;
 import Clases.Semirremolque;
 import Conexion.Conexion;
-import InterfacesDAO.ISemirremolqueDAO;
+import InterfacesDAO.IDAO;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
@@ -17,12 +17,12 @@ import java.util.ArrayList;
  *
  * @author clauz
  */
-public class SemirremolqueDAOImpl implements ISemirremolqueDAO{
+public class SemirremolqueDAOImpl implements IDAO<Semirremolque>{
     
     private Connection conexion;
     
     public SemirremolqueDAOImpl() throws ClassNotFoundException {
-         this.conexion = Conexion.getInstancia().getConexion();;
+         this.conexion = Conexion.getInstancia().getConexion();
     }
     @Override
     public void create(Semirremolque semirremolque) throws Exception {
@@ -56,7 +56,7 @@ public class SemirremolqueDAOImpl implements ISemirremolqueDAO{
     }
 
     @Override
-    public void find(Semirremolque semirremolque) throws Exception {
+    public Semirremolque read(Semirremolque obj) throws Exception {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
     

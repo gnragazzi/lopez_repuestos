@@ -4,55 +4,62 @@
  */
 package IDaoImpl;
 
-import Clases.Chofer;
+import Clases.Camion;
+import Clases.Semirremolque;
+import Clases.Vehiculo;
 import Conexion.Conexion;
 import InterfacesDAO.IDAO;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Iterator;
 
+/**
+ *
+ * @author clauz
+ */
+public class VehiculoDAOImpl implements IDAO<Vehiculo>{
 
-public class ChoferDAOImpl implements IDAO<Chofer>{
-    
     private Connection conexion;
     
-    public ChoferDAOImpl() throws ClassNotFoundException {
+    public VehiculoDAOImpl() throws ClassNotFoundException {
          this.conexion = Conexion.getInstancia().getConexion();
     }
-
     
-    public void create(Chofer obj) throws Exception {
+    @Override
+    public void create(Vehiculo obj) throws Exception {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
-    public Chofer read(Chofer obj) throws Exception {
+    @Override
+    public Vehiculo read(Vehiculo obj) throws Exception {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    @Override
+    public void update(Vehiculo obj) throws Exception {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    @Override
+    public void delete(Vehiculo obj) throws Exception {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    @Override
+    public ArrayList<Vehiculo> list() throws Exception {
+        
+        SemirremolqueDAOImpl semirremolqueDAO = new SemirremolqueDAOImpl();
+        CamionDAOImpl camionDAO = new CamionDAOImpl();
+        
+        ArrayList<Vehiculo> vehiculos = new ArrayList<>();
+        
+        vehiculos.addAll(camionDAO.list());
+        vehiculos.addAll(semirremolqueDAO.list());
+
+        
+        return vehiculos; 
     }
     
-     public void update(Chofer obj) throws Exception {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
-
-    public void delete(Chofer obj) throws Exception {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
-
-    
-    public ArrayList<Chofer> list() throws Exception {
-        Statement statement= conexion.createStatement();
-        ResultSet rs = statement.executeQuery("select * from Empleados, Choferes where dni=Empleados_DNI;");
-        ArrayList<Chofer> choferes= new ArrayList<>(); 
-        while(rs.next()){
-            Chofer chofer= new Chofer();
-            chofer.setDni(rs.getString("Empleados_DNI"));
-            chofer.setCuil(rs.getString("Cuil"));
-            chofer.setNombre(rs.getString("Nombre"));
-            chofer.setApellido(rs.getString("Apellido"));
-            chofer.setTelefono(rs.getString("Telefono"));
-            choferes.add(chofer);
-        }
-        return choferes;
-    }
-
 }

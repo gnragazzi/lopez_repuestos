@@ -6,13 +6,15 @@ package IDaoImpl;
 
 import Clases.Camion;
 import Clases.Chofer;
+import Clases.Costos;
 import Clases.Semirremolque;
 import Clases.Viaje;
 import Conexion.Conexion;
-import InterfacesDAO.IViajeDAO;
+import InterfacesDAO.IDAO;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -21,12 +23,12 @@ import java.util.ArrayList;
  *
  * @author clauz
  */
-public class ViajeDAOImpl implements IViajeDAO {
+public class ViajeDAOImpl implements IDAO<Viaje> {
 
     private Connection conexion;
 
     public ViajeDAOImpl() throws ClassNotFoundException {
-        this.conexion = Conexion.getInstancia().getConexion();;
+        this.conexion = Conexion.getInstancia().getConexion();
     }
 
     @Override
@@ -82,12 +84,6 @@ public class ViajeDAOImpl implements IViajeDAO {
         return viajes;
     }
 
-    @Override
-    public void find(Viaje viaje) throws Exception {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
-
-    @Override
     public ArrayList<Viaje> comprobarfechas(String Fecha_partida, String Fecha_llegada) throws Exception {
         PreparedStatement comprobarFechas = conexion.prepareStatement("select * from Viajes where (Fecha_partida between ?  and ? ) or (Fecha_llegada between ? and  ?);");
         comprobarFechas.setString(1, Fecha_partida);
@@ -116,4 +112,25 @@ public class ViajeDAOImpl implements IViajeDAO {
         return viajes;
     }
 
+    @Override
+    public Viaje read(Viaje obj) throws Exception {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+    
+    public Costos calcular_costos_viaje (String patente, LocalDate fecha) throws SQLException{
+        Costos respuesta = new Costos();
+
+        PreparedStatement costoViaje= conexion.prepareStatement("SELECT sum(Costos_combustibles), sum(Kilometros_realizados) FROM Viajes WHERE MONTH(Fecha_partida) = ? AND YEAR(Fecha_partida) = ? and Camiones_Vehiculos_Patente= ? ;");
+        costoViaje.setInt(1, fecha.getMonthValue());
+        costoViaje.setInt(2, fecha.getYear());
+        costoViaje.setString(3, patente);
+        ResultSet rs= costoViaje.executeQuery();
+        rs=costoViaje.executeQuery();
+        while(rs.next()){
+            respuesta.setCosto_combustible(rs.getFloat("sum(Costos_combustibles)")); 
+            respuesta.setKilometros_realizados(rs.getFloat("sum(Kilometros_realizados)"));
+        }
+        
+        return respuesta;
+    }
 }

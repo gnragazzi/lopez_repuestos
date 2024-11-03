@@ -1,25 +1,27 @@
 package IDaoImpl;
 
 import Clases.Camion;
+import Clases.Costos;
 import Clases.Mantenimiento;
 import Clases.Mecanico;
 import Clases.Semirremolque;
 import Conexion.Conexion;
-import InterfacesDAO.IMantenimientoDAO;
+import InterfacesDAO.IDAO;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Iterator;
 
-public class MantenimientoDAOImpl implements IMantenimientoDAO {
+public class MantenimientoDAOImpl implements IDAO<Mantenimiento> {
 
     private Connection conexion;
 
     public MantenimientoDAOImpl() throws ClassNotFoundException {
-        this.conexion = Conexion.getInstancia().getConexion();;
+        this.conexion = Conexion.getInstancia().getConexion();
     }
 
     @Override
@@ -86,8 +88,22 @@ public class MantenimientoDAOImpl implements IMantenimientoDAO {
     }
 
     @Override
-    public void find(Mantenimiento mantenimiento) throws Exception {
+    public Mantenimiento read(Mantenimiento obj) throws Exception {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
+    
+    public Costos calcular_costos_mantenimiento(String patente, LocalDate fecha) throws SQLException{
+        Costos respuesta = new Costos();
 
+        PreparedStatement costoMantenimiento= conexion.prepareStatement("SELECT sum(Costos_mano_de_obra), sum(Costos_repuestos) FROM Mantenimientos WHERE MONTH(Fecha) = ? and YEAR(Fecha) = ?  and Vehiculos_Patente= ?");
+        costoMantenimiento.setInt(1, fecha.getMonthValue());
+        costoMantenimiento.setInt(2, fecha.getYear());
+        costoMantenimiento.setString(3, patente);
+        ResultSet rs= costoMantenimiento.executeQuery();
+        while(rs.next()){
+            respuesta.setCosto_repuestos(rs.getFloat("sum(Costos_repuestos)"));
+            respuesta.setCost_mano_de_obra(rs.getFloat("sum(Costos_mano_de_obra)"));
+        }
+        return respuesta;
+    }
 }

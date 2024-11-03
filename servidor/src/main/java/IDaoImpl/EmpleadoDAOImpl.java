@@ -4,45 +4,38 @@
  */
 package IDaoImpl;
 
-import Clases.Tecnica;
-import Conexion.Conexion;
+import Clases.Empleado;
 import InterfacesDAO.IDAO;
-import java.sql.Connection;
 import java.util.ArrayList;
 
 /**
  *
  * @author clauz
  */
-public class TecnicaDAOImpl implements IDAO<Tecnica>{
-    
-    private Connection conexion;
-    
-    public TecnicaDAOImpl() throws ClassNotFoundException {
-         this.conexion = Conexion.getInstancia().getConexion();
-    }
+public class EmpleadoDAOImpl implements IDAO<Empleado>{
+
     @Override
-    public void create(Tecnica tecnica) throws Exception {
+    public void create(Empleado obj) throws Exception {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     @Override
-    public void delete(Tecnica tecnica) throws Exception {
+    public Empleado read(Empleado obj) throws Exception {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     @Override
-    public void update(Tecnica tecnica) throws Exception {
+    public void update(Empleado obj) throws Exception {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     @Override
-    public ArrayList<Tecnica> list() throws Exception {
+    public void delete(Empleado obj) throws Exception {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     @Override
-    public Tecnica read(Tecnica obj) throws Exception {
+    public ArrayList<Empleado> list() throws Exception {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
     

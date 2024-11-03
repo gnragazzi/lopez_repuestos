@@ -7,7 +7,7 @@ package IDaoImpl;
 import Clases.Camion;
 import Clases.Costos;
 import Conexion.Conexion;
-import InterfacesDAO.ICamionDAO;
+import InterfacesDAO.IDAO;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -17,36 +17,34 @@ import java.util.ArrayList;
 import org.json.JSONObject;
 
  
-public class CamionDAOImpl implements ICamionDAO{
+public class CamionDAOImpl implements IDAO<Camion>{
 
     private Connection conexion;
     
     public CamionDAOImpl() throws ClassNotFoundException {
-         this.conexion = Conexion.getInstancia().getConexion();;
+         this.conexion = Conexion.getInstancia().getConexion();
     }
 
-    @Override
-    public void create(Camion camion) throws Exception {
+    public void create(Camion obj) throws Exception {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-        /*ACA VA LA CONSULTA A LA BASE DE DATOS */
     }
-
-    @Override
-    public void delete(Camion camion) throws Exception {
+    
+    public Camion read(Camion obj) throws Exception {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-        /*ACA VA LA CONSULTA A LA BASE DE DATOS */
     }
-
-    @Override
-    public void update(Camion camion) throws Exception {
+    
+    public void update(Camion obj) throws Exception {
         PreparedStatement envioCamion;
         envioCamion = conexion.prepareStatement("update Camiones set kilometraje=kilometraje + ? where Vehiculos_Patente= ?;");
-        envioCamion.setInt(1,camion.getKilometraje());
-        envioCamion.setString(2,camion.getPatente());
+        envioCamion.setInt(1,obj.getKilometraje());
+        envioCamion.setString(2,obj.getPatente());
         envioCamion.executeUpdate();
     }
-
-    @Override
+    
+    public void delete(Camion obj) throws Exception {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+    
     public ArrayList<Camion> list() throws Exception {
         Statement statement = conexion.createStatement();
         ResultSet rs = statement.executeQuery("select * from Camiones, Vehiculos where Patente=Vehiculos_Patente;");
@@ -63,38 +61,27 @@ public class CamionDAOImpl implements ICamionDAO{
         return camiones;
     }
 
-    @Override
-    public void find(Camion camion) throws Exception {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
-
-    @Override
     public Costos calcular_costos(String patente, LocalDate fecha) throws Exception {
         Costos respuesta = new Costos();
         respuesta.setPeríhodo(fecha);
         respuesta.setPatente(patente);
         
-        PreparedStatement costoMantenimiento= conexion.prepareStatement("SELECT sum(Costos_mano_de_obra), sum(Costos_repuestos) FROM Mantenimientos WHERE MONTH(Fecha) = ? and YEAR(Fecha) = ?  and Vehiculos_Patente= ?");
-        costoMantenimiento.setInt(1, fecha.getMonthValue());
-        costoMantenimiento.setInt(2, fecha.getYear());
-        costoMantenimiento.setString(3, patente);
-        ResultSet rs= costoMantenimiento.executeQuery();
-        while(rs.next()){
-            respuesta.setCosto_repuestos(rs.getFloat("sum(Costos_repuestos)"));
-            respuesta.setCost_mano_de_obra(rs.getFloat("sum(Costos_mano_de_obra)"));
-        }
-        PreparedStatement costoViaje= conexion.prepareStatement("SELECT sum(Costos_combustibles), sum(Kilometros_realizados) FROM Viajes WHERE MONTH(Fecha_partida) = ? AND YEAR(Fecha_partida) = ? and Camiones_Vehiculos_Patente= ? ;");
-        costoViaje.setInt(1, fecha.getMonthValue());
-        costoViaje.setInt(2, fecha.getYear());
-        costoViaje.setString(3, patente);
-        rs=costoViaje.executeQuery();
-        while(rs.next()){
-            respuesta.setCosto_combustible(rs.getFloat("sum(Costos_combustibles)")); 
-            respuesta.setKilometros_realizados(rs.getFloat("sum(Kilometros_realizados)"));
-        }
+        MantenimientoDAOImpl mantenimientoDAO= new  MantenimientoDAOImpl();
+        ViajeDAOImpl viajeDAO= new  ViajeDAOImpl();
+        
+        Costos costoM= mantenimientoDAO.calcular_costos_mantenimiento(patente, fecha);
+        Costos costoV= viajeDAO.calcular_costos_viaje(patente, fecha);
+        
+        respuesta.setCost_mano_de_obra(costoM.getCost_mano_de_obra());
+        respuesta.setCosto_repuestos(costoM.getCosto_repuestos());
+        respuesta.setCosto_combustible(costoV.getCosto_combustible());
+        respuesta.setKilometros_realizados(costoV.getKilometros_realizados());
+        
+        
         respuesta.calcularCostos_por_kilometros();
         
         return respuesta;
     }
+
 
 }

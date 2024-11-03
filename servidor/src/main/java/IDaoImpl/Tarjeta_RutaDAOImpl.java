@@ -6,7 +6,7 @@ package IDaoImpl;
 
 import Clases.Tarjeta_Ruta;
 import Conexion.Conexion;
-import InterfacesDAO.ITarjeta_RutaDAO;
+import InterfacesDAO.IDAO;
 import java.sql.Connection;
 import java.util.ArrayList;
 
@@ -14,13 +14,14 @@ import java.util.ArrayList;
  *
  * @author clauz
  */
-public class Tarjeta_RutaDAOImpl implements ITarjeta_RutaDAO{
+public class Tarjeta_RutaDAOImpl implements IDAO<Tarjeta_Ruta>{
     
     private Connection conexion;
     
     public Tarjeta_RutaDAOImpl() throws ClassNotFoundException {
-         this.conexion = Conexion.getInstancia().getConexion();;
+         this.conexion = Conexion.getInstancia().getConexion();
     }
+    
     @Override
     public void create(Tarjeta_Ruta tarjeta_ruta) throws Exception {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
@@ -42,7 +43,7 @@ public class Tarjeta_RutaDAOImpl implements ITarjeta_RutaDAO{
     }
 
     @Override
-    public void find(Tarjeta_Ruta tarjeta_ruta) throws Exception {
+    public Tarjeta_Ruta read(Tarjeta_Ruta obj) throws Exception {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
     
