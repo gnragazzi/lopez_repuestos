@@ -14,6 +14,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
+import java.net.URI;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import org.json.JSONException;
@@ -85,9 +86,15 @@ public class manejadorViaje extends Manejador {
         String fecha_partida, fecha_llegada;
         fecha_partida = obtenerParámetros(he.getRequestURI(), "fecha_partida");
         fecha_llegada = obtenerParámetros(he.getRequestURI(), "fecha_llegada");
-
+        
+        URI uri = he.getRequestURI();
         ArrayList<Viaje> viajes = new ArrayList<>();
-        if (fecha_partida == null && fecha_llegada == null) {
+        
+        if(obtenerParámetros(uri, "entregas_tardias") != null){
+            viajes.addAll(viajeDAO.ver_entregas_tardias());
+        }
+        else{
+            if (fecha_partida == null && fecha_llegada == null) {
             
             ViajeDAOImpl viajeDAO= new ViajeDAOImpl();
             viajes=viajeDAO.list();
@@ -101,8 +108,9 @@ public class manejadorViaje extends Manejador {
 
             viajes = viajeDAO.comprobarfechas(fecha_partida, fecha_llegada);
 
+          }
         }
-        
+
         ObjectWriter ow = new ObjectMapper().writer().withDefaultPrettyPrinter();
 
         return ow.writeValueAsString(viajes);
