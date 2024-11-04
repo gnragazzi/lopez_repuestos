@@ -5,7 +5,7 @@ import lopez from "../assets/iconos_lopez/icono_empresa.png";
 import { FaTruck } from "react-icons/fa";
 import { FaTree } from "react-icons/fa";
 import camion from "../assets/iconos_lateral/camion.gif";
-
+import { GiGrass } from "react-icons/gi";
 
 const Login = () => {
   const { auth, setAuth } = useContextoGlobal();
@@ -59,9 +59,13 @@ const Login = () => {
                 <div className="contenedor__arboles">
                     <FaTree className="arboles"/>
                     <FaTree className="arboles"/>
-
                 </div>
 
+              </div>
+              <div className="contenedor__pasto">
+               {Array.from({ length: 81 }).map((_, index) => (
+                  <GiGrass key={index} className="pasto" />
+                ))}
               </div>
               <div className="camion__piso">a</div>
             </div>
