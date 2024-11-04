@@ -15,10 +15,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
-public class manejadorChoferTemporal implements HttpHandler {
+public class update_chofer implements HttpHandler {
 
     @Override
     public void handle(HttpExchange he) throws IOException, JsonProcessingException {
@@ -31,18 +29,19 @@ public class manejadorChoferTemporal implements HttpHandler {
             he.sendResponseHeaders(204, -1);
             return;
         }
-        String response = "Hola... Fue todo correcto";
+        String response = "Actualización Correcta";
         int codigo_respuesta = 200;
         
-        Chofer chofer = new Chofer(LocalDate.parse("2024-06-17"), null, "35703579", "2035503579-8", "Maria Laura", "Gimeno", "Aucklandville 123", LocalDate.parse("2004-03-14"), "351 7070709");
+        
+        Chofer chofer = new Chofer(LocalDate.parse("1918-09-24"), null, "35703579", "321-8", "Verónica", "Cortiñescas", "La patadita 321", LocalDate.parse("1985-12-24"), "2664 6");
         
         try {
             ChoferDAOImpl cdi = new ChoferDAOImpl();
-            cdi.create(chofer);
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(manejadorChoferTemporal.class.getName()).log(Level.SEVERE, null, ex);
+            cdi.update(chofer,"35703579");  
         } catch (Exception ex) {
-            Logger.getLogger(manejadorChoferTemporal.class.getName()).log(Level.SEVERE, null, ex);
+            System.out.println(ex.getMessage()); 
+            response = "No se encontró...";
+            codigo_respuesta = 404;
         }
         
 

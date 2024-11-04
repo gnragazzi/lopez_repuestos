@@ -18,7 +18,7 @@ import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class baja_chofer implements HttpHandler {
+public class alta_chofer implements HttpHandler { 
 
     @Override
     public void handle(HttpExchange he) throws IOException, JsonProcessingException {
@@ -31,16 +31,19 @@ public class baja_chofer implements HttpHandler {
             he.sendResponseHeaders(204, -1);
             return;
         }
-        String response = "Baja Correcta";
+        String response = "Hola... Fue todo correcto";
         int codigo_respuesta = 200;
-
-        try { 
+        
+        Chofer chofer = new Chofer(LocalDate.parse("2024-06-17"), null, "35703579", "2035503579-8", "Maria Laura", "Gimeno", "Aucklandville 123", LocalDate.parse("2004-03-14"), "351 7070709");
+        
+        try {
             ChoferDAOImpl cdi = new ChoferDAOImpl();
-            cdi.delete("35703579"); 
+            cdi.create(chofer);
         } catch (Exception ex) {
-            System.out.println(ex.getMessage()); 
-            response = "No se encontró...";
-            codigo_respuesta = 404;
+            System.out.println(ex.getMessage());
+            codigo_respuesta = 401;
+            response = "Entrada Repetida"; 
+            
         }
         
 

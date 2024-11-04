@@ -14,8 +14,8 @@ public interface IDAO <T> {
     
     public void create(T obj) throws Exception;
     public T read(T obj) throws Exception;
-    public void update(T obj) throws Exception;
-    public void delete(T obj) throws Exception;
+    public void update(T obj, String key) throws Exception;
+    public void delete(String key) throws Exception;
     public ArrayList<T> list() throws Exception;
     
 }

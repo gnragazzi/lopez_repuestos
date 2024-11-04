@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package IDaoImpl;
 
 import Clases.Camion;
@@ -19,10 +15,6 @@ import java.sql.Statement;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
-/**
- *
- * @author clauz
- */
 public class ViajeDAOImpl implements IDAO<Viaje> {
 
     private Connection conexion;
@@ -49,15 +41,7 @@ public class ViajeDAOImpl implements IDAO<Viaje> {
         envioViaje.executeUpdate();
     }
 
-    @Override
-    public void delete(Viaje viaje) throws Exception {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
 
-    @Override
-    public void update(Viaje viaje) throws Exception {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
 
     @Override
     public ArrayList<Viaje> list() throws Exception {
@@ -132,5 +116,15 @@ public class ViajeDAOImpl implements IDAO<Viaje> {
         }
         
         return respuesta;
+    }
+
+    @Override
+    public void update(Viaje obj, String key) throws Exception {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    @Override
+    public void delete(String key) throws Exception {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 }

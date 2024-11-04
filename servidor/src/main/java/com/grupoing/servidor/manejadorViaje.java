@@ -60,7 +60,7 @@ public class manejadorViaje extends Manejador {
             // al camión recuperado, le sumamos los kilometros realizados en el viaje
             camion.setKilometraje(camion.getKilometraje() + kilometros_realizados);
             CamionDAOImpl camionDAO= new CamionDAOImpl();
-            camionDAO.update(camion);
+            camionDAO.update(camion, camion.getPatente()); 
             String destino = jsonobj.getString("destino");
             int peso = jsonobj.getInt("peso");
 
