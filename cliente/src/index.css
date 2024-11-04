@@ -243,10 +243,23 @@ body{
 
 .contenedor__pasto{
   height: 16px;
+  width: 200%;
   position: absolute;
   top: 9px;
   z-index: 0;
   overflow: hidden;
+  animation: moverPasto 0.5s linear infinite;
+}
+
+@keyframes moverPasto {
+
+  0%{
+    transform: translateX(0%);
+  }
+  100%{
+    transform: translateX(-10%);
+  }
+  
 }
 
 .pasto{

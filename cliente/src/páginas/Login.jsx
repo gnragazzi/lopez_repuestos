@@ -63,7 +63,7 @@ const Login = () => {
 
               </div>
               <div className="contenedor__pasto">
-               {Array.from({ length: 81 }).map((_, index) => (
+               {Array.from({ length: 120 }).map((_, index) => (
                   <GiGrass key={index} className="pasto" />
                 ))}
               </div>
