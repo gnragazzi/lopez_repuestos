@@ -8,6 +8,7 @@ import Clases.Chofer;
 import Conexion.Conexion;
 import InterfacesDAO.IDAO;
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
@@ -23,7 +24,26 @@ public class ChoferDAOImpl implements IDAO<Chofer>{
 
     
     public void create(Chofer obj) throws Exception {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+         PreparedStatement envioChofer;
+         //**** PREGUNTAR SI LO CORRECTO ES DAR EL ALTA EN EMPLEADOS DE LA TABLA EMPLEADOS Y EL ALTA DE CHOFERES EN EL DAO CHOFERES ****//
+         // ALTA EN Empleados
+         envioChofer = conexion.prepareStatement("INSERT INTO Empleados(DNI, CUIL, Nombre, Apellido, Domicilio, Fecha_Nacimiento, Telefono, Es_Mec_Chof) " 
+                 + "value(?,?,?,?,?,?,?,?);");
+         envioChofer.setString(1, obj.getDni());
+         envioChofer.setString(2, obj.getCuil());
+         envioChofer.setString(3, obj.getNombre());
+         envioChofer.setString(4, obj.getApellido());
+         envioChofer.setString(5, obj.getDomicilio());
+         envioChofer.setString(6, String.valueOf(obj.getFecha_nacimiento()));
+         envioChofer.setString(7, obj.getTelefono());
+         envioChofer.setString(8,"Chofer");
+         envioChofer.executeUpdate();
+         //ALTA EN Choferes
+         envioChofer = conexion.prepareStatement("INSERT INTO Choferes(Fecha_Psicotecnico, Empleados_DNI) "
+                 + "value(?,?);");
+         envioChofer.setString(1, obj.getFecha_psicotecnico().toString());
+         envioChofer.setString(2, obj.getDni());
+         envioChofer.execute();
     }
 
     public Chofer read(Chofer obj) throws Exception {
