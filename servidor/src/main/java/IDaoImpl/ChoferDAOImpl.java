@@ -55,7 +55,15 @@ public class ChoferDAOImpl implements IDAO<Chofer>{
     }
 
     public void delete(Chofer obj) throws Exception {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        //BAJA DE TABLA Choferes
+        PreparedStatement bajaChofer = conexion.prepareStatement("DELETE FROM Choferes WHERE Choferes.Empleados_DNI=?;");
+        bajaChofer.setString(1, obj.getDni());
+        bajaChofer.execute();
+         
+        //BAJA DE TABLA Empleados
+        bajaChofer = conexion.prepareStatement("DELETE FROM Empleados WHERE Empleados.DNI=?;");
+        bajaChofer.setString(1, obj.getDni());
+        bajaChofer.execute();
     }
 
     
