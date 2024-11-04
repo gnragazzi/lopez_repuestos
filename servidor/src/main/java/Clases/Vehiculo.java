@@ -12,16 +12,16 @@ public abstract class  Vehiculo {
 	@JsonProperty("tarjeta_ruta")
     private Tarjeta_Ruta tarjeta_ruta;
 	@JsonProperty("seguro")
-    private Seguro seguro;
+    private ArrayList<Seguro> seguro;
 	@JsonProperty("tecnica")
-    private Tecnica tecnica;
+    private ArrayList<Tecnica> tecnica;
 	@JsonProperty("mantenimiento")
     private ArrayList<Mantenimiento> mantenimiento;
 
     public Vehiculo() {
     }
 
-    public Vehiculo(String marca, String patente, Seguro seguro, Tarjeta_Ruta tarjeta_ruta, Tecnica tecnica, ArrayList<Mantenimiento> mantenimiento) {
+    public Vehiculo(String marca, String patente, ArrayList<Seguro> seguro, Tarjeta_Ruta tarjeta_ruta, ArrayList<Tecnica> tecnica, ArrayList<Mantenimiento> mantenimiento) {
         this.marca = marca;
         this.patente = patente;
         this.seguro = seguro;
@@ -50,11 +50,11 @@ public abstract class  Vehiculo {
         return tarjeta_ruta;
     }
 
-    public Seguro getSeguro() {
+    public ArrayList<Seguro> getSeguro() {
         return seguro;
     }
 
-    public Tecnica getTecnica() {
+    public ArrayList<Tecnica> getTecnica() {
         return tecnica;
     }
 
@@ -62,11 +62,11 @@ public abstract class  Vehiculo {
         this.tarjeta_ruta = tarjeta_ruta;
     }
 
-    public void setSeguro(Seguro seguro) {
+    public void setSeguro(ArrayList<Seguro> seguro) {
         this.seguro = seguro;
     }
 
-    public void setTecnica(Tecnica tecnica) {
+    public void setTecnica(ArrayList<Tecnica> tecnica) {
         this.tecnica = tecnica;
     }
 

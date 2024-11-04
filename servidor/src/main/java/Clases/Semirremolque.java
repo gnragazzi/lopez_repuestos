@@ -24,7 +24,7 @@ public class Semirremolque extends Vehiculo{
 
 
 
-    public Semirremolque(String marca, String patente, Seguro seguro, Tarjeta_Ruta tarjeta_ruta, Tecnica tecnica,
+    public Semirremolque(String marca, String patente, ArrayList<Seguro> seguro, Tarjeta_Ruta tarjeta_ruta, ArrayList<Tecnica> tecnica,
             ArrayList<Mantenimiento> mantenimiento, String tipo, String carga, ArrayList<Viaje> viaje) {
         super(marca, patente, seguro, tarjeta_ruta, tecnica, mantenimiento);
         this.tipo = tipo;

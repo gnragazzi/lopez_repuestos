@@ -8,6 +8,7 @@ import Clases.Seguro;
 import Conexion.Conexion;
 import InterfacesDAO.IDAO;
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.util.ArrayList;
 
 /**
@@ -23,7 +24,18 @@ public class SeguroDAOImpl implements IDAO<Seguro>{
     }
     @Override
     public void create(Seguro seguro) throws Exception {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        
+        PreparedStatement envioSeguro;
+        envioSeguro = conexion.prepareStatement("insert into Seguro(Fecha_emision, Fecha_vencimiento, Pago, Tipo, Nombre_aseguradora) "
+                + "value ( ? , ? , ? , ? , ?);");
+        envioSeguro.setString(1,String.valueOf(seguro.getFecha_emision()));
+        envioSeguro.setString(2,String.valueOf(seguro.getFecha_vencimiento()));
+        envioSeguro.setFloat(3, seguro.getPago());
+        envioSeguro.setString(4, seguro.getTipo());
+        envioSeguro.setString(5, seguro.getNombre_aseguradora());
+
+        envioSeguro.executeUpdate();
+        
     }
 
     @Override
