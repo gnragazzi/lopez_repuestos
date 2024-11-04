@@ -14,7 +14,7 @@ public class Conexion {
     //Connection conexion = Conexion.getInstancia().getConexion();
     //A la hora de cerrar la conexion se hace:
     //Conexion.getInstancia().cerrarConexion();
-    private Conexion() throws ClassNotFoundException {
+    Conexion() throws ClassNotFoundException {
         String url = Credenciales.getUrl();
         String usuario = Credenciales.getUsuario();
         String  contraseña= Credenciales.getContraseña();

@@ -1,6 +1,11 @@
 import axios from "axios";
 import { useContextoGlobal } from "../Contexto";
 import { useNavigate, useLocation, Navigate } from "react-router-dom";
+import lopez from "../assets/iconos_lopez/icono_empresa.png";
+import { FaTruck } from "react-icons/fa";
+import { FaTree } from "react-icons/fa";
+import camion from "../assets/iconos_lateral/camion.gif";
+
 
 const Login = () => {
   const { auth, setAuth } = useContextoGlobal();
@@ -21,9 +26,48 @@ const Login = () => {
   };
   if (!auth)
     return (
-      <div>
-        <h1>Login</h1>
-        <button onClick={manejarLogin}>Login</button>
+      <div className="contenedorlogin">
+        <div className="login">
+          <div className="login__descripcion">
+          </div>
+          <div className="login__formulario">
+            <div className="icono__formulario">
+              <img src={lopez} alt="icono de la empresa" />
+            </div>
+            <h2>Login</h2>
+            <div className="formulario__input">
+              <form action="">
+                <fieldset>
+                  <legend>Usuario</legend>
+                  <input type="text" name="usuario" id="usuario" placeholder="admin"/>
+                </fieldset>
+
+                <fieldset>
+                  <legend>Contraseña</legend>
+                  <input type="password" name="contrasena" id="contrasena" 
+                  placeholder="1234"/>
+                </fieldset>
+
+                <button onClick={manejarLogin}>Iniciar Sesión</button>
+
+                <a href="#">¿Has olvidado la contraseña?</a>
+              </form>
+            </div>
+            <div className="contenedor__camion">
+              <div className="camion__imagen">
+                <img src={camion} className="camion"/>
+                <div className="contenedor__arboles">
+                    <FaTree className="arboles"/>
+                    <FaTree className="arboles"/>
+
+                </div>
+
+              </div>
+              <div className="camion__piso">a</div>
+            </div>
+          </div>
+
+        </div>
       </div>
     );
   else return <Navigate to={"/"} state={{ from: localizacion }} replace />;
