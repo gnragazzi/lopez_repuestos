@@ -3,8 +3,6 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package control_acceso;
-import Clases.Camion;
-import Conexion.Conexion;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.nio.charset.StandardCharsets;
@@ -12,8 +10,6 @@ import Conexion.ConexionLogin;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.Statement;
-import java.util.Random;
 
 
 //aca tenemos que poner que implementa la intefaz DAO

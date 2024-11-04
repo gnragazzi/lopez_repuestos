@@ -13,7 +13,7 @@ import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class manejadorAuth extends Manejador {
+public class manejadorAuth implements HttpHandler {
 
     ControlAcceso ca;
         

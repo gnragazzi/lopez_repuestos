@@ -2,7 +2,6 @@ import axios from "axios";
 import { useContextoGlobal } from "../Contexto";
 import { useNavigate, useLocation, Navigate } from "react-router-dom";
 import lopez from "../assets/iconos_lopez/icono_empresa.png";
-import { FaTruck } from "react-icons/fa";
 import { FaTree } from "react-icons/fa";
 import camion from "../assets/iconos_lateral/camion.gif";
 import { GiGrass } from "react-icons/gi";
