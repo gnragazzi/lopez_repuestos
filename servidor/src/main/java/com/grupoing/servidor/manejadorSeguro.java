@@ -51,8 +51,9 @@ public class manejadorSeguro extends Manejador {
             float pago = (float) jsonobj.getDouble("pago");
             String tipo = jsonobj.getString("tipo");
             String nombre_aseguradora = jsonobj.getString("nombre_aseguradora");
+            String vehiculo = jsonobj.getString("vehiculo");
             
-            Seguro aux= new Seguro(fecha_emision, fecha_vencimiento, nombre_aseguradora, pago, tipo);
+            Seguro aux= new Seguro(fecha_emision, fecha_vencimiento, nombre_aseguradora, pago, tipo, vehiculo);
             
             seguroDAO.create(aux);
 
