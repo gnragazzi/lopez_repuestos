@@ -139,7 +139,7 @@ const CargarMantenimiento = () => {
         setError(error.message);
       });
     axiosPrivado
-      .get("/empleados?tipo=mecánico")
+      .get("/empleados?tipo=mecánico&activo=true")
       .then((res) => {
         setCargando(false);
         dispatch({ type: CARGAR_LISTA_MECÁNICOS, payload: res.data });
