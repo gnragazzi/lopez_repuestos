@@ -6,31 +6,60 @@ import com.fasterxml.jackson.databind.ObjectWriter;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 import control_acceso.ControlAcceso;
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.UnsupportedEncodingException;
 import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 public class manejadorAuth implements HttpHandler {
 
-    ControlAcceso ca;
-        
-    
+    ControlAcceso ca = new ControlAcceso();
+
     @Override
-    public void handle(HttpExchange he) throws IOException{
-        
-        String usuario, contrasena;
-        usuario = obtenerParámetros(he.getRequestURI(), "usuario");
-        contrasena = obtenerParámetros (he.getRequestURI(), "contrasena");
-        
+    public void handle(HttpExchange he) throws IOException {
+         System.out.println(he.getRequestBody().toString());
+        String usuario = "", contrasena = "";
+
+        //USAR EL InputStreamReadr NOS PERMITE PARSEAR EL CUERPO DEL POST
+        InputStreamReader isr = new InputStreamReader(he.getRequestBody(), "utf-8");
+        BufferedReader br = new BufferedReader(isr);
+        int b;
+        StringBuilder buf = new StringBuilder(512);
+        while ((b = br.read()) != -1) {
+            buf.append((char) b);
+        }
+        br.close();
+        isr.close();
+
         try {
-            if(ca.readUser(usuario)!= 1)
+            JSONObject jsonobj = new JSONObject(buf.toString());
+
+            usuario = jsonobj.getString("usuario");
+            contrasena = jsonobj.getString("contrasena");
+
+            System.out.println("usuario " + usuario + "contrasena " + contrasena);
+
+            he.getResponseHeaders().add("Access-Control-Allow-Origin", "http://localhost:5173");
+            he.getResponseHeaders().add("Access-Control-Allow-Credentials", "true");
+
+            if (he.getRequestMethod().equalsIgnoreCase("OPTIONS")) {
+                he.getResponseHeaders().add("Access-Control-Allow-Methods", "GET, OPTIONS");
+                he.getResponseHeaders().add("Access-Control-Allow-Headers", "Content-Type,Authorization");
+                he.sendResponseHeaders(204, -1);
+                return;
+            }
+
+            if (ca.readUser(usuario) != 1) {
                 ca.create(usuario, contrasena); //los creo ya que necesitamos implementar una forma para insertar los usuarios y contrasenas
-            
-            if(ca.read(usuario, contrasena)==1){
-                
+            }
+            if (ca.read(usuario, contrasena) == 1) {
+
                 String jwtToken = Autorización.nuevoTokenDeAcceso();
 
                 //REFRESH TOKEN
@@ -41,15 +70,6 @@ public class manejadorAuth implements HttpHandler {
                 String origin = he.getRequestHeaders().get("Origin").get(0);
                 System.out.println(origin); 
                  */
-                he.getResponseHeaders().add("Access-Control-Allow-Origin", "http://localhost:5173");
-                he.getResponseHeaders().add("Access-Control-Allow-Credentials", "true");
-
-                if (he.getRequestMethod().equalsIgnoreCase("OPTIONS")) {
-                    he.getResponseHeaders().add("Access-Control-Allow-Methods", "GET, OPTIONS");
-                    he.getResponseHeaders().add("Access-Control-Allow-Headers", "Content-Type,Authorization");
-                    he.sendResponseHeaders(204, -1);
-                    return;
-                }
 
                 ObjectWriter ow = new ObjectMapper().writer().withDefaultPrettyPrinter();
                 Respuesta obRespuesta = new Respuesta("Login", jwtToken);
@@ -59,24 +79,19 @@ public class manejadorAuth implements HttpHandler {
                 OutputStream os = he.getResponseBody();
                 os.write(response.getBytes());
                 os.close();
-            }      
-        } 
-        catch (ClassNotFoundException ex) {
-            Logger.getLogger(manejadorAuth.class.getName()).log(Level.SEVERE, null, ex);
+            } else {
+                String response = "Error, usuario no registrado";
+                he.getResponseHeaders().add("Content-Type", "application/json");
+                he.sendResponseHeaders(404, response.getBytes().length);
+                OutputStream os = he.getResponseBody();
+                os.write(response.getBytes());
+                os.close();
+            }
+
+        } catch (Exception ex) {
+            System.out.println(ex.getMessage());
         }
     }
-
-    @Override
-    protected String manejarGet(HttpExchange he) throws UnsupportedEncodingException, JsonProcessingException, ClassNotFoundException, Exception {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
-
-    @Override
-    protected String manejarPost(HttpExchange he) throws UnsupportedEncodingException, JsonProcessingException, ClassNotFoundException, Exception {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
-    
-    
 
     private class Respuesta {
 

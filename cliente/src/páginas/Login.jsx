@@ -5,16 +5,21 @@ import lopez from "../assets/iconos_lopez/icono_empresa.png";
 import { FaTree } from "react-icons/fa";
 import camion from "../assets/iconos_lateral/camion.gif";
 import { GiGrass } from "react-icons/gi";
+import { useState } from "react";
 
 const Login = () => {
   const { auth, setAuth } = useContextoGlobal();
   const navegar = useNavigate();
   const localizacion = useLocation();
   const from = localizacion.state?.from?.pathname || "/";
+  const [usuario, setUsuario] = useState("");
+  const [contrasena, setContrasena] = useState("");
 
-  const manejarLogin = () => {
+  const manejarLogin = (e) => {
+    e.preventDefault();
+
     axios
-      .get("http://localhost:8080/auth", { withCredentials: true })
+      .post("http://localhost:8080/auth", { usuario , contrasena }, {headers: {"Content-Type": "application/json"}})
       .then((res) => {
         const { token } = res.data;
         //sessionStorage.setItem("jwt", token);
@@ -27,8 +32,7 @@ const Login = () => {
     return (
       <div className="contenedorlogin">
         <div className="login">
-          <div className="login__descripcion">
-          </div>
+          <div className="login__descripcion"></div>
           <div className="login__formulario">
             <div className="icono__formulario">
               <img src={lopez} alt="icono de la empresa" />
@@ -38,13 +42,30 @@ const Login = () => {
               <form action="">
                 <fieldset>
                   <legend>Usuario</legend>
-                  <input type="text" name="usuario" id="usuario" placeholder="admin"/>
+                  <input
+                    type="text"
+                    name="usuario"
+                    id="usuario"
+                    placeholder="admin"
+                    value={usuario}
+                    onChange={(e) => {
+                      setUsuario(e.target.value); 
+                    }}
+                  />
                 </fieldset>
 
                 <fieldset>
                   <legend>Contraseña</legend>
-                  <input type="password" name="contrasena" id="contrasena" 
-                  placeholder="1234"/>
+                  <input
+                    type="password"
+                    name="contrasena"
+                    id="contrasena"
+                    placeholder="1234"
+                    value={contrasena}
+                    onChange={(e) => {
+                      setContrasena(e.target.value);
+                    }}
+                  />
                 </fieldset>
 
                 <button onClick={manejarLogin}>Iniciar Sesión</button>
@@ -54,22 +75,20 @@ const Login = () => {
             </div>
             <div className="contenedor__camion">
               <div className="camion__imagen">
-                <img src={camion} className="camion"/>
+                <img src={camion} className="camion" />
                 <div className="contenedor__arboles">
-                    <FaTree className="arboles"/>
-                    <FaTree className="arboles"/>
+                  <FaTree className="arboles" />
+                  <FaTree className="arboles" />
                 </div>
-
               </div>
               <div className="contenedor__pasto">
-               {Array.from({ length: 120 }).map((_, index) => (
+                {Array.from({ length: 120 }).map((_, index) => (
                   <GiGrass key={index} className="pasto" />
                 ))}
               </div>
               <div className="camion__piso">a</div>
             </div>
           </div>
-
         </div>
       </div>
     );

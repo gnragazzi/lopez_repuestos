@@ -68,7 +68,7 @@ public class ControlAcceso {
         try{
             conectarBD();
             String hash = sha256(contrasena);
-            PreparedStatement insertar = conexion.prepareStatement("insert (nombre,contrasena) into usuarios value (?, ?);");
+            PreparedStatement insertar = conexion.prepareStatement("insert into usuarios(nombre,contrasena) value (? , ?);");
             insertar.setString(1, nombre);
             insertar.setString(2, hash);
             insertar.executeUpdate();
