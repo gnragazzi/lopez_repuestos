@@ -41,22 +41,23 @@ public class ControlAcceso {
     }
     
     
-    public int read(String nombre, String contrasena) throws ClassNotFoundException{
+    public boolean read(String nombre, String contrasena) throws ClassNotFoundException{
         try{
             conectarBD();
-            PreparedStatement loguear= conexion.prepareStatement("select contrasena from usuarios where nombre=?");
-            loguear.setString(1,contrasena.toString());
+            PreparedStatement loguear= conexion.prepareStatement("select contrasena from usuarios where nombre = ?");
+            loguear.setString(1,nombre);
             ResultSet rs = loguear.executeQuery();
-       
+            
             if(rs.next()){
                 String hash= sha256(contrasena);
-                if(hash == rs.toString())
-                    return 1;
+                if(hash.equals(rs.getString(1)))
+                    return true;
                 else
-                    return -1;
+                    return false;
             }
             
-            return -1;
+            
+            return false;
             
         }
         catch(Exception e){
@@ -78,22 +79,25 @@ public class ControlAcceso {
         }
     }
     
-    public int readUser(String nombre) throws ClassNotFoundException{
+    public boolean readUser(String nombre) throws ClassNotFoundException{
         try{
             conectarBD();
             PreparedStatement loguear= conexion.prepareStatement("select nombre from usuarios where nombre=?");
             loguear.setString(1,nombre.toString());
             ResultSet rs = loguear.executeQuery();
-       
+            
+                 
             if(rs.next())
-                return 1;
+                return true;
             else
-                return -1;
+                return false;
             
         }
         catch(Exception e){
-            throw new RuntimeException(e);
+            System.out.println(e.toString());   
+            return false;
         }
+        
     }
         
     /*  

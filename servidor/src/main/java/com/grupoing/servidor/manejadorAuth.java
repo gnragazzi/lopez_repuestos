@@ -23,8 +23,17 @@ public class manejadorAuth implements HttpHandler {
 
     @Override
     public void handle(HttpExchange he) throws IOException {
-         System.out.println(he.getRequestBody().toString());
         String usuario = "", contrasena = "";
+
+        he.getResponseHeaders().add("Access-Control-Allow-Origin", "http://localhost:5173");
+        he.getResponseHeaders().add("Access-Control-Allow-Credentials", "true");
+
+        if (he.getRequestMethod().equalsIgnoreCase("OPTIONS")) {
+            he.getResponseHeaders().add("Access-Control-Allow-Methods", "GET, OPTIONS");
+            he.getResponseHeaders().add("Access-Control-Allow-Headers", "Content-Type,Authorization");
+            he.sendResponseHeaders(204, -1);
+            return;
+        }
 
         //USAR EL InputStreamReadr NOS PERMITE PARSEAR EL CUERPO DEL POST
         InputStreamReader isr = new InputStreamReader(he.getRequestBody(), "utf-8");
@@ -43,23 +52,14 @@ public class manejadorAuth implements HttpHandler {
             usuario = jsonobj.getString("usuario");
             contrasena = jsonobj.getString("contrasena");
 
-            System.out.println("usuario " + usuario + "contrasena " + contrasena);
 
-            he.getResponseHeaders().add("Access-Control-Allow-Origin", "http://localhost:5173");
-            he.getResponseHeaders().add("Access-Control-Allow-Credentials", "true");
-
-            if (he.getRequestMethod().equalsIgnoreCase("OPTIONS")) {
-                he.getResponseHeaders().add("Access-Control-Allow-Methods", "GET, OPTIONS");
-                he.getResponseHeaders().add("Access-Control-Allow-Headers", "Content-Type,Authorization");
-                he.sendResponseHeaders(204, -1);
-                return;
-            }
-
-            if (ca.readUser(usuario) != 1) {
+            if (ca.readUser(usuario) == false) {
                 ca.create(usuario, contrasena); //los creo ya que necesitamos implementar una forma para insertar los usuarios y contrasenas
             }
-            if (ca.read(usuario, contrasena) == 1) {
-
+            
+            if (ca.read(usuario, contrasena) == true) {
+                
+                        
                 String jwtToken = Autorización.nuevoTokenDeAcceso();
 
                 //REFRESH TOKEN
@@ -82,7 +82,7 @@ public class manejadorAuth implements HttpHandler {
             } else {
                 String response = "Error, usuario no registrado";
                 he.getResponseHeaders().add("Content-Type", "application/json");
-                he.sendResponseHeaders(404, response.getBytes().length);
+                he.sendResponseHeaders(405, response.getBytes().length);
                 OutputStream os = he.getResponseBody();
                 os.write(response.getBytes());
                 os.close();
