@@ -2,53 +2,32 @@ import { useEffect, useState } from "react";
 import { useContextoGlobal } from "../../Contexto";
 import useAxiosPrivado from "../../utilidades/useAxiosPrivado";
 
-const Costos_2 = () => {
+const Cargar_2 = () => {
   const [cargando, setCargando] = useState(false);
   const [error, setError] = useState("");
   const axiosPrivado = useAxiosPrivado();
   const {
-    acciones_camiones: { CARGAR_COSTO },
+    acciones_camiones: { CARGAR_TECNICA },
     dispatch_camiones: dispatch,
-    estado_camiones: {
-      lista_camiones,
-      camion_seleccionado,
-      mes_costo,
-      año_costo,
-      costos: {
-        costo_repuestos,
-        cost_mano_de_obra,
-        costo_combustible,
-        kilometros_realizados,
-        costos_por_kilometros,
-      },
-    },
+    estado_camiones: estado,
   } = useContextoGlobal();
   useEffect(() => {
     setError("");
     setCargando(true);
     axiosPrivado
-      .get(
-        `/vehiculos?costos=${año_costo}-${
-          mes_costo + 1 < 10 ? "0" + (mes_costo + 1) : mes_costo + 1
-        }&patente=${camion_seleccionado}`
-      )
+      .post("/tecnica?tipo=camion", estado_camiones)
       .then((res) => {
         const {
-          cost_mano_de_obra,
-          costo_combustible,
-          costo_repuestos,
-          costos_por_kilometros,
-          kilometros_realizados,
+          fecha_emision,
+          fecha_vencimiento,
+          ubicacion,
         } = res.data;
-
         dispatch({
-          type: CARGAR_COSTO,
+          type: CARGAR_TECNICA,
           payload: {
-            cost_mano_de_obra,
-            costo_combustible,
-            costo_repuestos,
-            costos_por_kilometros,
-            kilometros_realizados,
+            fecha_emision,
+            fecha_vencimiento,
+            ubicacion,
           },
         });
         setCargando(false);
@@ -59,11 +38,11 @@ const Costos_2 = () => {
         setError(error.message);
       });
   }, [
-    CARGAR_COSTO,
-    año_costo,
-    camion_seleccionado,
+    CARGAR_TECNICA,
     dispatch,
-    mes_costo,
+    fecha_emision,
+    fecha_vencimiento,
+    ubicacion,
     axiosPrivado,
   ]);
   if (cargando) {
@@ -79,30 +58,15 @@ const Costos_2 = () => {
       <div className="App formulario">
         <h2>Confirme Selección</h2>
         <div className="confirmar__seleccion">
-          {lista_camiones.map((v) => {
-            return (
-              camion_seleccionado == v.patente && (
-                <div key={v.patente}>
-                  <h4>Camión:</h4>
-                  <p>
-                    Marca: {v.marca} | Patente {v.patente}
-                  </p>
-                </div>
-              )
-            );
-          })}
           <h4>
-            Datos del período {mes_costo + 1}-{año_costo}:
+            Datos de la técnica
           </h4>
-          <p>Kilometros Realizados: {kilometros_realizados}km</p>
-          <p>Costo total de Combustible: ${costo_combustible}</p>
-          <p>Costo total por mano de obra: ${cost_mano_de_obra}</p>
-          <p>Costo total por repuestos: ${costo_repuestos}</p>
-          <br />
-          <p>Costo Por Kilómetro: ${costos_por_kilometros}/km</p>
+          <p>Fecha de emisión: ${fecha_emision}</p>
+          <p>Fecha de vencimiento: ${fecha_vencimiento}</p>
+          <p>Ubicación: ${ubicacion}</p>
         </div>
       </div>
     );
 };
 
-export default Costos_2;
+export default Cargar_2;

@@ -10,21 +10,21 @@ const Cargar_tecnica = () => {
     dispatch_camiones: dispatch,
     estado_camiones: estado,
   } = useContextoGlobal();
-  const { PROXIMA_PAGINA_CARGAR, ANTERIOR_PAGINA_CARGAR } = acciones;
-  const { pagina_cargar } = estado;
+  const { PROXIMA_PAGINA_TECNICA, ANTERIOR_PAGINA_TECNICA } = acciones;
+  const { pagina_tecnica } = estado;
   return (
     <>
       <div className="App formulario">
         {/* PÁGINAS */}
-        {pagina_cargar == 0 && <Cargar_1 />}
-        {pagina_cargar == 1 && <Cargar_2 />}
+        {pagina_tecnica == 0 && <Cargar_1 />}
+        {pagina_tecnica == 1 && <Cargar_2 />}
 
         {/* BOTONERA */}
         <div className="botonera_formulario">
           {
             <button
               className={`formulario__boton ${
-                pagina_costos == 0 ? "volver" : "siguiente"
+                pagina_tecnica == 0 ? "volver" : "siguiente"
               }`}
               onClick={() => navegar("/vehículos/camiones")}
             >
@@ -36,7 +36,7 @@ const Cargar_tecnica = () => {
               className="formulario__boton volver"
               onClick={() =>
                 dispatch({
-                  type: ANTERIOR_PAGINA_CARGAR,
+                  type: ANTERIOR_PAGINA_TECNICA,
                   payload: {
                     /* acá iría el arreglo de comprobación*/
                   },
@@ -50,7 +50,7 @@ const Cargar_tecnica = () => {
             <button
               className="formulario__boton siguiente"
               onClick={() => {
-                dispatch({ type: PROXIMA_PAGINA_CARGAR });
+                dispatch({ type: PROXIMA_PAGINA_TECNICA });
               }}
             >
               Siguiente

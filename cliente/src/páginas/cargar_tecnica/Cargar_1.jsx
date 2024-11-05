@@ -2,76 +2,67 @@ import { useContextoGlobal } from "../../Contexto";
 
 const Cargar_1 = () => {
   const {
-    acciones_camiones: { SELECCIONAR_MES, SELECCIONAR_AÑO },
+    acciones_camiones: {
+      SELECCIONAR_FECHA_EMISION,
+      SELECCIONAR_FECHA_VENCIMIENTO,
+      SELECCIONAR_UBICACION,
+    },
     dispatch_camiones: dispatch,
     estado_camiones: estado,
   } = useContextoGlobal();
-  const meses = [
-    "enero",
-    "febrero",
-    "marzo",
-    "abril",
-    "mayo",
-    "junio",
-    "julio",
-    "agosto",
-    "septiembre",
-    "octubre",
-    "noviembre",
-    "diciembre",
-  ];
-  const años = Array.from({ length: 20 }, (_, i) => 2024 - i);
+
   return (
     <>
-      <h2>Seleccione la Fecha:</h2>
+      <h2>Cargar Técnica</h2>
       <form className="form-table form__mantenimiento">
         <fieldset className="form__items-mantenimiento">
-          <legend className="form__legend">Mes</legend>
-          <select
-            className="items__input"
-            id="mes"
-            name="mes"
-            value={meses[estado.mes_costo]}
+          <legend className="form__legend">Fecha emisión</legend>
+          <input
+            type="date"
+            name="fecha_emision"
+            id="fecha_emision"
+            value={estado_camiones.fecha_emision}
             onChange={(e) => {
               dispatch({
-                type: SELECCIONAR_MES,
-                payload: meses.indexOf(e.target.value),
-              });
-            }}
-          >
-            {meses.map((mes, i) => {
-              return (
-                <option key={i} value={mes}>
-                  {mes}
-                </option>
-              );
-            })}
-          </select>
-        </fieldset>
-
-        <fieldset className="form__items-mantenimiento">
-          <legend className="form__legend">Año</legend>
-          <select
-            className="items__input"
-            id="año"
-            name="año"
-            value={estado.año_costo}
-            onChange={(e) => {
-              dispatch({
-                type: SELECCIONAR_AÑO,
+                type: SELECCIONAR_FECHA_EMISION,
                 payload: e.target.value,
               });
             }}
-          >
-            {años.map((año) => {
-              return (
-                <option key={año} value={año}>
-                  {año}
-                </option>
-              );
-            })}
-          </select>
+          />
         </fieldset>
+
+        <fieldset className="form__items-mantenimiento">
+          <legend className="form__legend">Fecha vencimiento</legend>
+          <input
+            type="date"
+            name="fecha_vencimiento"
+            id="fecha_vencimiento"
+            value={estado_camiones.fecha_vencimiento}
+            onChange={(e) => {
+              dispatch({
+                type: SELECCIONAR_FECHA_VENCIMIENTO,
+                payload: e.target.value,
+              });
+            }}
+          />
+        </fieldset>
+
+        <fieldset className="form__items-mantenimiento">
+          <legend className="form__legend">Ubicación</legend>
+          <input
+            type="text"
+            name="ubicacion"
+            id="ubicacion"
+            value={estado_camiones.ubicacion}
+            onChange={(e) => {
+              dispatch({
+                type: SELECCIONAR_UBICACION,
+                payload: e.target.value,
+              });
+            }}
+          />
+        </fieldset>
+
       </form>
     </>
   );
