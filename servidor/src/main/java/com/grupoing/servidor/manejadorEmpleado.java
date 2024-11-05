@@ -15,8 +15,10 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class manejadorEmpleado extends Manejador {
+
     ChoferDAOImpl choferDAO;
     MecanicoDAOImpl mecánicoDao;
+
     public manejadorEmpleado() {
         try {
             choferDAO = new ChoferDAOImpl();
@@ -30,22 +32,40 @@ public class manejadorEmpleado extends Manejador {
 
         String tipo = obtenerParámetros(he.getRequestURI(), "tipo");
 
+        String esActivo = obtenerParámetros(he.getRequestURI(), "activo");
+
         ArrayList<Empleado> empleados = new ArrayList<>();
         if (tipo == null) {
             //Es decir, en este caso no se quiso acceder a ningún tipo de empleado en particular, y se busca choferes y mecánicos por igual
             throw new Exception(); // TODAVÍA NO ESTÁ IMPLEMENTADO
         } else if (tipo.equalsIgnoreCase("chofer")) {
-            
+
             Iterator<Chofer> iteratorChofer = choferDAO.list().iterator();
-            while (iteratorChofer.hasNext()) {
-                empleados.add(iteratorChofer.next());
+            if (esActivo == null) {
+                while (iteratorChofer.hasNext()) {
+                    empleados.add(iteratorChofer.next());
+                }
+            } else {
+                while (iteratorChofer.hasNext()) {
+                    Chofer temp = iteratorChofer.next();
+                    if(temp.getActivo() == Boolean.parseBoolean(esActivo))
+                       empleados.add(temp);
+                }
             }
 
         } else if (tipo.equalsIgnoreCase("mecánico")) {
-            
+
             Iterator<Mecanico> iteratorMecanico = mecánicoDao.list().iterator();
-            while (iteratorMecanico.hasNext()) {
-                empleados.add(iteratorMecanico.next());
+            if (esActivo == null) {
+                while (iteratorMecanico.hasNext()) {
+                    empleados.add(iteratorMecanico.next());
+                }
+            } else {
+                while (iteratorMecanico.hasNext()) {
+                    Mecanico temp = iteratorMecanico.next();
+                    if(temp.getActivo() == Boolean.parseBoolean(esActivo)) 
+                       empleados.add(temp);
+                }
             }
         } else {
             //entonces está intentando acceder a un tipo incorrecto, por lo que el mensaje de respuesta debería ser 404

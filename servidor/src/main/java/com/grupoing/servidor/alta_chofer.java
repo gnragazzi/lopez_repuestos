@@ -15,8 +15,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 public class alta_chofer implements HttpHandler { 
 
@@ -34,7 +32,7 @@ public class alta_chofer implements HttpHandler {
         String response = "Hola... Fue todo correcto";
         int codigo_respuesta = 200;
         
-        Chofer chofer = new Chofer(LocalDate.parse("2024-06-17"), null, "35703579", "2035503579-8", "Maria Laura", "Gimeno", "Aucklandville 123", LocalDate.parse("2004-03-14"), "351 7070709");
+        Chofer chofer = new Chofer(LocalDate.parse("2024-06-17"), null, "35703579", "2035503579-8", "Maria Laura", "Gimeno", "Aucklandville 123", LocalDate.parse("2004-03-14"), "351 7070709",true);
         
         try {
             ChoferDAOImpl cdi = new ChoferDAOImpl();

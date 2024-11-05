@@ -8,7 +8,7 @@ import com.grupoing.servidor.manejadorVehiculos;
 import java.sql.SQLException;
 
 public class Servidor {
-
+ 
     public static int port = 8080;
 
     public static void main(String[] args) throws IOException, SQLException, ClassNotFoundException, Exception {
@@ -28,6 +28,7 @@ public class Servidor {
         server.createContext("/alta_chofer", new alta_chofer());
         server.createContext("/baja_chofer", new baja_chofer()); 
         server.createContext("/update_chofer", new update_chofer()); 
+        server.createContext("/temp", new temp());
         server.setExecutor(null);
         server.start();
     }

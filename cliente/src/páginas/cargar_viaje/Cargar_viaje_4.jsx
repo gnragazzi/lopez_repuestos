@@ -36,7 +36,7 @@ const Cargar_viaje_3 = ({ dispatch, acciones, estado }) => {
     setErrorFetch("");
     setCargando(true);
     axiosPrivado
-      .get("/empleados?tipo=chofer")
+      .get("/empleados?tipo=chofer&activo=true")
       .then((res) => {
         setCargando(false);
         dispatch({

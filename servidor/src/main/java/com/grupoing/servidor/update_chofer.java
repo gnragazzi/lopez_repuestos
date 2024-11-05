@@ -33,7 +33,7 @@ public class update_chofer implements HttpHandler {
         int codigo_respuesta = 200;
         
         
-        Chofer chofer = new Chofer(LocalDate.parse("1918-09-24"), null, "35703579", "321-8", "Verónica", "Cortiñescas", "La patadita 321", LocalDate.parse("1985-12-24"), "2664 6");
+        Chofer chofer = new Chofer(LocalDate.parse("1918-09-24"), null, "35703579", "321-8", "Verónica", "Cortiñescas", "La patadita 321", LocalDate.parse("1985-12-24"), "2664 6",true);
         
         try {
             ChoferDAOImpl cdi = new ChoferDAOImpl();

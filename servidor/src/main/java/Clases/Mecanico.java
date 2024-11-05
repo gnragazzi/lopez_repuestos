@@ -7,8 +7,8 @@ public class Mecanico extends Empleado{
 
     private ArrayList<Mantenimiento> mantenimiento;
     
-    public Mecanico(String dni, String cuil, String nombre, String apellido, String domicilio, LocalDate fecha_nacimiento, String telefono, ArrayList<Mantenimiento> mantenimiento) {
-        super(dni, cuil, nombre, apellido, domicilio, fecha_nacimiento, telefono);
+    public Mecanico(String dni, String cuil, String nombre, String apellido, String domicilio, LocalDate fecha_nacimiento, String telefono, ArrayList<Mantenimiento> mantenimiento, Boolean activo) {
+        super(dni, cuil, nombre, apellido, domicilio, fecha_nacimiento, telefono, activo);
         this.mantenimiento=mantenimiento;
     }
 

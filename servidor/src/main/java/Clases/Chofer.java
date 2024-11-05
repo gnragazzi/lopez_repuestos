@@ -13,8 +13,8 @@ public class Chofer extends Empleado {
     private LocalDate fecha_psicotecnico;
     private ArrayList<Viaje> viaje;
 
-    public Chofer(LocalDate fecha_psicotecnico, ArrayList<Viaje> viaje, String dni, String cuil, String nombre, String apellido, String domicilio, LocalDate fecha_nacimiento, String telefono) {
-        super(dni, cuil, nombre, apellido, domicilio, fecha_nacimiento, telefono);
+    public Chofer(LocalDate fecha_psicotecnico, ArrayList<Viaje> viaje, String dni, String cuil, String nombre, String apellido, String domicilio, LocalDate fecha_nacimiento, String telefono, Boolean activo) {
+        super(dni, cuil, nombre, apellido, domicilio, fecha_nacimiento, telefono, activo);
         this.fecha_psicotecnico = fecha_psicotecnico;
         this.viaje = viaje;
     }

@@ -39,6 +39,7 @@ public class MecanicoDAOImpl implements IDAO<Mecanico>{
             mecanico.setDni(rs.getString("Dni"));
             mecanico.setNombre(rs.getString("Nombre"));
             mecanico.setApellido(rs.getString("Apellido"));
+            mecanico.setActivo(rs.getBoolean("EsActivo"));
             mecanicos.add(mecanico);
         }
         

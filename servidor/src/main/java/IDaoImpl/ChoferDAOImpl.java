@@ -101,6 +101,7 @@ public class ChoferDAOImpl implements IDAO<Chofer> {
             chofer.setNombre(rs.getString("Nombre"));
             chofer.setApellido(rs.getString("Apellido"));
             chofer.setTelefono(rs.getString("Telefono"));
+            chofer.setActivo(rs.getBoolean("EsActivo"));
             choferes.add(chofer);
         }
         return choferes;
