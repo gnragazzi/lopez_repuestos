@@ -87,12 +87,19 @@ function Camiones() {
                         >
                           Editar
                         </button>{" "}
-                        <button
-                          className="btn btn-danger"
-                          onClick={() => console.log("Eliminar:", elemento)}
+                        <Link
+                          rel="nofollow"
+                          to={"tecnica"}
+                          className="btn btn-primary"
+                          onClick={() =>
+                            dispatch({
+                              type: SELECCIONAR_CAMION,
+                              payload: elemento.patente,
+                            })
+                          }
                         >
-                          Eliminar
-                        </button>{" "}
+                          Tecnica
+                        </Link>
                         <Link
                           rel="nofollow"
                           to={"costos"}

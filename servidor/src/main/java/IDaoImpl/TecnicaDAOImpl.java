@@ -25,7 +25,7 @@ public class TecnicaDAOImpl implements IDAO<Tecnica>{
     @Override
     public void create(Tecnica tecnica) throws Exception {
         PreparedStatement envioTecnica;
-        envioTecnica = conexion.prepareStatement("insert into Tecnica(Fecha_emision, Fecha_vencimiento, Ubicacion, Vehiculo) "
+        envioTecnica = conexion.prepareStatement("insert into tecnicas(Fecha_emision, Fecha_vencimiento, Ubicacion, Vehiculo) "
                 + "value ( ? , ? , ? , ? );");
         envioTecnica.setString(1,String.valueOf(tecnica.getFecha_emision()));
         envioTecnica.setString(2,String.valueOf(tecnica.getFecha_vencimiento()));

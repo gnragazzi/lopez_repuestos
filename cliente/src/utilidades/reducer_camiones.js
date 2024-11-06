@@ -29,11 +29,8 @@ export const estadoInicial_camiones = {
   },
   tecnica: {
     fecha_emision: new Date().toISOString().substring(0, 10),
-    fecha_vencimiento: new Date().toISOString.substring(0, 10),
+    fecha_vencimiento: new Date().toISOString().substring(0, 10),
     ubicacion: "",
-    vehiculo: {
-      vehiculoSeleccionado: camion_seleccionado,
-    },
   },
   pagina_costos: 0,
   pagina_tecnica: 0,
@@ -73,7 +70,7 @@ export const reducer_camiones = (estado, accion) => {
     }
 
     case acciones_camiones.PROXIMA_PAGINA_TECNICA: {
-      if (pagina_tecnica == 0 || pagina_tecnica == 1) {
+      if (estado.pagina_tecnica == 0 || estado.pagina_tecnica == 1) {
         return { ...estado, pagina_tecnica: estado.pagina_tecnica + 1 };
       }
     }

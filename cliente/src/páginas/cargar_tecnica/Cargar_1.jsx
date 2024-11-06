@@ -21,6 +21,7 @@ const Cargar_1 = () => {
             type="date"
             name="fecha_emision"
             id="fecha_emision"
+            className="items__input"
             value={estado.fecha_emision}
             onChange={(e) => {
               dispatch({
@@ -37,6 +38,7 @@ const Cargar_1 = () => {
             type="date"
             name="fecha_vencimiento"
             id="fecha_vencimiento"
+            className="items__input"
             value={estado.fecha_vencimiento}
             onChange={(e) => {
               dispatch({
@@ -53,6 +55,7 @@ const Cargar_1 = () => {
             type="text"
             name="ubicacion"
             id="ubicacion"
+            className="items__input"
             value={estado.ubicacion}
             onChange={(e) => {
               dispatch({

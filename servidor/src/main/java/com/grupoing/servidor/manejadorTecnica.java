@@ -47,13 +47,18 @@ public class manejadorTecnica extends Manejador {
         }
         br.close();
         isr.close();
+        
+
         try {
             // CONVERTIR EL JSONString a JSONObject
-
+                  
             JSONObject jsonobj = new JSONObject(buf.toString());
-            String ubicacion = jsonobj.getString("ubicacion");
-            LocalDate fecha_emision = LocalDate.parse(jsonobj.getString("fecha_emision"));
-            LocalDate fecha_vencimiento = LocalDate.parse(jsonobj.getString("fecha_vencimiento"));
+            JSONObject tecnica = jsonobj.getJSONObject("tecnica");
+            LocalDate fecha_emision = LocalDate.parse(tecnica.getString("fecha_emision"));
+                    
+            LocalDate fecha_vencimiento = LocalDate.parse(tecnica.getString("fecha_vencimiento"));
+            String ubicacion = tecnica.getString("ubicacion");
+
 
             String tipo = obtenerParámetros(uri, "tipo");
 
@@ -69,10 +74,12 @@ public class manejadorTecnica extends Manejador {
                 throw new Exception();
             }
 
-            vehiculo.setPatente((String) jsonobj.getJSONObject("vehiculo").get("vehiculoSeleccionado"));
+            vehiculo.setPatente(jsonobj.getString("camion_seleccionado"));
+            
             //no interesan los otros datos de vehiculo, en todo caso si necesitamos buscarlo lo consultamos en la base de datos
 
             Tecnica aux = new Tecnica(fecha_emision, fecha_vencimiento, ubicacion, vehiculo);
+            
 
             tecnicaDAO.create(aux);
 
