@@ -15,26 +15,13 @@ const Cargar_2 = () => {
     setError("");
     setCargando(true);
     axiosPrivado
-      .post("/tecnica?tipo=camion", estado_camiones)
-      .then((res) => {
-        const {
-          fecha_emision,
-          fecha_vencimiento,
-          ubicacion,
-        } = res.data;
-        dispatch({
-          type: CARGAR_TECNICA,
-          payload: {
-            fecha_emision,
-            fecha_vencimiento,
-            ubicacion,
-          },
-        });
+      .post("/tecnica?tipo=camion", estado)
+      .then(() => {
+        navegar("/vehiculos?tipo=camion");
         setCargando(false);
       })
       .catch((error) => {
         setCargando(false);
-
         setError(error.message);
       });
   }, [

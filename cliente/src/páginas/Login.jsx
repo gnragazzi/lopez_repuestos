@@ -7,7 +7,6 @@ const Login = () => {
   const navegar = useNavigate();
   const localizacion = useLocation();
   const from = localizacion.state?.from?.pathname || "/";
-
   const manejarLogin = () => {
     axios
       .get("http://localhost:8080/auth", { withCredentials: true })

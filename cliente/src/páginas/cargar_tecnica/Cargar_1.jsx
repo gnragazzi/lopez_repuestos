@@ -21,7 +21,7 @@ const Cargar_1 = () => {
             type="date"
             name="fecha_emision"
             id="fecha_emision"
-            value={estado_camiones.fecha_emision}
+            value={estado.fecha_emision}
             onChange={(e) => {
               dispatch({
                 type: SELECCIONAR_FECHA_EMISION,
@@ -37,7 +37,7 @@ const Cargar_1 = () => {
             type="date"
             name="fecha_vencimiento"
             id="fecha_vencimiento"
-            value={estado_camiones.fecha_vencimiento}
+            value={estado.fecha_vencimiento}
             onChange={(e) => {
               dispatch({
                 type: SELECCIONAR_FECHA_VENCIMIENTO,
@@ -53,7 +53,7 @@ const Cargar_1 = () => {
             type="text"
             name="ubicacion"
             id="ubicacion"
-            value={estado_camiones.ubicacion}
+            value={estado.ubicacion}
             onChange={(e) => {
               dispatch({
                 type: SELECCIONAR_UBICACION,
