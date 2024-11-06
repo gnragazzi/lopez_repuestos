@@ -1,24 +1,25 @@
-
 package Clases;
+
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;
 import java.time.LocalDate;
 
-
 public abstract class Empleado {
+
     private String dni;
     private String cuil;
     private String nombre;
     private String apellido;
     private String domicilio;
-    @JsonDeserialize(using = LocalDateDeserializer.class)  
-    @JsonSerialize(using = LocalDateSerializer.class)  
+    @JsonDeserialize(using = LocalDateDeserializer.class)
+    @JsonSerialize(using = LocalDateSerializer.class)
     private LocalDate fecha_nacimiento;
     private String telefono;
+    private Boolean activo;
 
-    public Empleado(String dni, String cuil, String nombre, String apellido, String domicilio, LocalDate fecha_nacimiento, String telefono) {
+    public Empleado(String dni, String cuil, String nombre, String apellido, String domicilio, LocalDate fecha_nacimiento, String telefono, Boolean activo) {
         this.dni = dni;
         this.cuil = cuil;
         this.nombre = nombre;
@@ -26,6 +27,7 @@ public abstract class Empleado {
         this.domicilio = domicilio;
         this.fecha_nacimiento = fecha_nacimiento;
         this.telefono = telefono;
+        this.activo = activo;
     }
 
     public Empleado() {
@@ -53,10 +55,14 @@ public abstract class Empleado {
 
     public LocalDate getFecha_nacimiento() {
         return fecha_nacimiento;
-    } 
+    }
 
     public String getTelefono() {
         return telefono;
+    }
+
+    public Boolean getActivo() {
+        return activo;
     }
 
     public void setDni(String dni) {
@@ -87,11 +93,7 @@ public abstract class Empleado {
         this.telefono = telefono;
     }
 
-    /*
-    @Override
-    public String toString() {
-        return "Empleado{" + "dni=" + dni + ", cuil=" + cuil + ", nombre=" + nombre + ", apellido=" + apellido + ", domicilio=" + domicilio + ", fecha_nacimiento=" + fecha_nacimiento + ", telefono=" + telefono + '}';
-    }*/
-  
-
+    public void setActivo(Boolean activo) {
+        this.activo = activo;
+    }
 }
