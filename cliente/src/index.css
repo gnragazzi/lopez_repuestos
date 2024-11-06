@@ -735,3 +735,13 @@ table tbody .no_disponible:hover{
   font-size: 1rem;
   font-weight: bold;
 }
+
+/*-------------------------------------Entregas tardias-------------------------------------*/
+.enlace_ver_entregas{
+  position: absolute;
+  border-radius: 7px;
+  padding: 7px;
+  top: 0;
+  left: 80%;
+  background-color: rgba(239, 189, 51, 0.763);
+}

@@ -13,6 +13,7 @@ import Costos_camión from "./páginas/costos_camion/Costos_camión.jsx";
 import EnConstrucción from "./componentes/EnConstrucción.jsx";
 import Login from "./páginas/Login.jsx";
 import RequiereAuth from "./componentes/RequiereAuth.jsx";
+import Entregas_tardias from "./páginas/ver_entregas_tardias/Entregas_tardias.jsx";
 
 const router = createBrowserRouter([
   {
@@ -91,6 +92,10 @@ const router = createBrowserRouter([
           {
             path: "cargar_viaje",
             element: <Cargar_viaje></Cargar_viaje>,
+          },
+          {
+            path: "ver_entregas_tardias",
+            element: <Entregas_tardias></Entregas_tardias>,
           },
         ],
       },
