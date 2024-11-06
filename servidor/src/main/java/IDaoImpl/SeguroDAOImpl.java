@@ -27,7 +27,7 @@ public class SeguroDAOImpl implements IDAO<Seguro>{
     }
 
     @Override
-    public Seguro read(Seguro obj) throws Exception {
+    public Seguro read(String clave) throws Exception {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 

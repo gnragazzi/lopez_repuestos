@@ -78,7 +78,7 @@ public class MantenimientoDAOImpl implements IDAO<Mantenimiento> {
     }
 
     @Override
-    public Mantenimiento read(Mantenimiento obj) throws Exception {
+    public Mantenimiento read(String clave) throws Exception {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
     

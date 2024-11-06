@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package IDaoImpl;
 
 import Clases.Chofer;
@@ -11,6 +7,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.time.LocalDate;
 import java.util.ArrayList;
 
 public class ChoferDAOImpl implements IDAO<Chofer> {
@@ -25,8 +22,8 @@ public class ChoferDAOImpl implements IDAO<Chofer> {
         PreparedStatement envioChofer;
         //**** PREGUNTAR SI LO CORRECTO ES DAR EL ALTA EN EMPLEADOS DE LA TABLA EMPLEADOS Y EL ALTA DE CHOFERES EN EL DAO CHOFERES ****//
         // ALTA EN Empleados
-        envioChofer = conexion.prepareStatement("INSERT INTO Empleados(DNI, CUIL, Nombre, Apellido, Domicilio, Fecha_Nacimiento, Telefono, Es_Mec_Chof) "
-                + "value(?,?,?,?,?,?,?,?);");
+        envioChofer = conexion.prepareStatement("INSERT INTO Empleados(DNI, CUIL, Nombre, Apellido, Domicilio, Fecha_Nacimiento, Telefono, Es_Mec_Chof, EsActivo) "
+                + "value(?,?,?,?,?,?,?,?,1);");
         envioChofer.setString(1, obj.getDni());
         envioChofer.setString(2, obj.getCuil());
         envioChofer.setString(3, obj.getNombre());
@@ -44,17 +41,33 @@ public class ChoferDAOImpl implements IDAO<Chofer> {
         envioChofer.execute();
     }
 
-    public Chofer read(Chofer obj) throws Exception {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    public Chofer read(String clave) throws Exception {
+        Statement statement = conexion.createStatement();
+        ResultSet rs = statement.executeQuery("select * from Empleados where dni=" + clave + ";");
+
+        rs.next(); 
+        
+        return new Chofer(
+                null,
+                null,
+                rs.getString("dni"),
+                rs.getString("cuil"),
+                rs.getString("nombre"),
+                rs.getString("apellido"),
+                rs.getString("domicilio"),
+                LocalDate.parse(rs.getString("fecha_nacimiento")),
+                rs.getString("telefono"),
+                Boolean.parseBoolean(rs.getString("EsActivo")) 
+        );
+
     }
 
     @Override
     public void update(Chofer obj, String key) throws Exception {
         PreparedStatement updateChofer;
         if (obj.getDni().equals(key)) {
-            System.out.println("Llegué correctamente");  
-            updateChofer = conexion.prepareStatement("UPDATE Empleados SET " 
-                    + "CUIL=?, Nombre=?, Apellido=?, Domicilio=?, Fecha_Nacimiento=?, Telefono=? "
+            updateChofer = conexion.prepareStatement("UPDATE Empleados SET "
+                    + "CUIL=?, Nombre=?, Apellido=?, Domicilio=?, Fecha_Nacimiento=?, Telefono=?, EsActivo=? "
                     + "WHERE DNI=?;");
             updateChofer.setString(1, obj.getCuil());
             updateChofer.setString(2, obj.getNombre());
@@ -62,30 +75,31 @@ public class ChoferDAOImpl implements IDAO<Chofer> {
             updateChofer.setString(4, obj.getDomicilio());
             updateChofer.setString(5, obj.getFecha_nacimiento().toString());
             updateChofer.setString(6, obj.getTelefono());
-            updateChofer.setString(7, key);
+            updateChofer.setString(7, obj.getActivo()?"1":"0");   
+            updateChofer.setString(8, key);
             updateChofer.execute();
 
-            updateChofer = conexion.prepareStatement("UPDATE Choferes SET " 
+            updateChofer = conexion.prepareStatement("UPDATE Choferes SET "
                     + "Fecha_Psicotecnico=? "
-                    + "WHERE Empleados_DNI=?;");  
+                    + "WHERE Empleados_DNI=?;");
             updateChofer.setString(1, obj.getFecha_psicotecnico().toString());
-            updateChofer.setString(2, key); 
+            updateChofer.setString(2, key);
             updateChofer.execute();
 
         } else {
             create(obj);
-            delete(key);
+            updateChofer = conexion.prepareStatement("DELETE FROM Choferes WHERE Empleados_DNI=?;");
+            updateChofer.setString(1, key);
+            updateChofer.execute();
+            updateChofer = conexion.prepareStatement("DELETE FROM Empleados WHERE DNI=?;");
+            updateChofer.setString(1, key);
+            updateChofer.execute();
         }
     }
 
     public void delete(String key) throws Exception {
-        //BAJA DE TABLA Choferes
-        PreparedStatement bajaChofer = conexion.prepareStatement("DELETE FROM Choferes WHERE Choferes.Empleados_DNI=?;");
-        bajaChofer.setString(1, key);
-        bajaChofer.execute();
-
-        //BAJA DE TABLA Empleados
-        bajaChofer = conexion.prepareStatement("DELETE FROM Empleados WHERE Empleados.DNI=?;");
+        //REALIZAMOS LA BAJA LÓGICA Y NO LA FÍSICA DEL CHOFER, DE MANERA DE MANTENER LA CORRESPONDENCIA DEL MISMO CON LAS OTRAS TABLAS
+        PreparedStatement bajaChofer = conexion.prepareStatement("UPDATE Empleados SET EsActivo=0 WHERE DNI=?;");
         bajaChofer.setString(1, key);
         bajaChofer.execute();
     }

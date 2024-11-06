@@ -47,7 +47,7 @@ public class MecanicoDAOImpl implements IDAO<Mecanico>{
     }
 
     @Override
-    public Mecanico read(Mecanico obj) throws Exception {
+    public Mecanico read(String clave) throws Exception {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 

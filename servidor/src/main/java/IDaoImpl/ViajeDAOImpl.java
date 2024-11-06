@@ -125,7 +125,7 @@ public class ViajeDAOImpl implements IDAO<Viaje> {
     }
 
     @Override
-    public Viaje read(Viaje obj) throws Exception {
+    public Viaje read(String clave) throws Exception {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
     

@@ -35,7 +35,7 @@ public class Tarjeta_RutaDAOImpl implements IDAO<Tarjeta_Ruta>{
     }
 
     @Override
-    public Tarjeta_Ruta read(Tarjeta_Ruta obj) throws Exception {
+    public Tarjeta_Ruta read(String clave) throws Exception {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 

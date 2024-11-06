@@ -20,7 +20,7 @@ public class VehiculoDAOImpl implements IDAO<Vehiculo>{
     }
 
     @Override
-    public Vehiculo read(Vehiculo obj) throws Exception {
+    public Vehiculo read(String clave) throws Exception {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 

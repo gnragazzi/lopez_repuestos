@@ -48,7 +48,7 @@ public class SemirremolqueDAOImpl implements IDAO<Semirremolque>{
     }
 
     @Override
-    public Semirremolque read(Semirremolque obj) throws Exception {
+    public Semirremolque read(String clave) throws Exception {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
