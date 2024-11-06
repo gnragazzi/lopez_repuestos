@@ -43,6 +43,10 @@ function Viajes() {
         >
           <button className="btn btn-success">Insertar</button>
         </Link>
+        <Link to="ver_entregas_tardias" className=""
+          rel="nofollow">
+          <button className="enlace_ver_entregas">Ver Entregas Tardias</button>
+        </Link>
         <div className="container__table">
           <table className="table table-bordered">
             <thead>

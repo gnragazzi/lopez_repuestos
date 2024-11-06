@@ -95,6 +95,34 @@ public class ViajeDAOImpl implements IDAO<Viaje> {
 
         return viajes;
     }
+    
+    public ArrayList<Viaje> ver_entregas_tardias() throws SQLException{
+        ArrayList<Viaje> viajes=new ArrayList<>();
+        
+        Statement statement = conexion.createStatement();
+        ResultSet rs = statement.executeQuery("select * from Viajes where fecha_llegada > fecha_esperada");
+        
+        while(rs.next()){
+            Viaje viaje = new Viaje();
+            Camion camion = new Camion();
+            Semirremolque semi = new Semirremolque();
+            Chofer chofer = new Chofer();
+            camion.setPatente(rs.getString("Camiones_Vehiculos_Patente"));
+            semi.setPatente(rs.getString("Semirremolques_Vehiculos_Patente"));
+            chofer.setDni(rs.getString("Choferes_Empleados_DNI"));
+            viaje.setCamion(camion);
+            viaje.setSemirremolque(semi);
+            viaje.setChofer(chofer);
+            viaje.setFecha_llegada(LocalDate.parse(rs.getString("Fecha_llegada")));
+            viaje.setFecha_partida(LocalDate.parse(rs.getString("Fecha_partida")));
+            viaje.setFecha_esperada(LocalDate.parse(rs.getString("Fecha_esperada")));
+            viaje.setDestino(rs.getString("destino"));
+            viajes.add(viaje);
+        }
+        
+        
+        return viajes;
+    }
 
     @Override
     public Viaje read(Viaje obj) throws Exception {

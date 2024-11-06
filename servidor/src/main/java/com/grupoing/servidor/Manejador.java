@@ -76,7 +76,7 @@ public abstract class Manejador implements HttpHandler {
 
     protected abstract String manejarPost(HttpExchange he) throws UnsupportedEncodingException, JsonProcessingException, ClassNotFoundException, Exception;
 
-    protected String obtenerParámetros(URI requestUri, String clave) throws UnsupportedEncodingException {
+    protected static String obtenerParámetros(URI requestUri, String clave) throws UnsupportedEncodingException {
         Map<String, Object> parameters = new HashMap<String, Object>();
         String query = requestUri.getRawQuery();
         if (query != null) {
