@@ -14,7 +14,7 @@ public class Conexion {
     //Connection conexion = Conexion.getInstancia().getConexion();
     //A la hora de cerrar la conexion se hace:
     //Conexion.getInstancia().cerrarConexion();
-    private Conexion() throws ClassNotFoundException {
+    Conexion() throws ClassNotFoundException {
         String url = Credenciales.getUrl();
         String usuario = Credenciales.getUsuario();
         String  contraseña= Credenciales.getContraseña();
@@ -23,7 +23,7 @@ public class Conexion {
         try {
             Class.forName(Credenciales.getDRIVERS());
             conexion = DriverManager.getConnection(url, usuario, contraseña);
-            System.out.println("Conección Exitosa.");
+            System.out.println("Conexión Exitosa a BD Lopez_Repuestos.");
             System.out.println(conexion);
         } catch (SQLException e) {
             e.printStackTrace();
