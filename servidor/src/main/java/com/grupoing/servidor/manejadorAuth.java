@@ -1,6 +1,5 @@
 package com.grupoing.servidor;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
 import com.sun.net.httpserver.HttpExchange;
@@ -10,11 +9,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
-import java.io.UnsupportedEncodingException;
 import java.util.Date;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import org.json.JSONException;
 import org.json.JSONObject;
 
 public class manejadorAuth implements HttpHandler {
@@ -52,10 +47,10 @@ public class manejadorAuth implements HttpHandler {
             usuario = jsonobj.getString("usuario");
             contrasena = jsonobj.getString("contrasena");
 
-
-            if (ca.readUser(usuario) == false) {
-                ca.create(usuario, contrasena); //los creo ya que necesitamos implementar una forma para insertar los usuarios y contrasenas
-            }
+            //MÉTODO PARA CREAR UN USUARIO 
+            /*if (ca.readUser(usuario) == false) {
+                ca.create(usuario, contrasena); 
+            } */ 
             
             if (ca.read(usuario, contrasena) == true) {
                 

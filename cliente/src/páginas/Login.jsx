@@ -6,6 +6,7 @@ import { FaTree } from "react-icons/fa";
 import camion from "../assets/iconos_lateral/camion.gif";
 import { GiGrass } from "react-icons/gi";
 import { useState } from "react";
+import { Bounce, toast, ToastContainer } from "react-toastify";
 
 const Login = () => {
   const { auth, setAuth } = useContextoGlobal();
@@ -19,18 +20,44 @@ const Login = () => {
     e.preventDefault();
 
     axios
-      .post("http://localhost:8080/auth", { usuario , contrasena }, {headers: {"Content-Type": "application/json"}})
+      .post(
+        "http://localhost:8080/auth",
+        { usuario, contrasena },
+        { headers: { "Content-Type": "application/json" } }
+      )
       .then((res) => {
         const { token } = res.data;
         //sessionStorage.setItem("jwt", token);
         setAuth(token);
         navegar(from, { replace: true });
       })
-      .catch((err) => console.log(err));
+      .catch(() => {
+        const error =
+          usuario == ""
+            ? "Ingrese un nombre de usuario"
+            : contrasena == ""
+            ? "Ingrese una contaseña"
+            : "Nombre de Usuario y/o Contraseña Incorrecto";
+        toast.error(error, {
+          position: "top-center",
+          autoClose: 3000,
+          pauseOnFocusLoss: false,
+          pauseOnHover: false,
+          draggable: true,
+          progress: undefined,
+          theme: "colored",
+          transition: Bounce,
+          icon: false,
+          closeButton: false,
+          bodyClassName: "toast_class",
+          style: { textAlign: "center" },
+        });
+      });
   };
   if (!auth)
     return (
       <div className="contenedorlogin">
+        <ToastContainer />
         <div className="login">
           <div className="login__descripcion"></div>
           <div className="login__formulario">
@@ -49,7 +76,7 @@ const Login = () => {
                     placeholder="admin"
                     value={usuario}
                     onChange={(e) => {
-                      setUsuario(e.target.value); 
+                      setUsuario(e.target.value);
                     }}
                   />
                 </fieldset>
