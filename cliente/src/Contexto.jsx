@@ -4,6 +4,11 @@ import {
   reducer_camiones,
   acciones_camiones,
 } from "./utilidades/reducer_camiones";
+import {
+  estadoInicial_seguro,
+  reducer_seguro,
+  acciones_seguro,
+} from "./utilidades/reducer_seguros"
 const ContextoGlobal = createContext();
 
 // eslint-disable-next-line react-refresh/only-export-components
@@ -17,6 +22,10 @@ function Contexto({ children }) {
   const [estado_camiones, dispatch_camiones] = useReducer(
     reducer_camiones,
     estadoInicial_camiones
+  );
+  const [estado_seguro, dispatch_seguro] = useReducer(
+    reducer_seguro,
+    estadoInicial_seguro
   );
   const [menuSeleccionado, setMenuSeleccionado] = useState("");
   const clickMenu = (e) => {
@@ -32,6 +41,9 @@ function Contexto({ children }) {
         estado_camiones,
         dispatch_camiones,
         acciones_camiones,
+        estado_seguro,
+        dispatch_seguro,
+        acciones_seguro,
         auth,
         setAuth,
       }}

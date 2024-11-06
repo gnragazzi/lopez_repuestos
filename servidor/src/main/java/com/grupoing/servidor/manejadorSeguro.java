@@ -3,13 +3,9 @@ package com.grupoing.servidor;
 
 import Clases.Seguro;
 import IDaoImpl.SeguroDAOImpl;
-import IDaoImpl.TecnicaDAOImpl;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.sun.net.httpserver.HttpExchange;
 import java.io.UnsupportedEncodingException;
-import java.util.ArrayList;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.ObjectWriter;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.time.LocalDate;
@@ -47,11 +43,18 @@ public class manejadorSeguro extends Manejador {
 
             JSONObject jsonobj = new JSONObject(buf.toString());
             LocalDate fecha_emision = LocalDate.parse(jsonobj.getString("fecha_emision"));
+            System.out.println("1" + fecha_emision);
+                   
             LocalDate fecha_vencimiento = LocalDate.parse(jsonobj.getString("fecha_vencimiento"));
+            System.out.println("2" + fecha_vencimiento);
             float pago = (float) jsonobj.getDouble("pago");
+            System.out.println("3" + pago);
             String tipo = jsonobj.getString("tipo");
+            System.out.println("4" + tipo);
             String nombre_aseguradora = jsonobj.getString("nombre_aseguradora");
-            String vehiculo = jsonobj.getString("vehiculo");
+            System.out.println("5" + nombre_aseguradora);
+            String vehiculo = jsonobj.getJSONObject("vehiculo_seleccionado").getString("camion_seleccionado");
+            System.out.println("6" + vehiculo);
             
             Seguro aux= new Seguro(fecha_emision, fecha_vencimiento, nombre_aseguradora, pago, tipo, vehiculo);
             

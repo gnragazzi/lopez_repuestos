@@ -81,12 +81,19 @@ function Camiones() {
                       <td>{elemento.modelo}</td>
                       <td>{elemento.kilometraje}</td>
                       <td>
-                        <button
+                      <Link
+                          rel="nofollow"
+                          to={"seguro"}
                           className="btn btn-primary"
-                          onClick={() => console.log("Editar:", elemento)}
+                          onClick={() =>
+                            dispatch({
+                              type: SELECCIONAR_CAMION,
+                              payload: elemento.patente,
+                            })
+                          }
                         >
-                          Editar
-                        </button>{" "}
+                          Seguro
+                        </Link>
                         <button
                           className="btn btn-danger"
                           onClick={() => console.log("Eliminar:", elemento)}

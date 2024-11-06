@@ -13,6 +13,7 @@ import Costos_camión from "./páginas/costos_camion/Costos_camión.jsx";
 import EnConstrucción from "./componentes/EnConstrucción.jsx";
 import Login from "./páginas/Login.jsx";
 import RequiereAuth from "./componentes/RequiereAuth.jsx";
+import Cargar_seguro from "./páginas/cargar_seguro/Cargar_seguro.jsx";
 
 const router = createBrowserRouter([
   {
@@ -59,6 +60,10 @@ const router = createBrowserRouter([
                 path: "costos",
                 element: <Costos_camión />,
               },
+              {
+                path: "seguro",
+                element: <Cargar_seguro />
+              }
             ],
           },
           {
