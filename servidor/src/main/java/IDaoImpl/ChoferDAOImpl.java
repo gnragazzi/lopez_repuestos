@@ -43,22 +43,25 @@ public class ChoferDAOImpl implements IDAO<Chofer> {
 
     public Chofer read(String clave) throws Exception {
         Statement statement = conexion.createStatement();
-        ResultSet rs = statement.executeQuery("select * from Empleados where dni=" + clave + ";");
+        ResultSet rs = statement.executeQuery("SELECT * FROM Empleados, Choferes WHERE dni=Empleados_DNI AND DNI=" + clave + ";");
+        ;
 
-        rs.next(); 
-        
-        return new Chofer(
-                null,
-                null,
-                rs.getString("dni"),
-                rs.getString("cuil"),
-                rs.getString("nombre"),
-                rs.getString("apellido"),
-                rs.getString("domicilio"),
-                LocalDate.parse(rs.getString("fecha_nacimiento")),
-                rs.getString("telefono"),
-                Boolean.parseBoolean(rs.getString("EsActivo")) 
-        );
+        if (!rs.next()) {
+            return null;
+        } else {
+            return new Chofer(
+                    LocalDate.parse(rs.getString("Fecha_Psicotecnico")),
+                    null,
+                    rs.getString("dni"),
+                    rs.getString("cuil"),
+                    rs.getString("nombre"),
+                    rs.getString("apellido"),
+                    rs.getString("domicilio"),
+                    LocalDate.parse(rs.getString("fecha_nacimiento")),
+                    rs.getString("telefono"),
+                    Boolean.parseBoolean(rs.getString("EsActivo"))
+            );
+        }
 
     }
 
@@ -75,7 +78,7 @@ public class ChoferDAOImpl implements IDAO<Chofer> {
             updateChofer.setString(4, obj.getDomicilio());
             updateChofer.setString(5, obj.getFecha_nacimiento().toString());
             updateChofer.setString(6, obj.getTelefono());
-            updateChofer.setString(7, obj.getActivo()?"1":"0");   
+            updateChofer.setString(7, obj.getActivo() ? "1" : "0");
             updateChofer.setString(8, key);
             updateChofer.execute();
 
@@ -87,11 +90,19 @@ public class ChoferDAOImpl implements IDAO<Chofer> {
             updateChofer.execute();
 
         } else {
+            // Se crea un nuevo objeto, con el nuevo dni, ya que no se puede borrar el anterior por ser DNI un PK
             create(obj);
-            updateChofer = conexion.prepareStatement("DELETE FROM Choferes WHERE Empleados_DNI=?;");
-            updateChofer.setString(1, key);
+
+            // Se deben modificar las referencias al objeto anterior
+            updateChofer = conexion.prepareStatement("UPDATE Viajes SET Choferes_Empleados_DNI=? WHERE Choferes_Empleados_DNI=?;");
+            updateChofer.setString(1, obj.getDni());
+            updateChofer.setString(2, key);
+            updateChofer.execute(); 
+            
+            // Por último, hay que borrar físicamente las entradas con el DNI anterior
+            updateChofer = conexion.prepareStatement("DELETE FROM Choferes WHERE Empleados_DNI=" + key + ";");
             updateChofer.execute();
-            updateChofer = conexion.prepareStatement("DELETE FROM Empleados WHERE DNI=?;");
+            updateChofer = conexion.prepareStatement("DELETE FROM Empleados WHERE DNI=?;"); 
             updateChofer.setString(1, key);
             updateChofer.execute();
         }
@@ -102,20 +113,25 @@ public class ChoferDAOImpl implements IDAO<Chofer> {
         PreparedStatement bajaChofer = conexion.prepareStatement("UPDATE Empleados SET EsActivo=0 WHERE DNI=?;");
         bajaChofer.setString(1, key);
         bajaChofer.execute();
+
     }
 
     public ArrayList<Chofer> list() throws Exception {
         Statement statement = conexion.createStatement();
-        ResultSet rs = statement.executeQuery("select * from Empleados, Choferes where dni=Empleados_DNI;");
+        ResultSet choferes_resultado = statement.executeQuery("select * from Empleados, Choferes where dni=Empleados_DNI;");
         ArrayList<Chofer> choferes = new ArrayList<>();
-        while (rs.next()) {
+
+        while (choferes_resultado.next()) {
             Chofer chofer = new Chofer();
-            chofer.setDni(rs.getString("Empleados_DNI"));
-            chofer.setCuil(rs.getString("Cuil"));
-            chofer.setNombre(rs.getString("Nombre"));
-            chofer.setApellido(rs.getString("Apellido"));
-            chofer.setTelefono(rs.getString("Telefono"));
-            chofer.setActivo(rs.getBoolean("EsActivo"));
+            chofer.setDni(choferes_resultado.getString("Empleados_DNI"));
+            chofer.setCuil(choferes_resultado.getString("Cuil"));
+            chofer.setNombre(choferes_resultado.getString("Nombre"));
+            chofer.setApellido(choferes_resultado.getString("Apellido"));
+            chofer.setTelefono(choferes_resultado.getString("Telefono"));
+            chofer.setDomicilio(choferes_resultado.getString("Domicilio"));
+            chofer.setFecha_psicotecnico(LocalDate.parse(choferes_resultado.getString("Fecha_Psicotecnico")));
+            chofer.setFecha_nacimiento(LocalDate.parse(choferes_resultado.getString("Fecha_Nacimiento")));
+            chofer.setActivo(choferes_resultado.getBoolean("EsActivo"));
             choferes.add(chofer);
         }
         return choferes;

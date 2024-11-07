@@ -14,10 +14,10 @@ import java.util.List;
 import java.util.Map;
 
 public abstract class Manejador implements HttpHandler {
+    URI uri;
 
     @Override
     public void handle(HttpExchange he) throws IOException, JsonProcessingException {
-
         he.getResponseHeaders().add("Access-Control-Allow-Origin", "*");
 
         if (he.getRequestMethod().equalsIgnoreCase("OPTIONS")) {
@@ -26,6 +26,9 @@ public abstract class Manejador implements HttpHandler {
             he.sendResponseHeaders(204, -1);
             return;
         }
+        
+        uri = he.getRequestURI();
+        
         String response = null;
         String token = null;
         int codigo_respuesta = 200;
@@ -38,21 +41,20 @@ public abstract class Manejador implements HttpHandler {
             } else {
 
                 String método = he.getRequestMethod();
+                try {
 
+                } catch (Exception ex) {
+                    codigo_respuesta = 500;
+                    response = "Error de " + método.toUpperCase() + ". No se pudo leer la entrada.";
+                }
                 if (método.equalsIgnoreCase("get")) {
-                    try {
-                        response = manejarGet(he);
-                    } catch (Exception ex) {
-                        codigo_respuesta = 500;
-                        response = "Error de GET. No se pudo leer la entrada.";
-                    }
+                    response = manejarGet(he);
                 } else if (método.equalsIgnoreCase("post")) {
-                    try {
-                        response = manejarPost(he);
-                    } catch (Exception ex) {
-                        codigo_respuesta = 500;
-                        response = "Error de POST. No se realizó la carga.";
-                    }
+                    response = manejarPost(he);
+                } else if (método.equalsIgnoreCase("PATCH")) {
+                    response = manejarPatch(he);
+                } else if (método.equalsIgnoreCase("DELETE")) {
+                    response = manejarDelete(he);
                 } else {
                     codigo_respuesta = 501;
                     response = "MÉTODO NO IMPLEMENTADO";
@@ -75,6 +77,10 @@ public abstract class Manejador implements HttpHandler {
     protected abstract String manejarGet(HttpExchange he) throws UnsupportedEncodingException, JsonProcessingException, ClassNotFoundException, Exception;
 
     protected abstract String manejarPost(HttpExchange he) throws UnsupportedEncodingException, JsonProcessingException, ClassNotFoundException, Exception;
+
+    protected abstract String manejarPatch(HttpExchange he) throws UnsupportedEncodingException, JsonProcessingException, ClassNotFoundException, Exception;
+
+    protected abstract String manejarDelete(HttpExchange he) throws UnsupportedEncodingException, JsonProcessingException, ClassNotFoundException, Exception;
 
     protected static String obtenerParámetros(URI requestUri, String clave) throws UnsupportedEncodingException {
         Map<String, Object> parameters = new HashMap<String, Object>();

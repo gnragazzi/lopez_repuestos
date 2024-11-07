@@ -1,39 +1,16 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package com.grupoing.servidor;
 
-import Clases.Chofer;
 import IDaoImpl.ChoferDAOImpl;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.sun.net.httpserver.HttpExchange;
-import com.sun.net.httpserver.HttpHandler;
-import java.io.IOException;
-import java.io.OutputStream;
-import java.time.LocalDate;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import java.io.UnsupportedEncodingException;
+import java.net.URI;
 
-/**
- *
- * @author gera
- */
-public class temp implements HttpHandler {
+public class temp extends Manejador {
 
     InterfacesDAO.IDAO dao;
-    Chofer chofer;
 
     public temp() {
-        chofer = new Chofer(
-                LocalDate.parse("1024-06-17"),
-                null,
-                "35703559", "20355035598", 
-                "Laria Maura",
-                "Onemig",
-                "Sydneyville 123",
-                LocalDate.parse("1004-03-14"),
-                "341 7070709",
-                true);
         try {
             dao = new ChoferDAOImpl();
         } catch (Exception ex) {
@@ -41,32 +18,38 @@ public class temp implements HttpHandler {
         }
     }
 
+
     @Override
-    public void handle(HttpExchange he) throws IOException {
-        String res = "Ok";
-
-        try {
-            // ALTA CHOFER
-            //dao.create(chofer);
-            // BAJA CHOFER
-            //dao.delete("35703579");
-            // MODIFICACIÓN CHOFER
-            //dao.update(chofer, "35703579");  
-            // LECTURA CHOFER
-            Chofer temp = (Chofer) dao.read("35703559");
-            
-            
-        } catch (Exception ex) {
-            Logger.getLogger(temp.class.getName()).log(Level.SEVERE, null, ex);
+    protected String manejarGet(HttpExchange he) throws UnsupportedEncodingException, JsonProcessingException, ClassNotFoundException, Exception {
+        String response = "";
+        URI uri = he.getRequestURI();
+        
+        String id = obtenerParámetros(uri, "id");
+        
+        
+        if(id != null){
+            response = "Se busca la entrada " + id; 
         }
+        else
+        {
+            response = "SE BUSCA LA TOTALIDAD DE LAS ENTRADAS";
+        }
+        return response;
+    }
 
-        //
-        he.getResponseHeaders().set("Content-Type", "application/json");
-        he.sendResponseHeaders(200, res.getBytes().length);
-        OutputStream os = he.getResponseBody();
-        os.write(res.getBytes());
-        os.close();
+    @Override
+    protected String manejarPost(HttpExchange he) throws UnsupportedEncodingException, JsonProcessingException, ClassNotFoundException, Exception {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
 
+    @Override
+    protected String manejarPatch(HttpExchange he) throws UnsupportedEncodingException, JsonProcessingException, ClassNotFoundException, Exception {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    @Override
+    protected String manejarDelete(HttpExchange he) throws UnsupportedEncodingException, JsonProcessingException, ClassNotFoundException, Exception {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
 }
