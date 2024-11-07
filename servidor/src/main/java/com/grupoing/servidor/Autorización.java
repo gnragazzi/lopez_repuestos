@@ -56,10 +56,10 @@ public class Autorización {
             DecodedJWT decodedJWT = verifier.verify(jwtToken);
             Claim claim = decodedJWT.getClaim("tipo");
             if (claim.asString().equals(tipo)) {
-                System.out.println("Token de " + tipo + " validado correctamente.");
+                //System.out.println("Token de " + tipo + " validado correctamente.");
                 return true;
             } else {
-                System.out.println("Token de " + tipo + " no pudo ser validado.");
+                //System.out.println("Token de " + tipo + " no pudo ser validado.");
                 return false;
             }
         } catch (JWTVerificationException e) {

@@ -9,6 +9,7 @@ import Viajes from "./páginas/Viajes.jsx";
 import CargarMantenimiento from "./páginas/mantenimiento/CargarMantenimiento.jsx";
 import { Cargar_viaje } from "./páginas/cargar_viaje/Cargar_viaje.jsx";
 import Camiones from "./páginas/Camion.jsx";
+import Chofer from "./páginas/Chofer.jsx";
 import Costos_camión from "./páginas/costos_camion/Costos_camión.jsx";
 import EnConstrucción from "./componentes/EnConstrucción.jsx";
 import Login from "./páginas/Login.jsx";
@@ -34,7 +35,7 @@ const router = createBrowserRouter([
         children: [
           {
             path: "choferes",
-            element: <EnConstrucción titulo={"Choferes"} />,
+            element: <Chofer />,
           },
           {
             path: "mecánicos",

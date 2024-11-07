@@ -73,43 +73,49 @@ const Cargar_viaje_3 = ({ dispatch, acciones, estado }) => {
               </tr>
             </thead>
             <tbody>
-              {lista_choferes.map((chofer) => {
-                const { dni, nombre, apellido } = chofer;
-                return (
-                  <tr
-                    className={
-                      filtro_chofer.includes(dni)
-                        ? "vehiculos_lista no_disponible"
-                        : chofer_seleccionado == dni
-                        ? "vehiculos_lista vehiculos_lista_seleccionado_viaje"
-                        : "vehiculos_lista disponible"
-                    }
-                    key={dni}
-                    onClick={
-                      filtro_chofer.includes(dni)
-                        ? () => {
-                            console.log("No se puede seleccionar");
-                          }
-                        : () => {
-                            dispatch({
-                              type: SELECCIONAR_CHOFER,
-                              payload: dni,
-                            });
-                          }
-                    }
-                  >
-                    <td>
-                      <p>{dni}</p>
-                    </td>
-                    <td>
-                      <p>{nombre}</p>
-                    </td>
-                    <td>
-                      <p>{apellido}</p>
-                    </td>
-                  </tr>
-                );
-              })}
+              {lista_choferes.length === 0 ? (
+                <tr>
+                  <td colSpan="5">No hay Choferes Cargados en el Sistema</td>
+                </tr>
+              ) : (
+                lista_choferes.map((chofer) => {
+                  const { dni, nombre, apellido } = chofer;
+                  return (
+                    <tr
+                      className={
+                        filtro_chofer.includes(dni)
+                          ? "vehiculos_lista no_disponible"
+                          : chofer_seleccionado == dni
+                          ? "vehiculos_lista vehiculos_lista_seleccionado_viaje"
+                          : "vehiculos_lista disponible"
+                      }
+                      key={dni}
+                      onClick={
+                        filtro_chofer.includes(dni)
+                          ? () => {
+                              console.log("No se puede seleccionar");
+                            }
+                          : () => {
+                              dispatch({
+                                type: SELECCIONAR_CHOFER,
+                                payload: dni,
+                              });
+                            }
+                      }
+                    >
+                      <td>
+                        <p>{dni}</p>
+                      </td>
+                      <td>
+                        <p>{nombre}</p>
+                      </td>
+                      <td>
+                        <p>{apellido}</p>
+                      </td>
+                    </tr>
+                  );
+                })
+              )}
             </tbody>
           </table>
         </div>

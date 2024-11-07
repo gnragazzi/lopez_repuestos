@@ -21,7 +21,7 @@ public abstract class Manejador implements HttpHandler {
         he.getResponseHeaders().add("Access-Control-Allow-Origin", "*");
 
         if (he.getRequestMethod().equalsIgnoreCase("OPTIONS")) {
-            he.getResponseHeaders().add("Access-Control-Allow-Methods", "GET, OPTIONS");
+            he.getResponseHeaders().add("Access-Control-Allow-Methods", "GET, OPTIONS, DELETE, PATCH"); 
             he.getResponseHeaders().add("Access-Control-Allow-Headers", "Content-Type,Authorization");
             he.sendResponseHeaders(204, -1);
             return;
