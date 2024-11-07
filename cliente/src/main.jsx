@@ -9,6 +9,7 @@ import Viajes from "./páginas/Viajes.jsx";
 import CargarMantenimiento from "./páginas/mantenimiento/CargarMantenimiento.jsx";
 import { Cargar_viaje } from "./páginas/cargar_viaje/Cargar_viaje.jsx";
 import Camiones from "./páginas/Camion.jsx";
+import Semirremolques from "./páginas/Semirremolque.jsx"
 import Costos_camión from "./páginas/costos_camion/Costos_camión.jsx";
 import EnConstrucción from "./componentes/EnConstrucción.jsx";
 import Login from "./páginas/Login.jsx";
@@ -64,7 +65,17 @@ const router = createBrowserRouter([
           },
           {
             path: "semirremolques",
-            element: <EnConstrucción titulo={"Semirremolques"} />,
+            children: [
+              {
+                path: "",
+                element: <Semirremolques />,
+              },
+              {
+                path: "nuevo",
+                element: <EnConstrucción titulo={"Cargar semirremolque"} />,
+              }
+              
+            ]
           },
         ],
       },

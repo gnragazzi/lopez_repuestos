@@ -4,6 +4,11 @@ import {
   reducer_camiones,
   acciones_camiones,
 } from "./utilidades/reducer_camiones";
+import {
+  estadoInicial_semirremolques,
+  reducer_semirremolques,
+  acciones_semirremolques,
+} from "./utilidades/reducer_semirremolques";
 const ContextoGlobal = createContext();
 
 // eslint-disable-next-line react-refresh/only-export-components
@@ -18,6 +23,10 @@ function Contexto({ children }) {
     reducer_camiones,
     estadoInicial_camiones
   );
+  const [estado_semirremolques, dispatch_semirremolques] = useReducer(
+    reducer_semirremolques,
+    estadoInicial_semirremolques,
+  )
   const [menuSeleccionado, setMenuSeleccionado] = useState("");
   const clickMenu = (e) => {
     setMenuSeleccionado(e.currentTarget.textContent);
@@ -34,6 +43,9 @@ function Contexto({ children }) {
         acciones_camiones,
         auth,
         setAuth,
+        estado_semirremolques,
+        dispatch_semirremolques,
+        acciones_semirremolques,
       }}
     >
       {children}
