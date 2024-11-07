@@ -53,7 +53,7 @@ public class manejadorSeguro extends Manejador {
             System.out.println("4" + tipo);
             String nombre_aseguradora = jsonobj.getString("nombre_aseguradora");
             System.out.println("5" + nombre_aseguradora);
-            String vehiculo = jsonobj.getJSONObject("vehiculo_seleccionado").getString("camion_seleccionado");
+            String vehiculo = jsonobj.getString("vehiculo_seleccionado");
             System.out.println("6" + vehiculo);
             
             Seguro aux= new Seguro(fecha_emision, fecha_vencimiento, nombre_aseguradora, pago, tipo, vehiculo);

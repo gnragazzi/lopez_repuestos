@@ -2,7 +2,7 @@ import { useNavigate } from "react-router-dom";
 import { useContextoGlobal } from "../../Contexto";
 import Seguro_1 from "./Seguro_1";
 import Seguro_2 from "./Seguro_2";
-import { useEffect , useState} from "react";
+import { useEffect, useState } from "react";
 import useAxiosPrivado from "../../utilidades/useAxiosPrivado";
 
 const Cargar_seguro = () => {
@@ -16,9 +16,14 @@ const Cargar_seguro = () => {
     estado_seguro: estado,
     estado_camiones: camion,
   } = useContextoGlobal();
-  const { PROXIMA_PAGINA_SEGURO, ANTERIOR_PAGINA_SEGURO , SELECCIONAR_VEHICULO, RESETEAR_ESTADO} = acciones;
+  const {
+    PROXIMA_PAGINA_SEGURO,
+    ANTERIOR_PAGINA_SEGURO,
+    SELECCIONAR_VEHICULO,
+    RESETEAR_ESTADO,
+  } = acciones;
   const { pagina_seguro } = estado;
-  const {camion_seleccionado} = camion;
+  const { camion_seleccionado } = camion;
 
   const enviarFormulario = () => {
     setError("");
@@ -46,11 +51,9 @@ const Cargar_seguro = () => {
   useEffect(() => {
     dispatch({
       type: SELECCIONAR_VEHICULO,
-      payload: {
-        camion_seleccionado,
-      },
+      payload: camion_seleccionado,
     });
-  } , [] );
+  }, [camion_seleccionado]);
   return (
     <>
       <div className="App formulario">
@@ -65,7 +68,7 @@ const Cargar_seguro = () => {
               className="formulario__boton volver"
               onClick={() => {
                 dispatch({ type: RESETEAR_ESTADO });
-                
+
                 navegar("/vehículos/camiones");
               }}
             >
