@@ -1,8 +1,8 @@
 import { useContextoGlobal } from "../../Contexto";
 
 const Cargar_2 = () => {
-  const { estado_camiones: estado } = useContextoGlobal();
-  const { fecha_emision, fecha_vencimiento, ubicacion } = estado.tecnica;
+  const { estado_tecnica: estado } = useContextoGlobal();
+  const { fecha_emision, fecha_vencimiento, ubicacion } = estado;
 
   return (
     <div className="App formulario">

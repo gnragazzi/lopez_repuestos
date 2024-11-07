@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useContextoGlobal } from "../../Contexto";
 import useAxiosPrivado from "../../utilidades/useAxiosPrivado";
@@ -11,11 +11,13 @@ const Cargar_tecnica = () => {
   const [error, setError] = useState("");
   const axiosPrivado = useAxiosPrivado();
   const {
-    acciones_camiones: acciones,
-    dispatch_camiones: dispatch,
-    estado_camiones: estado,
+    acciones_tecnica: acciones,
+    dispatch_tecnica: dispatch,
+    estado_tecnica: estado,
+    estado_camiones: camiones,
   } = useContextoGlobal();
-  const { PROXIMA_PAGINA_TECNICA, ANTERIOR_PAGINA_TECNICA } = acciones;
+  const { camion_seleccionado } = camiones;
+  const { PROXIMA_PAGINA_TECNICA, ANTERIOR_PAGINA_TECNICA , RESETEAR_ESTADO, SELECCIONAR_VEHICULO} = acciones;
   const { pagina_tecnica } = estado;
 
   const enviar_formulario = () => {
@@ -41,6 +43,15 @@ const Cargar_tecnica = () => {
     }
   };
 
+  useEffect (() => {
+    dispatch({
+      type: SELECCIONAR_VEHICULO,
+      payload: camion_seleccionado,
+    })
+  }, [camion_seleccionado])
+
+
+
   console.log(estado);
   return (
     <>
@@ -54,7 +65,7 @@ const Cargar_tecnica = () => {
           {pagina_tecnica == 0 && (
             <button
               className={"formulario__boton volver"}
-              onClick={() => navegar("/vehículos/camiones")}
+              onClick={() => navegar("/principal")}
             >
               Volver
             </button>
@@ -90,7 +101,10 @@ const Cargar_tecnica = () => {
               className="formulario__boton siguiente"
               onClick={() => {
                 enviar_formulario();
-                navegar("/vehículos/camiones");
+                dispatch( {
+                  type: RESETEAR_ESTADO
+                })
+                navegar("/principal");
               }}
             >
               Confirmar

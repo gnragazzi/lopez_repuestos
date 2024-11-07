@@ -1,5 +1,10 @@
 import { useState, useContext, createContext, useReducer } from "react";
 import {
+  estadoInicial_tecnica,
+  reducer_tecnica,
+  acciones_tecnica,
+} from "./utilidades/reducer_tecnica";
+import {
   estadoInicial_camiones,
   reducer_camiones,
   acciones_camiones,
@@ -18,6 +23,10 @@ function Contexto({ children }) {
     reducer_camiones,
     estadoInicial_camiones
   );
+  const [estado_tecnica, dispatch_tecnica] = useReducer(
+    reducer_tecnica,
+    estadoInicial_tecnica
+  )
   const [menuSeleccionado, setMenuSeleccionado] = useState("");
   const clickMenu = (e) => {
     setMenuSeleccionado(e.currentTarget.textContent);
@@ -34,6 +43,9 @@ function Contexto({ children }) {
         acciones_camiones,
         auth,
         setAuth,
+        estado_tecnica,
+        dispatch_tecnica,
+        acciones_tecnica,
       }}
     >
       {children}

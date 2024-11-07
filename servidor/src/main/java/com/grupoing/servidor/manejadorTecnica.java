@@ -53,11 +53,10 @@ public class manejadorTecnica extends Manejador {
             // CONVERTIR EL JSONString a JSONObject
                   
             JSONObject jsonobj = new JSONObject(buf.toString());
-            JSONObject tecnica = jsonobj.getJSONObject("tecnica");
-            LocalDate fecha_emision = LocalDate.parse(tecnica.getString("fecha_emision"));
+            LocalDate fecha_emision = LocalDate.parse(jsonobj.getString("fecha_emision"));
                     
-            LocalDate fecha_vencimiento = LocalDate.parse(tecnica.getString("fecha_vencimiento"));
-            String ubicacion = tecnica.getString("ubicacion");
+            LocalDate fecha_vencimiento = LocalDate.parse(jsonobj.getString("fecha_vencimiento"));
+            String ubicacion = jsonobj.getString("ubicacion");
 
 
             String tipo = obtenerParámetros(uri, "tipo");
@@ -74,7 +73,7 @@ public class manejadorTecnica extends Manejador {
                 throw new Exception();
             }
 
-            vehiculo.setPatente(jsonobj.getString("camion_seleccionado"));
+            vehiculo.setPatente(jsonobj.getString("vehiculo_seleccionado"));
             
             //no interesan los otros datos de vehiculo, en todo caso si necesitamos buscarlo lo consultamos en la base de datos
 

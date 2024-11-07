@@ -2,13 +2,13 @@ import { useContextoGlobal } from "../../Contexto";
 
 const Cargar_1 = () => {
   const {
-    acciones_camiones: {
+    acciones_tecnica: {
       SELECCIONAR_FECHA_EMISION,
       SELECCIONAR_FECHA_VENCIMIENTO,
       SELECCIONAR_UBICACION,
     },
-    dispatch_camiones: dispatch,
-    estado_camiones: estado,
+    dispatch_tecnica: dispatch,
+    estado_tecnica: estado,
   } = useContextoGlobal();
 
   return (
