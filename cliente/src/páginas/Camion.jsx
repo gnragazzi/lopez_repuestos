@@ -11,12 +11,16 @@ function Camiones() {
     estado_camiones: estado,
     dispatch_camiones: dispatch,
     acciones_camiones: acciones,
+    dispatch_tecnica: dispatch_tenica,
+    acciones_tecnica: acciones_tecnica,
   } = useContextoGlobal();
 
   const axiosPrivado = useAxiosPrivado();
 
   const { RESETEAR_ESTADO, CARGAR_LISTA_CAMIONES, SELECCIONAR_CAMION } =
     acciones;
+
+  const { SELECCIONAR_VEHICULO } = acciones_tecnica;
 
   useEffect(() => {
     dispatch({ type: RESETEAR_ESTADO });
@@ -92,8 +96,8 @@ function Camiones() {
                           to={"tecnica"}
                           className="btn btn-primary"
                           onClick={() =>
-                            dispatch({
-                              type: SELECCIONAR_CAMION,
+                            dispatch_tenica({
+                              type: SELECCIONAR_VEHICULO,
                               payload: elemento.patente,
                             })
                           }

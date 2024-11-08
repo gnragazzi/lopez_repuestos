@@ -43,13 +43,6 @@ const Cargar_tecnica = () => {
     }
   };
 
-  useEffect (() => {
-    dispatch({
-      type: SELECCIONAR_VEHICULO,
-      payload: camion_seleccionado,
-    })
-  }, [camion_seleccionado])
-
 
 
   console.log(estado);
