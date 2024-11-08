@@ -3,13 +3,9 @@ package com.grupoing.servidor;
 
 import Clases.Seguro;
 import IDaoImpl.SeguroDAOImpl;
-import IDaoImpl.TecnicaDAOImpl;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.sun.net.httpserver.HttpExchange;
 import java.io.UnsupportedEncodingException;
-import java.util.ArrayList;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.ObjectWriter;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.time.LocalDate;
@@ -51,7 +47,7 @@ public class manejadorSeguro extends Manejador {
             float pago = (float) jsonobj.getDouble("pago");
             String tipo = jsonobj.getString("tipo");
             String nombre_aseguradora = jsonobj.getString("nombre_aseguradora");
-            String vehiculo = jsonobj.getString("vehiculo");
+            String vehiculo = jsonobj.getString("vehiculo_seleccionado");
             
             Seguro aux= new Seguro(fecha_emision, fecha_vencimiento, nombre_aseguradora, pago, tipo, vehiculo);
             

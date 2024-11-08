@@ -11,8 +11,13 @@ function Camiones() {
     estado_camiones: estado,
     dispatch_camiones: dispatch,
     acciones_camiones: acciones,
+<<<<<<< HEAD
     dispatch_tecnica: dispatch_tenica,
     acciones_tecnica: acciones_tecnica,
+=======
+    dispatch_seguro: dispatch_seguro,
+    acciones_seguro: acciones_seguro,
+>>>>>>> 84cc4ef4ceee4daf1263f730164e04f90399a28d
   } = useContextoGlobal();
 
   const axiosPrivado = useAxiosPrivado();
@@ -20,7 +25,11 @@ function Camiones() {
   const { RESETEAR_ESTADO, CARGAR_LISTA_CAMIONES, SELECCIONAR_CAMION } =
     acciones;
 
+<<<<<<< HEAD
   const { SELECCIONAR_VEHICULO } = acciones_tecnica;
+=======
+  const { SELECCIONAR_VEHICULO } = acciones_seguro;
+>>>>>>> 84cc4ef4ceee4daf1263f730164e04f90399a28d
 
   useEffect(() => {
     dispatch({ type: RESETEAR_ESTADO });
@@ -85,10 +94,18 @@ function Camiones() {
                       <td>{elemento.modelo}</td>
                       <td>{elemento.kilometraje}</td>
                       <td>
-                        <button
+                      <Link
+                          rel="nofollow"
+                          to={"seguro"}
                           className="btn btn-primary"
-                          onClick={() => console.log("Editar:", elemento)}
+                          onClick={() =>
+                            dispatch_seguro({
+                              type: SELECCIONAR_VEHICULO,
+                              payload: elemento.patente,
+                            })
+                          }
                         >
+<<<<<<< HEAD
                           Editar
                         </button>{" "}
                         <Link
@@ -101,6 +118,13 @@ function Camiones() {
                               payload: elemento.patente,
                             })
                           }
+=======
+                          Seguro
+                        </Link>
+                        <button
+                          className="btn btn-danger"
+                          onClick={() => console.log("Eliminar:", elemento)}
+>>>>>>> 84cc4ef4ceee4daf1263f730164e04f90399a28d
                         >
                           Tecnica
                         </Link>

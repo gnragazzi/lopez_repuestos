@@ -16,6 +16,7 @@ import Login from "./páginas/Login.jsx";
 import RequiereAuth from "./componentes/RequiereAuth.jsx";
 import Entregas_tardias from "./páginas/ver_entregas_tardias/Entregas_tardias.jsx";
 import Cargar_tecnica from "./páginas/cargar_tecnica/cargar_tecnica.jsx";
+import Cargar_seguro from "./páginas/cargar_seguro/Cargar_seguro.jsx";
 
 const router = createBrowserRouter([
   {
@@ -66,6 +67,10 @@ const router = createBrowserRouter([
                 path: "tecnica",
                 element: <Cargar_tecnica />,
               },
+              {
+                path: "seguro",
+                element: <Cargar_seguro />
+              }
             ],
           },
           {
