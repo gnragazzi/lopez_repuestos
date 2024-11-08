@@ -23,6 +23,8 @@ public class Servidor {
         server.createContext("/mantenimiento", new manejadorMantenimiento());
         server.createContext("/viajes", new manejadorViaje());
         server.createContext("/empleados", new manejadorEmpleado());
+        server.createContext("/tecnica", new manejadorTecnica());
+        server.createContext("/seguro", new manejadorSeguro());
         server.createContext("/auth", new manejadorAuth());
         server.createContext("/refresh", new manejadorRefresh());
         server.createContext("/temp", new temp());

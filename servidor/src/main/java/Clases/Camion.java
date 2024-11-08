@@ -13,7 +13,7 @@ public class Camion extends Vehiculo{
         super();
     }
 
-    public Camion(String marca, String patente, Seguro seguro, Tarjeta_Ruta tarjeta_ruta, Tecnica tecnica,
+    public Camion(String marca, String patente, ArrayList<Seguro> seguro, Tarjeta_Ruta tarjeta_ruta, ArrayList<Tecnica> tecnica,
             ArrayList<Mantenimiento> mantenimiento, String modelo, String potencia, int kilometraje, ArrayList<Viaje> viaje) {
         super(marca, patente, seguro, tarjeta_ruta, tecnica, mantenimiento);
         this.modelo = modelo;

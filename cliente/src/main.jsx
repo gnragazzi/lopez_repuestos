@@ -15,6 +15,7 @@ import EnConstrucción from "./componentes/EnConstrucción.jsx";
 import Login from "./páginas/Login.jsx";
 import RequiereAuth from "./componentes/RequiereAuth.jsx";
 import Entregas_tardias from "./páginas/ver_entregas_tardias/Entregas_tardias.jsx";
+import Cargar_tecnica from "./páginas/cargar_tecnica/cargar_tecnica.jsx";
 
 const router = createBrowserRouter([
   {
@@ -60,6 +61,10 @@ const router = createBrowserRouter([
               {
                 path: "costos",
                 element: <Costos_camión />,
+              },
+              {
+                path: "tecnica",
+                element: <Cargar_tecnica />,
               },
             ],
           },

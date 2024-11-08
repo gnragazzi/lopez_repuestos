@@ -18,7 +18,6 @@ const Login = () => {
 
   const manejarLogin = (e) => {
     e.preventDefault();
-
     axios
       .post(
         "http://localhost:8080/auth",

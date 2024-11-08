@@ -11,12 +11,16 @@ function Camiones() {
     estado_camiones: estado,
     dispatch_camiones: dispatch,
     acciones_camiones: acciones,
+    dispatch_tecnica: dispatch_tenica,
+    acciones_tecnica: acciones_tecnica,
   } = useContextoGlobal();
 
   const axiosPrivado = useAxiosPrivado();
 
   const { RESETEAR_ESTADO, CARGAR_LISTA_CAMIONES, SELECCIONAR_CAMION } =
     acciones;
+
+  const { SELECCIONAR_VEHICULO } = acciones_tecnica;
 
   useEffect(() => {
     dispatch({ type: RESETEAR_ESTADO });
@@ -87,12 +91,19 @@ function Camiones() {
                         >
                           Editar
                         </button>{" "}
-                        <button
-                          className="btn btn-danger"
-                          onClick={() => console.log("Eliminar:", elemento)}
+                        <Link
+                          rel="nofollow"
+                          to={"tecnica"}
+                          className="btn btn-primary"
+                          onClick={() =>
+                            dispatch_tenica({
+                              type: SELECCIONAR_VEHICULO,
+                              payload: elemento.patente,
+                            })
+                          }
                         >
-                          Eliminar
-                        </button>{" "}
+                          Tecnica
+                        </Link>
                         <Link
                           rel="nofollow"
                           to={"costos"}

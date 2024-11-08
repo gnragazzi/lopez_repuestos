@@ -17,13 +17,15 @@ public class Seguro {
     private float pago;
     private String tipo;
     private String nombre_aseguradora;
+    private String vehiculo;
 
-    public Seguro(LocalDate fecha_emision, LocalDate fecha_vencimiento, String nombre_aseguradora, float pago, String tipo) {
+    public Seguro(LocalDate fecha_emision, LocalDate fecha_vencimiento, String nombre_aseguradora, float pago, String tipo, String vehiculo) {
         this.fecha_emision = fecha_emision;
         this.fecha_vencimiento = fecha_vencimiento;
         this.nombre_aseguradora = nombre_aseguradora;
         this.pago = pago;
         this.tipo = tipo;
+        this.vehiculo = vehiculo;
     }
 
     public Seguro() {
@@ -67,6 +69,14 @@ public class Seguro {
 
     public void setNombre_aseguradora(String nombre_aseguradora) {
         this.nombre_aseguradora = nombre_aseguradora;
+    }
+
+    public void setVehiculo(String vehiculo) {
+        this.vehiculo = vehiculo;
+    }
+
+    public String getVehiculo() {
+        return vehiculo;
     }
 
 }
