@@ -164,7 +164,7 @@ public class manejadorEmpleado extends Manejador {
             throw new Exception();// NO SOPORTADO TODAVÍA
         }
 
-        return "Se borró exitosamente el empleado con DNI=" + id;
+        return "Empleado Borrado Exitosamente (DNI=" + id + ")"; 
     }
 
 }

@@ -5,10 +5,12 @@ import icono_lopez from "./assets/imagen_fondo/fondo_lopez.png";
 import { FaTruckArrowRight } from "react-icons/fa6";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import Modal from "./componentes/Modal";
 
 function App() {
   return (
     <>
+      <Modal />
       <header>
         <Barra_superior />
         <ToastContainer />
