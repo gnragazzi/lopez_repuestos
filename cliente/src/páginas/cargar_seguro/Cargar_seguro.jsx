@@ -14,16 +14,14 @@ const Cargar_seguro = () => {
     acciones_seguro: acciones,
     dispatch_seguro: dispatch,
     estado_seguro: estado,
-    estado_camiones: camion,
   } = useContextoGlobal();
   const {
     PROXIMA_PAGINA_SEGURO,
     ANTERIOR_PAGINA_SEGURO,
-    SELECCIONAR_VEHICULO,
     RESETEAR_ESTADO,
   } = acciones;
   const { pagina_seguro } = estado;
-  const { camion_seleccionado } = camion;
+
 
   const enviarFormulario = () => {
     setError("");
@@ -48,12 +46,7 @@ const Cargar_seguro = () => {
     }
   };
 
-  useEffect(() => {
-    dispatch({
-      type: SELECCIONAR_VEHICULO,
-      payload: camion_seleccionado,
-    });
-  }, [camion_seleccionado]);
+
   return (
     <>
       <div className="App formulario">

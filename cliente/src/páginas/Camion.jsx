@@ -11,12 +11,16 @@ function Camiones() {
     estado_camiones: estado,
     dispatch_camiones: dispatch,
     acciones_camiones: acciones,
+    dispatch_seguro: dispatch_seguro,
+    acciones_seguro: acciones_seguro,
   } = useContextoGlobal();
 
   const axiosPrivado = useAxiosPrivado();
 
   const { RESETEAR_ESTADO, CARGAR_LISTA_CAMIONES, SELECCIONAR_CAMION } =
     acciones;
+
+  const { SELECCIONAR_VEHICULO } = acciones_seguro;
 
   useEffect(() => {
     dispatch({ type: RESETEAR_ESTADO });
@@ -86,8 +90,8 @@ function Camiones() {
                           to={"seguro"}
                           className="btn btn-primary"
                           onClick={() =>
-                            dispatch({
-                              type: SELECCIONAR_CAMION,
+                            dispatch_seguro({
+                              type: SELECCIONAR_VEHICULO,
                               payload: elemento.patente,
                             })
                           }
