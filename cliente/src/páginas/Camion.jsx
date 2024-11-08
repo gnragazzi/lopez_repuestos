@@ -87,11 +87,11 @@ function Camiones() {
                       <td>{elemento.marca}</td>
                       <td>{elemento.modelo}</td>
                       <td>{elemento.kilometraje}</td>
-                      <td>
+                      <td className="acciones">
                       <Link
                           rel="nofollow"
                           to={"seguro"}
-                          className="btn btn-primary"
+                          className="btn btn-info"
                           onClick={() =>
                             dispatch_seguro({
                               type: SELECCIONAR_VEHICULO_SEGURO,
@@ -117,7 +117,7 @@ function Camiones() {
                         <Link
                           rel="nofollow"
                           to={"costos"}
-                          className="btn btn-primary"
+                          className="btn btn-warning"
                           onClick={() =>
                             dispatch({
                               type: SELECCIONAR_CAMION,

@@ -58,7 +58,7 @@ const Cargar_tecnica = () => {
           {pagina_tecnica == 0 && (
             <button
               className={"formulario__boton volver"}
-              onClick={() => navegar("/principal")}
+              onClick={() => navegar("../")}
             >
               Volver
             </button>
@@ -97,7 +97,7 @@ const Cargar_tecnica = () => {
                 dispatch( {
                   type: RESETEAR_ESTADO
                 })
-                navegar("/principal");
+                navegar("../");
               }}
             >
               Confirmar

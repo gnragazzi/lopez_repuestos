@@ -83,8 +83,15 @@ const router = createBrowserRouter([
               {
                 path: "nuevo",
                 element: <EnConstrucción titulo={"Cargar semirremolque"} />,
+              },
+              {
+                path: "tecnica",
+                element: <Cargar_tecnica />,
+              },
+              {
+                path: "seguro",
+                element: <Cargar_seguro />
               }
-              
             ]
           },
         ],

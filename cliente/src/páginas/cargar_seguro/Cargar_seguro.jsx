@@ -61,8 +61,7 @@ const Cargar_seguro = () => {
               className="formulario__boton volver"
               onClick={() => {
                 dispatch({ type: RESETEAR_ESTADO });
-
-                navegar("/vehículos/camiones");
+                navegar("../");
               }}
             >
               Cancelar
@@ -100,7 +99,7 @@ const Cargar_seguro = () => {
                 console.log(estado);
                 enviarFormulario();
                 dispatch({ type: RESETEAR_ESTADO });
-                navegar("/vehículos/camiones");
+                navegar("../");
               }}
             >
               Confirmar

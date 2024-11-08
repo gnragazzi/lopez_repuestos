@@ -11,12 +11,19 @@ function Semirremolques() {
     estado_semirremolques: estado,
     dispatch_semirremolques: dispatch,
     acciones_semirremolques: acciones,
+    dispatch_tecnica: dispatch_tenica,
+    acciones_tecnica: acciones_tecnica,
+    dispatch_seguro: dispatch_seguro,
+    acciones_seguro: acciones_seguro,
   } = useContextoGlobal();
 
   const axiosPrivado = useAxiosPrivado();
 
-  const { RESETEAR_ESTADO, CARGAR_LISTA_SEMIRREMOLQUES, SELECCIONAR_SEMIRREMOLQUE } =
-    acciones;
+  const { RESETEAR_ESTADO, CARGAR_LISTA_SEMIRREMOLQUES } = acciones;
+
+  const { SELECCIONAR_VEHICULO: SELECCIONAR_VEHICULO_SEGURO } = acciones_seguro;
+  const { SELECCIONAR_VEHICULO: SELECCIONAR_VEHICULO_TECNICA } =
+    acciones_tecnica;
 
   useEffect(() => {
     dispatch({ type: RESETEAR_ESTADO });
@@ -24,10 +31,17 @@ function Semirremolques() {
     setCargando(true);
     const fetchData = async () => {
       try {
-        const response = await axiosPrivado.get("/vehiculos?tipo=semirremolque");
-        const semirremolquesData = Array.isArray(response.data) ? response.data : [];
+        const response = await axiosPrivado.get(
+          "/vehiculos?tipo=semirremolque"
+        );
+        const semirremolquesData = Array.isArray(response.data)
+          ? response.data
+          : [];
 
-        dispatch({ type: CARGAR_LISTA_SEMIRREMOLQUES, payload: semirremolquesData });
+        dispatch({
+          type: CARGAR_LISTA_SEMIRREMOLQUES,
+          payload: semirremolquesData,
+        });
         setCargando(false);
       } catch (error) {
         dispatch({ type: CARGAR_LISTA_SEMIRREMOLQUES, payload: [] });
@@ -80,25 +94,33 @@ function Semirremolques() {
                       <td>{elemento.marca}</td>
                       <td>{elemento.tipo}</td>
                       <td>{elemento.carga}</td>
-                      <td>
-                        <button
+                      <td className="acciones">
+                        <Link
+                          rel="nofollow"
+                          to={"seguro"}
+                          className="btn btn-info"
+                          onClick={() =>
+                            dispatch_seguro({
+                              type: SELECCIONAR_VEHICULO_SEGURO,
+                              payload: elemento.patente,
+                            })
+                          }
+                        >
+                          Seguro
+                        </Link>
+                        <Link
+                          rel="nofollow"
+                          to={"tecnica"}
                           className="btn btn-primary"
-                          onClick={() => console.log("Editar:", elemento)}
+                          onClick={() =>
+                            dispatch_tenica({
+                              type: SELECCIONAR_VEHICULO_TECNICA,
+                              payload: elemento.patente,
+                            })
+                          }
                         >
-                          Editar
-                        </button>{" "}
-                        <button
-                          className="btn btn-danger"
-                          onClick={() => console.log("Eliminar:", elemento)}
-                        >
-                          Eliminar
-                        </button>{" "}
-                        <button
-                          className="btn btn-danger"
-                          onClick={() => console.log("Visualizar:", elemento)}
-                        >
-                          Visualizar
-                        </button>{" "}
+                          Tecnica
+                        </Link>
                       </td>
                     </tr>
                   );

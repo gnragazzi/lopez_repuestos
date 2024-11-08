@@ -746,7 +746,11 @@ tbody tr:hover{
   background: linear-gradient(#0003,#0003), transparent;
   }
 
-
+.acciones{
+  display: flex;
+  flex-flow: row wrap;
+  gap: 5px;
+}
 
 /*----------------------------Formulario Mantenimiento*/
 
