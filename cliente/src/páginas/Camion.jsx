@@ -11,13 +11,10 @@ function Camiones() {
     estado_camiones: estado,
     dispatch_camiones: dispatch,
     acciones_camiones: acciones,
-<<<<<<< HEAD
     dispatch_tecnica: dispatch_tenica,
     acciones_tecnica: acciones_tecnica,
-=======
     dispatch_seguro: dispatch_seguro,
     acciones_seguro: acciones_seguro,
->>>>>>> 84cc4ef4ceee4daf1263f730164e04f90399a28d
   } = useContextoGlobal();
 
   const axiosPrivado = useAxiosPrivado();
@@ -25,11 +22,8 @@ function Camiones() {
   const { RESETEAR_ESTADO, CARGAR_LISTA_CAMIONES, SELECCIONAR_CAMION } =
     acciones;
 
-<<<<<<< HEAD
-  const { SELECCIONAR_VEHICULO } = acciones_tecnica;
-=======
-  const { SELECCIONAR_VEHICULO } = acciones_seguro;
->>>>>>> 84cc4ef4ceee4daf1263f730164e04f90399a28d
+  const { SELECCIONAR_VEHICULO:SELECCIONAR_VEHICULO_TECNICA } = acciones_tecnica;
+  const { SELECCIONAR_VEHICULO:SELECCIONAR_VEHICULO_SEGURO } = acciones_seguro;
 
   useEffect(() => {
     dispatch({ type: RESETEAR_ESTADO });
@@ -100,31 +94,23 @@ function Camiones() {
                           className="btn btn-primary"
                           onClick={() =>
                             dispatch_seguro({
-                              type: SELECCIONAR_VEHICULO,
+                              type: SELECCIONAR_VEHICULO_SEGURO,
                               payload: elemento.patente,
                             })
                           }
                         >
-<<<<<<< HEAD
-                          Editar
-                        </button>{" "}
+                          Seguro
+                        </Link>
                         <Link
                           rel="nofollow"
                           to={"tecnica"}
                           className="btn btn-primary"
                           onClick={() =>
                             dispatch_tenica({
-                              type: SELECCIONAR_VEHICULO,
+                              type: SELECCIONAR_VEHICULO_TECNICA,
                               payload: elemento.patente,
                             })
                           }
-=======
-                          Seguro
-                        </Link>
-                        <button
-                          className="btn btn-danger"
-                          onClick={() => console.log("Eliminar:", elemento)}
->>>>>>> 84cc4ef4ceee4daf1263f730164e04f90399a28d
                         >
                           Tecnica
                         </Link>
