@@ -2,12 +2,16 @@ import { useContextoGlobal } from "../../Contexto";
 
 const Cargar_2 = () => {
   const { estado_tecnica: estado } = useContextoGlobal();
-  const { fecha_emision, fecha_vencimiento, ubicacion } = estado;
+  const { fecha_emision, fecha_vencimiento, ubicacion, vehiculo_seleccionado } = estado;
 
   return (
     <div className="App formulario">
       <h2>Confirme Selección</h2>
       <div className="confirmar__seleccion">
+      <br />
+        <h4>Vehiculo</h4>
+        <p>Patente : {vehiculo_seleccionado}</p>
+        <br />
         <h4>Datos de la técnica</h4>
         <br />
         <div>

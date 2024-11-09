@@ -4,6 +4,7 @@ import { useContextoGlobal } from "../../Contexto";
 import useAxiosPrivado from "../../utilidades/useAxiosPrivado";
 import Cargar_1 from "./Cargar_1";
 import Cargar_2 from "./Cargar_2";
+import { MdReportGmailerrorred } from "react-icons/md";
 
 const Cargar_tecnica = () => {
   const navegar = useNavigate();
@@ -17,7 +18,7 @@ const Cargar_tecnica = () => {
     estado_camiones: camiones,
   } = useContextoGlobal();
   const { camion_seleccionado } = camiones;
-  const { PROXIMA_PAGINA_TECNICA, ANTERIOR_PAGINA_TECNICA , RESETEAR_ESTADO, SELECCIONAR_VEHICULO} = acciones;
+  const { PROXIMA_PAGINA_TECNICA, ANTERIOR_PAGINA_TECNICA, RESETEAR_ESTADO, SELECCIONAR_VEHICULO } = acciones;
   const { pagina_tecnica } = estado;
 
   const enviar_formulario = () => {
@@ -43,14 +44,46 @@ const Cargar_tecnica = () => {
     }
   };
 
+  const [ubicacionInvalida, setUbicacionInvalida] = useState("");
 
+  const validarFechas = () => {
+    const emision = new Date(estado.fecha_emision);
+    const vencimiento = new Date(estado.fecha_vencimiento);
 
-  console.log(estado);
+    if (vencimiento < emision) {
+      return false;
+    }
+    return true;
+  };
+
+  const validarUbicacion = () => {
+    const regex = /[^\w|\s|áéíóú|,]/i;
+    if (estado.ubicacion.trim() === "") {
+      setUbicacionInvalida(
+        <MdReportGmailerrorred title="La ubicación no puede estar vacía"/>
+      );
+      return false;
+    }
+
+    if (regex.test(estado.ubicacion)) {
+      setUbicacionInvalida(<MdReportGmailerrorred title= "La ubicación solo puede contener letras, números, espacios, acentos y comas"/>);
+      return false;
+    };
+
+    setUbicacionInvalida("");
+    return true;
+  };
+
   return (
     <>
       <div className="App formulario">
         {/* PÁGINAS */}
-        {pagina_tecnica == 0 && <Cargar_1 />}
+        {pagina_tecnica == 0 && (
+          <Cargar_1
+            ubicacionInvalida={ubicacionInvalida}
+            setUbicacionInvalida={setUbicacionInvalida}
+          />
+        )}
         {pagina_tecnica == 1 && <Cargar_2 />}
 
         {/* BOTONERA */}
@@ -69,9 +102,6 @@ const Cargar_tecnica = () => {
               onClick={() =>
                 dispatch({
                   type: ANTERIOR_PAGINA_TECNICA,
-                  payload: {
-                    /* acá iría el arreglo de comprobación*/
-                  },
                 })
               }
             >
@@ -82,28 +112,28 @@ const Cargar_tecnica = () => {
             <button
               className="formulario__boton siguiente"
               onClick={() => {
-                dispatch({ type: PROXIMA_PAGINA_TECNICA });
+                if (validarFechas() && validarUbicacion()) {
+                  dispatch({ type: PROXIMA_PAGINA_TECNICA });
+                }
               }}
             >
               Siguiente
             </button>
           )}
-          {
-            pagina_tecnica == 1 && (
-              <button
+          {pagina_tecnica == 1 && (
+            <button
               className="formulario__boton siguiente"
               onClick={() => {
                 enviar_formulario();
-                dispatch( {
-                  type: RESETEAR_ESTADO
-                })
+                dispatch({
+                  type: RESETEAR_ESTADO,
+                });
                 navegar("../");
               }}
             >
               Confirmar
             </button>
-            )
-          }
+          )}
         </div>
       </div>
     </>
