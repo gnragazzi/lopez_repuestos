@@ -11,7 +11,7 @@ function Camiones() {
     estado_camiones: estado,
     dispatch_camiones: dispatch,
     acciones_camiones: acciones,
-    dispatch_tecnica: dispatch_tenica,
+    dispatch_tecnica: dispatch_tecnica,
     acciones_tecnica: acciones_tecnica,
     dispatch_seguro: dispatch_seguro,
     acciones_seguro: acciones_seguro,
@@ -22,8 +22,8 @@ function Camiones() {
   const { RESETEAR_ESTADO, CARGAR_LISTA_CAMIONES, SELECCIONAR_CAMION } =
     acciones;
 
-  const { SELECCIONAR_VEHICULO:SELECCIONAR_VEHICULO_TECNICA } = acciones_tecnica;
-  const { SELECCIONAR_VEHICULO:SELECCIONAR_VEHICULO_SEGURO } = acciones_seguro;
+  const { SELECCIONAR_VEHICULO:SELECCIONAR_VEHICULO_TECNICA, RESETEAR_ESTADO:RESETEAR_ESTADO_TECNICA } = acciones_tecnica;
+  const { SELECCIONAR_VEHICULO:SELECCIONAR_VEHICULO_SEGURO, RESETEAR_ESTADO:RESETEAR_ESTADO_SEGURO } = acciones_seguro;
 
   useEffect(() => {
     dispatch({ type: RESETEAR_ESTADO });
@@ -92,12 +92,13 @@ function Camiones() {
                           rel="nofollow"
                           to={"seguro"}
                           className="btn btn-info"
-                          onClick={() =>
+                          onClick={() =>{
+                            dispatch_seguro({type: RESETEAR_ESTADO_SEGURO});
                             dispatch_seguro({
                               type: SELECCIONAR_VEHICULO_SEGURO,
                               payload: elemento.patente,
                             })
-                          }
+                          }}
                         >
                           Seguro
                         </Link>
@@ -105,12 +106,13 @@ function Camiones() {
                           rel="nofollow"
                           to={"tecnica"}
                           className="btn btn-primary"
-                          onClick={() =>
-                            dispatch_tenica({
+                          onClick={() =>{
+                            dispatch_tecnica({type: RESETEAR_ESTADO_TECNICA});
+                            dispatch_tecnica({
                               type: SELECCIONAR_VEHICULO_TECNICA,
                               payload: elemento.patente,
                             })
-                          }
+                          }}
                         >
                           Tecnica
                         </Link>
