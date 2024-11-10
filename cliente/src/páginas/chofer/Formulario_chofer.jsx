@@ -77,6 +77,8 @@ const Formulario_chofer = () => {
       return { esValido, cambiaron_campos };
     }
 
+    console.log({ choferes_activos, choferes_inactivos });
+
     if (dni.length < 1) {
       nuevosInputs.dni = "El campo no puede estar vacio, ingrese un dato.";
       esValido = false;
