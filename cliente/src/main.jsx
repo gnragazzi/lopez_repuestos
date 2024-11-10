@@ -5,16 +5,17 @@ import Contexto from "./Contexto.jsx";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Principal from "./páginas/Principal";
 import Mantenimiento from "./páginas/Mantenimiento.jsx";
-import Viajes from "./páginas/Viajes.jsx";
+import Viajes from "./páginas/cargar_viaje/Viajes.jsx";
 import CargarMantenimiento from "./páginas/mantenimiento/CargarMantenimiento.jsx";
 import { Cargar_viaje } from "./páginas/cargar_viaje/Cargar_viaje.jsx";
 import Camiones from "./páginas/Camion.jsx";
-import Chofer from "./páginas/Chofer.jsx";
+import Chofer from "./páginas/chofer/Chofer.jsx";
 import Costos_camión from "./páginas/costos_camion/Costos_camión.jsx";
 import EnConstrucción from "./componentes/EnConstrucción.jsx";
 import Login from "./páginas/Login.jsx";
 import RequiereAuth from "./componentes/RequiereAuth.jsx";
 import Entregas_tardias from "./páginas/ver_entregas_tardias/Entregas_tardias.jsx";
+import Chofer_manejador from "./páginas/chofer/Chofer_manejador.jsx";
 
 const router = createBrowserRouter([
   {
@@ -35,7 +36,20 @@ const router = createBrowserRouter([
         children: [
           {
             path: "choferes",
-            element: <Chofer />,
+            children: [
+              {
+                path: "",
+                element: <Chofer />,
+              },
+              {
+                path: "editar",
+                element: <Chofer_manejador />,
+              },
+              {
+                path: "nuevo",
+                element: <Chofer_manejador />,
+              },
+            ],
           },
           {
             path: "mecánicos",

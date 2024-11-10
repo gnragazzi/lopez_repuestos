@@ -4,12 +4,11 @@ import { MdReportGmailerrorred } from "react-icons/md";
 
 /* eslint-disable react/prop-types */
 function Cargar_viaje_1({ dispatch, acciones, estado }) {
-  
   const [fechainvalida, setFechainvalida] = useState("");
   const validarFechas = () => {
     const partida = new Date(fecha_partida);
     const llegada = new Date(fecha_llegada);
-  
+
     if (llegada < partida) {
       setFechainvalida(MdReportGmailerrorred);
       return false;
@@ -18,7 +17,7 @@ function Cargar_viaje_1({ dispatch, acciones, estado }) {
     setFechainvalida("");
     return true;
   };
-  
+
   const {
     PROXIMA_PANTALLA,
     SELECCIONAR_FECHA_PARTIDA,
@@ -34,6 +33,7 @@ function Cargar_viaje_1({ dispatch, acciones, estado }) {
       <form action="" className="form-table form__mantenimiento">
         <fieldset className="form__items-mantenimiento">
           <legend className="form__legend">Fecha de Partida</legend>
+          {console.log(fecha_partida)}
           <input
             className="items__input"
             type="date"
@@ -48,9 +48,14 @@ function Cargar_viaje_1({ dispatch, acciones, estado }) {
         </fieldset>
         <fieldset className="form__items-mantenimiento">
           <legend className="form__legend">Fecha de Llegada</legend>
-          <div className="mensaje__error" title="La fecha de llegada no puede ser anterior a la fecha de partida. Elija otra fecha valida" >{fechainvalida}</div>
+          <div
+            className="mensaje__error"
+            title="La fecha de llegada no puede ser anterior a la fecha de partida. Elija otra fecha valida"
+          >
+            {fechainvalida}
+          </div>
           <input
-            className={`items__input ${fechainvalida ? 'error' : ''}`}
+            className={`items__input ${fechainvalida ? "error" : ""}`}
             type="date"
             value={fecha_llegada}
             onChange={(e) => {
@@ -60,7 +65,7 @@ function Cargar_viaje_1({ dispatch, acciones, estado }) {
               });
             }}
           />
-        </fieldset >
+        </fieldset>
         <fieldset className="form__items-mantenimiento">
           <legend className="form__legend">Fecha Esperada</legend>
           <input
@@ -77,23 +82,33 @@ function Cargar_viaje_1({ dispatch, acciones, estado }) {
         </fieldset>
       </form>
       <div className="botonera_formulario">
-        <button className="formulario__boton volver"><Link  rel="nofollow" to="/viajes" style={{textDecoration:'none', color:'#000'}}>Volver</Link></button>
-      <button className="formulario__boton siguiente" 
-        onClick={() =>{
-          if(validarFechas()){
-            dispatch({
-            type: PROXIMA_PANTALLA,
-            //hay que validar las fechas unas contra otras (por ejemplo, fecha de partida no puede ser posterior a fecha de llegada)
-            payload: [
-              Boolean(fecha_partida),
-              Boolean(fecha_llegada),
-              Boolean(fecha_esperada),
-            ],
-          })}
-        }}
-      >
-        Siguiente
-      </button>
+        <button className="formulario__boton volver">
+          <Link
+            rel="nofollow"
+            to="/viajes"
+            style={{ textDecoration: "none", color: "#000" }}
+          >
+            Volver
+          </Link>
+        </button>
+        <button
+          className="formulario__boton siguiente"
+          onClick={() => {
+            if (validarFechas()) {
+              dispatch({
+                type: PROXIMA_PANTALLA,
+                //hay que validar las fechas unas contra otras (por ejemplo, fecha de partida no puede ser posterior a fecha de llegada)
+                payload: [
+                  Boolean(fecha_partida),
+                  Boolean(fecha_llegada),
+                  Boolean(fecha_esperada),
+                ],
+              });
+            }
+          }}
+        >
+          Siguiente
+        </button>
       </div>
     </div>
   );

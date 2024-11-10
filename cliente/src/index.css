@@ -665,6 +665,11 @@ main{
   flex-flow: row wrap;
 }
 
+.formulario_titulo{
+  margin: 0;
+  flex-basis: auto;
+  height: 60px;
+}
 
 /*Es un flex-item de cuerpo*/
 .App{
@@ -775,14 +780,19 @@ tbody tr:hover{
 }
 
 .botonera_formulario{
-  position: relative;
-  margin-top: 20px;
+  /*position: absolute;*/
+  margin: 0.5rem 0 0 0 ;
+  bottom: 3vh;
   width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
 }
 
 .formulario__boton{
-  position: absolute;  
+  /*position: absolute;  */
   box-shadow: 0 0 3px var(--fondo-borde-logo);
+  height: min-content;
   border-radius: 5px;
   padding: 6px;
   background:linear-gradient(#fffa,#fffa), transparent;
@@ -835,9 +845,8 @@ tbody tr:hover{
   align-items: start;
   overflow-y: auto;
   overflow-x: hidden;
-  padding: 2vh 0 2vh 2vw;
+  padding: 2vh 0 2vh 0vw;
 }
-
 
 .form__items-mantenimiento{
   flex: 0 1 100%; /*El ultimo es el flex basis, que define el ancho de los elementos, y como es column es el largo en este caso*/
@@ -845,6 +854,20 @@ tbody tr:hover{
   padding: 0 2vw 0 1vw;
   position: relative;
 }
+.formulario_grid{
+  width: 100%;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  
+  padding: 2vh 0 2vh 0vw;
+}
+
+.form__items-grid{
+  width: 90%;
+  padding: 0 2vw 0 1vw;
+  position: relative;
+}
+
 
 .form__legend{
   float: none;
@@ -853,21 +876,21 @@ tbody tr:hover{
   color: var(--color-de-seleccion-nav);
 }
 
-.form__items-mantenimiento .items__input{
+.items__input{
   margin: 0 0 1vh 0;
   width: 100%;
   background-color: transparent;
   border-bottom: 1px solid #0003;
 }
 
-.form__items-mantenimiento .items__input:focus{
+.items__input:focus{
   outline: 1px solid #0003;
   outline-offset: 3px;
   border: none;
   border-radius: 5px;
 }
 
-.form__items-mantenimiento .items__input{
+.items__input{
   border-bottom: 1px solid #0003;
 }
 
@@ -877,7 +900,7 @@ tbody tr:hover{
 }
 
 
-.form__items-mantenimiento .error{
+.error{
   border-bottom: 3px solid #d10c0c;
 }
 

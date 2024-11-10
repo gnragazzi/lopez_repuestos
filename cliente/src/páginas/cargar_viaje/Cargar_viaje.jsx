@@ -29,12 +29,15 @@ export const Cargar_viaje = () => {
         dispatch({ type: acciones.RESETEAR_CUERPO_VIAJE });
         toast.success("🚚 Viaje Cargado Correctamente 🚚", {
           position: "top-center",
-          autoClose: 3000,
+          autoClose: 2000,
           draggable: true,
           progress: undefined,
-          theme: "colored",
+          theme: "light",
           transition: Bounce,
           icon: false,
+          closeButton: false,
+          style: { textAlign: "center" },
+          pauseOnHover: false,
           bodyClassName: "toast_class",
         });
         navegar("/viajes");

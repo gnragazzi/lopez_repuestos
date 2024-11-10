@@ -1,7 +1,5 @@
 /* eslint-disable react/prop-types */
-import { Link } from "react-router-dom";
 
-Link;
 function Cargar_viaje_6({ dispatch, acciones, estado, enviarFormulario }) {
   const { PANTALLA_ANTERIOR } = acciones;
   const {

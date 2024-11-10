@@ -91,6 +91,7 @@ public class manejadorEmpleado extends Manejador {
 
     @Override
     public String manejarPost(HttpExchange he) throws Exception {
+
         InputStreamReader isr = new InputStreamReader(he.getRequestBody(), "utf-8");
         BufferedReader br = new BufferedReader(isr);
         int b;
@@ -114,7 +115,6 @@ public class manejadorEmpleado extends Manejador {
                 LocalDate.parse(jsonobj.getString("fecha_nacimiento")),
                 jsonobj.getString("telefono"),
                 Boolean.TRUE);
-
         choferDAO.create(temp);
 
         return "Alta Exitosa";
@@ -132,9 +132,12 @@ public class manejadorEmpleado extends Manejador {
         }
         br.close();
         isr.close();
-
         JSONObject jsonobj = new JSONObject(buf.toString());
 
+        
+        //System.out.println("Aqui: " + buf.toString());  
+        System.out.println("Fecha_psicotécnico: " + LocalDate.parse(jsonobj.getString("fecha_psicotecnico")) );  
+        System.out.println("fecha_nacimiento: " + LocalDate.parse(jsonobj.getString("fecha_nacimiento")));   
         Chofer temp = new Chofer(
                 LocalDate.parse(jsonobj.getString("fecha_psicotecnico")),
                 null,
@@ -146,11 +149,10 @@ public class manejadorEmpleado extends Manejador {
                 LocalDate.parse(jsonobj.getString("fecha_nacimiento")),
                 jsonobj.getString("telefono"),
                 jsonobj.getBoolean("esActivo"));
-        
-        
+        System.out.println("Llegar acá, estaría buenísimo."); 
         choferDAO.update(temp, id);
 
-        return "Actualización Exitosa"; 
+        return "Actualización Exitosa";
     }
 
     @Override
@@ -164,7 +166,7 @@ public class manejadorEmpleado extends Manejador {
             throw new Exception();// NO SOPORTADO TODAVÍA
         }
 
-        return "Empleado Borrado Exitosamente (DNI=" + id + ")"; 
+        return "Empleado Borrado Exitosamente (DNI=" + id + ")";
     }
 
 }

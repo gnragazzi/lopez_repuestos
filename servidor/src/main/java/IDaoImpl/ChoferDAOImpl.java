@@ -67,7 +67,8 @@ public class ChoferDAOImpl implements IDAO<Chofer> {
 
     @Override
     public void update(Chofer obj, String key) throws Exception {
-        PreparedStatement updateChofer;
+        
+        PreparedStatement updateChofer; 
         if (obj.getDni().equals(key)) {
             updateChofer = conexion.prepareStatement("UPDATE Empleados SET "
                     + "CUIL=?, Nombre=?, Apellido=?, Domicilio=?, Fecha_Nacimiento=?, Telefono=?, EsActivo=? "
@@ -90,9 +91,8 @@ public class ChoferDAOImpl implements IDAO<Chofer> {
             updateChofer.execute();
 
         } else {
-            // Se crea un nuevo objeto, con el nuevo dni, ya que no se puede borrar el anterior por ser DNI un PK
-            create(obj);
-
+            // Se crea un nuevo objeto, con el nuevo dni, ya que no se puede borrar el anterior por ser DNI un PK            
+            create(obj);  
             // Se deben modificar las referencias al objeto anterior
             updateChofer = conexion.prepareStatement("UPDATE Viajes SET Choferes_Empleados_DNI=? WHERE Choferes_Empleados_DNI=?;");
             updateChofer.setString(1, obj.getDni());
