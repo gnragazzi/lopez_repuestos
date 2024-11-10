@@ -5,6 +5,8 @@ import Seguro_2 from "./Seguro_2";
 import { useEffect, useState } from "react";
 import useAxiosPrivado from "../../utilidades/useAxiosPrivado";
 import { MdReportGmailerrorred } from "react-icons/md";
+import { Bounce, toast } from "react-toastify";
+import { AiOutlineFileProtect } from "react-icons/ai";
 
 const Cargar_seguro = () => {
   const navegar = useNavigate();
@@ -82,6 +84,16 @@ const Cargar_seguro = () => {
       .post("/seguro", estado)
       .then(() => {
         setCargando(false);
+        toast.success(" Seguro Cargado Correctamente", {
+          position: "top-center",
+          autoClose: 3000,
+          draggable: true,
+          progress: undefined,
+          theme: "colored",
+          icon: <AiOutlineFileProtect size={24}/>,
+          transition: Bounce,
+          bodyClassName: "toast_class",
+        });
       })
       .catch((error) => {
         setCargando(false);
