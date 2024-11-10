@@ -25,7 +25,7 @@ public class Servidor {
         server.createContext("/empleados", new manejadorEmpleado());
         server.createContext("/auth", new manejadorAuth());
         server.createContext("/refresh", new manejadorRefresh());
-        server.createContext("/temp", new temp());
+        server.createContext("/clear", new temp());
         server.setExecutor(null);
         server.start();
     }

@@ -57,6 +57,15 @@ const Login = () => {
   if (!auth)
     return (
       <div className="contenedorlogin">
+        <button
+          onClick={() =>
+            axios
+              .get("http://localhost:8080/clear")
+              .then((res) => console.log(res))
+          }
+        >
+          clear
+        </button>
         <ToastContainer />
         <div className="login">
           <div className="login__descripcion"></div>
