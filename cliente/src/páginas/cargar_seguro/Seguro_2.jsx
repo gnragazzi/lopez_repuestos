@@ -6,12 +6,16 @@ const Seguro_2 = () => {
     estado_seguro: estado
   } = useContextoGlobal();
 
-  const { fecha_emision, fecha_vencimiento, tipo, pago, nombre_aseguradora } = estado;
+  const { fecha_emision, fecha_vencimiento, tipo, pago, nombre_aseguradora, vehiculo_seleccionado } = estado;
 
   return (
     <div className="App formulario">
       <h2>Confirme Selección</h2>
       <div className="confirmar__seleccion">
+      <br />
+        <h4>Vehiculo</h4>
+        <p>Patente : {vehiculo_seleccionado}</p>
+        <br />
         <h4>Datos del seguro</h4>
         <br />
         <div>
