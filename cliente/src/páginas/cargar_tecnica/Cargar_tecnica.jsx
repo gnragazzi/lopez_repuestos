@@ -5,6 +5,8 @@ import useAxiosPrivado from "../../utilidades/useAxiosPrivado";
 import Cargar_1 from "./Cargar_1";
 import Cargar_2 from "./Cargar_2";
 import { MdReportGmailerrorred } from "react-icons/md";
+import { PiFileMagnifyingGlassFill } from "react-icons/pi";
+import { Bounce, toast } from "react-toastify";
 
 const Cargar_tecnica = () => {
   const navegar = useNavigate();
@@ -28,6 +30,16 @@ const Cargar_tecnica = () => {
       .post("/tecnica?tipo=camion", estado)
       .then(() => {
         setCargando(false);
+        toast.success("Tecnica Cargada Correctamente", {
+          position: "top-center",
+          autoClose: 3000,
+          draggable: true,
+          progress: undefined,
+          theme: "colored",
+          transition: Bounce,
+          icon: <PiFileMagnifyingGlassFill size={50}/>,
+          bodyClassName: "toast_class",
+        });
       })
       .catch((error) => {
         setCargando(false);
