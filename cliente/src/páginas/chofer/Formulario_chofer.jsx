@@ -2,8 +2,10 @@ import { MdReportGmailerrorred } from "react-icons/md";
 import { useContextoGlobal } from "../../Contexto";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
+import useAxiosPrivado from "../../utilidades/useAxiosPrivado";
 
 const Formulario_chofer = () => {
+  const axiosPrivado = useAxiosPrivado();
   const navegador = useNavigate();
   const {
     estado_choferes: {
@@ -28,6 +30,8 @@ const Formulario_chofer = () => {
     },
     dispatch_choferes: dispatch,
     acciones_choferes: {
+      RESETEAR_CHOFER,
+      ERROR_SERVIDOR,
       PROXIMA_PANTALLA,
       VALIDAR_INPUTS,
       SELECCIONAR_DNI,
@@ -39,6 +43,7 @@ const Formulario_chofer = () => {
       SELECCIONAR_FECHA_NACIMIENTO,
       SELECCIONAR_FECHA_PSICOTECNICO,
     },
+    setEstadoModal,
   } = useContextoGlobal();
 
   const validarCampos = () => {
@@ -77,8 +82,6 @@ const Formulario_chofer = () => {
       return { esValido, cambiaron_campos };
     }
 
-    console.log({ choferes_activos, choferes_inactivos });
-
     if (dni.length < 1) {
       nuevosInputs.dni = "El campo no puede estar vacio, ingrese un dato.";
       esValido = false;
@@ -88,13 +91,52 @@ const Formulario_chofer = () => {
     } else if (dni.length > 8) {
       nuevosInputs.dni = "El dni no puede tener más de 8 dígitos.";
       esValido = false;
-    } else if (
-      choferes_activos.filter((ch) => ch.dni == dni).length > 0 ||
-      choferes_inactivos.filter((ch) => ch.dni == dni).length > 0
-    ) {
+    } else if (choferes_activos.filter((ch) => ch.dni == dni).length > 0) {
       nuevosInputs.dni =
         "El DNI ingresado se encuentra asociado a otro Chofer.";
       esValido = false;
+    } else if (choferes_inactivos.filter((ch) => ch.dni == dni).length > 0) {
+      if (!esModificacion) {
+        const chofer = choferes_inactivos.filter((ch) => ch.dni == dni)[0];
+
+        setEstadoModal({
+          activo: true,
+          mensaje: `El DNI ingresado ya se encuentra asociado al chofer inactivo ${chofer.nombre} ${chofer.apellido}. ¿Desea darle nuevamente de alta?`,
+          accion: () => {
+            axiosPrivado
+              .patch(`/empleados?id=${chofer.dni}`, {
+                ...chofer,
+                esActivo: true,
+              })
+              .then(() => {
+                toast.success(
+                  `🛠 Se ha dado de alta a ${chofer.nombre} ${chofer.apellido} 🛠`,
+                  {
+                    position: "top-center",
+                    style: { textAlign: "center" },
+                    autoClose: 2000,
+                    draggable: true,
+                    progress: undefined,
+                    theme: "light",
+                    icon: false,
+                    closeButton: false,
+                    pauseOnHover: false,
+                    bodyClassName: "toast_class",
+                  }
+                );
+                dispatch({ tipo: RESETEAR_CHOFER });
+                navegador("/empleados/choferes");
+              })
+              .catch((error) => {
+                dispatch({ tipo: ERROR_SERVIDOR, payload: error.message });
+              });
+            setEstadoModal({ activo: false, mensaje: "", accion: null });
+          },
+        });
+      }
+      esValido = false;
+      nuevosInputs.dni =
+        "El DNI ingresado se encuentra asociado a un Chofer inactivo";
     }
     if (cuil.length < 1) {
       nuevosInputs.cuil = "El campo no puede estar vacio, ingrese un dato.";
