@@ -192,6 +192,7 @@ export const reducer_choferes = (estado, accion) => {
         inputs: payload,
       };
     }
+
     default:
       throw new Error(`ERROR: "${tipo}" no es una acción reconocida...`);
   }

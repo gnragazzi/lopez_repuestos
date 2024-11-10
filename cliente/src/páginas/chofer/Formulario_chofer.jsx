@@ -7,6 +7,8 @@ const Formulario_chofer = () => {
   const navegador = useNavigate();
   const {
     estado_choferes: {
+      datos_chofer,
+      datos_anteriores,
       datos_chofer: {
         dni,
         cuil,
@@ -17,8 +19,8 @@ const Formulario_chofer = () => {
         fecha_nacimiento,
         fecha_psicotecnico,
       },
-      /*esModificacion,
-      datos_anteriores: { dni: dni_anterior, cuil: cuil_anterior },*/
+      esModificacion,
+      /*datos_anteriores: { dni: dni_anterior, cuil: cuil_anterior },*/
       inputs,
       inputs: { flag_formulario },
       choferes_activos,
@@ -43,6 +45,7 @@ const Formulario_chofer = () => {
     const regex = /[^\w|\s|áéíóú|,|.]/i;
     const regexDNI = /\D/g;
     let esValido = true;
+    let cambiaron_campos = false;
     const nuevosInputs = {
       dni: "",
       cuil: "",
@@ -53,6 +56,26 @@ const Formulario_chofer = () => {
       fecha_nacimiento: "",
       fecha_psicotecnico: "",
     };
+
+    if (esModificacion) {
+      const chofer_actual = Object.entries(datos_chofer);
+      const chofer_anterior = Object.entries(datos_anteriores);
+
+      for (let i = 0; i < chofer_actual.length; i++) {
+        const [, valor_actual] = chofer_actual[i];
+        const [, valor_anterior] = chofer_anterior[i];
+        if (valor_actual != valor_anterior) {
+          cambiaron_campos = true;
+          break;
+        }
+      }
+    } else {
+      cambiaron_campos = true;
+    }
+    if (!cambiaron_campos) {
+      esValido = false;
+      return { esValido, cambiaron_campos };
+    }
 
     if (dni.length < 1) {
       nuevosInputs.dni = "El campo no puede estar vacio, ingrese un dato.";
@@ -159,7 +182,7 @@ const Formulario_chofer = () => {
 
     nuevosInputs.flag_formulario = true;
     dispatch({ tipo: VALIDAR_INPUTS, payload: nuevosInputs });
-    return esValido;
+    return { esValido, cambiaron_campos };
   };
 
   return (
@@ -363,9 +386,23 @@ const Formulario_chofer = () => {
         <button
           className="formulario__boton siguiente"
           onClick={() => {
-            validarCampos()
+            const { esValido, cambiaron_campos } = validarCampos();
+            esValido
               ? dispatch({ tipo: PROXIMA_PANTALLA })
-              : toast.error("Verifique la información Ingresada", {
+              : cambiaron_campos
+              ? toast.error("Verifique la Información Ingresada", {
+                  position: "top-center",
+                  autoClose: 1500,
+                  draggable: true,
+                  progress: undefined,
+                  theme: "light",
+                  icon: false,
+                  closeButton: false,
+                  style: { textAlign: "center" },
+                  pauseOnHover: false,
+                  bodyClassName: "toast_class",
+                })
+              : toast.error("Debe modificar al menos un campo.", {
                   position: "top-center",
                   autoClose: 1500,
                   draggable: true,
