@@ -1,43 +1,55 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package com.grupoing.servidor;
 
 import IDaoImpl.ChoferDAOImpl;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.sun.net.httpserver.HttpExchange;
-import com.sun.net.httpserver.HttpHandler;
-import java.io.IOException;
-import java.io.OutputStream;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import java.io.UnsupportedEncodingException;
+import java.net.URI;
 
-/**
- *
- * @author gera
- */
-public class temp implements HttpHandler{
+public class temp extends Manejador {
+
+    InterfacesDAO.IDAO dao;
+
+    public temp() {
+        try {
+            dao = new ChoferDAOImpl();
+        } catch (Exception ex) {
+            System.out.println(ex.getMessage());
+        }
+    }
+
 
     @Override
-    public void handle(HttpExchange he) throws IOException {
-        String res = "Ok";
+    protected String manejarGet(HttpExchange he) throws UnsupportedEncodingException, JsonProcessingException, ClassNotFoundException, Exception {
+        String response = "";
+        URI uri = he.getRequestURI();
         
-        try {
-            //
-            ChoferDAOImpl c = new ChoferDAOImpl();
-            c.list();
-        } catch (Exception ex) {
-            Logger.getLogger(temp.class.getName()).log(Level.SEVERE, null, ex);
+        String id = obtenerParámetros(uri, "id");
+        
+        
+        if(id != null){
+            response = "Se busca la entrada " + id; 
         }
-        
-        //
-        
-        he.getResponseHeaders().set("Content-Type", "application/json");
-        he.sendResponseHeaders(200, res.getBytes().length);
-        OutputStream os = he.getResponseBody();
-        os.write(res.getBytes());
-        os.close();
-        
+        else
+        {
+            response = "SE BUSCA LA TOTALIDAD DE LAS ENTRADAS";
+        }
+        return response;
     }
-    
+
+    @Override
+    protected String manejarPost(HttpExchange he) throws UnsupportedEncodingException, JsonProcessingException, ClassNotFoundException, Exception {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    @Override
+    protected String manejarPatch(HttpExchange he) throws UnsupportedEncodingException, JsonProcessingException, ClassNotFoundException, Exception {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    @Override
+    protected String manejarDelete(HttpExchange he) throws UnsupportedEncodingException, JsonProcessingException, ClassNotFoundException, Exception {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
 }

@@ -23,6 +23,12 @@ import{
 } from "./utilidades/reducer_seguros"
 
 
+import {
+  acciones_choferes,
+  estadoInicial_choferes,
+  reducer_choferes,
+} from "./utilidades/reducer_choferes";
+
 const ContextoGlobal = createContext();
 
 // eslint-disable-next-line react-refresh/only-export-components
@@ -32,6 +38,11 @@ export const useContextoGlobal = () => {
 
 // eslint-disable-next-line react/prop-types
 function Contexto({ children }) {
+  const [estadoModal, setEstadoModal] = useState({
+    activo: false,
+    mensaje: "",
+    accion: () => {},
+  });
   const [auth, setAuth] = useState("");
   const [estado_camiones, dispatch_camiones] = useReducer(
     reducer_camiones,
@@ -54,6 +65,10 @@ function Contexto({ children }) {
   );
 
   
+  const [estado_choferes, dispatch_choferes] = useReducer(
+    reducer_choferes,
+    estadoInicial_choferes
+  );
   const [menuSeleccionado, setMenuSeleccionado] = useState("");
   const clickMenu = (e) => {
     setMenuSeleccionado(e.currentTarget.textContent);
@@ -79,6 +94,11 @@ function Contexto({ children }) {
         estado_tecnica,
         dispatch_tecnica,
         acciones_tecnica,
+        estado_choferes,
+        dispatch_choferes,
+        acciones_choferes,
+        estadoModal,
+        setEstadoModal,
       }}
     >
       {children}
@@ -87,3 +107,4 @@ function Contexto({ children }) {
 }
 
 export default Contexto;
+

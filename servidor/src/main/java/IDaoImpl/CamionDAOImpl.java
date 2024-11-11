@@ -29,11 +29,11 @@ public class CamionDAOImpl implements IDAO<Camion>{
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
     
-    public Camion read(Camion obj) throws Exception {
+    public Camion read(String clave) throws Exception {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
     
-    public void update(Camion obj) throws Exception {
+    public void update(Camion obj, String key) throws Exception {
         PreparedStatement envioCamion;
         envioCamion = conexion.prepareStatement("update Camiones set kilometraje=kilometraje + ? where Vehiculos_Patente= ?;");
         envioCamion.setInt(1,obj.getKilometraje());
@@ -41,9 +41,7 @@ public class CamionDAOImpl implements IDAO<Camion>{
         envioCamion.executeUpdate();
     }
     
-    public void delete(Camion obj) throws Exception {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
+
     
     public ArrayList<Camion> list() throws Exception {
         Statement statement = conexion.createStatement();
@@ -81,6 +79,11 @@ public class CamionDAOImpl implements IDAO<Camion>{
         respuesta.calcularCostos_por_kilometros();
         
         return respuesta;
+    }
+
+    @Override
+    public void delete(String key) throws Exception {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
 

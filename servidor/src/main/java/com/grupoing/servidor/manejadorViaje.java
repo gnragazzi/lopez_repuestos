@@ -61,7 +61,7 @@ public class manejadorViaje extends Manejador {
             // al camión recuperado, le sumamos los kilometros realizados en el viaje
             camion.setKilometraje(camion.getKilometraje() + kilometros_realizados);
             CamionDAOImpl camionDAO= new CamionDAOImpl();
-            camionDAO.update(camion);
+            camionDAO.update(camion, camion.getPatente()); 
             String destino = jsonobj.getString("destino");
             int peso = jsonobj.getInt("peso");
 
@@ -114,6 +114,16 @@ public class manejadorViaje extends Manejador {
         ObjectWriter ow = new ObjectMapper().writer().withDefaultPrettyPrinter();
 
         return ow.writeValueAsString(viajes);
+    }
+
+    @Override
+    protected String manejarPatch(HttpExchange he) throws UnsupportedEncodingException, JsonProcessingException, ClassNotFoundException, Exception {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    @Override
+    protected String manejarDelete(HttpExchange he) throws UnsupportedEncodingException, JsonProcessingException, ClassNotFoundException, Exception {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
 }

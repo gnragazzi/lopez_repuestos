@@ -109,12 +109,15 @@ const CargarMantenimiento = () => {
       .then(() => {
         toast.success("🛠 Cargado Correctamente 🛠", {
           position: "top-center",
-          autoClose: 3000,
+          style: { textAlign: "center" },
+          autoClose: 2000,
           draggable: true,
           progress: undefined,
-          theme: "colored",
+          theme: "light",
           transition: Bounce,
           icon: false,
+          closeButton: false,
+          pauseOnHover: false,
           bodyClassName: "toast_class",
         });
         navegar("/mantenimiento");

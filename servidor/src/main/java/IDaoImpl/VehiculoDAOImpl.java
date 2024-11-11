@@ -1,24 +1,11 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package IDaoImpl;
 
-import Clases.Camion;
-import Clases.Semirremolque;
 import Clases.Vehiculo;
 import Conexion.Conexion;
 import InterfacesDAO.IDAO;
 import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.Statement;
 import java.util.ArrayList;
-import java.util.Iterator;
 
-/**
- *
- * @author clauz
- */
 public class VehiculoDAOImpl implements IDAO<Vehiculo>{
 
     private Connection conexion;
@@ -33,19 +20,11 @@ public class VehiculoDAOImpl implements IDAO<Vehiculo>{
     }
 
     @Override
-    public Vehiculo read(Vehiculo obj) throws Exception {
+    public Vehiculo read(String clave) throws Exception {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
-    @Override
-    public void update(Vehiculo obj) throws Exception {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
 
-    @Override
-    public void delete(Vehiculo obj) throws Exception {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
 
     @Override
     public ArrayList<Vehiculo> list() throws Exception {
@@ -60,6 +39,16 @@ public class VehiculoDAOImpl implements IDAO<Vehiculo>{
 
         
         return vehiculos; 
+    }
+
+    @Override
+    public void update(Vehiculo obj, String key) throws Exception {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    @Override
+    public void delete(String key) throws Exception {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
     
 }

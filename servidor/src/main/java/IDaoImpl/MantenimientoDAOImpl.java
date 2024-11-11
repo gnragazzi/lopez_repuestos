@@ -47,17 +47,7 @@ public class MantenimientoDAOImpl implements IDAO<Mantenimiento> {
 
     }
 
-    @Override
-    public void delete(Mantenimiento mantenimiento) throws Exception {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-        /*ACA VA LA CONSULTA A LA BASE DE DATOS */
-    }
 
-    @Override
-    public void update(Mantenimiento mantenimiento) throws Exception {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-        /*ACA VA LA CONSULTA A LA BASE DE DATOS */
-    }
 
     @Override
     public ArrayList<Mantenimiento> list() throws Exception {
@@ -88,7 +78,7 @@ public class MantenimientoDAOImpl implements IDAO<Mantenimiento> {
     }
 
     @Override
-    public Mantenimiento read(Mantenimiento obj) throws Exception {
+    public Mantenimiento read(String clave) throws Exception {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
     
@@ -105,5 +95,15 @@ public class MantenimientoDAOImpl implements IDAO<Mantenimiento> {
             respuesta.setCost_mano_de_obra(rs.getFloat("sum(Costos_mano_de_obra)"));
         }
         return respuesta;
+    }
+
+    @Override
+    public void update(Mantenimiento obj, String key) throws Exception {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    @Override
+    public void delete(String key) throws Exception {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 }

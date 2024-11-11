@@ -27,15 +27,7 @@ public class Tarjeta_RutaDAOImpl implements IDAO<Tarjeta_Ruta>{
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
-    @Override
-    public void delete(Tarjeta_Ruta tarjeta_ruta) throws Exception {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
 
-    @Override
-    public void update(Tarjeta_Ruta tarjeta_ruta) throws Exception {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
 
     @Override
     public ArrayList<Tarjeta_Ruta> list() throws Exception {
@@ -43,7 +35,17 @@ public class Tarjeta_RutaDAOImpl implements IDAO<Tarjeta_Ruta>{
     }
 
     @Override
-    public Tarjeta_Ruta read(Tarjeta_Ruta obj) throws Exception {
+    public Tarjeta_Ruta read(String clave) throws Exception {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    @Override
+    public void update(Tarjeta_Ruta obj, String key) throws Exception {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    @Override
+    public void delete(String key) throws Exception {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
     
