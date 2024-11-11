@@ -23,7 +23,10 @@ const Login = () => {
       .post(
         "http://localhost:8080/auth",
         { usuario, contrasena },
-        { headers: { "Content-Type": "application/json" } }
+        {
+          headers: { "Content-Type": "application/json" },
+          withCredentials: true,
+        }
       )
       .then((res) => {
         const { token } = res.data;
