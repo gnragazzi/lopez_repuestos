@@ -16,6 +16,7 @@ export const acciones_choferes = {
   RESETEAR_CHOFER: 15,
   PROXIMA_PANTALLA: 16,
   PANTALLA_ANTERIOR: 17,
+  FORMULARIO_ALTA: 18,
 };
 
 const choferVacio = {
@@ -174,6 +175,12 @@ export const reducer_choferes = (estado, accion) => {
     case acciones_choferes.RESETEAR_CHOFER: {
       return estadoInicial_choferes;
     }
+    case acciones_choferes.FORMULARIO_ALTA: {
+      return {
+        ...estado,
+        pantalla: 0,
+      };
+    }
     case acciones_choferes.PROXIMA_PANTALLA: {
       return {
         ...estado,
@@ -192,6 +199,7 @@ export const reducer_choferes = (estado, accion) => {
         inputs: payload,
       };
     }
+
     default:
       throw new Error(`ERROR: "${tipo}" no es una acción reconocida...`);
   }

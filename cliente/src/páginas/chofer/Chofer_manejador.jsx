@@ -75,7 +75,7 @@ const Chofer_manejador = () => {
 
   return (
     <>
-      {pantalla == 0 && <Formulario_chofer />}
+      {pantalla == 0 && <Formulario_chofer enviar={enviarFormulario} />}
       {pantalla > 0 && <Confirmar_chofer enviar={enviarFormulario} />}
     </>
   );

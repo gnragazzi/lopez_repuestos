@@ -19,7 +19,7 @@ const Chofer = () => {
     CARGAR_CHOFERES,
     BAJA_CHOFER,
     CARGAR_DATOS_CHOFER,
-    RESETEAR_CHOFER,
+    FORMULARIO_ALTA,
   } = acciones;
 
   const { choferes_activos, error, cargando } = estado;
@@ -90,7 +90,8 @@ const Chofer = () => {
           <button
             className="btn btn-success enlace_cargar_mantenimiento"
             onClick={() => {
-              dispatch({ tipo: RESETEAR_CHOFER });
+              dispatch({ tipo: FORMULARIO_ALTA });
+
               navegador("nuevo");
             }}
           >
