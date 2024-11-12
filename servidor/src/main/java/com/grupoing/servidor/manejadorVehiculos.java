@@ -25,7 +25,6 @@ public class manejadorVehiculos extends Manejador {
 
     public manejadorVehiculos() {
         try {
-            System.out.println("Constructor de manejador vehículos");
             this.semirremolqueDAO = new SemirremolqueDAOImpl();
             this.camionDAO = new CamionDAOImpl();
             this.vehiculoDAO=new VehiculoDAOImpl();

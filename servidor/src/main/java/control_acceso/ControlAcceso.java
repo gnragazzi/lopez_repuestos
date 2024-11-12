@@ -10,6 +10,7 @@ import Conexion.ConexionLogin;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 
 
 //aca tenemos que poner que implementa la intefaz DAO
@@ -99,7 +100,18 @@ public class ControlAcceso {
         }
         
     }
+    
+    public String getUltimaFecha() throws SQLException, ClassNotFoundException, Exception{
+        conectarBD();
+        PreparedStatement buscarFecha = conexion.prepareStatement("SELECT Fecha FROM Registro_Backup ORDER BY Fecha DESC;");  
+        ResultSet rs = buscarFecha.executeQuery();
         
+        if(rs.next())
+            return rs.getString("Fecha"); 
+        else 
+            throw new Exception();
+    }
+    
     /*  
         @Override 
         public void delete() throws Exception {
