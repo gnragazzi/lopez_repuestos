@@ -5,7 +5,7 @@ import com.sun.net.httpserver.HttpHandler;
 import java.io.IOException;
 import java.io.OutputStream;
 
-public class temp implements HttpHandler {
+public class clear implements HttpHandler {
 
     @Override
     public void handle(HttpExchange he) throws IOException {
@@ -17,7 +17,7 @@ public class temp implements HttpHandler {
             he.sendResponseHeaders(204, -1);
             return;
         }        
-        String response = "CHEQUEAR DATA";
+        String response = "Borrado el token de refresh"; 
         he.getResponseHeaders().set("Content-Type", "application/json");
         he.getResponseHeaders().set("Clear-Site-Data", "\"*\""); 
         he.sendResponseHeaders(201, response.getBytes().length);
