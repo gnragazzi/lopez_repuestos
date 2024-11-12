@@ -1,55 +1,28 @@
 package com.grupoing.servidor;
 
-import IDaoImpl.ChoferDAOImpl;
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.sun.net.httpserver.HttpExchange;
-import java.io.UnsupportedEncodingException;
-import java.net.URI;
+import com.sun.net.httpserver.HttpHandler;
+import java.io.IOException;
+import java.io.OutputStream;
 
-public class temp extends Manejador {
-
-    InterfacesDAO.IDAO dao;
-
-    public temp() {
-        try {
-            dao = new ChoferDAOImpl();
-        } catch (Exception ex) {
-            System.out.println(ex.getMessage());
-        }
-    }
-
+public class temp implements HttpHandler {
 
     @Override
-    protected String manejarGet(HttpExchange he) throws UnsupportedEncodingException, JsonProcessingException, ClassNotFoundException, Exception {
-        String response = "";
-        URI uri = he.getRequestURI();
-        
-        String id = obtenerParámetros(uri, "id");
-        
-        
-        if(id != null){
-            response = "Se busca la entrada " + id; 
-        }
-        else
-        {
-            response = "SE BUSCA LA TOTALIDAD DE LAS ENTRADAS";
-        }
-        return response;
-    }
+    public void handle(HttpExchange he) throws IOException {
+        he.getResponseHeaders().add("Access-Control-Allow-Origin", "*");
 
-    @Override
-    protected String manejarPost(HttpExchange he) throws UnsupportedEncodingException, JsonProcessingException, ClassNotFoundException, Exception {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        if (he.getRequestMethod().equalsIgnoreCase("OPTIONS")) {
+            he.getResponseHeaders().add("Access-Control-Allow-Methods", "GET, OPTIONS, DELETE, PATCH"); 
+            he.getResponseHeaders().add("Access-Control-Allow-Headers", "Content-Type,Authorization");
+            he.sendResponseHeaders(204, -1);
+            return;
+        }        
+        String response = "CHEQUEAR DATA";
+        he.getResponseHeaders().set("Content-Type", "application/json");
+        he.getResponseHeaders().set("Clear-Site-Data", "\"*\""); 
+        he.sendResponseHeaders(201, response.getBytes().length);
+        OutputStream os = he.getResponseBody();
+        os.write(response.getBytes());
+        os.close();
     }
-
-    @Override
-    protected String manejarPatch(HttpExchange he) throws UnsupportedEncodingException, JsonProcessingException, ClassNotFoundException, Exception {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
-
-    @Override
-    protected String manejarDelete(HttpExchange he) throws UnsupportedEncodingException, JsonProcessingException, ClassNotFoundException, Exception {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
-
 }

@@ -22,7 +22,10 @@ const Login = () => {
       .post(
         "http://localhost:8080/auth",
         { usuario, contrasena },
-        { headers: { "Content-Type": "application/json" } }
+        {
+          headers: { "Content-Type": "application/json" },
+          withCredentials: true,
+        }
       )
       .then((res) => {
         const { token } = res.data;
@@ -56,6 +59,15 @@ const Login = () => {
   if (!auth)
     return (
       <div className="contenedorlogin">
+        <button
+          onClick={() =>
+            axios
+              .get("http://localhost:8080/clear")
+              .then((res) => console.log(res))
+          }
+        >
+          clear
+        </button>
         <ToastContainer />
         <div className="login">
           <div className="login__descripcion"></div>

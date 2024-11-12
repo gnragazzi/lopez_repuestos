@@ -31,14 +31,14 @@ public class Autorización {
                 .withSubject("Baeldung Details")
                 .withClaim("tipo", ACCESO)
                 .withIssuedAt(new Date())
-                .withExpiresAt(new Date(System.currentTimeMillis() + 10*60000L)) 
+                .withExpiresAt(new Date(System.currentTimeMillis() + 2000L))  
                 .withJWTId(UUID.randomUUID()
                         .toString())
                 //                .withNotBefore(new Date(System.currentTimeMillis() + 1000L)) 
                 .sign(algorithm); 
     }
 
-    public static String nuevoTokenRefresh(Date fecha_expiración) {
+    public static String nuevoTokenRefresh(Date fecha_expiración) { 
         return JWT.create()
                 .withIssuer("Lopez-Servidor")
                 .withSubject("Baeldung Details")
