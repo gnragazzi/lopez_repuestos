@@ -1,33 +1,36 @@
 package com.grupoing.servidor;
 
-
 import Clases.Seguro;
 import IDaoImpl.SeguroDAOImpl;
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.ObjectWriter;
 import com.sun.net.httpserver.HttpExchange;
 import java.io.UnsupportedEncodingException;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
+import java.net.URI;
 import java.time.LocalDate;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.json.JSONObject;
 
 public class manejadorSeguro extends Manejador {
+
     SeguroDAOImpl seguroDAO;
     Seguro seguro;
+
     public manejadorSeguro() {
         try {
             seguroDAO = new SeguroDAOImpl();
-            seguro= new Seguro();
+            seguro = new Seguro();
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(manejadorTecnica.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
-   
     public String manejarPost(HttpExchange he) throws Exception {
-        
+
         //USAR EL InputStreamReadr NOS PERMITE PARSEAR EL CUERPO DEL POST
         InputStreamReader isr = new InputStreamReader(he.getRequestBody(), "utf-8");
         BufferedReader br = new BufferedReader(isr);
@@ -48,9 +51,9 @@ public class manejadorSeguro extends Manejador {
             String tipo = jsonobj.getString("tipo");
             String nombre_aseguradora = jsonobj.getString("nombre_aseguradora");
             String vehiculo = jsonobj.getString("vehiculo_seleccionado");
-            
-            Seguro aux= new Seguro(fecha_emision, fecha_vencimiento, nombre_aseguradora, pago, tipo, vehiculo);
-            
+
+            Seguro aux = new Seguro(fecha_emision, fecha_vencimiento, nombre_aseguradora, pago, tipo, vehiculo);
+
             seguroDAO.create(aux);
 
             //CREAR HTTP RESPONSE
@@ -63,6 +66,22 @@ public class manejadorSeguro extends Manejador {
 
     @Override
     protected String manejarGet(HttpExchange he) throws UnsupportedEncodingException, JsonProcessingException, ClassNotFoundException, Exception {
+
+        URI uri = he.getRequestURI();
+        String patente = obtenerParámetros(uri, "patente");
+        
+        ObjectWriter ow = new ObjectMapper().writer().withDefaultPrettyPrinter();
+        return ow.writeValueAsString(seguroDAO.ultimoSeguro(patente));
+
+    }
+
+    @Override
+    protected String manejarPatch(HttpExchange he) throws UnsupportedEncodingException, JsonProcessingException, ClassNotFoundException, Exception {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    @Override
+    protected String manejarDelete(HttpExchange he) throws UnsupportedEncodingException, JsonProcessingException, ClassNotFoundException, Exception {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
