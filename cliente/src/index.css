@@ -353,7 +353,7 @@ header{
   flex-flow: row nowrap;
   place-items: center;
   justify-content: end;
-  margin-right: 10px;
+  margin-right: 20px;
   gap: 0 2vw;
 }
 
@@ -366,6 +366,7 @@ header{
   justify-content: center;
   transition: background-color .3s;
   cursor: pointer;
+  z-index: 21;
 }
 
 .iconos_barra_superior .icon{
@@ -1067,4 +1068,55 @@ table tbody .no_disponible:hover{
 #confirmar:hover{
   background-color: #ae8c5c;
   color: #F8F2E8;
+}
+
+/*MENU BARRA SUPERIOR*/
+.menu_barra_superior{
+  position: absolute;
+  top: var(--altura-barra-superior);
+  transform: translate(-50%,3%);
+  /*border: 1px solid red;*/
+  background-color: var(--fondo-barra-superior);
+  z-index: 205;
+  color: var(--color-fuente-sidebar);
+  text-align: center;
+  transition: background-color .3s;
+  padding: 1rem;
+  border-radius: 0.3rem;
+  opacity: 1;
+  cursor: pointer;
+}
+
+.menu_barra_superior:hover{
+  background-color: var(--color-de-seleccion-nav);
+}
+
+.item_menu_barra_superior{
+  margin: 0;  
+  font-size: 0.7rem;
+  font-weight: bold;
+  transition: color .3s;
+}
+
+.menu_barra_superior:hover .item_menu_barra_superior{
+  color: var(--color-fuente-sidebar-hover);
+}
+
+
+.menu_oculto{
+  top: - 100%;
+  opacity: 0;
+}
+
+.overlay{
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 20;
+}
+
+.overlay_oculto{
+  z-index: -10;
 }
