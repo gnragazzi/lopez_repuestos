@@ -6,6 +6,9 @@ import Conexion.Conexion;
 import InterfacesDAO.IDAO;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.Statement;
+import java.time.LocalDate;
 import java.util.ArrayList;
 
 public class SeguroDAOImpl implements IDAO<Seguro>{
@@ -52,6 +55,26 @@ public class SeguroDAOImpl implements IDAO<Seguro>{
     @Override
     public void delete(String key) throws Exception {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+    
+    public Seguro ultimoSeguro(String patente)throws Exception{
+        
+        PreparedStatement statement = conexion.prepareStatement("select * from Seguros where Fecha_Emision = (select max(Fecha_Emision) from Seguros where Vehiculo = ?) order by idSeguros desc;");
+        statement.setString(1, patente);
+        ResultSet rs = statement.executeQuery();
+        
+        rs.next();
+        
+        Seguro auxiliar = new Seguro();
+        
+        auxiliar.setFecha_emision(LocalDate.parse(rs.getString("Fecha_Emision")));
+        auxiliar.setFecha_vencimiento(LocalDate.parse(rs.getString("Fecha_Vencimiento")));
+        auxiliar.setNombre_aseguradora(rs.getString("Nombre_aseguradora"));
+        auxiliar.setPago(rs.getFloat("Pago"));
+        auxiliar.setTipo(rs.getString("Tipo"));
+        auxiliar.setVehiculo(rs.getString("Vehiculo"));
+        
+        return auxiliar;
     }
     
 }

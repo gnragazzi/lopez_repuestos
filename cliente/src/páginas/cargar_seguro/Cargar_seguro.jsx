@@ -2,6 +2,7 @@ import { useNavigate } from "react-router-dom";
 import { useContextoGlobal } from "../../Contexto";
 import Seguro_1 from "./Seguro_1";
 import Seguro_2 from "./Seguro_2";
+import Listar_seguro from "./Listar_seguro";
 import { useEffect, useState } from "react";
 import useAxiosPrivado from "../../utilidades/useAxiosPrivado";
 import { MdReportGmailerrorred } from "react-icons/md";
@@ -55,7 +56,7 @@ const Cargar_seguro = () => {
         esValido=false;
     }else setAseguradoraInvalida("");
 
-    if (estado.pago.trim() === "") {
+    if (estado.pago.trim() == "") {
       setPagoInvalido(
         <MdReportGmailerrorred title="El pago no puede estar vacío"/>
       );
@@ -115,14 +116,27 @@ const Cargar_seguro = () => {
     <>
       <div className="App formulario">
         {/* PÁGINAS */}
-        {pagina_seguro == 0 && <Seguro_1 
+        {pagina_seguro == 0 && <Listar_seguro/>}
+        {pagina_seguro == 1 && <Seguro_1 
         aseguradoraInvalida={aseguradoraInvalida} setAseguradoraInvalida={setAseguradoraInvalida}
         tipoInvalida={tipoInvalida} setTipoInvalida={setTipoInvalida}
         pagoInvalido={pagoInvalido} setPagoInvalido={setPagoInvalido}/>}
-        {pagina_seguro == 1 && <Seguro_2 />}
+        {pagina_seguro == 2 && <Seguro_2/>}
+
 
         {/* BOTONERA */}
         <div className="botonera_formulario">
+          {pagina_seguro == 1 && (
+            <button
+              className="formulario__boton volver"
+              onClick={() => {
+                dispatch({ type: RESETEAR_ESTADO });
+                navegar("../");
+              }}
+            >
+              Cancelar
+            </button>
+          )}
           {pagina_seguro == 0 && (
             <button
               className="formulario__boton volver"
@@ -134,7 +148,7 @@ const Cargar_seguro = () => {
               Cancelar
             </button>
           )}
-          {pagina_seguro == 1 && (
+          {pagina_seguro == 2 && (
             <button
               className="formulario__boton volver"
               onClick={() =>
@@ -149,7 +163,7 @@ const Cargar_seguro = () => {
               Volver
             </button>
           )}
-          {pagina_seguro == 0 && (
+          {pagina_seguro == 1 && (
             <button
               className="formulario__boton siguiente"
               onClick={() => {
@@ -161,7 +175,7 @@ const Cargar_seguro = () => {
               Siguiente
             </button>
           )}
-          {pagina_seguro == 1 && (
+          {pagina_seguro == 2 && (
             <button
               className="formulario__boton siguiente"
               onClick={() => {
