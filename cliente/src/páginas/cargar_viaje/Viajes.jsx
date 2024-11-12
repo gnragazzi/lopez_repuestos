@@ -36,16 +36,20 @@ function Viajes() {
       <div className="App">
         <h2>Viajes</h2>
         <br />
-        <Link
-          to="cargar_viaje"
-          className="enlace_cargar_mantenimiento"
-          rel="nofollow"
-        >
-          <button className="btn btn-success">Insertar</button>
-        </Link>
-        <Link to="ver_entregas_tardias" className="" rel="nofollow">
-          <button className="enlace_ver_entregas">Ver Entregas Tardias</button>
-        </Link>
+        <div className="entregas-insertar-viajes">
+          <Link
+            to="cargar_viaje"
+            rel="nofollow"
+          >
+            <button  className="btn btn-success">Insertar</button>
+          </Link>
+          <Link to="ver_entregas_tardias" rel="nofollow">
+            <button className="btn btn-info">
+              Ver Entregas Tardias
+            </button>
+          </Link>
+        </div>
+
         <div className="container__table">
           <table className="table table-bordered">
             <thead>
@@ -74,7 +78,7 @@ function Viajes() {
                     {elemento.fecha_llegada[0]}
                   </td>
                   <td>{elemento.destino}</td>
-                  <td className="td__botones tr-boton">
+                  <td className="td__botones tr-boton acciones">
                     <button
                       className="btn btn-primary"
                       onClick={() => console.log("Editar:", elemento)}

@@ -145,7 +145,7 @@ const Cargar_seguro = () => {
                 navegar("../");
               }}
             >
-              Cancelar
+              Volver
             </button>
           )}
           {pagina_seguro == 2 && (

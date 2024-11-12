@@ -36,7 +36,7 @@ function Entregas_tardias() {
 
     return (
         <div className="App">
-        <h1 className="prueba">Entregas Tardias</h1>
+        <h2>Entregas Tardias</h2>
         <div className="container__table">
           <table className="table table-bordered">
             <thead>

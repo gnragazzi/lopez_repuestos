@@ -687,7 +687,7 @@ main{
 /*----------------------------Tabla para formularios*/
 
 .App h2{
-  font-size: 1.5rem;
+  font-size: 2rem;
 }
 
 .container__table{
@@ -837,7 +837,14 @@ tbody tr:hover{
   left: 0;
 }
 
+/*------------------------------- botonera de entregas tardías e insertar en viajes */
 
+.entregas-insertar-viajes{
+  position: absolute;
+  right: 0;
+  display: flex;
+  gap: 5px;
+}
 
 
 /*------------------------------- Formulario para cargar más detalles de mantenimiento*/

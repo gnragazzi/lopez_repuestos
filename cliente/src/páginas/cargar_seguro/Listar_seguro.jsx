@@ -52,7 +52,7 @@ const Listar_seguro = () => {
   } = estado.ultimo_seguro;
   return (
     <div className="App formulario">
-      <h2>Confirme Selección</h2>
+      <h2>Datos de seguro actual</h2>
       <button
         className="enlace_cargar_mantenimiento btn btn-success"
         onClick={() => dispatch({ type: PROXIMA_PAGINA_SEGURO })}
@@ -64,8 +64,6 @@ const Listar_seguro = () => {
           <br />
           <h4>Vehiculo</h4>
           <p>Patente : {vehiculo_seleccionado}</p>
-          <br />
-          <h4>Datos del seguro</h4>
           <br />
           <div>
             <h4>Aseguradora</h4>
@@ -81,8 +79,8 @@ const Listar_seguro = () => {
           </div>
           <div>
             <h4>Fechas</h4>
-            <p>Fecha de emisión: {emision_ultimo} </p>
-            <p>Fecha de vencimiento: {vencimiento_ultimo}</p>
+            <p>Fecha de emisión: {emision_ultimo[2]}/{emision_ultimo[1]}/{emision_ultimo[0]} </p>
+            <p>Fecha de vencimiento: {vencimiento_ultimo[2]}/{vencimiento_ultimo[1]}/{vencimiento_ultimo[0]}</p>
           </div>
         </div>
       )}
