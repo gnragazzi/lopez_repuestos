@@ -9,6 +9,7 @@ export const acciones_seguro = {
   SELECCIONAR_NOMBRE_ASEGURADORA: 7,
   RESETEAR_ESTADO: 8,
   CARGAR_SEGURO: 9,
+  ES_CAMION_SEGURO: 10,
 };
 
 export const estadoInicial_seguro = {
@@ -26,6 +27,7 @@ export const estadoInicial_seguro = {
     tipo: "",
     nombre_aseguradora: "",
   },
+  esCamion: "",
 };
 
 export const reducer_seguro = (estado, accion) => {
@@ -59,7 +61,10 @@ export const reducer_seguro = (estado, accion) => {
       return estadoInicial_seguro;
     }
     case acciones_seguro.CARGAR_SEGURO: {
-      return { ...estado, ultimo_seguro: payload};
+      return { ...estado, ultimo_seguro: payload };
+    }
+    case acciones_seguro.ES_CAMION_SEGURO: {
+      return { ...estado, esCamion: payload };
     }
     default:
       throw new Error(`ERROR: "${accion.type}" no es una acción reconocida...`);

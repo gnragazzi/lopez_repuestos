@@ -47,40 +47,41 @@ public class manejadorTecnica extends Manejador {
         }
         br.close();
         isr.close();
-        
 
         try {
             // CONVERTIR EL JSONString a JSONObject
-                  
+
             JSONObject jsonobj = new JSONObject(buf.toString());
             LocalDate fecha_emision = LocalDate.parse(jsonobj.getString("fecha_emision"));
-                    
+
             LocalDate fecha_vencimiento = LocalDate.parse(jsonobj.getString("fecha_vencimiento"));
             String ubicacion = jsonobj.getString("ubicacion");
 
+            String patente = jsonobj.getString("vehiculo_seleccionado");
 
-            String tipo = obtenerParámetros(uri, "tipo");
+            String tipoVehiculo = jsonobj.getString("esCamion");
 
             Vehiculo vehiculo;
-            
-            if (tipo.equalsIgnoreCase("camion")) {
-                vehiculo = new Camion();
 
-            } else if (tipo.equalsIgnoreCase("semirremolque")) {
-                vehiculo = new Semirremolque();
+            if (tipoVehiculo.equalsIgnoreCase("camion")) {
+                vehiculo = new Camion();
+                vehiculo.setPatente(patente);
+                Tecnica aux = new Tecnica(fecha_emision, fecha_vencimiento, ubicacion, vehiculo);
+                tecnicaDAO.create(aux);
+                System.out.println("La técnica es para camión");
             } else {
-                //entonces está intentando acceder a un tipo incorrecto, por lo que el mensaje de respuesta debería ser 404 
-                throw new Exception();
+                if (tipoVehiculo.equalsIgnoreCase("semirremolque")) {
+                    vehiculo = new Semirremolque();
+                    vehiculo.setPatente(patente);
+                    Tecnica aux = new Tecnica(fecha_emision, fecha_vencimiento, ubicacion, vehiculo);
+                    tecnicaDAO.create(aux);
+                    System.out.println("La técnica es para semirremolque");
+                } else {
+                    System.out.println("Hubo un error en determinar el tipo de vehiculo");
+                }
             }
 
-            vehiculo.setPatente(jsonobj.getString("vehiculo_seleccionado"));
-            
             //no interesan los otros datos de vehiculo, en todo caso si necesitamos buscarlo lo consultamos en la base de datos
-
-            Tecnica aux = new Tecnica(fecha_emision, fecha_vencimiento, ubicacion, vehiculo);
-            
-
-            tecnicaDAO.create(aux);
 
             //CREAR HTTP RESPONSE
             return "Cargado Correctamente.";
@@ -92,7 +93,14 @@ public class manejadorTecnica extends Manejador {
 
     @Override
     protected String manejarGet(HttpExchange he) throws UnsupportedEncodingException, JsonProcessingException, ClassNotFoundException, Exception {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+
+        URI uri = he.getRequestURI();
+        String patente = obtenerParámetros(uri, "patente");
+
+        System.out.println("entra");
+        ObjectWriter ow = new ObjectMapper().writer().withDefaultPrettyPrinter();
+        return ow.writeValueAsString(tecnicaDAO.ultimaTecnica(patente));
+
     }
 
     @Override
