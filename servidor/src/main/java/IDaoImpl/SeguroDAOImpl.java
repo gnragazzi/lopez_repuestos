@@ -1,6 +1,7 @@
 package IDaoImpl;
 
 import Clases.Seguro;
+import Clases.Vehiculo;
 import Conexion.Conexion;
 import InterfacesDAO.IDAO;
 import java.sql.Connection;
@@ -29,7 +30,7 @@ public class SeguroDAOImpl implements IDAO<Seguro> {
         envioSeguro.setFloat(3, seguro.getPago());
         envioSeguro.setString(4, seguro.getTipo());
         envioSeguro.setString(5, seguro.getNombre_aseguradora());
-        envioSeguro.setString(6, seguro.getVehiculo());
+        envioSeguro.setString(6, seguro.getVehiculo().getPatente());
 
         envioSeguro.executeUpdate();
 
@@ -71,7 +72,6 @@ public class SeguroDAOImpl implements IDAO<Seguro> {
         auxiliar.setNombre_aseguradora(rs.getString("Nombre_aseguradora"));
         auxiliar.setPago(rs.getFloat("Pago"));
         auxiliar.setTipo(rs.getString("Tipo"));
-        auxiliar.setVehiculo(rs.getString("Vehiculo"));
 
         return auxiliar;
     }

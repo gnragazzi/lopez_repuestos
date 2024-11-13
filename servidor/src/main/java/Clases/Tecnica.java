@@ -20,9 +20,9 @@ public class Tecnica {
     @JsonProperty("ubicacion")
     private String ubicacion;
     @JsonProperty("vehiculo")
-    private String vehiculo;
+    private Vehiculo vehiculo;
 
-    public Tecnica(LocalDate fecha_emision, LocalDate fecha_vencimiento, String ubicacion, String vehiculo) {
+    public Tecnica(LocalDate fecha_emision, LocalDate fecha_vencimiento, String ubicacion, Vehiculo vehiculo) {
         this.fecha_emision = fecha_emision;
         this.fecha_vencimiento = fecha_vencimiento;
         this.ubicacion = ubicacion;
@@ -44,7 +44,7 @@ public class Tecnica {
         return ubicacion;
     }
 
-    public String getVehiculo() {
+    public Vehiculo getVehiculo() {
         return vehiculo;
     }
 
@@ -60,7 +60,7 @@ public class Tecnica {
         this.ubicacion = ubicacion;
     }
 
-    public void setVehiculo(String vehiculo) {
+    public void setVehiculo(Vehiculo vehiculo) {
         this.vehiculo = vehiculo;
     }
 

@@ -1,6 +1,9 @@
 package com.grupoing.servidor;
 
+import Clases.Camion;
 import Clases.Seguro;
+import Clases.Semirremolque;
+import Clases.Vehiculo;
 import IDaoImpl.SeguroDAOImpl;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -50,11 +53,28 @@ public class manejadorSeguro extends Manejador {
             float pago = (float) jsonobj.getDouble("pago");
             String tipo = jsonobj.getString("tipo");
             String nombre_aseguradora = jsonobj.getString("nombre_aseguradora");
-            String vehiculo = jsonobj.getString("vehiculo_seleccionado");
 
-            Seguro aux = new Seguro(fecha_emision, fecha_vencimiento, nombre_aseguradora, pago, tipo, vehiculo);
+            String tipoVehiculo = jsonobj.getString("esCamion");
 
-            seguroDAO.create(aux);
+            Vehiculo vehiculo;
+
+            String patente = jsonobj.getString("vehiculo_seleccionado");
+
+            if (tipoVehiculo.equalsIgnoreCase("camion")) {
+                vehiculo = new Camion();
+                vehiculo.setPatente(patente);
+                Seguro aux = new Seguro(fecha_emision, fecha_vencimiento, nombre_aseguradora, pago, tipo, vehiculo);
+                seguroDAO.create(aux);
+            } else {
+                if (tipoVehiculo.equalsIgnoreCase("semirremolque")) {
+                    vehiculo = new Semirremolque();
+                    vehiculo.setPatente(patente);
+                    Seguro aux = new Seguro(fecha_emision, fecha_vencimiento, nombre_aseguradora, pago, tipo, vehiculo);
+                    seguroDAO.create(aux);
+                } else {
+                    System.out.println("Hubo un error en determinar el tipo de vehiculo");
+                }
+            }
 
             //CREAR HTTP RESPONSE
             return "Cargado Correctamente.";
@@ -69,7 +89,7 @@ public class manejadorSeguro extends Manejador {
 
         URI uri = he.getRequestURI();
         String patente = obtenerParámetros(uri, "patente");
-        
+
         ObjectWriter ow = new ObjectMapper().writer().withDefaultPrettyPrinter();
         return ow.writeValueAsString(seguroDAO.ultimoSeguro(patente));
 
@@ -84,6 +104,5 @@ public class manejadorSeguro extends Manejador {
     protected String manejarDelete(HttpExchange he) throws UnsupportedEncodingException, JsonProcessingException, ClassNotFoundException, Exception {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
-
 
 }

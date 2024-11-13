@@ -34,7 +34,7 @@ public class TecnicaDAOImpl implements IDAO<Tecnica> {
         envioTecnica.setString(1, String.valueOf(tecnica.getFecha_emision()));
         envioTecnica.setString(2, String.valueOf(tecnica.getFecha_vencimiento()));
         envioTecnica.setString(3, tecnica.getUbicacion());
-        envioTecnica.setString(4, tecnica.getVehiculo());
+        envioTecnica.setString(4, tecnica.getVehiculo().getPatente());
 
         envioTecnica.executeUpdate();
     }
@@ -73,7 +73,6 @@ public class TecnicaDAOImpl implements IDAO<Tecnica> {
         auxiliar.setFecha_emision(LocalDate.parse(rs.getString("Fecha_Emision")));
         auxiliar.setFecha_vencimiento(LocalDate.parse(rs.getString("Fecha_Vencimiento")));
         auxiliar.setUbicacion(rs.getString("Ubicacion"));
-        auxiliar.setVehiculo(rs.getString("Vehiculo"));
 
         return auxiliar;
     }

@@ -57,14 +57,31 @@ public class manejadorTecnica extends Manejador {
             LocalDate fecha_vencimiento = LocalDate.parse(jsonobj.getString("fecha_vencimiento"));
             String ubicacion = jsonobj.getString("ubicacion");
 
-            String tipo = obtenerParámetros(uri, "tipo");
+            String patente = jsonobj.getString("vehiculo_seleccionado");
 
-            String vehiculo = jsonobj.getString("vehiculo_seleccionado");
+            String tipoVehiculo = jsonobj.getString("esCamion");
+
+            Vehiculo vehiculo;
+
+            if (tipoVehiculo.equalsIgnoreCase("camion")) {
+                vehiculo = new Camion();
+                vehiculo.setPatente(patente);
+                Tecnica aux = new Tecnica(fecha_emision, fecha_vencimiento, ubicacion, vehiculo);
+                tecnicaDAO.create(aux);
+                System.out.println("La técnica es para camión");
+            } else {
+                if (tipoVehiculo.equalsIgnoreCase("semirremolque")) {
+                    vehiculo = new Semirremolque();
+                    vehiculo.setPatente(patente);
+                    Tecnica aux = new Tecnica(fecha_emision, fecha_vencimiento, ubicacion, vehiculo);
+                    tecnicaDAO.create(aux);
+                    System.out.println("La técnica es para semirremolque");
+                } else {
+                    System.out.println("Hubo un error en determinar el tipo de vehiculo");
+                }
+            }
 
             //no interesan los otros datos de vehiculo, en todo caso si necesitamos buscarlo lo consultamos en la base de datos
-            Tecnica aux = new Tecnica(fecha_emision, fecha_vencimiento, ubicacion, vehiculo);
-
-            tecnicaDAO.create(aux);
 
             //CREAR HTTP RESPONSE
             return "Cargado Correctamente.";

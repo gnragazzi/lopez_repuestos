@@ -21,8 +21,8 @@ function Semirremolques() {
 
   const { RESETEAR_ESTADO, CARGAR_LISTA_SEMIRREMOLQUES } = acciones;
 
-  const { SELECCIONAR_VEHICULO:SELECCIONAR_VEHICULO_TECNICA, RESETEAR_ESTADO:RESETEAR_ESTADO_TECNICA } = acciones_tecnica;
-  const { SELECCIONAR_VEHICULO:SELECCIONAR_VEHICULO_SEGURO, RESETEAR_ESTADO:RESETEAR_ESTADO_SEGURO } = acciones_seguro;
+  const { SELECCIONAR_VEHICULO:SELECCIONAR_VEHICULO_TECNICA, RESETEAR_ESTADO:RESETEAR_ESTADO_TECNICA , ES_CAMION_TECNICA} = acciones_tecnica;
+  const { SELECCIONAR_VEHICULO:SELECCIONAR_VEHICULO_SEGURO, RESETEAR_ESTADO:RESETEAR_ESTADO_SEGURO , ES_CAMION_SEGURO} = acciones_seguro;
 
   useEffect(() => {
     dispatch({ type: RESETEAR_ESTADO });
@@ -104,6 +104,10 @@ function Semirremolques() {
                               type: SELECCIONAR_VEHICULO_SEGURO,
                               payload: elemento.patente,
                             })
+                            dispatch_seguro({
+                              type: ES_CAMION_SEGURO,
+                              payload: "semirremolque"
+                            })
                           }}
                         >
                           Seguro
@@ -117,6 +121,10 @@ function Semirremolques() {
                             dispatch_tecnica({
                               type: SELECCIONAR_VEHICULO_TECNICA,
                               payload: elemento.patente,
+                            })
+                            dispatch_tecnica({
+                              type: ES_CAMION_TECNICA,
+                              payload: "semirremolque"
                             })
                           }}
                         >
