@@ -6,6 +6,7 @@ export const acciones_tecnica = {
   SELECCIONAR_FECHA_EMISION: 4,
   SELECCIONAR_FECHA_VENCIMIENTO: 5,
   SELECCIONAR_UBICACION: 6,
+  CARGAR_TECNICA: 7,
 };
 
 export const estadoInicial_tecnica = {
@@ -14,6 +15,11 @@ export const estadoInicial_tecnica = {
   fecha_vencimiento: new Date().toISOString().substring(0, 10),
   ubicacion: "",
   pagina_tecnica: 0,
+  ultima_tecnica: {
+    fecha_emision: new Date().toISOString().substring(0, 10),
+    fecha_vencimiento: new Date().toISOString().substring(0, 10),
+    ubicacion: "",
+  },
 };
 
 export const reducer_tecnica = (estado, accion) => {
@@ -35,20 +41,26 @@ export const reducer_tecnica = (estado, accion) => {
     case acciones_tecnica.SELECCIONAR_FECHA_EMISION: {
       return {
         ...estado,
-        fecha_emision: payload
+        fecha_emision: payload,
       };
     }
     case acciones_tecnica.SELECCIONAR_FECHA_VENCIMIENTO: {
       return {
         ...estado,
-        fecha_vencimiento: payload
+        fecha_vencimiento: payload,
       };
     }
     case acciones_tecnica.SELECCIONAR_UBICACION: {
       return {
-          ...estado,
-          ubicacion: payload,
+        ...estado,
+        ubicacion: payload,
       };
+    }
+    case acciones_tecnica.CARGAR_TECNICA: {
+      return {
+        ...estado,
+        ultima_tecnica: payload,
+      }
     }
     default:
       throw new Error(`ERROR: "${accion.type}" no es una acción reconocida...`);

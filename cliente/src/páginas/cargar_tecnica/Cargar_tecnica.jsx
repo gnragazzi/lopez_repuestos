@@ -4,6 +4,7 @@ import { useContextoGlobal } from "../../Contexto";
 import useAxiosPrivado from "../../utilidades/useAxiosPrivado";
 import Cargar_1 from "./Cargar_1";
 import Cargar_2 from "./Cargar_2";
+import Listar_tecnica from "./Listar_tenica";
 import { MdReportGmailerrorred } from "react-icons/md";
 import { PiFileMagnifyingGlassFill } from "react-icons/pi";
 import { Bounce, toast } from "react-toastify";
@@ -17,17 +18,16 @@ const Cargar_tecnica = () => {
     acciones_tecnica: acciones,
     dispatch_tecnica: dispatch,
     estado_tecnica: estado,
-    estado_camiones: camiones,
   } = useContextoGlobal();
-  const { camion_seleccionado } = camiones;
-  const { PROXIMA_PAGINA_TECNICA, ANTERIOR_PAGINA_TECNICA, RESETEAR_ESTADO, SELECCIONAR_VEHICULO } = acciones;
+  const { PROXIMA_PAGINA_TECNICA, ANTERIOR_PAGINA_TECNICA, RESETEAR_ESTADO } =
+    acciones;
   const { pagina_tecnica } = estado;
 
   const enviar_formulario = () => {
     setError("");
     setCargando(true);
     axiosPrivado
-      .post("/tecnica?tipo=camion", estado)
+      .post("/tecnica", estado)
       .then(() => {
         setCargando(false);
         toast.success("Tecnica Cargada Correctamente", {
@@ -37,7 +37,7 @@ const Cargar_tecnica = () => {
           progress: undefined,
           theme: "colored",
           transition: Bounce,
-          icon: <PiFileMagnifyingGlassFill size={50}/>,
+          icon: <PiFileMagnifyingGlassFill size={50} />,
           bodyClassName: "toast_class",
         });
       })
@@ -72,15 +72,17 @@ const Cargar_tecnica = () => {
     const regex = /[^\w|\s|áéíóú|,]/i;
     if (estado.ubicacion.trim() === "") {
       setUbicacionInvalida(
-        <MdReportGmailerrorred title="La ubicación no puede estar vacía"/>
+        <MdReportGmailerrorred title="La ubicación no puede estar vacía" />
       );
       return false;
     }
 
     if (regex.test(estado.ubicacion)) {
-      setUbicacionInvalida(<MdReportGmailerrorred title= "La ubicación solo puede contener letras, números, espacios, acentos y comas"/>);
+      setUbicacionInvalida(
+        <MdReportGmailerrorred title="La ubicación solo puede contener letras, números, espacios, acentos y comas" />
+      );
       return false;
-    };
+    }
 
     setUbicacionInvalida("");
     return true;
@@ -90,13 +92,14 @@ const Cargar_tecnica = () => {
     <>
       <div className="App formulario">
         {/* PÁGINAS */}
-        {pagina_tecnica == 0 && (
+        {pagina_tecnica == 0 && <Listar_tecnica />}
+        {pagina_tecnica == 1 && (
           <Cargar_1
             ubicacionInvalida={ubicacionInvalida}
             setUbicacionInvalida={setUbicacionInvalida}
           />
         )}
-        {pagina_tecnica == 1 && <Cargar_2 />}
+        {pagina_tecnica == 2 && <Cargar_2 />}
 
         {/* BOTONERA */}
         <div className="botonera_formulario">
@@ -108,9 +111,21 @@ const Cargar_tecnica = () => {
               Volver
             </button>
           )}
-          {pagina_tecnica == 1 && (
+          {(pagina_tecnica == 1) && (
             <button
-              className="formulario__boton volver"
+              className={"formulario__boton volver"}
+              onClick={() =>
+                dispatch({
+                  type: ANTERIOR_PAGINA_TECNICA,
+                })
+              }
+            >
+              Cancelar
+            </button>
+          )}
+          {(pagina_tecnica == 2) && (
+            <button
+              className={"formulario__boton volver"}
               onClick={() =>
                 dispatch({
                   type: ANTERIOR_PAGINA_TECNICA,
@@ -120,7 +135,7 @@ const Cargar_tecnica = () => {
               Volver
             </button>
           )}
-          {pagina_tecnica == 0 && (
+          {pagina_tecnica == 1 && (
             <button
               className="formulario__boton siguiente"
               onClick={() => {
@@ -132,7 +147,7 @@ const Cargar_tecnica = () => {
               Siguiente
             </button>
           )}
-          {pagina_tecnica == 1 && (
+          {pagina_tecnica == 2 && (
             <button
               className="formulario__boton siguiente"
               onClick={() => {

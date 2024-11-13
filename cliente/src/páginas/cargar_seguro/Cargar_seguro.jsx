@@ -126,17 +126,6 @@ const Cargar_seguro = () => {
 
         {/* BOTONERA */}
         <div className="botonera_formulario">
-          {pagina_seguro == 1 && (
-            <button
-              className="formulario__boton volver"
-              onClick={() => {
-                dispatch({ type: RESETEAR_ESTADO });
-                navegar("../");
-              }}
-            >
-              Cancelar
-            </button>
-          )}
           {pagina_seguro == 0 && (
             <button
               className="formulario__boton volver"
@@ -146,6 +135,16 @@ const Cargar_seguro = () => {
               }}
             >
               Volver
+            </button>
+          )}
+          {pagina_seguro == 1 && (
+            <button
+              className="formulario__boton volver"
+              onClick={() => {
+                dispatch({ type: ANTERIOR_PAGINA_SEGURO });
+              }}
+            >
+              Cancelar
             </button>
           )}
           {pagina_seguro == 2 && (

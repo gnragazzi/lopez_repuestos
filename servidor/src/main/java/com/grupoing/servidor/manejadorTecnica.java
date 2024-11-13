@@ -47,38 +47,22 @@ public class manejadorTecnica extends Manejador {
         }
         br.close();
         isr.close();
-        
 
         try {
             // CONVERTIR EL JSONString a JSONObject
-                  
+
             JSONObject jsonobj = new JSONObject(buf.toString());
             LocalDate fecha_emision = LocalDate.parse(jsonobj.getString("fecha_emision"));
-                    
+
             LocalDate fecha_vencimiento = LocalDate.parse(jsonobj.getString("fecha_vencimiento"));
             String ubicacion = jsonobj.getString("ubicacion");
 
-
             String tipo = obtenerParámetros(uri, "tipo");
 
-            Vehiculo vehiculo;
-            
-            if (tipo.equalsIgnoreCase("camion")) {
-                vehiculo = new Camion();
+            String vehiculo = jsonobj.getString("vehiculo_seleccionado");
 
-            } else if (tipo.equalsIgnoreCase("semirremolque")) {
-                vehiculo = new Semirremolque();
-            } else {
-                //entonces está intentando acceder a un tipo incorrecto, por lo que el mensaje de respuesta debería ser 404 
-                throw new Exception();
-            }
-
-            vehiculo.setPatente(jsonobj.getString("vehiculo_seleccionado"));
-            
             //no interesan los otros datos de vehiculo, en todo caso si necesitamos buscarlo lo consultamos en la base de datos
-
             Tecnica aux = new Tecnica(fecha_emision, fecha_vencimiento, ubicacion, vehiculo);
-            
 
             tecnicaDAO.create(aux);
 
@@ -92,7 +76,14 @@ public class manejadorTecnica extends Manejador {
 
     @Override
     protected String manejarGet(HttpExchange he) throws UnsupportedEncodingException, JsonProcessingException, ClassNotFoundException, Exception {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+
+        URI uri = he.getRequestURI();
+        String patente = obtenerParámetros(uri, "patente");
+
+        System.out.println("entra");
+        ObjectWriter ow = new ObjectMapper().writer().withDefaultPrettyPrinter();
+        return ow.writeValueAsString(tecnicaDAO.ultimaTecnica(patente));
+
     }
 
     @Override
