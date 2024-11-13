@@ -22,7 +22,7 @@ const Seguro_1 = ({aseguradoraInvalida,setAseguradoraInvalida, tipoInvalida,setT
 
   return (
     <>
-      <h2>Seleccione la Fecha:</h2>
+      <h2>Ingrese los datos del seguro:</h2>
       <form className="form-table form__mantenimiento">
         <fieldset className="form__items-mantenimiento">
           <legend className="form__legend">Aseguradora</legend>
@@ -113,13 +113,27 @@ const Seguro_1 = ({aseguradoraInvalida,setAseguradoraInvalida, tipoInvalida,setT
 
         <fieldset className="form__items-mantenimiento">
           <legend className="form__legend">Emisión</legend>
+          <div className="mensaje__error">
+            {fechainvalida && (
+              <MdReportGmailerrorred title={fechainvalida}/>
+            )}
+          </div>
           <input
             type="date"
             name="fecha_emision"
             id="fecha_emision"
-            className="items__input"
+            className={`items__input ${fechainvalida ? 'error' : ''}`}
             value={estado.fecha_emision}
             onChange={(e) => {
+              const emision = new Date(e.target.value);
+              const vencimiento = new Date(estado.fecha_vencimiento);
+
+              if (vencimiento < emision) {
+                setFechainvalida("La fecha de vencimiento no puede ser anterior a la fecha de emisión. Elija una fecha valida.");
+              } else {
+                setFechainvalida("");
+              }
+              
               dispatch({
                 type: SELECCIONAR_FECHA_EMISION,
                 payload: e.target.value,

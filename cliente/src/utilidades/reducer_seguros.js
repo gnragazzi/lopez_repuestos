@@ -15,7 +15,7 @@ export const estadoInicial_seguro = {
   vehiculo_seleccionado: "",
   fecha_emision: new Date().toISOString().substring(0, 10),
   fecha_vencimiento: new Date().toISOString().substring(0, 10),
-  pago: 0,
+  pago: "",
   tipo: "",
   nombre_aseguradora: "",
   pagina_seguro: 0,

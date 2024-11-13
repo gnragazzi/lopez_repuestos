@@ -47,7 +47,7 @@ const Cargar_seguro = () => {
 
     if (estado.nombre_aseguradora.trim() === "") {
       setAseguradoraInvalida(
-        <MdReportGmailerrorred title="La ubicación no puede estar vacía"/>
+        <MdReportGmailerrorred title="El nombre de la aseguradora no puede estar vacío"/>
       );
       esValido=false;
     }else 
