@@ -31,6 +31,10 @@ const Login = () => {
         const { token } = res.data;
         //sessionStorage.setItem("jwt", token);
         setAuth(token);
+        //PREGUNTAR AL SERVIDOR POR VENCIMIENTOS CERCANOS
+        // SI HAY INFORMACIÓN
+        // POBLAR LA PANTALLA PRINCIPAL
+        // ESTABLECER LAS NOTIFICACIONES
         navegar(from, { replace: true });
       })
       .catch(() => {

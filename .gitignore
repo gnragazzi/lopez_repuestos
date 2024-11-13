@@ -4,3 +4,4 @@ servidor/target/*
 servidor/src/main/java/Conexion/Credenciales.java
 */Credenciales.java
 servidor/src/main/java/Conexion
+*.sql

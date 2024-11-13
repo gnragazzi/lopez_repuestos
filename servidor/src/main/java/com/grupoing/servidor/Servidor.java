@@ -8,7 +8,7 @@ import com.grupoing.servidor.manejadorVehiculos;
 import java.sql.SQLException;
 
 public class Servidor {
- 
+
     public static int port = 8080;
 
     public static void main(String[] args) throws IOException, SQLException, ClassNotFoundException, Exception {
@@ -18,7 +18,7 @@ public class Servidor {
         //***************************************************//
         HttpServer server = HttpServer.create(new InetSocketAddress(port), 0);
         System.out.println("Servidor Montado en el puerto " + port);
-        
+
         server.createContext("/vehiculos", new manejadorVehiculos());
         server.createContext("/mantenimiento", new manejadorMantenimiento());
         server.createContext("/viajes", new manejadorViaje());
@@ -28,6 +28,7 @@ public class Servidor {
         server.createContext("/auth", new manejadorAuth());
         server.createContext("/refresh", new manejadorRefresh());
         server.createContext("/clear", new clear());
+        // RECIBIR PREGUNTA POR VENCIMIENTOS
         server.setExecutor(null);
         server.start();
     }
