@@ -5,8 +5,6 @@ import java.io.IOException;
 import java.net.InetSocketAddress;
 import com.sun.net.httpserver.HttpServer;
 import com.grupoing.servidor.manejadorVehiculos;
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
 import java.sql.SQLException;
 
 public class Servidor {
@@ -14,10 +12,16 @@ public class Servidor {
     public static int port = 8080;
 
     public static void main(String[] args) throws IOException, SQLException, ClassNotFoundException, Exception {
-        
+
         // **** BACKUP BASE DE DATOS **** //
-        backup.backup();
-        
+        if (backup.realizarBackup()) {
+            backup.backup();
+        }
+        else
+        {
+            System.out.println("No es necesario realizar backup de la base de datos"); 
+        }
+
         //Eventualmente, hay que implementar un singleton o restringir de alguna forma nuevas instancias
         Autorización auth = new Autorización();
         //***************************************************//
