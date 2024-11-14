@@ -16,7 +16,7 @@ public class Autorización {
 
     public static final String ACCESO = "acceso";
     public static final String REFRESH = "refresh";
-    
+     
     public Autorización() {
         algorithm = Algorithm.HMAC256("xF1oOlk#4!.41x3r");   
         //algorithm = Algorithm.HMAC256("xF1oOlk#4!.41x3rk");  
@@ -31,7 +31,7 @@ public class Autorización {
                 .withSubject("Baeldung Details")
                 .withClaim("tipo", ACCESO)
                 .withIssuedAt(new Date())
-                .withExpiresAt(new Date(System.currentTimeMillis() + 2000L))  
+                .withExpiresAt(new Date(System.currentTimeMillis() + 60*60000L))  
                 .withJWTId(UUID.randomUUID()
                         .toString())
                 //                .withNotBefore(new Date(System.currentTimeMillis() + 1000L)) 

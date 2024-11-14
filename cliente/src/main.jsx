@@ -9,14 +9,14 @@ import Viajes from "./páginas/cargar_viaje/Viajes.jsx";
 import CargarMantenimiento from "./páginas/mantenimiento/CargarMantenimiento.jsx";
 import { Cargar_viaje } from "./páginas/cargar_viaje/Cargar_viaje.jsx";
 import Camiones from "./páginas/Camion.jsx";
-import Semirremolques from "./páginas/Semirremolque.jsx"
+import Semirremolques from "./páginas/Semirremolque.jsx";
 import Chofer from "./páginas/chofer/Chofer.jsx";
 import Costos_camión from "./páginas/costos_camion/Costos_camión.jsx";
 import EnConstrucción from "./componentes/EnConstrucción.jsx";
 import Login from "./páginas/Login.jsx";
 import RequiereAuth from "./componentes/RequiereAuth.jsx";
 import Entregas_tardias from "./páginas/ver_entregas_tardias/Entregas_tardias.jsx";
-import Cargar_tecnica from "./páginas/cargar_tecnica/cargar_tecnica.jsx";
+import Cargar_tecnica from "./páginas/cargar_tecnica/Cargar_tecnica.jsx";
 import Cargar_seguro from "./páginas/cargar_seguro/Cargar_seguro.jsx";
 import Chofer_manejador from "./páginas/chofer/Chofer_manejador.jsx";
 
@@ -84,8 +84,8 @@ const router = createBrowserRouter([
               },
               {
                 path: "seguro",
-                element: <Cargar_seguro />
-              }
+                element: <Cargar_seguro />,
+              },
             ],
           },
           {
@@ -105,9 +105,9 @@ const router = createBrowserRouter([
               },
               {
                 path: "seguro",
-                element: <Cargar_seguro />
-              }
-            ]
+                element: <Cargar_seguro />,
+              },
+            ],
           },
         ],
       },

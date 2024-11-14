@@ -31,7 +31,8 @@ public class Tarjeta_RutaDAOImpl implements IDAO<Tarjeta_Ruta>{
 
     @Override
     public ArrayList<Tarjeta_Ruta> list() throws Exception {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        // LISTAR LAS TARJETA_RUTAS
+        return null;
     }
 
     @Override

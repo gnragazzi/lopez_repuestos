@@ -137,4 +137,26 @@ public class ChoferDAOImpl implements IDAO<Chofer> {
         return choferes;
     }
 
+    public ArrayList<Chofer> listarVencimiento(int dias) throws Exception {
+        Statement statement = conexion.createStatement();
+        ResultSet choferes_resultado = statement.executeQuery("select * from Empleados, Choferes where dni=Empleados_DNI;");
+        ArrayList<Chofer> choferes = new ArrayList<>();
+        while (choferes_resultado.next()) {
+            if(LocalDate.parse(choferes_resultado.getString("Fecha_Psicotecnico")).toEpochDay() - LocalDate.now().toEpochDay() < dias){
+                Chofer chofer = new Chofer();
+                chofer.setDni(choferes_resultado.getString("Empleados_DNI"));
+                chofer.setCuil(choferes_resultado.getString("Cuil"));
+                chofer.setNombre(choferes_resultado.getString("Nombre"));
+                chofer.setApellido(choferes_resultado.getString("Apellido"));
+                chofer.setTelefono(choferes_resultado.getString("Telefono"));
+                chofer.setDomicilio(choferes_resultado.getString("Domicilio"));
+                chofer.setFecha_psicotecnico(LocalDate.parse(choferes_resultado.getString("Fecha_Psicotecnico")));
+                chofer.setFecha_nacimiento(LocalDate.parse(choferes_resultado.getString("Fecha_Nacimiento")));
+                chofer.setActivo(choferes_resultado.getBoolean("EsActivo"));
+                choferes.add(chofer);
+            }
+        }
+        return choferes;
+    }
+    
 }

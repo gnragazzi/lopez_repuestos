@@ -38,7 +38,8 @@ public class SeguroDAOImpl implements IDAO<Seguro> {
 
     @Override
     public ArrayList<Seguro> list() throws Exception {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        // LISTAR SEGUROS
+        return null;
     }
 
     @Override
@@ -61,19 +62,20 @@ public class SeguroDAOImpl implements IDAO<Seguro> {
         PreparedStatement statement = conexion.prepareStatement("select * from Seguros where Fecha_Emision = (select max(Fecha_Emision) from Seguros where Vehiculo = ?) and Vehiculo = ? order by idSeguros desc;");
         statement.setString(1, patente);
         statement.setString(2, patente);
+
         ResultSet rs = statement.executeQuery();
 
-        rs.next();
-
-        Seguro auxiliar = new Seguro();
-
-        auxiliar.setFecha_emision(LocalDate.parse(rs.getString("Fecha_Emision")));
-        auxiliar.setFecha_vencimiento(LocalDate.parse(rs.getString("Fecha_Vencimiento")));
-        auxiliar.setNombre_aseguradora(rs.getString("Nombre_aseguradora"));
-        auxiliar.setPago(rs.getFloat("Pago"));
-        auxiliar.setTipo(rs.getString("Tipo"));
-
-        return auxiliar;
+        if (rs.next()) {
+            Seguro auxiliar = new Seguro();
+            auxiliar.setFecha_emision(LocalDate.parse(rs.getString("Fecha_Emision"))); 
+            auxiliar.setFecha_vencimiento(LocalDate.parse(rs.getString("Fecha_Vencimiento")));
+            auxiliar.setNombre_aseguradora(rs.getString("Nombre_aseguradora"));
+            auxiliar.setPago(rs.getFloat("Pago"));
+            auxiliar.setTipo(rs.getString("Tipo"));
+            return auxiliar;
+        } else {
+            return null;
+        }
     }
 
 }

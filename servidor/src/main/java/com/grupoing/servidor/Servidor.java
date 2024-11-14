@@ -27,6 +27,7 @@ public class Servidor {
         server.createContext("/seguro", new manejadorSeguro());
         server.createContext("/auth", new manejadorAuth());
         server.createContext("/refresh", new manejadorRefresh());
+        server.createContext("/vencimientos", new manejadorVencimientos());
         server.createContext("/clear", new clear());
         // RECIBIR PREGUNTA POR VENCIMIENTOS
         server.setExecutor(null);

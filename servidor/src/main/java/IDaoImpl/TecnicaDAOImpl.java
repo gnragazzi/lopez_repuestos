@@ -41,7 +41,8 @@ public class TecnicaDAOImpl implements IDAO<Tecnica> {
 
     @Override
     public ArrayList<Tecnica> list() throws Exception {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        // LISTAR LA TARJETA DE RUTA
+        return null;
     }
 
     @Override
