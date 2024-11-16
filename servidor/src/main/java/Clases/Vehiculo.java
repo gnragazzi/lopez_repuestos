@@ -3,19 +3,19 @@ package Clases;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import java.util.ArrayList;
 
+public abstract class Vehiculo {
 
-public abstract class  Vehiculo {
-	@JsonProperty("marca")
+    @JsonProperty("marca")
     private String marca;
-	@JsonProperty("patente")
+    @JsonProperty("patente")
     private String patente;
-	@JsonProperty("tarjeta_ruta")
+    @JsonProperty("tarjeta_ruta")
     private Tarjeta_Ruta tarjeta_ruta;
-	@JsonProperty("seguro")
+    @JsonProperty("seguro")
     private ArrayList<Seguro> seguro;
-	@JsonProperty("tecnica")
+    @JsonProperty("tecnica")
     private ArrayList<Tecnica> tecnica;
-	@JsonProperty("mantenimiento")
+    @JsonProperty("mantenimiento")
     private ArrayList<Mantenimiento> mantenimiento;
 
     public Vehiculo() {
@@ -27,7 +27,7 @@ public abstract class  Vehiculo {
         this.seguro = seguro;
         this.tarjeta_ruta = tarjeta_ruta;
         this.tecnica = tecnica;
-        this.mantenimiento=mantenimiento;
+        this.mantenimiento = mantenimiento;
     }
 
     public String getMarca() {
@@ -66,8 +66,22 @@ public abstract class  Vehiculo {
         this.seguro = seguro;
     }
 
+    public void agregarSeguro(Seguro s) {
+        if (this.seguro == null) {
+            this.seguro = new ArrayList<>();
+        }
+        seguro.add(s);
+    }
+
     public void setTecnica(ArrayList<Tecnica> tecnica) {
         this.tecnica = tecnica;
+    }
+
+    public void agregarTecnica(Tecnica t) {
+        if (this.tecnica == null) {
+            this.tecnica = new ArrayList<>();
+        }
+        tecnica.add(t);
     }
 
     public ArrayList<Mantenimiento> getMantenimiento() {
@@ -77,7 +91,5 @@ public abstract class  Vehiculo {
     public void setMantenimiento(ArrayList<Mantenimiento> mantenimiento) {
         this.mantenimiento = mantenimiento;
     }
-    
-    
-    
+
 }

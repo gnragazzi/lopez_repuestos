@@ -4,7 +4,6 @@
  */
 package IDaoImpl;
 
-import Clases.Seguro;
 import Clases.Tecnica;
 import Conexion.Conexion;
 import InterfacesDAO.IDAO;
@@ -61,20 +60,19 @@ public class TecnicaDAOImpl implements IDAO<Tecnica> {
     }
 
     public Tecnica ultimaTecnica(String patente) throws Exception {
-
         PreparedStatement statement = conexion.prepareStatement("select * from Tecnicas where Fecha_Emision in (select max(Fecha_Emision) from Tecnicas where Vehiculo = ?) and Vehiculo = ? order by idTecnicas desc;");
         statement.setString(1, patente);
         statement.setString(2, patente);
         ResultSet rs = statement.executeQuery();
 
-        rs.next();
-
-        Tecnica auxiliar = new Tecnica();
-
-        auxiliar.setFecha_emision(LocalDate.parse(rs.getString("Fecha_Emision")));
-        auxiliar.setFecha_vencimiento(LocalDate.parse(rs.getString("Fecha_Vencimiento")));
-        auxiliar.setUbicacion(rs.getString("Ubicacion"));
-
-        return auxiliar;
-    }
+        if(rs.next()){
+            Tecnica auxiliar = new Tecnica();
+            auxiliar.setFecha_emision(LocalDate.parse(rs.getString("Fecha_Emision")));
+            auxiliar.setFecha_vencimiento(LocalDate.parse(rs.getString("Fecha_Vencimiento")));
+            auxiliar.setUbicacion(rs.getString("Ubicacion"));
+            return auxiliar;
+        }else{
+            return null;
+        }
+    } 
 }
