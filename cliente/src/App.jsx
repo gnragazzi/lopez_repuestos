@@ -21,6 +21,7 @@ function App() {
     axiosPrivado
       .get("/vencimientos")
       .then((res) => {
+        console.log("Busqué vencimientos!");
         dispatch({ tipo: CARGAR_VENCIMIENTOS, payload: res.data });
       })
       .catch((error) => console.log(error.message));

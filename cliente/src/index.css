@@ -34,14 +34,19 @@
   --color-de-seleccion-nav: #ae8c5c;
   --color-fuente-sidebar: #ae8c5c;
   --color-fuente-sidebar-hover: #312F2F;
+  --color-boton-principal: #ae8c5c;
+  --color-boton-principal-hover: #bb9765;
+  --color-boton-cerrar: #4d4b4b;
   /* OTROS */
   --altura-barra-superior: 6vh;
   --posicion-cuerpo:calc(100-var(var(--altura-barra-superior)));
   --width-sidebar:0;
-  --color-boton-cerrar: #4d4b4b;
   --radio-borde: 0.3rem;
+  --fondo-container-notificaciones:rgba(174, 140, 92,0.1);
+  /* --fondo-notificaciones:rgba(174, 140, 92,0.6); */
+  --fondo-notificaciones:rgba(49, 47, 47,0.8);
   /* --transicion:  */
-
+  --transicion-boton: background-color .3s;
   /*Propiedades*/
   line-height: 1.5;
   font-weight: 400;
@@ -1131,4 +1136,80 @@ table tbody .no_disponible:hover{
 
 .overlay_oculto{
   z-index: -10;
+}
+
+/* NOTIFICACIONES */
+.container_notificaciones{
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%,-50%);
+  background-color: var(--fondo-container-notificaciones);
+  /* opacity: 0.3; */
+  height: 90%;
+  width: 90%;
+  padding: 1.5rem;
+  border-radius: var(--radio-borde);
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 1rem;
+  /* gird */
+  overflow-y: scroll;
+}
+.notificacion{
+  background-color: var(--fondo-notificaciones); 
+  height: 45%;
+  padding: 1rem;
+  border-radius: var(--radio-borde);
+  color: #ae8c5c;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  overflow-y: scroll;
+}
+.notificacion_titulo{
+  font-weight: bold;
+  font-size: 1.4rem;
+}
+.notificacion_datos{
+  margin-left: 18px;
+  background-color: rgba(165, 165, 165, 0.3);
+  border-radius: var(--radio-borde);
+  /* font-weight: bold; */
+  padding: 0.4rem 0.4rem 0.4rem 0.8rem;
+  font-size: 1.0rem;
+  color: #F8F2E8;
+}
+
+.notificacion_container_boton{
+  display: flex;
+  justify-content: space-around;
+}
+
+.notificacion_boton{
+  padding: 1rem;
+  width: 30%;
+  border-radius: var(--radio-borde);
+  transition: var(--transicion-boton);
+}
+
+.notificacion_descartar{
+  font-weight: bold;
+  color: #312F2F;
+  background-color: #F8F2E8;
+}
+.notificacion_descartar:hover{
+  background-color: rgba(248, 242, 232,0.9);
+
+}
+
+.notificacion_ver{
+  font-weight: bold;
+  color: #F8F2E8;
+  background-color: var(--color-boton-principal);
+}
+
+
+.notificacion_ver:hover{
+  background-color: var(--color-boton-principal-hover);
 }
