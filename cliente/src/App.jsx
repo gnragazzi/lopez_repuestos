@@ -6,8 +6,25 @@ import { FaTruckArrowRight } from "react-icons/fa6";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Modal from "./componentes/Modal";
+import { useEffect } from "react";
+import useAxiosPrivado from "./utilidades/useAxiosPrivado";
+import { useContextoGlobal } from "./Contexto";
 
 function App() {
+  const {
+    dispatch_vencimientos: dispatch,
+    acciones_vencimientos: { CARGAR_VENCIMIENTOS },
+  } = useContextoGlobal();
+  const axiosPrivado = useAxiosPrivado();
+  useEffect(() => {
+    //PREGUNTAR AL SERVIDOR POR VENCIMIENTOS CERCANOS
+    axiosPrivado
+      .get("/vencimientos")
+      .then((res) => {
+        dispatch({ tipo: CARGAR_VENCIMIENTOS, payload: res.data });
+      })
+      .catch((error) => console.log(error.message));
+  }, [CARGAR_VENCIMIENTOS, axiosPrivado, dispatch]);
   return (
     <>
       <Modal />

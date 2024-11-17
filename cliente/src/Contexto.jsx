@@ -16,12 +16,11 @@ import {
   acciones_semirremolques,
 } from "./utilidades/reducer_semirremolques";
 
-import{
+import {
   estadoInicial_seguro,
   reducer_seguro,
   acciones_seguro,
-} from "./utilidades/reducer_seguros"
-
+} from "./utilidades/reducer_seguros";
 
 import {
   acciones_choferes,
@@ -29,6 +28,11 @@ import {
   reducer_choferes,
 } from "./utilidades/reducer_choferes";
 
+import {
+  acciones_vencimientos,
+  reducer_vencimientos,
+  estadoInicial_vencimientos,
+} from "./utilidades/reducer_vencimientos";
 const ContextoGlobal = createContext();
 
 // eslint-disable-next-line react-refresh/only-export-components
@@ -51,23 +55,27 @@ function Contexto({ children }) {
 
   const [estado_semirremolques, dispatch_semirremolques] = useReducer(
     reducer_semirremolques,
-    estadoInicial_semirremolques,
-  )
+    estadoInicial_semirremolques
+  );
 
   const [estado_tecnica, dispatch_tecnica] = useReducer(
     reducer_tecnica,
     estadoInicial_tecnica
-  )
+  );
 
   const [estado_seguro, dispatch_seguro] = useReducer(
     reducer_seguro,
     estadoInicial_seguro
   );
 
-  
   const [estado_choferes, dispatch_choferes] = useReducer(
     reducer_choferes,
     estadoInicial_choferes
+  );
+
+  const [estado_vencimiento, dispatch_vencimientos] = useReducer(
+    reducer_vencimientos,
+    estadoInicial_vencimientos
   );
   const [menuSeleccionado, setMenuSeleccionado] = useState("");
   const clickMenu = (e) => {
@@ -97,6 +105,9 @@ function Contexto({ children }) {
         estado_choferes,
         dispatch_choferes,
         acciones_choferes,
+        estado_vencimiento,
+        acciones_vencimientos,
+        dispatch_vencimientos,
         estadoModal,
         setEstadoModal,
       }}
@@ -107,4 +118,3 @@ function Contexto({ children }) {
 }
 
 export default Contexto;
-
