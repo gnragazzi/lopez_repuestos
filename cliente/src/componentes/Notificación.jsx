@@ -6,6 +6,7 @@ const Notificación = ({
   fecha,
   funcionDescartar,
   funcionVer,
+  id,
 }) => {
   return (
     <div className="notificacion">
@@ -25,7 +26,9 @@ const Notificación = ({
         </button>
         <button
           className="notificacion_boton notificacion_ver"
-          onClick={funcionVer}
+          onClick={() => {
+            funcionVer(id);
+          }}
         >
           Ver
         </button>

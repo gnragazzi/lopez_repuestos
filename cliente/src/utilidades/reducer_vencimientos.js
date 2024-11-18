@@ -46,9 +46,57 @@ export const reducer_vencimientos = (estado, accion) => {
       };
     }
     case acciones_vencimientos.ACTUALIZAR_LISTA_VENCIMIENTOS: {
-      console.log("ACTUALIZAR_LISTA_VENCIMIENTOS", payload);
+      const {
+        fecha_vencimiento: [año, mes, dia],
+        idVencimiento,
+        esCamion,
+        origen,
+      } = payload;
+      let lista_nueva = [...estado.lista];
+      const fecha_nueva = new Date(
+        parseInt(año),
+        parseInt(mes) - 1, // meses basados en índice 0
+        parseInt(dia)
+      );
+      const hastaVencimiento = Math.ceil(
+        (fecha_nueva.getTime() - Date.now()) / (1000 * 60 * 60 * 24)
+      );
+      const yaVencio = hastaVencimiento <= 0;
+
+      if (hastaVencimiento <= 30) {
+        lista_nueva.forEach((e) => {
+          if (e.id == idVencimiento) {
+            e.titulo = `${origen} de ${esCamion ? "Camión" : "Semirremolque"} ${
+              yaVencio
+                ? "Vencida"
+                : `por Vencer en ${hastaVencimiento} día${
+                    hastaVencimiento > 1 ? "s" : ""
+                  }`
+            }`;
+            e.fecha = {
+              año,
+              mes,
+              dia,
+            };
+          }
+        });
+      } else {
+        lista_nueva = lista_nueva.filter((e) => {
+          return e.id != idVencimiento;
+        });
+      }
+      console.log(lista_nueva);
+      lista_nueva.sort(({ fecha: a }, { fecha: b }) => {
+        if (!a) return -1;
+        else if (!b) return 1;
+        return (
+          new Date(a.año, a.mes - 1, a.dia).getTime() -
+          new Date(b.año, b.mes - 1, b.dia).getTime()
+        );
+      });
       return {
         ...estado,
+        lista: lista_nueva,
       };
     }
     default:

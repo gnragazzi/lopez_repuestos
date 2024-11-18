@@ -23,7 +23,7 @@ const Cargar_seguro = () => {
   } = useContextoGlobal();
   const { PROXIMA_PAGINA_SEGURO, ANTERIOR_PAGINA_SEGURO, RESETEAR_ESTADO } =
     acciones;
-  const { pagina_seguro, fecha_vencimiento, idVencimiento } = estado;
+  const { pagina_seguro, fecha_vencimiento, idVencimiento, esCamion } = estado;
 
   const [aseguradoraInvalida, setAseguradoraInvalida] = useState("");
   const [tipoInvalida, setTipoInvalida] = useState("");
@@ -86,10 +86,16 @@ const Cargar_seguro = () => {
       .post("/seguro", estado)
       .then(() => {
         setCargando(false);
-        if (idVencimiento) {
+        if (idVencimiento != null) {
+          console.log(esCamion);
           dispatch_vencimientos({
             tipo: ACTUALIZAR_LISTA_VENCIMIENTOS,
-            payload: { fecha_vencimiento, idVencimiento },
+            payload: {
+              fecha_vencimiento: fecha_vencimiento.split("-"),
+              idVencimiento,
+              esCamion: esCamion == "camion" ? true : false,
+              origen: "Seguro",
+            },
           });
         }
         toast.success(" Seguro Cargado Correctamente", {

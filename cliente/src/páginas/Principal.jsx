@@ -65,6 +65,7 @@ function Principal() {
     axiosPrivado
       .get("/vencimientos")
       .then((res) => {
+        console.log(res.data);
         dispatch({ tipo: CARGAR_VENCIMIENTOS, payload: res.data });
         const {
           sinSeguro,
@@ -86,7 +87,7 @@ function Principal() {
             } sin Seguro`,
             datos: `${marca} ${modelo ? modelo : tipo}-${patente}`,
             fecha: "",
-            funcionVer: () => verSeguro(elem, id),
+            funcionVer: (id) => verSeguro(elem, id),
           });
         });
         sinTecnica?.forEach((elem) => {
@@ -98,7 +99,9 @@ function Principal() {
             } sin Verificación Técnica`,
             datos: `${marca} ${modelo ? modelo : tipo}-${patente}`,
             fecha: "",
-            funcionVer: () => verTecnica(elem, id),
+            funcionVer: (id) => {
+              verTecnica(elem, id);
+            },
           });
         });
         sinTarjetaRuta?.forEach((elem) => {
@@ -164,7 +167,7 @@ function Principal() {
             }`,
             datos: `${marca} ${modelo ? modelo : tipo}-${patente}`,
             fecha: { dia, mes, año },
-            funcionVer: () => verSeguro(elem),
+            funcionVer: (id) => verSeguro(elem, id),
           });
         });
         tecnicaVencida?.forEach((elem) => {
@@ -193,7 +196,7 @@ function Principal() {
             }`,
             datos: `${marca} ${modelo ? modelo : tipo}-${patente}`,
             fecha: { dia, mes, año },
-            funcionVer: () => verTecnica(elem, id),
+            funcionVer: (id) => verTecnica(elem, id),
           });
         });
         tarjetaRutaVencida?.forEach((elem) => {
@@ -244,6 +247,10 @@ function Principal() {
       .catch((error) => console.log(error.message));
   };
   useEffect(() => {
+    /*dispatch({
+      tipo: ACTUALIZAR_LISTA_VENCIMIENTOS,
+      payload: { fecha_vencimiento: "2024-11-20", idVencimiento: 12 },
+    });*/
     if (!flagCargado) {
       poblarLista();
     }
@@ -267,6 +274,7 @@ function Principal() {
                 titulo={titulo}
                 datos={datos}
                 fecha={fecha}
+                id={id}
                 funcionDescartar={() =>
                   dispatch({ tipo: DESCARTAR_ITEM, payload: id })
                 }

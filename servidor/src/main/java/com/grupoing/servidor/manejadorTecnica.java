@@ -50,7 +50,6 @@ public class manejadorTecnica extends Manejador {
 
         try {
             // CONVERTIR EL JSONString a JSONObject
-
             JSONObject jsonobj = new JSONObject(buf.toString());
             LocalDate fecha_emision = LocalDate.parse(jsonobj.getString("fecha_emision"));
 
@@ -68,31 +67,30 @@ public class manejadorTecnica extends Manejador {
                 vehiculo.setPatente(patente);
                 Tecnica aux = new Tecnica(fecha_emision, fecha_vencimiento, ubicacion, vehiculo);
                 tecnicaDAO.create(aux);
-                System.out.println("La técnica es para camión");
+            } else if (tipoVehiculo.equalsIgnoreCase("semirremolque")) {
+                vehiculo = new Semirremolque();
+                vehiculo.setPatente(patente);
+                Tecnica aux = new Tecnica(fecha_emision, fecha_vencimiento, ubicacion, vehiculo);
+                tecnicaDAO.create(aux);
             } else {
-                if (tipoVehiculo.equalsIgnoreCase("semirremolque")) {
-                    vehiculo = new Semirremolque();
-                    vehiculo.setPatente(patente);
-                    Tecnica aux = new Tecnica(fecha_emision, fecha_vencimiento, ubicacion, vehiculo);
-                    tecnicaDAO.create(aux);
-                    System.out.println("La técnica es para semirremolque");
-                } else {
-                    System.out.println("Hubo un error en determinar el tipo de vehiculo");
-                }
+                System.out.println("Hubo un error en determinar el tipo de vehiculo");
             }
+        //no interesan los otros datos de vehiculo, en todo caso si necesitamos buscarlo lo consultamos en la base de datos
 
-            //no interesan los otros datos de vehiculo, en todo caso si necesitamos buscarlo lo consultamos en la base de datos
-
-            //CREAR HTTP RESPONSE
-            return "Cargado Correctamente.";
-        } catch (Exception ex) {
-            System.out.println("Ocurrió un error en el parseo del JSON.");
-            throw ex;
-        }
+        //CREAR HTTP RESPONSE
+        return "Cargado Correctamente.";
     }
+    catch (Exception ex
 
-    @Override
-    protected String manejarGet(HttpExchange he) throws UnsupportedEncodingException, JsonProcessingException, ClassNotFoundException, Exception {
+    
+        ) {
+            System.out.println("Ocurrió un error en el parseo del JSON.");
+        throw ex;
+    }
+}
+
+@Override
+protected String manejarGet(HttpExchange he) throws UnsupportedEncodingException, JsonProcessingException, ClassNotFoundException, Exception {
 
         URI uri = he.getRequestURI();
         String patente = obtenerParámetros(uri, "patente");
@@ -104,12 +102,12 @@ public class manejadorTecnica extends Manejador {
     }
 
     @Override
-    protected String manejarPatch(HttpExchange he) throws UnsupportedEncodingException, JsonProcessingException, ClassNotFoundException, Exception {
+protected String manejarPatch(HttpExchange he) throws UnsupportedEncodingException, JsonProcessingException, ClassNotFoundException, Exception {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     @Override
-    protected String manejarDelete(HttpExchange he) throws UnsupportedEncodingException, JsonProcessingException, ClassNotFoundException, Exception {
+protected String manejarDelete(HttpExchange he) throws UnsupportedEncodingException, JsonProcessingException, ClassNotFoundException, Exception {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 

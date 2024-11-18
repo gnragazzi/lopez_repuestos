@@ -23,8 +23,7 @@ const Cargar_tecnica = () => {
   } = useContextoGlobal();
   const { PROXIMA_PAGINA_TECNICA, ANTERIOR_PAGINA_TECNICA, RESETEAR_ESTADO } =
     acciones;
-  const { pagina_tecnica, fecha_vencimiento, idVencimiento } = estado;
-
+  const { pagina_tecnica, fecha_vencimiento, idVencimiento, esCamion } = estado;
   const enviar_formulario = () => {
     setError("");
     setCargando(true);
@@ -33,9 +32,15 @@ const Cargar_tecnica = () => {
       .then(() => {
         setCargando(false);
         if (idVencimiento) {
+          console.log(esCamion);
           dispatch_vencimientos({
             tipo: ACTUALIZAR_LISTA_VENCIMIENTOS,
-            payload: { fecha_vencimiento, idVencimiento },
+            payload: {
+              fecha_vencimiento: fecha_vencimiento.split("-"),
+              idVencimiento,
+              esCamion: esCamion == "camion" ? true : false,
+              origen: "Técnica",
+            },
           });
         }
         toast.success("Tecnica Cargada Correctamente", {

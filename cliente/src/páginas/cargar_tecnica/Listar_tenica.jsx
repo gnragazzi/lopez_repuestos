@@ -21,13 +21,11 @@ const Listar_tecnica = () => {
   useEffect(() => {
     setError("");
     setCargando(true);
-    console.log(vehiculo_seleccionado);
     axiosPrivado
       .get(`/tecnica?patente=${vehiculo_seleccionado}`)
       .then((res) => {
         const { fecha_emision, fecha_vencimiento, ubicacion } = res.data;
 
-        console.log(ubicacion);
         dispatch({
           type: CARGAR_TECNICA,
           payload: {
