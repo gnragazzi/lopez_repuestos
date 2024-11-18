@@ -7,25 +7,13 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Modal from "./componentes/Modal";
 import { useEffect } from "react";
-import useAxiosPrivado from "./utilidades/useAxiosPrivado";
-import { useContextoGlobal } from "./Contexto";
+import usePoblarLista from "./utilidades/usePoblarLista";
 
 function App() {
-  const {
-    dispatch_vencimientos: dispatch,
-    acciones_vencimientos: { CARGAR_VENCIMIENTOS },
-  } = useContextoGlobal();
-  const axiosPrivado = useAxiosPrivado();
+  const poblarLista = usePoblarLista();
   useEffect(() => {
-    //PREGUNTAR AL SERVIDOR POR VENCIMIENTOS CERCANOS
-    axiosPrivado
-      .get("/vencimientos")
-      .then((res) => {
-        console.log("Busqué vencimientos!");
-        dispatch({ tipo: CARGAR_VENCIMIENTOS, payload: res.data });
-      })
-      .catch((error) => console.log(error.message));
-  }, [CARGAR_VENCIMIENTOS, axiosPrivado, dispatch]);
+    poblarLista();
+  }, []);
   return (
     <>
       <Modal />

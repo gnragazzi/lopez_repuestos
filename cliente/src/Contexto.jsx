@@ -33,6 +33,7 @@ import {
   reducer_vencimientos,
   estadoInicial_vencimientos,
 } from "./utilidades/reducer_vencimientos";
+
 const ContextoGlobal = createContext();
 
 // eslint-disable-next-line react-refresh/only-export-components
@@ -42,6 +43,7 @@ export const useContextoGlobal = () => {
 
 // eslint-disable-next-line react/prop-types
 function Contexto({ children }) {
+  const [notificaciones, setNotificaciones] = useState(5);
   const [estadoModal, setEstadoModal] = useState({
     activo: false,
     mensaje: "",
@@ -85,6 +87,8 @@ function Contexto({ children }) {
   return (
     <ContextoGlobal.Provider
       value={{
+        notificaciones,
+        setNotificaciones,
         useContextoGlobal,
         menuSeleccionado,
         clickMenu,

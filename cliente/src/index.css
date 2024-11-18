@@ -1110,7 +1110,7 @@ table tbody .no_disponible:hover{
 
 .item_menu_barra_superior{
   margin: 0;  
-  font-size: 0.7rem;
+  font-size: 0.8rem;
   font-weight: bold;
   transition: color .3s;
 }
@@ -1246,4 +1246,16 @@ table tbody .no_disponible:hover{
 .notificaciones_recargar:hover{
   color: var(--fondo-degradado);
   background-color: rgba(49, 47, 47,0.9);
+}
+
+.notificaciones_barra_superior{
+  position: absolute;
+  transform: translate(60%,-60%);
+  color: red;
+  border: 1px solid #312F2F;
+  background-color: #cf6363;
+  border-radius: 100%;
+  width: 0.9rem;
+  height: 0.9rem;
+
 }

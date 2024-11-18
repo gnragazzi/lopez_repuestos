@@ -19,7 +19,7 @@ const Cargar_seguro = () => {
     dispatch_seguro: dispatch,
     estado_seguro: estado,
     dispatch_vencimientos,
-    acciones_vencimientos: { ACTUALIZAR_LISTA_VENCIMIENTOS },
+    acciones_vencimientos: { ACTUALIZAR_LISTA_VENCIMIENTOS, SE_MODIFICO_LISTA },
   } = useContextoGlobal();
   const { PROXIMA_PAGINA_SEGURO, ANTERIOR_PAGINA_SEGURO, RESETEAR_ESTADO } =
     acciones;
@@ -96,6 +96,10 @@ const Cargar_seguro = () => {
               esCamion: esCamion == "camion" ? true : false,
               origen: "Seguro",
             },
+          });
+        } else {
+          dispatch_vencimientos({
+            tipo: SE_MODIFICO_LISTA,
           });
         }
         toast.success(" Seguro Cargado Correctamente", {

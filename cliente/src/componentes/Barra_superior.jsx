@@ -6,9 +6,14 @@ import { IoMdContact } from "react-icons/io";
 import { IoIosNotifications } from "react-icons/io";
 import axios from "axios";
 import { useContextoGlobal } from "../Contexto";
+import { useNavigate } from "react-router-dom";
 
 function Barra_superior() {
-  const { setAuth } = useContextoGlobal();
+  const navegar = useNavigate();
+  const {
+    setAuth,
+    estado_vencimiento: { numeroNotificaciones },
+  } = useContextoGlobal();
   const [x, setX] = useState(0);
   const [menuOculto, setMenuOculto] = useState(true);
   const [overlayOculto, setOverlayOculto] = useState(true);
@@ -50,8 +55,9 @@ function Barra_superior() {
           break;
         case "notificaciones":
           {
-            setTexto("Notificaciones");
-            setFuncionMenu(() => {});
+            setMenuOculto(true);
+            setOverlayOculto(true);
+            navegar("/principal");
           }
           break;
         default:
@@ -77,13 +83,20 @@ function Barra_superior() {
             onClick={modificarAltura}
           />
         </a>
-        <a className="iconos_barra_superior" to="#">
-          <IoIosNotifications
-            id="notificaciones"
-            className="icon"
-            onClick={modificarAltura}
-          />
-        </a>
+        <div
+          className="iconos_barra_superior"
+          id="notificaciones"
+          onClick={modificarAltura}
+        >
+          <IoIosNotifications id="notificaciones" className="icon" />
+          {numeroNotificaciones > 0 && (
+            <div
+              className={
+                numeroNotificaciones ? "notificaciones_barra_superior" : ""
+              }
+            ></div>
+          )}
+        </div>
         <a className="iconos_barra_superior" to="#">
           {" "}
           <IoSettingsSharp

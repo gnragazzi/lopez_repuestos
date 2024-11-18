@@ -19,7 +19,7 @@ const Cargar_tecnica = () => {
     dispatch_tecnica: dispatch,
     estado_tecnica: estado,
     dispatch_vencimientos,
-    acciones_vencimientos: { ACTUALIZAR_LISTA_VENCIMIENTOS },
+    acciones_vencimientos: { ACTUALIZAR_LISTA_VENCIMIENTOS, SE_MODIFICO_LISTA },
   } = useContextoGlobal();
   const { PROXIMA_PAGINA_TECNICA, ANTERIOR_PAGINA_TECNICA, RESETEAR_ESTADO } =
     acciones;
@@ -42,6 +42,8 @@ const Cargar_tecnica = () => {
               origen: "Técnica",
             },
           });
+        } else {
+          dispatch_vencimientos({ tipo: SE_MODIFICO_LISTA });
         }
         toast.success("Tecnica Cargada Correctamente", {
           position: "top-center",

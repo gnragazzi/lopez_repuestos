@@ -3,6 +3,7 @@ export const acciones_vencimientos = {
   POBLAR_LISTA: 1,
   DESCARTAR_ITEM: 2,
   ACTUALIZAR_LISTA_VENCIMIENTOS: 3,
+  SE_MODIFICO_LISTA: 4,
 };
 
 export const estadoInicial_vencimientos = {
@@ -16,6 +17,8 @@ export const estadoInicial_vencimientos = {
   lista: [],
   flagCargado: false,
   listaModificada: false,
+  numeroNotificaciones: 0,
+  seModificoLista: false,
 };
 
 export const reducer_vencimientos = (estado, accion) => {
@@ -27,6 +30,8 @@ export const reducer_vencimientos = (estado, accion) => {
         lista: estado.lista,
         flagCargado: estado.flagCargado,
         listaModificada: estado.listaModificada,
+        numeroNotificaciones: estado.numeroNotificaciones,
+        seModificoLista: false,
       };
     }
     case acciones_vencimientos.POBLAR_LISTA: {
@@ -35,6 +40,8 @@ export const reducer_vencimientos = (estado, accion) => {
         lista: payload,
         flagCargado: true,
         listaModificada: false,
+        numeroNotificaciones: payload.length,
+        seModificoLista: false,
       };
     }
     case acciones_vencimientos.DESCARTAR_ITEM: {
@@ -43,7 +50,11 @@ export const reducer_vencimientos = (estado, accion) => {
         ...estado,
         lista: nueva_lista,
         listaModificada: true,
+        numeroNotificaciones: estado.numeroNotificaciones - 1,
       };
+    }
+    case acciones_vencimientos.SE_MODIFICO_LISTA: {
+      return { ...estado, seModificoLista: true };
     }
     case acciones_vencimientos.ACTUALIZAR_LISTA_VENCIMIENTOS: {
       const {
@@ -97,6 +108,7 @@ export const reducer_vencimientos = (estado, accion) => {
       return {
         ...estado,
         lista: lista_nueva,
+        numeroNotificaciones: lista_nueva.length,
       };
     }
     default:
