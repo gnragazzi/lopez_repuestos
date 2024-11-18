@@ -15,8 +15,14 @@ const usePoblarLista = () => {
     dispatch_vencimientos,
   } = useContextoGlobal();
   const poblarLista = () => {
-    const { RESETEAR_ESTADO_SEGURO, CARGAR_SEGURO } = acciones_seguro;
-    const { RESETEAR_ESTADO_TECNICA, CARGAR_TECNICA } = acciones_tecnica;
+    const {
+      RESETEAR_ESTADO: RESETEAR_ESTADO_SEGURO,
+      CARGAR_DESDE_VENCIMIENTO: CARGAR_SEGURO,
+    } = acciones_seguro;
+    const {
+      RESETEAR_ESTADO: RESETEAR_ESTADO_TECNICA,
+      CARGAR_DESDE_VENCIMIENTO: CARGAR_TECNICA,
+    } = acciones_tecnica;
     const { CARGAR_VENCIMIENTOS, POBLAR_LISTA } = acciones_vencimientos;
     const verSeguro = (elem, id) => {
       dispatch_seguro({ type: RESETEAR_ESTADO_SEGURO });
