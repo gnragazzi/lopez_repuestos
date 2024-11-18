@@ -21,30 +21,32 @@ const Listar_seguro = () => {
   useEffect(() => {
     setError("");
     setCargando(true);
-    console.log(vehiculo_seleccionado);
-    axiosPrivado.get(`/seguro?patente=${vehiculo_seleccionado}`).then((res) => {
-      const {
-        fecha_emision,
-        fecha_vencimiento,
-        pago,
-        tipo,
-        nombre_aseguradora,
-      } = res.data;
-
-      dispatch({
-        type: CARGAR_SEGURO,
-        payload: {
+    axiosPrivado
+      .get(`/seguro?patente=${vehiculo_seleccionado}`)
+      .then((res) => {
+        const {
           fecha_emision,
           fecha_vencimiento,
           pago,
           tipo,
           nombre_aseguradora,
-        },
-      });
+        } = res.data;
 
-      setCargando(false);
-    });
-  }, [vehiculo_seleccionado]);
+        dispatch({
+          type: CARGAR_SEGURO,
+          payload: {
+            fecha_emision,
+            fecha_vencimiento,
+            pago,
+            tipo,
+            nombre_aseguradora,
+          },
+        });
+
+        setCargando(false);
+      })
+      .catch(() => console.log("No Hay seguros cargados"));
+  }, [CARGAR_SEGURO, axiosPrivado, dispatch, vehiculo_seleccionado]);
 
   const {
     fecha_emision: emision_ultimo,
@@ -79,8 +81,14 @@ const Listar_seguro = () => {
           </div>
           <div>
             <h4>Fechas</h4>
-            <p>Fecha de emisión: {emision_ultimo[2]}/{emision_ultimo[1]}/{emision_ultimo[0]} </p>
-            <p>Fecha de vencimiento: {vencimiento_ultimo[2]}/{vencimiento_ultimo[1]}/{vencimiento_ultimo[0]}</p>
+            <p>
+              Fecha de emisión: {emision_ultimo[2]}/{emision_ultimo[1]}/
+              {emision_ultimo[0]}{" "}
+            </p>
+            <p>
+              Fecha de vencimiento: {vencimiento_ultimo[2]}/
+              {vencimiento_ultimo[1]}/{vencimiento_ultimo[0]}
+            </p>
           </div>
         </div>
       )}

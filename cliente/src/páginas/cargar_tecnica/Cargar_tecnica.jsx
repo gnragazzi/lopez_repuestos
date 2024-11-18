@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useContextoGlobal } from "../../Contexto";
 import useAxiosPrivado from "../../utilidades/useAxiosPrivado";
@@ -18,10 +18,12 @@ const Cargar_tecnica = () => {
     acciones_tecnica: acciones,
     dispatch_tecnica: dispatch,
     estado_tecnica: estado,
+    dispatch_vencimientos,
+    acciones_vencimientos: { ACTUALIZAR_LISTA_VENCIMIENTOS },
   } = useContextoGlobal();
   const { PROXIMA_PAGINA_TECNICA, ANTERIOR_PAGINA_TECNICA, RESETEAR_ESTADO } =
     acciones;
-  const { pagina_tecnica } = estado;
+  const { pagina_tecnica, fecha_vencimiento, idVencimiento } = estado;
 
   const enviar_formulario = () => {
     setError("");
@@ -30,6 +32,12 @@ const Cargar_tecnica = () => {
       .post("/tecnica", estado)
       .then(() => {
         setCargando(false);
+        if (idVencimiento) {
+          dispatch_vencimientos({
+            tipo: ACTUALIZAR_LISTA_VENCIMIENTOS,
+            payload: { fecha_vencimiento, idVencimiento },
+          });
+        }
         toast.success("Tecnica Cargada Correctamente", {
           position: "top-center",
           autoClose: 3000,
@@ -106,12 +114,12 @@ const Cargar_tecnica = () => {
           {pagina_tecnica == 0 && (
             <button
               className={"formulario__boton volver"}
-              onClick={() => navegar("../")}
+              onClick={() => navegar(-1)}
             >
               Volver
             </button>
           )}
-          {(pagina_tecnica == 1) && (
+          {pagina_tecnica == 1 && (
             <button
               className={"formulario__boton volver"}
               onClick={() =>
@@ -123,7 +131,7 @@ const Cargar_tecnica = () => {
               Cancelar
             </button>
           )}
-          {(pagina_tecnica == 2) && (
+          {pagina_tecnica == 2 && (
             <button
               className={"formulario__boton volver"}
               onClick={() =>

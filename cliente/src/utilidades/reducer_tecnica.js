@@ -8,6 +8,7 @@ export const acciones_tecnica = {
   SELECCIONAR_UBICACION: 6,
   CARGAR_TECNICA: 7,
   ES_CAMION_TECNICA: 8,
+  CARGAR_DESDE_VENCIMIENTO: 9,
 };
 
 export const estadoInicial_tecnica = {
@@ -22,6 +23,7 @@ export const estadoInicial_tecnica = {
     ubicacion: "",
   },
   esCamion: "",
+  idVencimiento: null,
 };
 
 export const reducer_tecnica = (estado, accion) => {
@@ -68,6 +70,15 @@ export const reducer_tecnica = (estado, accion) => {
       return {
         ...estado,
         esCamion: payload,
+      };
+    }
+    case acciones_tecnica.CARGAR_DESDE_VENCIMIENTO: {
+      const { vehiculo_seleccionado, esCamion, idVencimiento } = payload;
+      return {
+        ...estado,
+        vehiculo_seleccionado,
+        esCamion,
+        idVencimiento,
       };
     }
     default:

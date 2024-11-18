@@ -3,7 +3,7 @@ import { useContextoGlobal } from "../../Contexto";
 import Seguro_1 from "./Seguro_1";
 import Seguro_2 from "./Seguro_2";
 import Listar_seguro from "./Listar_seguro";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import useAxiosPrivado from "../../utilidades/useAxiosPrivado";
 import { MdReportGmailerrorred } from "react-icons/md";
 import { Bounce, toast } from "react-toastify";
@@ -18,14 +18,12 @@ const Cargar_seguro = () => {
     acciones_seguro: acciones,
     dispatch_seguro: dispatch,
     estado_seguro: estado,
+    dispatch_vencimientos,
+    acciones_vencimientos: { ACTUALIZAR_LISTA_VENCIMIENTOS },
   } = useContextoGlobal();
-  const {
-    PROXIMA_PAGINA_SEGURO,
-    ANTERIOR_PAGINA_SEGURO,
-    RESETEAR_ESTADO,
-  } = acciones;
-  const { pagina_seguro } = estado;
-
+  const { PROXIMA_PAGINA_SEGURO, ANTERIOR_PAGINA_SEGURO, RESETEAR_ESTADO } =
+    acciones;
+  const { pagina_seguro, fecha_vencimiento, idVencimiento } = estado;
 
   const [aseguradoraInvalida, setAseguradoraInvalida] = useState("");
   const [tipoInvalida, setTipoInvalida] = useState("");
@@ -33,50 +31,53 @@ const Cargar_seguro = () => {
 
   const regex = /[^\w|\s|áéíóú|,]/i;
 
-  const validarCampos =()=>{
+  const validarCampos = () => {
     let esValido = true;
-    if(estado.tipo.trim() === ""){
+    if (estado.tipo.trim() === "") {
       setTipoInvalida(
-      <MdReportGmailerrorred title="El tipo no puede estar vacía"/>);
-      esValido=false;
-    }else 
-      if (regex.test(estado.tipo)) {
-        setTipoInvalida(<MdReportGmailerrorred title= "El tipo solo puede contener letras, números, espacios, acentos y comas"/>);
-        esValido=false;
-    }else setTipoInvalida("");
+        <MdReportGmailerrorred title="El tipo no puede estar vacía" />
+      );
+      esValido = false;
+    } else if (regex.test(estado.tipo)) {
+      setTipoInvalida(
+        <MdReportGmailerrorred title="El tipo solo puede contener letras, números, espacios, acentos y comas" />
+      );
+      esValido = false;
+    } else setTipoInvalida("");
 
     if (estado.nombre_aseguradora.trim() === "") {
       setAseguradoraInvalida(
-        <MdReportGmailerrorred title="El nombre de la aseguradora no puede estar vacío"/>
+        <MdReportGmailerrorred title="El nombre de la aseguradora no puede estar vacío" />
       );
-      esValido=false;
-    }else 
-      if (regex.test(estado.nombre_aseguradora)) {
-        setAseguradoraInvalida(<MdReportGmailerrorred title= "La ubicación solo puede contener letras, números, espacios, acentos y comas"/>);
-        esValido=false;
-    }else setAseguradoraInvalida("");
+      esValido = false;
+    } else if (regex.test(estado.nombre_aseguradora)) {
+      setAseguradoraInvalida(
+        <MdReportGmailerrorred title="La ubicación solo puede contener letras, números, espacios, acentos y comas" />
+      );
+      esValido = false;
+    } else setAseguradoraInvalida("");
 
     if (estado.pago.trim() == "") {
       setPagoInvalido(
-        <MdReportGmailerrorred title="El pago no puede estar vacío"/>
+        <MdReportGmailerrorred title="El pago no puede estar vacío" />
       );
-      esValido=false;
-    }else 
-      if (estado.pago < 0) {
-        setPagoInvalido(<MdReportGmailerrorred title= "El pago no puede ser negativo. Ingrese un valor valido."/>);
-        esValido=false;
-    }else setPagoInvalido("");
+      esValido = false;
+    } else if (estado.pago < 0) {
+      setPagoInvalido(
+        <MdReportGmailerrorred title="El pago no puede ser negativo. Ingrese un valor valido." />
+      );
+      esValido = false;
+    } else setPagoInvalido("");
 
     const emision = new Date(estado.fecha_emision);
     const vencimiento = new Date(estado.fecha_vencimiento);
-  
+
     if (vencimiento < emision) {
-      esValido=false;
+      esValido = false;
     }
 
     return esValido;
-  }
-
+  };
 
   const enviarFormulario = () => {
     setError("");
@@ -85,13 +86,19 @@ const Cargar_seguro = () => {
       .post("/seguro", estado)
       .then(() => {
         setCargando(false);
+        if (idVencimiento) {
+          dispatch_vencimientos({
+            tipo: ACTUALIZAR_LISTA_VENCIMIENTOS,
+            payload: { fecha_vencimiento, idVencimiento },
+          });
+        }
         toast.success(" Seguro Cargado Correctamente", {
           position: "top-center",
           autoClose: 3000,
           draggable: true,
           progress: undefined,
           theme: "colored",
-          icon: <AiOutlineFileProtect size={24}/>,
+          icon: <AiOutlineFileProtect size={24} />,
           transition: Bounce,
           bodyClassName: "toast_class",
         });
@@ -110,19 +117,22 @@ const Cargar_seguro = () => {
       );
     }
   };
-
-
   return (
     <>
       <div className="App formulario">
         {/* PÁGINAS */}
-        {pagina_seguro == 0 && <Listar_seguro/>}
-        {pagina_seguro == 1 && <Seguro_1 
-        aseguradoraInvalida={aseguradoraInvalida} setAseguradoraInvalida={setAseguradoraInvalida}
-        tipoInvalida={tipoInvalida} setTipoInvalida={setTipoInvalida}
-        pagoInvalido={pagoInvalido} setPagoInvalido={setPagoInvalido}/>}
-        {pagina_seguro == 2 && <Seguro_2/>}
-
+        {pagina_seguro == 0 && <Listar_seguro />}
+        {pagina_seguro == 1 && (
+          <Seguro_1
+            aseguradoraInvalida={aseguradoraInvalida}
+            setAseguradoraInvalida={setAseguradoraInvalida}
+            tipoInvalida={tipoInvalida}
+            setTipoInvalida={setTipoInvalida}
+            pagoInvalido={pagoInvalido}
+            setPagoInvalido={setPagoInvalido}
+          />
+        )}
+        {pagina_seguro == 2 && <Seguro_2 />}
 
         {/* BOTONERA */}
         <div className="botonera_formulario">
@@ -131,7 +141,7 @@ const Cargar_seguro = () => {
               className="formulario__boton volver"
               onClick={() => {
                 dispatch({ type: RESETEAR_ESTADO });
-                navegar("../");
+                navegar(-1);
               }}
             >
               Volver
@@ -166,7 +176,7 @@ const Cargar_seguro = () => {
             <button
               className="formulario__boton siguiente"
               onClick={() => {
-                if(validarCampos()){
+                if (validarCampos()) {
                   dispatch({ type: PROXIMA_PAGINA_SEGURO });
                 }
               }}
@@ -178,7 +188,6 @@ const Cargar_seguro = () => {
             <button
               className="formulario__boton siguiente"
               onClick={() => {
-                console.log(estado);
                 enviarFormulario();
                 dispatch({ type: RESETEAR_ESTADO });
                 navegar("../");

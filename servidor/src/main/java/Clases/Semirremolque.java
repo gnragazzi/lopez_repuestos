@@ -1,22 +1,14 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package Clases;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import java.util.ArrayList;
 
-/**
- *
- * @author Administrador
- */
 public class Semirremolque extends Vehiculo{
 	@JsonProperty("tipo")
     private String tipo;
 	@JsonProperty("carga")
     private String carga;
-	@JsonProperty("camion")
+	@JsonProperty("viaje")
     private ArrayList<Viaje> viaje;
 
     public Semirremolque() {

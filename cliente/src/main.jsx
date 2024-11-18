@@ -142,6 +142,14 @@ const router = createBrowserRouter([
           },
         ],
       },
+      {
+        path: "tarjeta-ruta",
+        element: <EnConstrucción titulo={"Tarjeta Ruta"} />,
+      },
+      {
+        path: "psicotecnica",
+        element: <EnConstrucción titulo={"Psicotecnica"} />,
+      },
     ],
   },
 ]);

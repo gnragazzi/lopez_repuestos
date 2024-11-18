@@ -22,25 +22,26 @@ const Listar_tecnica = () => {
     setError("");
     setCargando(true);
     console.log(vehiculo_seleccionado);
-    axiosPrivado.get(`/tecnica?patente=${vehiculo_seleccionado}`).then((res) => {
-      const {
-        fecha_emision,
-        fecha_vencimiento,
-        ubicacion,
-      } = res.data;
+    axiosPrivado
+      .get(`/tecnica?patente=${vehiculo_seleccionado}`)
+      .then((res) => {
+        const { fecha_emision, fecha_vencimiento, ubicacion } = res.data;
 
-      console.log(ubicacion)
-      dispatch({
-        type: CARGAR_TECNICA,
-        payload: {
-          fecha_emision,
-          fecha_vencimiento,
-          ubicacion,
-        },
+        console.log(ubicacion);
+        dispatch({
+          type: CARGAR_TECNICA,
+          payload: {
+            fecha_emision,
+            fecha_vencimiento,
+            ubicacion,
+          },
+        });
+
+        setCargando(false);
+      })
+      .catch(() => {
+        console.log("No hay Técnica");
       });
-
-      setCargando(false);
-    });
   }, [vehiculo_seleccionado]);
 
   const {
@@ -69,8 +70,14 @@ const Listar_tecnica = () => {
           </div>
           <div>
             <h4>Fechas</h4>
-            <p>Fecha de emisión: {emision_ultimo[2]}/{emision_ultimo[1]}/{emision_ultimo[0]} </p>
-            <p>Fecha de vencimiento: {vencimiento_ultimo[2]}/{vencimiento_ultimo[1]}/{vencimiento_ultimo[0]}</p>
+            <p>
+              Fecha de emisión: {emision_ultimo[2]}/{emision_ultimo[1]}/
+              {emision_ultimo[0]}{" "}
+            </p>
+            <p>
+              Fecha de vencimiento: {vencimiento_ultimo[2]}/
+              {vencimiento_ultimo[1]}/{vencimiento_ultimo[0]}
+            </p>
           </div>
         </div>
       )}
