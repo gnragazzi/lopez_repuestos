@@ -680,7 +680,6 @@ main{
 /*Es un flex-item de cuerpo*/
 .App{
   width: 100%;
-  /* esto no permite ver los botones en el formulario de consultar costos */
   height: 93%;
   position: relative;
   display: flex;
@@ -711,6 +710,7 @@ main{
   max-height: 100%;
   position: relative;
   border-collapse: collapse;
+  overflow: hidden !important;
   background-color: transparent!important;
 }
 
@@ -747,6 +747,36 @@ td{
 .btn{
   max-width: fit-content;
 }
+
+.btn-info, .btn-primary, .btn-warning, .btn-danger{
+  background-color: inherit !important;
+  outline: 1px solid var(--color-boton-cerrar) !important;
+  border: none !important;
+  box-shadow: 0 0 5px var(--color-boton-cerrar) ;
+  color: #000 !important;
+  transition: all 1s linear;
+}
+
+:is(.btn-info, .btn-primary, .btn-warning, .btn-danger):hover{
+  background-color: var(--color-fuente-sidebar-hover) !important;
+  color: #fff !important;
+}
+
+
+.btn-entregas{
+  padding: 6px 12px;
+  border: 1px solid transparent;
+  border-radius: 0.375rem;
+  background: var(--color-boton-cerrar);
+  opacity: 0.9;
+  color: #f1f1f1;
+  transition: all 0.15s ease-in-out;
+}
+
+.btn-entregas:hover{
+  opacity: 1;
+}
+
 
 .table thead tr{
   position: sticky;
@@ -862,7 +892,7 @@ tbody tr:hover{
   justify-content: start;
   align-items: start;
   overflow-y: auto;
-  overflow-x: hidden;
+  overflow-x: auto;
   padding: 2vh 0 2vh 0vw;
 }
 
@@ -870,13 +900,12 @@ tbody tr:hover{
   flex: 0 1 100%; /*El ultimo es el flex basis, que define el ancho de los elementos, y como es column es el largo en este caso*/
   width: 50%;
   padding: 0 2vw 0 1vw;
-  position: relative;
 }
+
 .formulario_grid{
   width: 100%;
   display: grid;
   grid-template-columns: 1fr 1fr;
-  
   padding: 2vh 0 2vh 0vw;
 }
 
@@ -1138,7 +1167,15 @@ table tbody .no_disponible:hover{
   z-index: -10;
 }
 
-/* NOTIFICACIONES */
+
+
+
+
+/*------------------------------------------- NOTIFICACIONES */
+
+
+
+
 .container_notificaciones{
   /* position: absolute;
   top: 50%;
@@ -1155,6 +1192,7 @@ table tbody .no_disponible:hover{
   grid-template-rows: auto;
   grid-auto-flow: row;
   gap: 1rem;
+  align-content: baseline;
   /* gird */
 }
 
@@ -1169,8 +1207,7 @@ table tbody .no_disponible:hover{
   flex-direction: column;
   justify-content: space-evenly;
   overflow-y: auto;
-  min-height: 250px;
-  max-height: max-content;
+  height: 250px;
   /* height: min-content; */
 }
 .notificacion:hover{

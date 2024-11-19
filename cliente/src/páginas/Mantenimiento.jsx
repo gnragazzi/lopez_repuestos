@@ -1,6 +1,5 @@
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import { useState, useEffect } from "react";
-import "bootstrap/dist/css/bootstrap.min.css";
 import { useContextoGlobal } from "../Contexto";
 import useAxiosPrivado from "../utilidades/useAxiosPrivado";
 
@@ -79,7 +78,7 @@ function Mantenimiento() {
                   </td>
                   <td>${elemento.costos_manodeobra}</td>
                   <td>${elemento.costos_repuestos}</td>
-                  <td className="td__botones tr-boton">
+                  <td className="td__botones tr-boton acciones">
                     <button
                       className="btn btn-primary"
                       onClick={() => console.log("Editar:", elemento)}
