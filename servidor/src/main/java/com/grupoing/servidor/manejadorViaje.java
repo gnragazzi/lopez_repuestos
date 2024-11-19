@@ -96,7 +96,6 @@ public class manejadorViaje extends Manejador {
         else{
             if (fecha_partida == null && fecha_llegada == null) {
             
-            ViajeDAOImpl viajeDAO= new ViajeDAOImpl();
             viajes=viajeDAO.list();
             
         } else if (fecha_llegada == null) {
