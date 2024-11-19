@@ -6,7 +6,6 @@ import Clases.Semirremolque;
 import Clases.Vehiculo;
 import IDaoImpl.CamionDAOImpl;
 import IDaoImpl.SemirremolqueDAOImpl;
-import IDaoImpl.VehiculoDAOImpl;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.sun.net.httpserver.HttpExchange;
 import java.io.UnsupportedEncodingException;
@@ -21,14 +20,12 @@ public class manejadorVehiculos extends Manejador {
 
     CamionDAOImpl camionDAO;
     SemirremolqueDAOImpl semirremolqueDAO;
-    VehiculoDAOImpl vehiculoDAO;
 
     public manejadorVehiculos() {
         try {
             System.out.println("Constructor de manejador vehículos");
             this.semirremolqueDAO = new SemirremolqueDAOImpl();
             this.camionDAO = new CamionDAOImpl();
-            this.vehiculoDAO=new VehiculoDAOImpl();
             
         } catch (ClassNotFoundException err) {
             System.err.println(err);
@@ -44,11 +41,22 @@ public class manejadorVehiculos extends Manejador {
         } else {
             String tipo = obtenerParámetros(uri, "tipo");
 
-            ArrayList<Vehiculo> vehiculos = new ArrayList<>();
+            ArrayList<Vehiculo> vehiculos = new ArrayList<>(); 
             if (tipo == null) {
-               
-                vehiculos= vehiculoDAO.list();
                 
+                ArrayList<Camion> camiones = camionDAO.list();
+                Iterator<Camion> iteratorCamion = camiones.iterator();
+                while (iteratorCamion.hasNext()) {
+                    vehiculos.add(iteratorCamion.next());
+                }
+                
+                ArrayList<Semirremolque> semirremolques = semirremolqueDAO.list();
+                Iterator<Semirremolque> iteratorSemirremolque = semirremolques.iterator();
+                while (iteratorSemirremolque.hasNext()) {
+                    vehiculos.add(iteratorSemirremolque.next());
+                }
+                
+                 
             } else if (tipo.equalsIgnoreCase("camion")) {
                 ArrayList<Camion> camiones = camionDAO.list();
                 Iterator<Camion> iteratorCamion = camiones.iterator();

@@ -1,5 +1,6 @@
 package com.grupoing.servidor;
 
+import Clases.Camion;
 import IDaoImpl.ChoferDAOImpl;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.sun.net.httpserver.HttpExchange;
@@ -8,33 +9,37 @@ import java.util.ArrayList;
 import Clases.Chofer;
 import Clases.Vehiculo;
 import Clases.Seguro;
+import Clases.Semirremolque;
 import Clases.Tarjeta_Ruta;
 import Clases.Tecnica;
 import Clases.Vencimientos;
+import IDaoImpl.CamionDAOImpl;
 import IDaoImpl.SeguroDAOImpl;
+import IDaoImpl.SemirremolqueDAOImpl;
 import IDaoImpl.Tarjeta_RutaDAOImpl;
 import IDaoImpl.TecnicaDAOImpl;
-import IDaoImpl.VehiculoDAOImpl;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
 import java.time.LocalDate;
+import java.util.Iterator;
 
 public class manejadorVencimientos extends Manejador {
 
     private static final int LIMITE = 30;
     ChoferDAOImpl choferDao;
-    VehiculoDAOImpl vehiculoDao;
     SeguroDAOImpl seguroDao;
     Tarjeta_RutaDAOImpl tRutaDao;
     TecnicaDAOImpl tecnicaDao;
-
+    CamionDAOImpl camionDao;
+    SemirremolqueDAOImpl semiDao;
     public manejadorVencimientos() {
         try {
             choferDao = new ChoferDAOImpl();
-            vehiculoDao = new VehiculoDAOImpl();
             seguroDao = new SeguroDAOImpl();
             tRutaDao = new Tarjeta_RutaDAOImpl();
             tecnicaDao = new TecnicaDAOImpl();
+            camionDao = new CamionDAOImpl();
+            semiDao = new SemirremolqueDAOImpl();
         } catch (Exception ex) {
             System.out.println(ex.getMessage());
         }
@@ -42,21 +47,34 @@ public class manejadorVencimientos extends Manejador {
 
     @Override
     protected String manejarGet(HttpExchange he) throws UnsupportedEncodingException, JsonProcessingException, ClassNotFoundException, Exception {
-        
-        Vencimientos venc_prox; 
+
+        Vencimientos venc_prox;
         ArrayList<Vehiculo> vehiculos;
-         
+
         try {
             // TÉCNICA
             venc_prox = new Vencimientos();
-            vehiculos = vehiculoDao.list(); 
+            vehiculos = new ArrayList<>();
+
+            ArrayList<Camion> camiones = camionDao.list();
+            Iterator<Camion> iteratorCamion = camiones.iterator();
+            while (iteratorCamion.hasNext()) {
+                vehiculos.add(iteratorCamion.next());
+            }
+
+            ArrayList<Semirremolque> semirremolques = semiDao.list();
+            Iterator<Semirremolque> iteratorSemirremolque = semirremolques.iterator();
+            while (iteratorSemirremolque.hasNext()) {
+                vehiculos.add(iteratorSemirremolque.next());
+            }
+
             venc_prox.setChoferes(choferDao.listarVencimiento(LIMITE));
         } catch (Exception e) {
             return "primer Catch";
         }
 
         try {
-            
+
             for (Vehiculo v : vehiculos) {
                 String patente = v.getPatente();
 
@@ -88,10 +106,10 @@ public class manejadorVencimientos extends Manejador {
                 }
             }
         } catch (Exception e) {
-            System.out.println(e.getLocalizedMessage()); 
+            System.out.println(e.getLocalizedMessage());
             return "Segundo Catch";
         }
-        
+
         // DEVOLVER INFORMACIÓN 
         try {
             ObjectWriter ow = new ObjectMapper().writer().withDefaultPrettyPrinter();
