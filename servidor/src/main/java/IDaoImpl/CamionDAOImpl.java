@@ -14,7 +14,6 @@ import java.sql.ResultSet;
 import java.sql.Statement;
 import java.time.LocalDate;
 import java.util.ArrayList;
-import org.json.JSONObject;
 
  
 public class CamionDAOImpl implements IDAO<Camion>{
