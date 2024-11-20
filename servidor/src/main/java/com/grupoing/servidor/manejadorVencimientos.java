@@ -6,7 +6,6 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.sun.net.httpserver.HttpExchange;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
-import Clases.Chofer;
 import Clases.Vehiculo;
 import Clases.Seguro;
 import Clases.Semirremolque;
