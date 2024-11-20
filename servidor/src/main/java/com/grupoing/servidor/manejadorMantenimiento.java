@@ -1,6 +1,7 @@
 package com.grupoing.servidor;
 
 import Clases.Camion;
+import Clases.Costos;
 import Clases.Mantenimiento;
 import Clases.Mecanico;
 import Clases.Semirremolque;
@@ -14,14 +15,15 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
+import java.net.URI;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
 public class manejadorMantenimiento extends Manejador {
-    MantenimientoDAOImpl mantenimientoDAO;
 
+    MantenimientoDAOImpl mantenimientoDAO;
 
     public manejadorMantenimiento() {
         try {
@@ -33,12 +35,26 @@ public class manejadorMantenimiento extends Manejador {
 
     @Override
     public String manejarGet(HttpExchange he) throws JsonProcessingException, UnsupportedEncodingException, ClassNotFoundException, Exception {
-        ArrayList<Mantenimiento> mantenimientos = new ArrayList<>();
-        mantenimientos = mantenimientoDAO.list();
 
         ObjectWriter ow = new ObjectMapper().writer().withDefaultPrettyPrinter();
-        return ow.writeValueAsString(mantenimientos);
+        
+        URI uri = he.getRequestURI();
+        
+        String fechaCostos = obtenerParámetros(uri, "costos");
+        String patente = obtenerParámetros(uri, "patente");
+
+        if ( fechaCostos != null && patente != null) {
+            LocalDate ld = LocalDate.parse(fechaCostos + "-01");
+            Costos costos = mantenimientoDAO.obtener_costos_mantenimiento(patente, ld);
+            return ow.writeValueAsString(costos);
+        } else {
+            ArrayList<Mantenimiento> mantenimientos = new ArrayList<>();
+            mantenimientos = mantenimientoDAO.list();
+            return ow.writeValueAsString(mantenimientos);
+        }
+        
     }
+
 
     @Override
     public String manejarPost(HttpExchange he) throws UnsupportedEncodingException, IOException, Exception {
@@ -60,7 +76,6 @@ public class manejadorMantenimiento extends Manejador {
             LocalDate fecha = LocalDate.parse(jsonobj.getString("fecha"));
             Double costo_repuestos = jsonobj.getDouble("costo_repuestos");
             Double costo_manodeobra = jsonobj.getDouble("costo_manodeobra");
-
 
             Vehiculo vehiculo = jsonobj.getJSONObject("vehiculo").getBoolean("esCamion") ? new Camion() : new Semirremolque();
             vehiculo.setPatente((String) jsonobj.getJSONObject("vehiculo").get("vehiculoSeleccionado"));

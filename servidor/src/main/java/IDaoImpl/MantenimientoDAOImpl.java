@@ -82,7 +82,7 @@ public class MantenimientoDAOImpl implements IDAO<Mantenimiento> {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
     
-    public Costos calcular_costos_mantenimiento(String patente, LocalDate fecha) throws SQLException{
+    public Costos obtener_costos_mantenimiento(String patente, LocalDate fecha) throws SQLException{
         Costos respuesta = new Costos();
 
         PreparedStatement costoMantenimiento= conexion.prepareStatement("SELECT sum(Costos_mano_de_obra), sum(Costos_repuestos) FROM Mantenimientos WHERE MONTH(Fecha) = ? and YEAR(Fecha) = ?  and Vehiculos_Patente= ?");

@@ -28,8 +28,8 @@ public class manejadorVehiculos extends Manejador {
             System.out.println("Constructor de manejador vehículos");
             this.semirremolqueDAO = new SemirremolqueDAOImpl();
             this.camionDAO = new CamionDAOImpl();
-            this.vehiculoDAO=new VehiculoDAOImpl();
-            
+            this.vehiculoDAO = new VehiculoDAOImpl();
+
         } catch (ClassNotFoundException err) {
             System.err.println(err);
         }
@@ -38,52 +38,39 @@ public class manejadorVehiculos extends Manejador {
     @Override
     public String manejarGet(HttpExchange he) throws UnsupportedEncodingException, JsonProcessingException, ClassNotFoundException, Exception {
         URI uri = he.getRequestURI();
-        String costos = obtenerParámetros(uri, "costos");
-        if (costos != null) {
-            return obtenerCostos(costos, obtenerParámetros(uri, "patente"));
-        } else {
-            String tipo = obtenerParámetros(uri, "tipo");
+        String tipo = obtenerParámetros(uri, "tipo");
 
-            ArrayList<Vehiculo> vehiculos = new ArrayList<>();
-            if (tipo == null) {
-               
-                vehiculos= vehiculoDAO.list();
-                
-            } else if (tipo.equalsIgnoreCase("camion")) {
-                ArrayList<Camion> camiones = camionDAO.list();
-                Iterator<Camion> iteratorCamion = camiones.iterator();
-                while (iteratorCamion.hasNext()) {
-                    vehiculos.add(iteratorCamion.next());
-                }
+        ArrayList<Vehiculo> vehiculos = new ArrayList<>();
+        if (tipo == null) {
 
-            } else if (tipo.equalsIgnoreCase("semirremolque")) {
-                ArrayList<Semirremolque> semirremolques = semirremolqueDAO.list();
-                Iterator<Semirremolque> iteratorSemirremolque = semirremolques.iterator();
-                while (iteratorSemirremolque.hasNext()) {
-                    vehiculos.add(iteratorSemirremolque.next());
-                }
-            } else {
-                //entonces está intentando acceder a un tipo incorrecto, por lo que el mensaje de respuesta debería ser 404 
-                throw new Exception();
+            vehiculos = vehiculoDAO.list();
+
+        } else if (tipo.equalsIgnoreCase("camion")) {
+            ArrayList<Camion> camiones = camionDAO.list();
+            Iterator<Camion> iteratorCamion = camiones.iterator();
+            while (iteratorCamion.hasNext()) {
+                vehiculos.add(iteratorCamion.next());
             }
-            // send response
 
-            ObjectWriter ow = new ObjectMapper().writer().withDefaultPrettyPrinter();
-            return ow.writeValueAsString(vehiculos);
+        } else if (tipo.equalsIgnoreCase("semirremolque")) {
+            ArrayList<Semirremolque> semirremolques = semirremolqueDAO.list();
+            Iterator<Semirremolque> iteratorSemirremolque = semirremolques.iterator();
+            while (iteratorSemirremolque.hasNext()) {
+                vehiculos.add(iteratorSemirremolque.next());
+            }
+        } else {
+            //entonces está intentando acceder a un tipo incorrecto, por lo que el mensaje de respuesta debería ser 404 
+            throw new Exception();
         }
+        // send response
+
+        ObjectWriter ow = new ObjectMapper().writer().withDefaultPrettyPrinter();
+        return ow.writeValueAsString(vehiculos);
     }
 
     @Override
     public String manejarPost(HttpExchange he) throws Exception {
         throw new Exception();
-    }
-
-    public String obtenerCostos(String c, String p) throws Exception {
-        LocalDate ld = LocalDate.parse(c + "-01");
-        Costos costos = camionDAO.calcular_costos(p, ld);
-
-        ObjectWriter ow = new ObjectMapper().writer().withDefaultPrettyPrinter();
-        return ow.writeValueAsString(costos);
     }
 
     @Override

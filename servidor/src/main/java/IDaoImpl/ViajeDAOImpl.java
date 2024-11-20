@@ -129,7 +129,7 @@ public class ViajeDAOImpl implements IDAO<Viaje> {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
     
-    public Costos calcular_costos_viaje (String patente, LocalDate fecha) throws SQLException{
+    public Costos obtener_costos_viaje (String patente, LocalDate fecha) throws SQLException{
         Costos respuesta = new Costos();
 
         PreparedStatement costoViaje= conexion.prepareStatement("SELECT sum(Costos_combustibles), sum(Kilometros_realizados) FROM Viajes WHERE MONTH(Fecha_partida) = ? AND YEAR(Fecha_partida) = ? and Camiones_Vehiculos_Patente= ? ;");

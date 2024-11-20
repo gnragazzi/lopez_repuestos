@@ -2,6 +2,7 @@ package com.grupoing.servidor;
 
 import Clases.Camion;
 import Clases.Chofer;
+import Clases.Costos;
 import Clases.Semirremolque;
 import Clases.Viaje;
 import IDaoImpl.CamionDAOImpl;
@@ -27,7 +28,7 @@ public class manejadorViaje extends Manejador {
     public manejadorViaje() {
         try {
             viajeDAO = new ViajeDAOImpl();
-        }catch(ClassNotFoundException ex) {
+        } catch (ClassNotFoundException ex) {
             System.out.println(ex);
         }
 
@@ -60,8 +61,8 @@ public class manejadorViaje extends Manejador {
             camion.setPatente(jsonobj.getString("camion"));
             // al camión recuperado, le sumamos los kilometros realizados en el viaje
             camion.setKilometraje(camion.getKilometraje() + kilometros_realizados);
-            CamionDAOImpl camionDAO= new CamionDAOImpl();
-            camionDAO.update(camion, camion.getPatente()); 
+            CamionDAOImpl camionDAO = new CamionDAOImpl();
+            camionDAO.update(camion, camion.getPatente());
             String destino = jsonobj.getString("destino");
             int peso = jsonobj.getInt("peso");
 
@@ -86,35 +87,40 @@ public class manejadorViaje extends Manejador {
         String fecha_partida, fecha_llegada;
         fecha_partida = obtenerParámetros(he.getRequestURI(), "fecha_partida");
         fecha_llegada = obtenerParámetros(he.getRequestURI(), "fecha_llegada");
-        
+
         URI uri = he.getRequestURI();
         ArrayList<Viaje> viajes = new ArrayList<>();
-        
-        if(obtenerParámetros(uri, "entregas_tardias") != null){
-            viajes.addAll(viajeDAO.ver_entregas_tardias());
-        }
-        else{
-            if (fecha_partida == null && fecha_llegada == null) {
-            
-            viajes=viajeDAO.list();
-            
-        } else if (fecha_llegada == null) {
-            // SE DEVUEVLVEN TODOS VIAJES  A PARTIR DE FECHAPARTIDA
-        } else if (fecha_partida == null) {
-            // SE DEVUEVLVEN TODOS VIAJES  A PARTIR DE FECHAPARTIDA
 
-        } else {
-
-            viajes = viajeDAO.comprobarfechas(fecha_partida, fecha_llegada);
-
-          }
-        }
+        String fechaCostos = obtenerParámetros(uri, "costos");
+        String patente = obtenerParámetros(uri, "patente");
 
         ObjectWriter ow = new ObjectMapper().writer().withDefaultPrettyPrinter();
 
+        if (fechaCostos != null && patente != null) {
+            LocalDate ld = LocalDate.parse(fechaCostos + "-01");
+            Costos costos = viajeDAO.obtener_costos_viaje(patente, ld);
+            return ow.writeValueAsString(costos);
+        } else if (obtenerParámetros(uri, "entregas_tardias") != null) {
+            viajes.addAll(viajeDAO.ver_entregas_tardias());
+        } else {
+            if (fecha_partida == null && fecha_llegada == null) {
+
+                viajes = viajeDAO.list();
+
+            } else if (fecha_llegada == null) {
+                // SE DEVUEVLVEN TODOS VIAJES  A PARTIR DE FECHAPARTIDA
+            } else if (fecha_partida == null) {
+                // SE DEVUEVLVEN TODOS VIAJES  A PARTIR DE FECHAPARTIDA
+
+            } else {
+
+                viajes = viajeDAO.comprobarfechas(fecha_partida, fecha_llegada);
+
+            }
+        }
+
         return ow.writeValueAsString(viajes);
     }
-
     @Override
     protected String manejarPatch(HttpExchange he) throws UnsupportedEncodingException, JsonProcessingException, ClassNotFoundException, Exception {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody

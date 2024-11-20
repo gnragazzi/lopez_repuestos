@@ -7,7 +7,11 @@ const Costos_2 = () => {
   const [error, setError] = useState("");
   const axiosPrivado = useAxiosPrivado();
   const {
-    acciones_camiones: { CARGAR_COSTO },
+    acciones_camiones: {
+      CARGAR_COSTO_MANTENIMIENTO,
+      CARGAR_COSTO_VIAJE,
+      CARGAR_COSTOS_POR_KILOMETROS,
+    },
     dispatch_camiones: dispatch,
     estado_camiones: {
       lista_camiones,
@@ -23,34 +27,49 @@ const Costos_2 = () => {
       },
     },
   } = useContextoGlobal();
+
   useEffect(() => {
     setError("");
     setCargando(true);
     axiosPrivado
       .get(
-        `/vehiculos?costos=${año_costo}-${
+        `/mantenimiento?costos=${año_costo}-${
           mes_costo + 1 < 10 ? "0" + (mes_costo + 1) : mes_costo + 1
         }&patente=${camion_seleccionado}`
       )
       .then((res) => {
-        const {
-          cost_mano_de_obra,
-          costo_combustible,
-          costo_repuestos,
-          costos_por_kilometros,
-          kilometros_realizados,
-        } = res.data;
+        const { cost_mano_de_obra, costo_repuestos } = res.data;
 
         dispatch({
-          type: CARGAR_COSTO,
+          type: CARGAR_COSTO_MANTENIMIENTO,
           payload: {
             cost_mano_de_obra,
-            costo_combustible,
             costo_repuestos,
-            costos_por_kilometros,
-            kilometros_realizados,
           },
         });
+
+        axiosPrivado
+          .get(
+            `/viajes?costos=${año_costo}-${
+              mes_costo + 1 < 10 ? "0" + (mes_costo + 1) : mes_costo + 1
+            }&patente=${camion_seleccionado}`
+          )
+          .then((resultado) => {
+            const { costo_combustible, kilometros_realizados } = resultado.data;
+            console.log(resultado.data);
+
+            dispatch({
+              type: CARGAR_COSTO_VIAJE,
+              payload: {
+                costo_combustible,
+                kilometros_realizados,
+              },
+            }); 
+            dispatch({
+              type: CARGAR_COSTOS_POR_KILOMETROS,
+            })
+          });
+
         setCargando(false);
       })
       .catch((error) => {
@@ -59,7 +78,8 @@ const Costos_2 = () => {
         setError(error.message);
       });
   }, [
-    CARGAR_COSTO,
+    CARGAR_COSTO_VIAJE,
+    CARGAR_COSTO_MANTENIMIENTO,
     año_costo,
     camion_seleccionado,
     dispatch,

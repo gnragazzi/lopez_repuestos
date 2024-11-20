@@ -59,27 +59,6 @@ public class CamionDAOImpl implements IDAO<Camion>{
         return camiones;
     }
 
-    public Costos calcular_costos(String patente, LocalDate fecha) throws Exception {
-        Costos respuesta = new Costos();
-        respuesta.setPeríhodo(fecha);
-        respuesta.setPatente(patente);
-        
-        MantenimientoDAOImpl mantenimientoDAO= new  MantenimientoDAOImpl();
-        ViajeDAOImpl viajeDAO= new  ViajeDAOImpl();
-        
-        Costos costoM= mantenimientoDAO.calcular_costos_mantenimiento(patente, fecha);
-        Costos costoV= viajeDAO.calcular_costos_viaje(patente, fecha);
-        
-        respuesta.setCost_mano_de_obra(costoM.getCost_mano_de_obra());
-        respuesta.setCosto_repuestos(costoM.getCosto_repuestos());
-        respuesta.setCosto_combustible(costoV.getCosto_combustible());
-        respuesta.setKilometros_realizados(costoV.getKilometros_realizados());
-        
-        
-        respuesta.calcularCostos_por_kilometros();
-        
-        return respuesta;
-    }
 
     @Override
     public void delete(String key) throws Exception {

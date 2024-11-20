@@ -15,7 +15,6 @@ public class Costos {
     private float cost_mano_de_obra;
     private float costo_combustible;
     private float kilometros_realizados;
-    private float costos_por_kilometros;
 
     public Costos() {
         this.períhodo = null;
@@ -24,7 +23,6 @@ public class Costos {
         this.cost_mano_de_obra = 0;
         this.costo_combustible = 0;
         this.kilometros_realizados = 0;
-        this.costos_por_kilometros = 0;
     }
 
     public Costos(LocalDate períhodo, String patente, float costo_repuestos, float cost_mano_de_obra, float costo_combustible, float kilometros_realizados) {
@@ -34,7 +32,6 @@ public class Costos {
         this.cost_mano_de_obra = cost_mano_de_obra;
         this.costo_combustible = costo_combustible;
         this.kilometros_realizados = kilometros_realizados;
-        this.costos_por_kilometros = (costo_repuestos+cost_mano_de_obra+costo_combustible)/kilometros_realizados;
     }
 
     public float getCost_mano_de_obra() {
@@ -47,10 +44,6 @@ public class Costos {
 
     public float getCosto_repuestos() {
         return costo_repuestos;
-    }
-
-    public float getCostos_por_kilometros() {
-        return costos_por_kilometros;
     }
 
     public float getKilometros_realizados() {
@@ -75,13 +68,6 @@ public class Costos {
 
     public void setKilometros_realizados(float kilometros_realizados) {
         this.kilometros_realizados = kilometros_realizados;
-    }
-
-    public void calcularCostos_por_kilometros() {
-        if(this.kilometros_realizados == 0)//en tal caso, no se han realizado viajes y, por lo tanto, no es válido preguntar por "costo por kilómetro" 
-            return;
-        else 
-            this.costos_por_kilometros = (costo_repuestos+cost_mano_de_obra+costo_combustible)/kilometros_realizados;
     }
 
     public void setCosto_repuestos(float costo_repuestos) {
