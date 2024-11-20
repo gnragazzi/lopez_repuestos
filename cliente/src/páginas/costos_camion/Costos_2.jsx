@@ -119,7 +119,7 @@ const Costos_2 = () => {
           <p>Costo total por mano de obra: ${cost_mano_de_obra}</p>
           <p>Costo total por repuestos: ${costo_repuestos}</p>
           <br />
-          <p>Costo Por Kilómetro: ${costos_por_kilometros}/km</p>
+          <p>Costo Por Kilómetro: ${costos_por_kilometros.toFixed(2)}/km</p>
         </div>
       </div>
     );
