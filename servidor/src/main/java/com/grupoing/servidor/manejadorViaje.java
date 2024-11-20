@@ -5,7 +5,6 @@ import Clases.Chofer;
 import Clases.Costos;
 import Clases.Semirremolque;
 import Clases.Viaje;
-import IDaoImpl.CamionDAOImpl;
 import IDaoImpl.ViajeDAOImpl;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -57,12 +56,7 @@ public class manejadorViaje extends Manejador {
             float costos_combustibles = (float) jsonobj.getDouble("costos_combustibles");
 
             Camion camion = new Camion();
-            //IDEALMENTE, BUSCAMOS EL CAMION EN LA BASE DE DATOS
             camion.setPatente(jsonobj.getString("camion"));
-            // al camión recuperado, le sumamos los kilometros realizados en el viaje
-            camion.setKilometraje(camion.getKilometraje() + kilometros_realizados);
-            CamionDAOImpl camionDAO = new CamionDAOImpl();
-            camionDAO.update(camion, camion.getPatente());
             String destino = jsonobj.getString("destino");
             int peso = jsonobj.getInt("peso");
 

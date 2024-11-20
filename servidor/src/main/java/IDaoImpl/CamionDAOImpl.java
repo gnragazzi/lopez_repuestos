@@ -16,33 +16,45 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import org.json.JSONObject;
 
- 
-public class CamionDAOImpl implements IDAO<Camion>{
+public class CamionDAOImpl implements IDAO<Camion> {
 
     private Connection conexion;
-    
+
     public CamionDAOImpl() throws ClassNotFoundException {
-         this.conexion = Conexion.getInstancia().getConexion();
+        this.conexion = Conexion.getInstancia().getConexion();
     }
 
     public void create(Camion obj) throws Exception {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
-    
+
     public Camion read(String clave) throws Exception {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        Statement statement = conexion.createStatement();
+        ResultSet rs = statement.executeQuery("SELECT * FROM Camiones,Vehiculos WHERE Patente=Vehiculos_Patente AND Vehiculos_Patente=\"" + clave + "\";");
+
+        if (!rs.next()) {
+            return null;
+        } else {
+            return new Camion(
+                    rs.getString("Marca"),
+                    rs.getString("Patente"),
+                    null, null, null, null,
+                    rs.getString("Modelo"),
+                    rs.getString("Potencia"),
+                    rs.getInt("Kilometraje"), null);
+        }
+
     }
-    
+
     public void update(Camion obj, String key) throws Exception {
         PreparedStatement envioCamion;
-        envioCamion = conexion.prepareStatement("update Camiones set kilometraje=kilometraje + ? where Vehiculos_Patente= ?;");
-        envioCamion.setInt(1,obj.getKilometraje());
-        envioCamion.setString(2,obj.getPatente());
-        envioCamion.executeUpdate();
+        //envioCamion = conexion.prepareStatement("update Camiones set Kilometraje=? where Vehiculos_Patente=\"?\";");
+        envioCamion = conexion.prepareStatement("UPDATE Camiones set Kilometraje=? WHERE Vehiculos_Patente=\""+key+"\";");    
+        
+        envioCamion.setInt(1, obj.getKilometraje());
+        envioCamion.execute(); 
     }
-    
 
-    
     public ArrayList<Camion> list() throws Exception {
         Statement statement = conexion.createStatement();
         ResultSet rs = statement.executeQuery("select * from Camiones, Vehiculos where Patente=Vehiculos_Patente;");
@@ -55,15 +67,13 @@ public class CamionDAOImpl implements IDAO<Camion>{
             camion.setKilometraje(rs.getInt("Kilometraje"));
             camion.setPotencia(rs.getString("Potencia"));
             camiones.add(camion);
-            }
+        }
         return camiones;
     }
-
 
     @Override
     public void delete(String key) throws Exception {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
-
 
 }

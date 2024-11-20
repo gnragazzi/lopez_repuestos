@@ -43,7 +43,7 @@ public class ChoferDAOImpl implements IDAO<Chofer> {
 
     public Chofer read(String clave) throws Exception {
         Statement statement = conexion.createStatement();
-        ResultSet rs = statement.executeQuery("SELECT * FROM Empleados, Choferes WHERE dni=Empleados_DNI AND DNI=" + clave + ";");
+        ResultSet rs = statement.executeQuery("SELECT * FROM Empleados, Choferes WHERE dni=Empleados_DNI AND DNI=\"" + clave + "\";"); 
         ;
 
         if (!rs.next()) {

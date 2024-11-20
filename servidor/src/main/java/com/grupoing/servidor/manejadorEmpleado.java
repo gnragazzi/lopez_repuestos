@@ -36,57 +36,58 @@ public class manejadorEmpleado extends Manejador {
 
     @Override
     public String manejarGet(HttpExchange he) throws UnsupportedEncodingException, ClassNotFoundException, Exception {
-        String tipo = obtenerParámetros(uri, "tipo");
-        String esActivo = obtenerParámetros(uri, "activo");
-        String id = obtenerParámetros(uri, "id");
+            String tipo = obtenerParámetros(uri, "tipo");
+            String esActivo = obtenerParámetros(uri, "activo"); 
+            String id = obtenerParámetros(uri, "id");
 
-        ArrayList<Empleado> empleados = new ArrayList<>();
-        if (tipo == null) {
-            //Es decir, en este caso no se quiso acceder a ningún tipo de empleado en particular, y se busca choferes y mecánicos por igual
-            throw new Exception(); // TODAVÍA NO ESTÁ IMPLEMENTADO
-        } else if (tipo.equalsIgnoreCase("chofer")) {
-            // SI HAY CAMPO ID, SE BUSCA UN SUJETO, SINO LA LISTA COMPLETA
-            if (id != null) {
-                Chofer temp = choferDAO.read(id);
-                empleados.add(temp);
-            } else {
-                Iterator<Chofer> iteratorChofer = choferDAO.list().iterator();
+            ArrayList<Empleado> empleados = new ArrayList<>();
+            if (tipo == null) {
+                //Es decir, en este caso no se quiso acceder a ningún tipo de empleado en particular, y se busca choferes y mecánicos por igual
+                throw new Exception(); // TODAVÍA NO ESTÁ IMPLEMENTADO
+            } else if (tipo.equalsIgnoreCase("chofer")) {
+                // SI HAY CAMPO ID, SE BUSCA UN SUJETO, SINO LA LISTA COMPLETA
+                if (id != null) {
+                    System.out.println("Hasta acá llegué");
+                    Chofer temp = choferDAO.read(id);
+                    empleados.add(temp);
+                } else {
+                    Iterator<Chofer> iteratorChofer = choferDAO.list().iterator();
+                    if (esActivo == null) {
+                        while (iteratorChofer.hasNext()) {
+                            empleados.add(iteratorChofer.next());
+                        }
+                    } else {
+                        while (iteratorChofer.hasNext()) {
+                            Chofer temp = iteratorChofer.next();
+                            if (temp.getActivo() == Boolean.parseBoolean(esActivo)) {
+                                empleados.add(temp);
+                            }
+                        }
+                    }
+                }
+
+            } else if (tipo.equalsIgnoreCase("mecánico")) {
+
+                Iterator<Mecanico> iteratorMecanico = mecánicoDao.list().iterator();
                 if (esActivo == null) {
-                    while (iteratorChofer.hasNext()) {
-                        empleados.add(iteratorChofer.next());
+                    while (iteratorMecanico.hasNext()) {
+                        empleados.add(iteratorMecanico.next());
                     }
                 } else {
-                    while (iteratorChofer.hasNext()) {
-                        Chofer temp = iteratorChofer.next();
+                    while (iteratorMecanico.hasNext()) {
+                        Mecanico temp = iteratorMecanico.next();
                         if (temp.getActivo() == Boolean.parseBoolean(esActivo)) {
                             empleados.add(temp);
                         }
                     }
                 }
-            }
-
-        } else if (tipo.equalsIgnoreCase("mecánico")) {
-
-            Iterator<Mecanico> iteratorMecanico = mecánicoDao.list().iterator();
-            if (esActivo == null) {
-                while (iteratorMecanico.hasNext()) {
-                    empleados.add(iteratorMecanico.next());
-                }
             } else {
-                while (iteratorMecanico.hasNext()) {
-                    Mecanico temp = iteratorMecanico.next();
-                    if (temp.getActivo() == Boolean.parseBoolean(esActivo)) {
-                        empleados.add(temp);
-                    }
-                }
+                //entonces está intentando acceder a un tipo incorrecto, por lo que el mensaje de respuesta debería ser 404 
             }
-        } else {
-            //entonces está intentando acceder a un tipo incorrecto, por lo que el mensaje de respuesta debería ser 404 
-        }
-        // send response
+            // send response
 
-        ObjectWriter ow = new ObjectMapper().writer().withDefaultPrettyPrinter();
-        return ow.writeValueAsString(id != null ? empleados.get(0) : empleados);
+            ObjectWriter ow = new ObjectMapper().writer().withDefaultPrettyPrinter();
+            return ow.writeValueAsString(id != null ? empleados.get(0) : empleados);
     }
 
     @Override
@@ -135,9 +136,6 @@ public class manejadorEmpleado extends Manejador {
         JSONObject jsonobj = new JSONObject(buf.toString());
 
         
-        //System.out.println("Aqui: " + buf.toString());  
-        System.out.println("Fecha_psicotécnico: " + LocalDate.parse(jsonobj.getString("fecha_psicotecnico")) );  
-        System.out.println("fecha_nacimiento: " + LocalDate.parse(jsonobj.getString("fecha_nacimiento")));   
         Chofer temp = new Chofer(
                 LocalDate.parse(jsonobj.getString("fecha_psicotecnico")),
                 null,
@@ -149,7 +147,6 @@ public class manejadorEmpleado extends Manejador {
                 LocalDate.parse(jsonobj.getString("fecha_nacimiento")),
                 jsonobj.getString("telefono"),
                 jsonobj.getBoolean("esActivo"));
-        System.out.println("Llegar acá, estaría buenísimo."); 
         choferDAO.update(temp, id);
 
         return "Actualización Exitosa";

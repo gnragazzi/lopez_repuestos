@@ -1,7 +1,6 @@
 package com.grupoing.servidor;
 
 import Clases.Camion;
-import Clases.Costos;
 import Clases.Semirremolque;
 import Clases.Vehiculo;
 import IDaoImpl.CamionDAOImpl;
@@ -13,9 +12,11 @@ import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
 import java.net.URI;
-import java.time.LocalDate;
 import java.util.Iterator;
+import org.json.JSONObject;
 
 public class manejadorVehiculos extends Manejador {
 
@@ -75,7 +76,35 @@ public class manejadorVehiculos extends Manejador {
 
     @Override
     protected String manejarPatch(HttpExchange he) throws UnsupportedEncodingException, JsonProcessingException, ClassNotFoundException, Exception {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        /*String patente = obtenerParámetros(uri, "km_realizados");
+        int km_realizados = Integer.valueOf(obtenerParámetros(uri,"patente"));*/
+        JSONObject jsonobj = null;
+        String patente;
+        int km_realizados;
+        Camion camion = null;
+        try {
+            InputStreamReader isr = new InputStreamReader(he.getRequestBody(), "utf-8");
+            BufferedReader br = new BufferedReader(isr);
+            int b;
+            StringBuilder buf = new StringBuilder(512);
+            while ((b = br.read()) != -1) {
+                buf.append((char) b);
+            }
+            br.close();
+            isr.close();
+            jsonobj = new JSONObject(buf.toString());
+            patente = jsonobj.getString("patente");
+            km_realizados = jsonobj.getInt("km_realizados");
+            camion = camionDAO.read(patente);
+            // al camión recuperado, le sumamos los kilometros realizados en el viaje 
+            camion.setKilometraje(km_realizados + camion.getKilometraje());
+        } catch (Exception e) {
+            System.out.println(e.getMessage()); 
+            return "FALLO";
+        }
+         
+        camionDAO.update(camion, camion.getPatente()); 
+        return camion.getModelo();
     }
 
     @Override

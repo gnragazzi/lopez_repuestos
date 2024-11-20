@@ -26,6 +26,16 @@ export const Cargar_viaje = () => {
       .post("/viajes", estado.cuerpo_cargar_viaje)
       .then((res) => {
         console.log(res);
+      })
+      .catch((error) => {
+        setError(error.message);
+      });
+    axiosPrivado
+      .patch("/vehiculos", {
+        patente: estado.cuerpo_cargar_viaje.camion,
+        km_realizados: estado.cuerpo_cargar_viaje.kilometros_realizados,
+      })
+      .then(() => {
         dispatch({ type: acciones.RESETEAR_CUERPO_VIAJE });
         toast.success("🚚 Viaje Cargado Correctamente 🚚", {
           position: "top-center",
@@ -42,9 +52,7 @@ export const Cargar_viaje = () => {
         });
         navegar("/viajes");
       })
-      .catch((error) => {
-        setError(error.message);
-      });
+      .catch((err) => setError(err.message));
   };
   // //HAY QUE TENER ALGUNA PANTALLA PARA CUANDO NO HAYA CAMIONES Y/O SEMIRREMOLQUES EN EL PERIODO DETERMINADO
   // // if (estado.lista_vehiculos.length < 1) {
