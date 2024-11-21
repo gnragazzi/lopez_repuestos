@@ -82,6 +82,8 @@ public class manejadorMantenimiento extends Manejador {
 
             ArrayList<Mecanico> mecanicos = new ArrayList<>();
 
+            int km_r = jsonobj.getInt("kilometros_en_que_se_realizo");
+            
             JSONArray arr = jsonobj.getJSONArray("mecanicosSeleccionados");
             if (arr != null) {
                 int len = arr.length();
@@ -93,7 +95,7 @@ public class manejadorMantenimiento extends Manejador {
                 }
             }
 
-            Mantenimiento m = new Mantenimiento(trabajos_realizados, fecha, costo_repuestos, costo_manodeobra, 0, mecanicos, vehiculo);
+            Mantenimiento m = new Mantenimiento(trabajos_realizados, fecha, costo_repuestos, costo_manodeobra, km_r, mecanicos, vehiculo);
 //            System.out.printf(
 //                    "Trabajo: %s\n fecha: %s\ncosto_repuestos: %f\ncosto_manodeobra: %s\nkilometros_en_que_se_realizo: %d\nDni mecánico: %s\nMatrícula Vehículo: %s\n",
 //                    m.getTrabajos_realizados(),

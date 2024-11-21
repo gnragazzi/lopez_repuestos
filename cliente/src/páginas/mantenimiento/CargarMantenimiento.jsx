@@ -107,6 +107,7 @@ const CargarMantenimiento = () => {
     return esValido;
   };
   const enviarFormulario = () => {
+    console.log(cuerpo_cargar_mantenimiento);
     axiosPrivado
       .post("/mantenimiento", cuerpo_cargar_mantenimiento)
       .then(() => {

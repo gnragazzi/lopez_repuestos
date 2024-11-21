@@ -139,7 +139,7 @@ export const reducer_cargar_mantenimiento = (estado, accion) => {
         ...estado,
         cuerpo_cargar_mantenimiento: {
           ...estado.cuerpo_cargar_mantenimiento,
-          kilometros_en_que_se_realizo: payload,
+          kilometros_en_que_se_realizo: parseInt(payload),
         },
       };
     }

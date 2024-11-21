@@ -64,10 +64,10 @@ const Costos_2 = () => {
                 costo_combustible,
                 kilometros_realizados,
               },
-            }); 
+            });
             dispatch({
               type: CARGAR_COSTOS_POR_KILOMETROS,
-            })
+            });
           });
 
         setCargando(false);
@@ -97,7 +97,7 @@ const Costos_2 = () => {
   } else
     return (
       <div className="App formulario">
-        <h2>Confirme Selección</h2>
+        <h2>Informe Costos</h2>
         <div className="confirmar__seleccion">
           {lista_camiones.map((v) => {
             return (
@@ -119,7 +119,11 @@ const Costos_2 = () => {
           <p>Costo total por mano de obra: ${cost_mano_de_obra}</p>
           <p>Costo total por repuestos: ${costo_repuestos}</p>
           <br />
-          <p>Costo Por Kilómetro: ${costos_por_kilometros.toFixed(2)}/km</p>
+          <h4>
+            <strong>
+              Costo Por Kilómetro: ${costos_por_kilometros.toFixed(2)}/km
+            </strong>
+          </h4>
         </div>
       </div>
     );
