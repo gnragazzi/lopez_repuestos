@@ -42,7 +42,7 @@ function Viajes() {
             <button className="btn btn-success">Insertar</button>
           </Link>
           <Link to="ver_entregas_tardias" rel="nofollow">
-            <button className="btn btn-info">Ver Entregas Tardias</button>
+            <button className="btn-entregas">Ver Entregas Tardias</button>
           </Link>
         </div>
 
