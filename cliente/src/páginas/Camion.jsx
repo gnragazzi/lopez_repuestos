@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import { Link, Outlet } from "react-router-dom";
-import "bootstrap/dist/css/bootstrap.min.css";
 import { useContextoGlobal } from "../Contexto";
 import useAxiosPrivado from "../utilidades/useAxiosPrivado";
 
@@ -130,7 +129,7 @@ function Camiones() {
                             });
                           }}
                         >
-                          Tecnica
+                          Técnica
                         </Link>
                         <Link
                           rel="nofollow"

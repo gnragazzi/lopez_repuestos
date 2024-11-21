@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import { Link, Outlet } from "react-router-dom";
-import "bootstrap/dist/css/bootstrap.min.css";
 import { useContextoGlobal } from "../Contexto";
 import useAxiosPrivado from "../utilidades/useAxiosPrivado";
 
@@ -128,7 +127,7 @@ function Semirremolques() {
                             })
                           }}
                         >
-                          Tecnica
+                          Técnica
                         </Link>
                       </td>
                     </tr>

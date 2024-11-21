@@ -99,7 +99,7 @@ const Cargar_M3 = ({ dispatch, estado, acciones, validarCampos }) => {
         {esCamion && (
           <fieldset className="form__items-mantenimiento">
             <legend className="form__legend">
-              Kilometros del camión en que se realizó el mantenimiento
+              Kilómetros del camión en que se realizó el mantenimiento
             </legend>
             <div className="mensaje__error">
               {inputs.kilometros_en_que_se_realizo && (

@@ -63,10 +63,8 @@ const Listar_seguro = () => {
       </button>
       {estado.ultimo_seguro.nombre_aseguradora && (
         <div className="confirmar__seleccion">
-          <br />
-          <h4>Vehiculo</h4>
+          <h4>Vehículo</h4>
           <p>Patente : {vehiculo_seleccionado}</p>
-          <br />
           <div>
             <h4>Aseguradora</h4>
             <p> {estado.ultimo_seguro.nombre_aseguradora} </p>
@@ -94,7 +92,7 @@ const Listar_seguro = () => {
       )}
       {estado.ultimo_seguro.nombre_aseguradora.trim() == "" && (
         <div className="confirmar__seleccion">
-          <h4>Vehiculo</h4>
+          <h4>Vehículo</h4>
           <p>Patente : {vehiculo_seleccionado}</p>
           <div>
             <br />

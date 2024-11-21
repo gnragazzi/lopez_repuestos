@@ -76,6 +76,7 @@ const Login = () => {
                     type="text"
                     name="usuario"
                     id="usuario"
+                    required
                     placeholder="admin"
                     value={usuario}
                     onChange={(e) => {
@@ -91,6 +92,7 @@ const Login = () => {
                     name="contrasena"
                     id="contrasena"
                     placeholder="1234"
+                    required
                     value={contrasena}
                     onChange={(e) => {
                       setContrasena(e.target.value);

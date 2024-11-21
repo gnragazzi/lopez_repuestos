@@ -13,7 +13,7 @@ const Cargar_M4 = ({ estado }) => {
     <>
       <h2>Confirme Selección</h2>
       <div className="confirmar__seleccion">
-        <h3>Vehículo: </h3>
+        <h4>Vehículo: </h4>
         {lista_vehículos.map((v) => {
           return (
             v.patente == vehiculoSeleccionado && (
@@ -23,7 +23,7 @@ const Cargar_M4 = ({ estado }) => {
             )
           );
         })}
-        <h3>Mecanicos: </h3>
+        <h4>Mecánicos: </h4>
         {lista_mecánicos.map((m) => {
           return (
             mecanicosSeleccionados.includes(m.dni) && (
@@ -33,7 +33,7 @@ const Cargar_M4 = ({ estado }) => {
             )
           );
         })}
-        <h3>Datos del Mantenimiento: </h3>
+        <h4>Datos del Mantenimiento: </h4>
         <p>
           Trabajo Realizado: {cuerpo_cargar_mantenimiento.trabajos_realizados}
         </p>
@@ -43,7 +43,7 @@ const Cargar_M4 = ({ estado }) => {
         </p>
         {esCamion && (
           <p>
-            Kilometros del camión en que se realizó el mantenimiento:{" "}
+            Kilómetros del camión en que se realizó el mantenimiento:{" "}
             {cuerpo_cargar_mantenimiento.kilometros_en_que_se_realizo}Km
           </p>
         )}

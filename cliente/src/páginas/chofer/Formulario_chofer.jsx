@@ -398,7 +398,7 @@ const Formulario_chofer = () => {
         </fieldset>
         {/* FECHA PSICOTÉCNICO */}
         <fieldset className="form__items-grid">
-          <legend className="form__legend">Fecha del Psicotecnico</legend>
+          <legend className="form__legend">Fecha del Psicotécnico</legend>
           <div className="mensaje__error">
             {inputs.fecha_psicotecnico && (
               <MdReportGmailerrorred title={inputs.fecha_psicotecnico} />
