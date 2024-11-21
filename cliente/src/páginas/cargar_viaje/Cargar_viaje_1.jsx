@@ -1,11 +1,16 @@
 import { Link } from "react-router-dom";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { MdReportGmailerrorred } from "react-icons/md";
 import { notificacion_error } from "../../utilidades/toast_modificados";
 
 /* eslint-disable react/prop-types */
 function Cargar_viaje_1({ dispatch, acciones, estado }) {
   const [fechainvalida, setFechainvalida] = useState("");
+
+  useEffect(() => {
+    dispatch({ type: acciones.RESETEAR_CUERPO_VIAJE });
+  }, []);
+
   const validarFechas = () => {
     const partida = new Date(fecha_partida);
     const llegada = new Date(fecha_llegada);
@@ -45,6 +50,7 @@ function Cargar_viaje_1({ dispatch, acciones, estado }) {
                 payload: e.target.value,
               });
             }}
+            onBlur={validarFechas}
           />
         </fieldset>
         <fieldset className="form__items-mantenimiento">
@@ -65,6 +71,7 @@ function Cargar_viaje_1({ dispatch, acciones, estado }) {
                 payload: e.target.value,
               });
             }}
+            onBlur={validarFechas}
           />
         </fieldset>
         <fieldset className="form__items-mantenimiento">
