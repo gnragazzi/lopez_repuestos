@@ -31,6 +31,7 @@ function Principal() {
 
   return (
     <>
+    <h2 style={{ fontSize: '2rem' }}>Notificaciones</h2>
       {(lista?.length <= 0 || listaModificada) && (
         <FiRefreshCcw
           className="notificaciones_recargar"

@@ -45,7 +45,7 @@ function Viajes() {
           </Link>
           <Link to="ver_entregas_tardias" rel="nofollow">
             <button className="btn-entregas">
-              Ver Entregas Tardias
+              Ver Entregas Tardías
             </button>
           </Link>
         </div>
@@ -54,7 +54,7 @@ function Viajes() {
           <table className="table table-bordered">
             <thead>
               <tr>
-                <th>Camion</th>
+                <th>Camión</th>
                 <th>Chofer</th>
                 <th>Semirremolque</th>
                 <th>Fecha de partida</th>

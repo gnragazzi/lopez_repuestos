@@ -1,23 +1,26 @@
 import { useContextoGlobal } from "../../Contexto";
 
-
 const Seguro_2 = () => {
-  const {
-    estado_seguro: estado
-  } = useContextoGlobal();
+  const { estado_seguro: estado } = useContextoGlobal();
 
-  const { fecha_emision, fecha_vencimiento, tipo, pago, nombre_aseguradora, vehiculo_seleccionado } = estado;
+  const {
+    fecha_emision,
+    fecha_vencimiento,
+    tipo,
+    pago,
+    nombre_aseguradora,
+    vehiculo_seleccionado,
+  } = estado;
 
   return (
     <div className="App formulario">
       <h2>Confirme Selección</h2>
       <div className="confirmar__seleccion">
-      <br />
-        <h4>Vehiculo</h4>
-        <p>Patente : {vehiculo_seleccionado}</p>
-        <br />
         <h4>Datos del seguro</h4>
         <br />
+
+        <h4>Vehículo</h4>
+        <p>Patente : {vehiculo_seleccionado}</p>
         <div>
           <h4>Aseguradora</h4>
           <p> {nombre_aseguradora} </p>
@@ -39,6 +42,5 @@ const Seguro_2 = () => {
     </div>
   );
 };
-
 
 export default Seguro_2;

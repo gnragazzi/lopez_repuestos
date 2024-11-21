@@ -58,10 +58,8 @@ const Listar_tecnica = () => {
       </button>
       {estado.ultima_tecnica.ubicacion && (
         <div className="confirmar__seleccion">
-          <br />
           <h4>Vehículo</h4>
           <p>Patente : {vehiculo_seleccionado}</p>
-          <br />
           <div>
             <h4>Ubicación</h4>
             <p> {estado.ultima_tecnica.ubicacion} </p>

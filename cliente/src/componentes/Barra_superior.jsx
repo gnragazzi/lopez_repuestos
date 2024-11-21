@@ -108,8 +108,8 @@ function Barra_superior() {
         <a className="iconos_barra_superior" to="#">
           <MdContactSupport
             id="ayuda"
-            className="icon"
-            onClick={modificarAltura}
+            className="icon ayuda"
+            
           />
         </a>
       </div>

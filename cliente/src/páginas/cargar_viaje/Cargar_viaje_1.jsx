@@ -29,7 +29,7 @@ function Cargar_viaje_1({ dispatch, acciones, estado }) {
   } = estado;
   return (
     <div className="App formulario">
-      <h2>Por Favor, seleccione las fechas en las que se realizo el viaje</h2>
+      <h2>Por Favor, seleccione las fechas en las que se realizó el viaje</h2>
       <form action="" className="form-table form__mantenimiento">
         <fieldset className="form__items-mantenimiento">
           <legend className="form__legend">Fecha de Partida</legend>

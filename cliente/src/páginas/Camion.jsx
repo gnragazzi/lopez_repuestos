@@ -129,7 +129,7 @@ function Camiones() {
                             });
                           }}
                         >
-                          Tecnica
+                          Técnica
                         </Link>
                         <Link
                           rel="nofollow"

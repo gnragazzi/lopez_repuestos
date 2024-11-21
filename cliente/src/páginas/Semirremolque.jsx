@@ -127,7 +127,7 @@ function Semirremolques() {
                             })
                           }}
                         >
-                          Tecnica
+                          Técnica
                         </Link>
                       </td>
                     </tr>
