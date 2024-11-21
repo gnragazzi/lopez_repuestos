@@ -73,34 +73,31 @@ const Cargar_tecnica = () => {
 
   const [ubicacionInvalida, setUbicacionInvalida] = useState("");
 
-  const validarFechas = () => {
+  const regex = /[^\w|\s|áéíóú|,]/i;
+
+  const validarCampos = () => {
+    let esValido = true;
+    if (estado.ubicacion.trim() === "") {
+      setUbicacionInvalida(
+        <MdReportGmailerrorred title="La ubicacion no puede estar vacío" />
+      );
+      esValido = false;
+    } else if (regex.test(estado.ubicacion)) {
+      console.log(estado.ubicacion);
+      setUbicacionInvalida(
+        <MdReportGmailerrorred title="La ubicacion solo puede contener letras, números, espacios, acentos y comas" />
+      );
+      esValido = false;
+    } else setUbicacionInvalida("");
+
     const emision = new Date(estado.fecha_emision);
     const vencimiento = new Date(estado.fecha_vencimiento);
 
     if (vencimiento < emision) {
-      return false;
-    }
-    return true;
-  };
-
-  const validarUbicacion = () => {
-    const regex = /[^\w|\s|áéíóú|,]/i;
-    if (estado.ubicacion.trim() === "") {
-      setUbicacionInvalida(
-        <MdReportGmailerrorred title="La ubicación no puede estar vacía" />
-      );
-      return false;
+      esValido = false;
     }
 
-    if (regex.test(estado.ubicacion)) {
-      setUbicacionInvalida(
-        <MdReportGmailerrorred title="La ubicación solo puede contener letras, números, espacios, acentos y comas" />
-      );
-      return false;
-    }
-
-    setUbicacionInvalida("");
-    return true;
+    return esValido;
   };
 
   return (
@@ -154,7 +151,7 @@ const Cargar_tecnica = () => {
             <button
               className="formulario__boton siguiente"
               onClick={() => {
-                if (validarFechas() && validarUbicacion()) {
+                if (validarCampos()) {
                   dispatch({ type: PROXIMA_PAGINA_TECNICA });
                 }
               }}

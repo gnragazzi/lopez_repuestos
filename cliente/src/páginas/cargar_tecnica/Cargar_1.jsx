@@ -22,13 +22,26 @@ const Cargar_1 = ({ ubicacionInvalida, setUbicacionInvalida }) => {
       <form className="form-table form__mantenimiento">
         <fieldset className="form__items-mantenimiento">
           <legend className="form__legend">Fecha emisión</legend>
+          <div className="mensaje__error">
+            {fechainvalida && (
+              <MdReportGmailerrorred title={fechainvalida}/>
+            )}
+          </div>
           <input
             type="date"
             name="fecha_emision"
             id="fecha_emision"
-            className="items__input"
+            className={`items__input ${fechainvalida ? 'error' : ''}`}
             value={estado.fecha_emision}
             onChange={(e) => {
+              const emision = new Date(e.target.value);
+              const vencimiento = new Date(estado.fecha_vencimiento);
+
+              if (vencimiento < emision) {
+                setFechainvalida("La fecha de vencimiento no puede ser anterior a la fecha de emisión. Elija una fecha valida.");
+              } else {
+                setFechainvalida("");
+              }
               dispatch({
                 type: SELECCIONAR_FECHA_EMISION,
                 payload: e.target.value,
@@ -82,10 +95,10 @@ const Cargar_1 = ({ ubicacionInvalida, setUbicacionInvalida }) => {
             className={`items__input ${ubicacionInvalida ? 'error' : ''}`}
             value={estado.ubicacion}
             onChange={(e) => {
-              const value = e.target.value;
-              if (!regex.test(value)) {
+              if (!regex.test(e.target.value)) {
                 setUbicacionInvalida("La ubicación solo puede contener letras, números, espacios, acentos y comas");
-              } else if (value.trim() === "") {
+                console.log("nooooo");
+              } else if (e.target.value.trim() === "") {
                 setUbicacionInvalida("El campo de ubicación no puede estar vacío");
               } else {
                 setUbicacionInvalida("");
@@ -93,7 +106,7 @@ const Cargar_1 = ({ ubicacionInvalida, setUbicacionInvalida }) => {
 
               dispatch({
                 type: SELECCIONAR_UBICACION,
-                payload: value,
+                payload: e.target.value,
               });
             }}
           />
