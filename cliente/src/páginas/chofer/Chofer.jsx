@@ -3,7 +3,7 @@ import { acciones_choferes as acciones } from "../../utilidades/reducer_choferes
 import useAxiosPrivado from "../../utilidades/useAxiosPrivado";
 import { Outlet, useNavigate } from "react-router-dom";
 import { useContextoGlobal } from "../../Contexto";
-import { toast } from "react-toastify";
+import { notificacion_error } from "../../utilidades/toast_modificados";
 
 const Chofer = () => {
   const navegador = useNavigate();
@@ -122,67 +122,53 @@ const Chofer = () => {
                         <td>{ch.apellido}</td>
                         <td>{ch.telefono}</td>
                         <td>
-                          <div className="acciones">
-                            <button
-                              className="btn btn-primary"
-                              onClick={() => {
-                                dispatch({
-                                  tipo: CARGAR_DATOS_CHOFER,
-                                  payload: ch,
-                                });
-                                navegador("editar");
-                              }}
-                            >
-                              Editar
-                            </button>{" "}
-                            <button
-                              className="btn btn-danger"
-                              onClick={() => {
-                                setEstadoModal({
-                                  activo: true,
-                                  mensaje: `¿Dar de baja a ${ch.nombre} ${ch.apellido}, DNI:${ch.dni}?`,
-                                  accion: () => {
-                                    dispatch({
-                                      tipo: BAJA_CHOFER,
-                                      payload: ch.dni,
-                                    });
-                                    axiosPrivado
-                                      .delete(
-                                        `/empleados?tipo=chofer&id=${ch.dni}`
-                                      )
-                                      .then((res) => {
-                                        toast.error(res.data, {
-                                          position: "top-right",
-                                          autoClose: 1500,
-                                          draggable: true,
-                                          progress: undefined,
-                                          theme: "light",
-                                          icon: false,
-                                          closeButton: false,
-                                          bodyClassName: "toast_class",
-                                          style: { textAlign: "center" },
-                                          pauseOnHover: false,
-                                          pauseOnFocusLoss: false,
-                                        });
-                                      })
-                                      .catch((err) => {
-                                        dispatch({
-                                          tipo: ERROR_SERVIDOR,
-                                          payload: err.message,
-                                        });
+                          <button
+                            className="btn btn-primary"
+                            onClick={() => {
+                              dispatch({
+                                tipo: CARGAR_DATOS_CHOFER,
+                                payload: ch,
+                              });
+                              navegador("editar");
+                            }}
+                          >
+                            Editar
+                          </button>{" "}
+                          <button
+                            className="btn btn-danger"
+                            onClick={() => {
+                              setEstadoModal({
+                                activo: true,
+                                mensaje: `¿Dar de baja a ${ch.nombre} ${ch.apellido}, DNI:${ch.dni}?`,
+                                accion: () => {
+                                  dispatch({
+                                    tipo: BAJA_CHOFER,
+                                    payload: ch.dni,
+                                  });
+                                  axiosPrivado
+                                    .delete(
+                                      `/empleados?tipo=chofer&id=${ch.dni}`
+                                    )
+                                    .then((res) => {
+                                      notificacion_error(res.data);
+                                    })
+                                    .catch((err) => {
+                                      dispatch({
+                                        tipo: ERROR_SERVIDOR,
+                                        payload: err.message,
                                       });
-                                    setEstadoModal({
-                                      activo: false,
-                                      mensaje: "",
-                                      accion: () => {},
                                     });
-                                  },
-                                });
-                              }}
-                            >
-                              Eliminar
-                            </button>{" "}
-                          </div>
+                                  setEstadoModal({
+                                    activo: false,
+                                    mensaje: "",
+                                    accion: () => {},
+                                  });
+                                },
+                              });
+                            }}
+                          >
+                            Eliminar
+                          </button>{" "}
                         </td>
                       </tr>
                     );

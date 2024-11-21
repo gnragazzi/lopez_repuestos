@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import useAxiosPrivado from "../../utilidades/useAxiosPrivado";
+import { notificacion_no_implementado } from "../../utilidades/toast_modificados";
 
 function Viajes() {
   const [viajes, setViajes] = useState([]);
@@ -37,16 +38,11 @@ function Viajes() {
         <h2>Viajes</h2>
         <br />
         <div className="entregas-insertar-viajes">
-          <Link
-            to="cargar_viaje"
-            rel="nofollow"
-          >
-            <button  className="btn btn-success">Insertar</button>
+          <Link to="cargar_viaje" rel="nofollow">
+            <button className="btn btn-success">Insertar</button>
           </Link>
           <Link to="ver_entregas_tardias" rel="nofollow">
-            <button className="btn-entregas">
-              Ver Entregas Tardías
-            </button>
+            <button className="btn btn-info">Ver Entregas Tardias</button>
           </Link>
         </div>
 
@@ -81,13 +77,13 @@ function Viajes() {
                   <td className="td__botones tr-boton acciones">
                     <button
                       className="btn btn-primary"
-                      onClick={() => console.log("Editar:", elemento)}
+                      onClick={notificacion_no_implementado}
                     >
                       Editar
                     </button>
                     <button
                       className="btn btn-danger"
-                      onClick={() => console.log("Eliminar:", elemento)}
+                      onClick={notificacion_no_implementado}
                     >
                       Eliminar
                     </button>

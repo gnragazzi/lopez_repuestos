@@ -2,6 +2,7 @@ import { Link, useNavigate, useLocation } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { useContextoGlobal } from "../Contexto";
 import useAxiosPrivado from "../utilidades/useAxiosPrivado";
+import { notificacion_no_implementado } from "../utilidades/toast_modificados";
 
 function Mantenimiento() {
   const navegar = useNavigate();
@@ -81,14 +82,14 @@ function Mantenimiento() {
                   <td className="td__botones tr-boton acciones">
                     <button
                       className="btn btn-primary"
-                      onClick={() => console.log("Editar:", elemento)}
+                      onClick={notificacion_no_implementado}
                     >
                       Editar
                     </button>
                     {"   "}
                     <button
                       className="btn btn-danger"
-                      onClick={() => console.log("Eliminar:", elemento)}
+                      onClick={notificacion_no_implementado}
                     >
                       Eliminar
                     </button>

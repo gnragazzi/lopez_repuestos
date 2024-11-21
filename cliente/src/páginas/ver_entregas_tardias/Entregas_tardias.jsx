@@ -36,12 +36,12 @@ function Entregas_tardias() {
 
     return (
         <div className="App">
-        <h2>Entregas Tardias</h2>
+        <h2>Entregas Tardías</h2>
         <div className="container__table">
           <table className="table table-bordered">
             <thead>
               <tr>
-                <th>Camion</th>
+                <th>Camión</th>
                 <th>Chofer</th>
                 <th>Semirremolque</th>
                 <th>Fecha de partida</th>

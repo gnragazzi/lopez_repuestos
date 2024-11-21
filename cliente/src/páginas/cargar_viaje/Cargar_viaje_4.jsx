@@ -2,6 +2,7 @@
 import { useEffect, useState } from "react";
 import { MdErrorOutline } from "react-icons/md";
 import useAxiosPrivado from "../../utilidades/useAxiosPrivado";
+import { notificacion_error } from "../../utilidades/toast_modificados";
 
 const Cargar_viaje_3 = ({ dispatch, acciones, estado }) => {
   const [error, setError] = useState("");
@@ -127,9 +128,9 @@ const Cargar_viaje_3 = ({ dispatch, acciones, estado }) => {
           >
             Volver
           </button>
-          <div className="no_seleccionado">
+          {/* <div className="no_seleccionado">
             {icono_error} {error}
-          </div>
+          </div> */}
           <button
             className="formulario__boton siguiente"
             onClick={() => {
@@ -138,6 +139,10 @@ const Cargar_viaje_3 = ({ dispatch, acciones, estado }) => {
                   type: PROXIMA_PANTALLA,
                   payload: [Boolean(chofer_seleccionado)],
                 });
+              } else {
+                notificacion_error(
+                  "Debe Seleccionar un Chofer para Poder Avanzar"
+                );
               }
             }}
           >

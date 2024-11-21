@@ -1,8 +1,11 @@
 import { MdReportGmailerrorred } from "react-icons/md";
 import { useContextoGlobal } from "../../Contexto";
-import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import useAxiosPrivado from "../../utilidades/useAxiosPrivado";
+import {
+  notificacion_error,
+  notificacion_exito,
+} from "../../utilidades/toast_modificados";
 
 const Formulario_chofer = () => {
   const axiosPrivado = useAxiosPrivado();
@@ -109,21 +112,10 @@ const Formulario_chofer = () => {
                 esActivo: true,
               })
               .then(() => {
-                toast.success(
-                  `🛠 Se ha dado de alta a ${chofer.nombre} ${chofer.apellido} 🛠`,
-                  {
-                    position: "top-center",
-                    style: { textAlign: "center" },
-                    autoClose: 2000,
-                    draggable: true,
-                    progress: undefined,
-                    theme: "light",
-                    icon: false,
-                    closeButton: false,
-                    pauseOnHover: false,
-                    bodyClassName: "toast_class",
-                  }
+                notificacion_exito(
+                  `🛠 Se ha dado de alta a ${chofer.nombre} ${chofer.apellido} 🛠`
                 );
+
                 dispatch({ tipo: RESETEAR_CHOFER });
                 navegador("/empleados/choferes");
               })
@@ -434,30 +426,8 @@ const Formulario_chofer = () => {
             esValido
               ? dispatch({ tipo: PROXIMA_PANTALLA })
               : cambiaron_campos
-              ? toast.error("Verifique la Información Ingresada", {
-                  position: "top-center",
-                  autoClose: 1500,
-                  draggable: true,
-                  progress: undefined,
-                  theme: "light",
-                  icon: false,
-                  closeButton: false,
-                  style: { textAlign: "center" },
-                  pauseOnHover: false,
-                  bodyClassName: "toast_class",
-                })
-              : toast.error("Debe modificar al menos un campo.", {
-                  position: "top-center",
-                  autoClose: 1500,
-                  draggable: true,
-                  progress: undefined,
-                  theme: "light",
-                  icon: false,
-                  closeButton: false,
-                  style: { textAlign: "center" },
-                  pauseOnHover: false,
-                  bodyClassName: "toast_class",
-                });
+              ? notificacion_error("Verifique la Información Ingresada")
+              : notificacion_error("Debe modificar al menos un campo.");
           }}
         >
           Siguiente

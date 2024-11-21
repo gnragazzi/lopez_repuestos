@@ -1,3 +1,5 @@
+import { notificacion_error } from "./toast_modificados";
+
 export const acciones_cargar_mantenimiento = {
   PROXIMA_PANTALLA: 0,
   PANTALLA_ANTERIOR: 1,
@@ -57,7 +59,10 @@ export const reducer_cargar_mantenimiento = (estado, accion) => {
         pantalla == 2
       ) {
         return { ...estado, pantalla: estado.pantalla + 1 };
-      } else return estado;
+      } else {
+        notificacion_error("Para continuar, elija alguna opción");
+        return estado;
+      }
     }
     case acciones_cargar_mantenimiento.PANTALLA_ANTERIOR: {
       return { ...estado, pantalla: estado.pantalla - 1 };

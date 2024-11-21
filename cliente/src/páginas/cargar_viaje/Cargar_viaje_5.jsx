@@ -1,4 +1,5 @@
 import { MdReportGmailerrorred } from "react-icons/md";
+import { notificacion_error } from "../../utilidades/toast_modificados";
 
 /* eslint-disable react/prop-types */
 function Cargar_viaje_5({ dispatch, acciones, estado }) {
@@ -180,6 +181,8 @@ function Cargar_viaje_5({ dispatch, acciones, estado }) {
                   Boolean(costos_combustibles),
                 ],
               });
+            } else {
+              notificacion_error("Verifique la información ingresada");
             }
           }}
         >
