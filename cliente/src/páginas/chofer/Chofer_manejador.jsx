@@ -1,5 +1,5 @@
-import { Bounce, toast } from "react-toastify";
 import { useContextoGlobal } from "../../Contexto";
+import { notificacion_exito } from "../../utilidades/toast_modificados";
 import useAxiosPrivado from "../../utilidades/useAxiosPrivado";
 import Confirmar_chofer from "./Confirmar_chofer";
 import Formulario_chofer from "./Formulario_chofer";
@@ -25,19 +25,7 @@ const Chofer_manejador = () => {
       axiosPrivado
         .post("/empleados?tipo=chofer", { ...datos_chofer, esActivo: true })
         .then(() => {
-          toast.success("🛠 Cargado Correctamente 🛠", {
-            position: "top-center",
-            style: { textAlign: "center" },
-            autoClose: 2000,
-            draggable: true,
-            progress: undefined,
-            theme: "light",
-            transition: Bounce,
-            icon: false,
-            closeButton: false,
-            pauseOnHover: false,
-            bodyClassName: "toast_class",
-          });
+          notificacion_exito("🛠 Cargado Correctamente 🛠");
           dispatch({ tipo: RESETEAR_CHOFER });
           navegar("/empleados/choferes");
         })
@@ -51,19 +39,7 @@ const Chofer_manejador = () => {
           esActivo: datos_chofer.activo,
         })
         .then(() => {
-          toast.success("🛠 Actualizado Correctamente 🛠", {
-            position: "top-center",
-            style: { textAlign: "center" },
-            autoClose: 2000,
-            draggable: true,
-            progress: undefined,
-            theme: "light",
-            transition: Bounce,
-            icon: false,
-            closeButton: false,
-            pauseOnHover: false,
-            bodyClassName: "toast_class",
-          });
+          notificacion_exito("🛠 Actualizado Correctamente 🛠");
           dispatch({ tipo: RESETEAR_CHOFER });
           navegar("/empleados/choferes");
         })

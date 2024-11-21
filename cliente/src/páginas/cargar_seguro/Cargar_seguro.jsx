@@ -6,8 +6,10 @@ import Listar_seguro from "./Listar_seguro";
 import { useState } from "react";
 import useAxiosPrivado from "../../utilidades/useAxiosPrivado";
 import { MdReportGmailerrorred } from "react-icons/md";
-import { Bounce, toast } from "react-toastify";
-import { AiOutlineFileProtect } from "react-icons/ai";
+import {
+  notificacion_error,
+  notificacion_exito,
+} from "../../utilidades/toast_modificados";
 
 const Cargar_seguro = () => {
   const navegar = useNavigate();
@@ -102,16 +104,7 @@ const Cargar_seguro = () => {
             tipo: SE_MODIFICO_LISTA,
           });
         }
-        toast.success(" Seguro Cargado Correctamente", {
-          position: "top-center",
-          autoClose: 3000,
-          draggable: true,
-          progress: undefined,
-          theme: "colored",
-          icon: <AiOutlineFileProtect size={24} />,
-          transition: Bounce,
-          bodyClassName: "toast_class",
-        });
+        notificacion_exito("Seguro Cargado Correctamente");
       })
       .catch((error) => {
         setCargando(false);
@@ -188,6 +181,8 @@ const Cargar_seguro = () => {
               onClick={() => {
                 if (validarCampos()) {
                   dispatch({ type: PROXIMA_PAGINA_SEGURO });
+                } else {
+                  notificacion_error("Verifique los campos ingresados");
                 }
               }}
             >

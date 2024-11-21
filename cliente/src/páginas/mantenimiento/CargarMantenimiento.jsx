@@ -11,7 +11,10 @@ import Cargar_M2 from "./Cargar_M2.jsx";
 import Cargar_M3 from "./Cargar_M3.jsx";
 import Cargar_M4 from "./Cargar_M4.jsx";
 import useAxiosPrivado from "../../utilidades/useAxiosPrivado.jsx";
-import { Bounce, toast } from "react-toastify";
+import {
+  notificacion_error,
+  notificacion_exito,
+} from "../../utilidades/toast_modificados.js";
 // crear componentes para mostrar información
 
 const CargarMantenimiento = () => {
@@ -107,19 +110,7 @@ const CargarMantenimiento = () => {
     axiosPrivado
       .post("/mantenimiento", cuerpo_cargar_mantenimiento)
       .then(() => {
-        toast.success("🛠 Cargado Correctamente 🛠", {
-          position: "top-center",
-          style: { textAlign: "center" },
-          autoClose: 2000,
-          draggable: true,
-          progress: undefined,
-          theme: "light",
-          transition: Bounce,
-          icon: false,
-          closeButton: false,
-          pauseOnHover: false,
-          bodyClassName: "toast_class",
-        });
+        notificacion_exito("🛠 Cargado Correctamente 🛠");
         navegar("/mantenimiento");
         dispatch({ type: RESETEAR_CUERPO_MANTENIMIENTO });
       })
@@ -226,7 +217,9 @@ const CargarMantenimiento = () => {
                         ? dispatch({
                             type: PROXIMA_PANTALLA,
                           })
-                        : undefined;
+                        : notificacion_error(
+                            "Verifique los valores ingresados"
+                          );
                     }
               }
             >

@@ -6,8 +6,10 @@ import Cargar_1 from "./Cargar_1";
 import Cargar_2 from "./Cargar_2";
 import Listar_tecnica from "./Listar_tenica";
 import { MdReportGmailerrorred } from "react-icons/md";
-import { PiFileMagnifyingGlassFill } from "react-icons/pi";
-import { Bounce, toast } from "react-toastify";
+import {
+  notificacion_error,
+  notificacion_exito,
+} from "../../utilidades/toast_modificados";
 
 const Cargar_tecnica = () => {
   const navegar = useNavigate();
@@ -45,16 +47,7 @@ const Cargar_tecnica = () => {
         } else {
           dispatch_vencimientos({ tipo: SE_MODIFICO_LISTA });
         }
-        toast.success("Tecnica Cargada Correctamente", {
-          position: "top-center",
-          autoClose: 3000,
-          draggable: true,
-          progress: undefined,
-          theme: "colored",
-          transition: Bounce,
-          icon: <PiFileMagnifyingGlassFill size={50} />,
-          bodyClassName: "toast_class",
-        });
+        notificacion_exito("Verificación Técnica Cargada Correctamente");
       })
       .catch((error) => {
         setCargando(false);
@@ -156,6 +149,8 @@ const Cargar_tecnica = () => {
               onClick={() => {
                 if (validarFechas() && validarUbicacion()) {
                   dispatch({ type: PROXIMA_PAGINA_TECNICA });
+                } else {
+                  notificacion_error("Verifique la información ingresada");
                 }
               }}
             >

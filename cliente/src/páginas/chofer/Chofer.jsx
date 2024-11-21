@@ -3,7 +3,7 @@ import { acciones_choferes as acciones } from "../../utilidades/reducer_choferes
 import useAxiosPrivado from "../../utilidades/useAxiosPrivado";
 import { Outlet, useNavigate } from "react-router-dom";
 import { useContextoGlobal } from "../../Contexto";
-import { toast } from "react-toastify";
+import { notificacion_error } from "../../utilidades/toast_modificados";
 
 const Chofer = () => {
   const navegador = useNavigate();
@@ -150,19 +150,7 @@ const Chofer = () => {
                                       `/empleados?tipo=chofer&id=${ch.dni}`
                                     )
                                     .then((res) => {
-                                      toast.error(res.data, {
-                                        position: "top-right",
-                                        autoClose: 1500,
-                                        draggable: true,
-                                        progress: undefined,
-                                        theme: "light",
-                                        icon: false,
-                                        closeButton: false,
-                                        bodyClassName: "toast_class",
-                                        style: { textAlign: "center" },
-                                        pauseOnHover: false,
-                                        pauseOnFocusLoss: false,
-                                      });
+                                      notificacion_error(res.data);
                                     })
                                     .catch((err) => {
                                       dispatch({

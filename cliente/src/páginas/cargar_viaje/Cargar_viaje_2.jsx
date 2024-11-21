@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { MdErrorOutline } from "react-icons/md";
 import useAxiosPrivado from "../../utilidades/useAxiosPrivado";
+import { notificacion_error } from "../../utilidades/toast_modificados";
 
 /* eslint-disable react/prop-types */
 function Cargar_viaje_2({ dispatch, acciones, estado }) {
@@ -144,9 +145,9 @@ function Cargar_viaje_2({ dispatch, acciones, estado }) {
           >
             Volver
           </button>
-          <div className="no_seleccionado">
+          {/* <div className="no_seleccionado">
             {icono_error} {error}
-          </div>
+          </div> */}
           <button
             className="formulario__boton siguiente"
             onClick={() => {
@@ -155,6 +156,11 @@ function Cargar_viaje_2({ dispatch, acciones, estado }) {
                   type: PROXIMA_PANTALLA,
                   payload: [Boolean(camion_seleccionado)],
                 });
+              } else {
+                notificacion_error(
+                  "Debe seleccionar un camión para poder avanzar"
+                );
+                console.log("nooo");
               }
             }}
           >

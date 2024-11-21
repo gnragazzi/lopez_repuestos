@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import { useState } from "react";
 import { MdReportGmailerrorred } from "react-icons/md";
+import { notificacion_error } from "../../utilidades/toast_modificados";
 
 /* eslint-disable react/prop-types */
 function Cargar_viaje_1({ dispatch, acciones, estado }) {
@@ -104,6 +105,8 @@ function Cargar_viaje_1({ dispatch, acciones, estado }) {
                   Boolean(fecha_esperada),
                 ],
               });
+            } else {
+              notificacion_error("Verifique los datos ingresados");
             }
           }}
         >
