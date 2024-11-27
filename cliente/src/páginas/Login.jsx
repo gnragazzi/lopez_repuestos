@@ -7,6 +7,7 @@ import camion from "../assets/iconos_lateral/camion.gif";
 import { GiGrass } from "react-icons/gi";
 import { useState } from "react";
 import { Bounce, toast, ToastContainer } from "react-toastify";
+import { notificacion_error } from "../utilidades/toast_modificados";
 
 const Login = () => {
   const { auth, setAuth } = useContextoGlobal();
@@ -18,6 +19,12 @@ const Login = () => {
 
   const manejarLogin = (e) => {
     e.preventDefault();
+    const regex = /[^\w|\s|áéíóú|,]/i;
+    if(regex.test(usuario)||regex.test(contrasena))
+    {
+      notificacion_error("Utilice únicamente letras y números. ")
+      return;
+    }
     axios
       .post(
         "http://localhost:8080/auth",

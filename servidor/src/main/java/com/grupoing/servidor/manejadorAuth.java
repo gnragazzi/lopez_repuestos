@@ -47,10 +47,6 @@ public class manejadorAuth implements HttpHandler {
             usuario = jsonobj.getString("usuario");
             contrasena = jsonobj.getString("contrasena");
 
-            //MÉTODO PARA CREAR UN USUARIO 
-            /*if (ca.readUser(usuario) == false) {
-                ca.create(usuario, contrasena); 
-            } */ 
             
             if (ca.read(usuario, contrasena) == true) {
                 

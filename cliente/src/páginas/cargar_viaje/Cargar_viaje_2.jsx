@@ -160,7 +160,6 @@ function Cargar_viaje_2({ dispatch, acciones, estado }) {
                 notificacion_error(
                   "Debe seleccionar un camión para poder avanzar"
                 );
-                console.log("nooo");
               }
             }}
           >
